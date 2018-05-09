@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {floor} from './util'
 
 // TODO queue real time data
 // TODO object pool
@@ -7,10 +8,6 @@ import PropTypes from 'prop-types'
 // TODO render elements off screen
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
-
-function floor(x) {
-  return x ^ 0
-}
 
 function drawCandlestick(ctx, props, metric, data) {
   const {x, width, yMin, scaleY,} = metric
