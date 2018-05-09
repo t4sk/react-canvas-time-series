@@ -1,22 +1,44 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
-function drawCandlestick(ctx, props, data) {
-  // TODO scale
+// TODO queue real time data
+// TODO object pool
+// TODO use more than one canvas
+// TODO render elements off screen
+// TODO bitwise operator for math
+// TODO use requestAnimationFrame?
+
+function floor(x) {
+  return x ^ 0
+}
+
+function drawCandlestick(ctx, props, metric, data) {
+  const {x, width, yMin, scaleY,} = metric
   const {high, low, open, close} = data
+
+  const y = props.height - scaleY * (Math.max(open, close) - yMin)
+  const height = scaleY * Math.abs(open - close)
 
   if (open <= close) {
     ctx.strokeStyle = props.candlestick.bull.color
-    ctx.strokeRect(100, 100, 20, 30)
+    ctx.strokeRect(x, y, width, height)
   } else {
     ctx.strokeStyle = props.candlestick.bear.color
     ctx.fillStyle = props.candlestick.bear.color
-    ctx.fillRect(100, 100, 20, 30)
+    ctx.fillRect(x, y, width, height)
   }
 
+  const xCenter = x + floor(width / 2)
+  // top wick
   ctx.beginPath()
-  ctx.moveTo(110,145)
-  ctx.lineTo(110,175)
+  ctx.moveTo(xCenter, y)
+  ctx.lineTo(xCenter, y - scaleY * (high - Math.max(open, close)))
+  ctx.stroke()
+
+  // bottom wick
+  ctx.beginPath()
+  ctx.moveTo(xCenter, y + height)
+  ctx.lineTo(xCenter, y + height + scaleY * (Math.min(open, close) - low))
   ctx.stroke()
 }
 
@@ -34,11 +56,40 @@ class Candlestick extends Component {
     this.ctx.fillStyle = this.props.backgroundColor
     this.ctx.fillRect(0, 0, this.props.width, this.props.height)
 
+    // candlesticks
+    const xMin = 100
+    const xMax = 200
+    const yMin = 30
+    const yMax = 100
+    const scaleX = floor(this.props.width / (xMax - xMin))
+    const scaleY = floor(this.props.height / (yMax - yMin))
+
+    const x1 = 20
+    const x0 = 10
+    const width = scaleX * (x1 - x0)
+
     drawCandlestick(this.ctx, this.props, {
-      high: 100,
-      low: 50,
+      x: x0,
+      width,
+      yMin,
+      scaleY,
+    }, {
+      high: 85,
+      low: 65,
       open: 70,
-      close: 90,
+      close: 80,
+    })
+
+    drawCandlestick(this.ctx, this.props, {
+      x: width + x1,
+      width,
+      yMin,
+      scaleY,
+    }, {
+      high: 75,
+      low: 55,
+      open: 70,
+      close: 60,
     })
   }
 
@@ -61,6 +112,8 @@ class Candlestick extends Component {
 
 Candlestick.defaultProps = {
   backgroundColor: "#2f3d45",
+  width: 500,
+  height: 300,
   candlestick: {
     bull: {
       color: "lightgreen",

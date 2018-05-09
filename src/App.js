@@ -9,10 +9,7 @@ class App extends Component {
       <div className="App">
         <div style={{margin: 10}}></div>
 
-        <Candlestick
-          width={500}
-          height={300}
-        />
+        <Candlestick />
       </div>
     );
   }
