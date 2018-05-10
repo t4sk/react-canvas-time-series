@@ -9,6 +9,7 @@ import {floor} from './util'
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
 
+//TODO get width and height of canvas
 function drawCandlestick(ctx, props, metric, data) {
   const {x, width, yMin, scaleY,} = metric
   const {high, low, open, close} = data
@@ -42,7 +43,8 @@ function drawCandlestick(ctx, props, metric, data) {
 class Candlestick extends Component {
   componentDidMount() {
     this.ctx = {
-      dataLayer: this.refs.dataLayer.getContext("2d")
+      dataLayer: this.refs.dataLayer.getContext("2d"),
+      scaleLayer: this.refs.scaleLayer.getContext("2d"),
     }
 
     this.draw()
@@ -51,13 +53,19 @@ class Candlestick extends Component {
   draw() {
     this.ctx.dataLayer.clearRect(0, 0, this.props.width, this.props.height)
 
+    console.log(this.ctx.scaleLayer.canvas.width)
+
+    // -------- scale layer --------
+    this.ctx.scaleLayer.fillStyle = "black"
+    this.ctx.scaleLayer.fillRect(0, 0, this.props.width + 50, this.props.height + 50)
+
+    // draw horizontal lines
+    // draw vertical lines
+
+    // ------ data layer -----------
     // background
     this.ctx.dataLayer.fillStyle = this.props.backgroundColor
     this.ctx.dataLayer.fillRect(0, 0, this.props.width, this.props.height)
-
-    // draw horizontal lines
-
-    // draw vertical lines
 
     // candlesticks
     const xMin = 100
@@ -98,21 +106,42 @@ class Candlestick extends Component {
 
   render() {
     return (
-      <div>
+      <div style={style.container}>
         <canvas
+          style={style.scaleLayer}
+          ref="scaleLayer"
+          width={this.props.width + 50}
+          height={this.props.height + 50}
+        >
+        </canvas>
+        <canvas
+          style={style.dataLayer}
           ref="dataLayer"
           width={this.props.width}
           height={this.props.height}
-          style={{
-            border: "1px solid #000000",
-            width: this.props.width,
-            height: this.props.height,
-          }}
         >
         </canvas>
       </div>
     )
   }
+}
+
+const style = {
+  container: {
+    position: "relative",
+  },
+  scaleLayer: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 1
+  },
+  dataLayer: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 2,
+  },
 }
 
 Candlestick.defaultProps = {

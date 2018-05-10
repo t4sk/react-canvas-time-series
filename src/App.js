@@ -7,9 +7,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div style={{margin: 10}}></div>
+        <div style={{margin: 10}}>
+          <Candlestick />
+        </div>
 
-        <Candlestick />
       </div>
     );
   }
