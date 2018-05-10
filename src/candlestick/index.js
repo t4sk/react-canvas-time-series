@@ -41,17 +41,23 @@ function drawCandlestick(ctx, props, metric, data) {
 
 class Candlestick extends Component {
   componentDidMount() {
-    this.ctx = this.refs.canvas.getContext("2d")
+    this.ctx = {
+      dataLayer: this.refs.dataLayer.getContext("2d")
+    }
 
     this.draw()
   }
 
   draw() {
-    this.ctx.clearRect(0, 0, this.props.width, this.props.height)
+    this.ctx.dataLayer.clearRect(0, 0, this.props.width, this.props.height)
 
     // background
-    this.ctx.fillStyle = this.props.backgroundColor
-    this.ctx.fillRect(0, 0, this.props.width, this.props.height)
+    this.ctx.dataLayer.fillStyle = this.props.backgroundColor
+    this.ctx.dataLayer.fillRect(0, 0, this.props.width, this.props.height)
+
+    // draw horizontal lines
+
+    // draw vertical lines
 
     // candlesticks
     const xMin = 100
@@ -65,7 +71,7 @@ class Candlestick extends Component {
     const x0 = 10
     const width = scaleX * (x1 - x0)
 
-    drawCandlestick(this.ctx, this.props, {
+    drawCandlestick(this.ctx.dataLayer, this.props, {
       x: x0,
       width,
       yMin,
@@ -77,7 +83,7 @@ class Candlestick extends Component {
       close: 80,
     })
 
-    drawCandlestick(this.ctx, this.props, {
+    drawCandlestick(this.ctx.dataLayer, this.props, {
       x: width + x1,
       width,
       yMin,
@@ -92,17 +98,19 @@ class Candlestick extends Component {
 
   render() {
     return (
-      <canvas
-        ref="canvas"
-        width={this.props.width}
-        height={this.props.height}
-        style={{
-          border: "1px solid #000000",
-          width: this.props.width,
-          height: this.props.height,
-        }}
-      >
-      </canvas>
+      <div>
+        <canvas
+          ref="dataLayer"
+          width={this.props.width}
+          height={this.props.height}
+          style={{
+            border: "1px solid #000000",
+            width: this.props.width,
+            height: this.props.height,
+          }}
+        >
+        </canvas>
+      </div>
     )
   }
 }
