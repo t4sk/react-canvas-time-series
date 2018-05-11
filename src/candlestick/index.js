@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {floor} from './util'
+import drawCandlestick from './candlestick'
 
 const SCALE_Y_WIDTH = 50
 const SCALE_X_HEIGHT = 50
@@ -11,36 +12,6 @@ const SCALE_X_HEIGHT = 50
 // TODO render elements off screen
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
-
-function drawCandlestick(ctx, props, metric, data) {
-  const {x, width, yMin, scaleY,} = metric
-  const {high, low, open, close} = data
-
-  const y = ctx.canvas.height - scaleY * (Math.max(open, close) - yMin)
-  const height = scaleY * Math.abs(open - close)
-
-  if (open <= close) {
-    ctx.strokeStyle = props.candlestick.bull.color
-    ctx.strokeRect(x, y, width, height)
-  } else {
-    ctx.strokeStyle = props.candlestick.bear.color
-    ctx.fillStyle = props.candlestick.bear.color
-    ctx.fillRect(x, y, width, height)
-  }
-
-  const xCenter = x + floor(width / 2)
-  // top wick
-  ctx.beginPath()
-  ctx.moveTo(xCenter, y)
-  ctx.lineTo(xCenter, y - scaleY * (high - Math.max(open, close)))
-  ctx.stroke()
-
-  // bottom wick
-  ctx.beginPath()
-  ctx.moveTo(xCenter, y + height)
-  ctx.lineTo(xCenter, y + height + scaleY * (Math.min(open, close) - low))
-  ctx.stroke()
-}
 
 class Candlestick extends Component {
   componentDidMount() {
