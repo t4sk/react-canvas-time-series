@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {floor} from './util'
 
+const SCALE_Y_WIDTH = 50
+const SCALE_X_HEIGHT = 50
+
 // TODO queue real time data
 // TODO object pool
 // TODO use more than one canvas
@@ -9,12 +12,11 @@ import {floor} from './util'
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
 
-//TODO get width and height of canvas
 function drawCandlestick(ctx, props, metric, data) {
   const {x, width, yMin, scaleY,} = metric
   const {high, low, open, close} = data
 
-  const y = props.height - scaleY * (Math.max(open, close) - yMin)
+  const y = ctx.canvas.height - scaleY * (Math.max(open, close) - yMin)
   const height = scaleY * Math.abs(open - close)
 
   if (open <= close) {
@@ -57,7 +59,11 @@ class Candlestick extends Component {
 
     // -------- scale layer --------
     this.ctx.scaleLayer.fillStyle = "black"
-    this.ctx.scaleLayer.fillRect(0, 0, this.props.width + 50, this.props.height + 50)
+    this.ctx.scaleLayer.fillRect(
+      0, 0,
+      this.ctx.scaleLayer.canvas.width,
+      this.ctx.scaleLayer.canvas.height,
+    )
 
     // draw horizontal lines
     // draw vertical lines
@@ -65,15 +71,19 @@ class Candlestick extends Component {
     // ------ data layer -----------
     // background
     this.ctx.dataLayer.fillStyle = this.props.backgroundColor
-    this.ctx.dataLayer.fillRect(0, 0, this.props.width, this.props.height)
+    this.ctx.dataLayer.fillRect(
+      0, 0,
+      this.ctx.dataLayer.canvas.width,
+      this.ctx.dataLayer.canvas.height,
+    )
 
     // candlesticks
     const xMin = 100
     const xMax = 200
     const yMin = 30
     const yMax = 100
-    const scaleX = floor(this.props.width / (xMax - xMin))
-    const scaleY = floor(this.props.height / (yMax - yMin))
+    const scaleX = floor(this.ctx.dataLayer.canvas.width / (xMax - xMin))
+    const scaleY = floor(this.ctx.dataLayer.canvas.height / (yMax - yMin))
 
     const x1 = 20
     const x0 = 10
@@ -110,15 +120,15 @@ class Candlestick extends Component {
         <canvas
           style={style.scaleLayer}
           ref="scaleLayer"
-          width={this.props.width + 50}
-          height={this.props.height + 50}
+          width={this.props.width}
+          height={this.props.height}
         >
         </canvas>
         <canvas
           style={style.dataLayer}
           ref="dataLayer"
-          width={this.props.width}
-          height={this.props.height}
+          width={this.props.width - SCALE_Y_WIDTH}
+          height={this.props.height - SCALE_X_HEIGHT}
         >
         </canvas>
       </div>
