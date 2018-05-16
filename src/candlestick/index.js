@@ -13,49 +13,75 @@ const SCALE_X_HEIGHT = 50
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
 
+const NUM_Y_INTERVALS = 6
+
+function drawHorizontalLines(ctx, props, metric) {
+
+  const yInterval = 40
+  const width = ctx.canvas.width - SCALE_Y_WIDTH
+
+  for (let i = 0; i <= NUM_Y_INTERVALS; i++) {
+    ctx.beginPath()
+    ctx.strokeStyle = "black"
+    ctx.moveTo(0, i * yInterval)
+    ctx.lineTo(width, i * yInterval)
+    ctx.stroke()
+
+    // ctx.beginPth()
+    // ctx.font = "20px Arial"
+    // ctx.textBaseline = "middle"
+    // ctx.fillText(y, WIDTH - Y_AXIS_PADD_RIGHT + 15, canvasY)
+  }
+}
+
+function drawVerticalLines(ctx) {
+}
+
 class Candlestick extends Component {
   componentDidMount() {
     this.ctx = {
       dataLayer: this.refs.dataLayer.getContext("2d"),
-      scaleLayer: this.refs.scaleLayer.getContext("2d"),
+      background: this.refs.background.getContext("2d"),
     }
 
     this.draw()
   }
 
   draw() {
-    this.ctx.dataLayer.clearRect(0, 0, this.props.width, this.props.height)
-
-    console.log(this.ctx.scaleLayer.canvas.width)
-
-    // -------- scale layer --------
-    this.ctx.scaleLayer.fillStyle = "black"
-    this.ctx.scaleLayer.fillRect(
-      0, 0,
-      this.ctx.scaleLayer.canvas.width,
-      this.ctx.scaleLayer.canvas.height,
-    )
-
-    // draw horizontal lines
-    // draw vertical lines
-
-    // ------ data layer -----------
-    // background
-    this.ctx.dataLayer.fillStyle = this.props.backgroundColor
-    this.ctx.dataLayer.fillRect(
-      0, 0,
-      this.ctx.dataLayer.canvas.width,
-      this.ctx.dataLayer.canvas.height,
-    )
-
-    // candlesticks
     const xMin = 100
     const xMax = 200
     const yMin = 30
     const yMax = 100
+
     const scaleX = floor(this.ctx.dataLayer.canvas.width / (xMax - xMin))
     const scaleY = floor(this.ctx.dataLayer.canvas.height / (yMax - yMin))
 
+    this.ctx.dataLayer.clearRect(0, 0, this.ctx.background.width, this.ctx.background.height)
+
+    // -------- background layer --------
+    this.ctx.background.fillStyle = "lightgrey"
+    this.ctx.background.fillRect(
+      0, 0,
+      this.ctx.background.canvas.width,
+      this.ctx.background.canvas.height,
+    )
+
+    this.ctx.background.fillStyle = this.props.backgroundColor
+    this.ctx.background.fillRect(
+      0, 0,
+      this.ctx.background.canvas.width - SCALE_Y_WIDTH,
+      this.ctx.background.canvas.height - SCALE_X_HEIGHT,
+    )
+
+    // draw horizontal lines
+    drawHorizontalLines(this.ctx.background, this.props, {
+      yMin, yMax, scaleY,
+    })
+    // draw vertical lines
+    drawVerticalLines(this.ctx.background)
+
+    // ------ data layer -----------
+    // candlesticks
     const x1 = 20
     const x0 = 10
     const width = scaleX * (x1 - x0)
@@ -89,8 +115,8 @@ class Candlestick extends Component {
     return (
       <div style={style.container}>
         <canvas
-          style={style.scaleLayer}
-          ref="scaleLayer"
+          style={style.background}
+          ref="background"
           width={this.props.width}
           height={this.props.height}
         >
@@ -111,7 +137,7 @@ const style = {
   container: {
     position: "relative",
   },
-  scaleLayer: {
+  background: {
     position: "absolute",
     left: 0,
     top: 0,
