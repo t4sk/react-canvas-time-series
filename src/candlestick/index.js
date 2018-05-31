@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {floor} from './util'
+import {floor, toY} from './util'
 import drawCandlestick from './candlestick'
 
 const SCALE_Y_WIDTH = 50
@@ -13,24 +13,29 @@ const SCALE_X_HEIGHT = 50
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
 
-const NUM_Y_INTERVALS = 6
+const NUM_HORIZONTAL_INTERVALS = 6
 
 function drawHorizontalLines(ctx, props, metric) {
+  const {yMin, yMax} = metric
 
-  const yInterval = 40
   const width = ctx.canvas.width - SCALE_Y_WIDTH
+  const height = ctx.canvas.height - SCALE_X_HEIGHT
+  const interval = floor(height / NUM_HORIZONTAL_INTERVALS)
 
-  for (let i = 0; i <= NUM_Y_INTERVALS; i++) {
-    ctx.beginPath()
-    ctx.strokeStyle = "black"
-    ctx.moveTo(0, i * yInterval)
-    ctx.lineTo(width, i * yInterval)
+  for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS; i++) {
+    // draw line
+    ctx.moveTo(0, i * interval)
+    ctx.lineTo(width, i * interval)
     ctx.stroke()
 
-    // ctx.beginPth()
-    // ctx.font = "20px Arial"
-    // ctx.textBaseline = "middle"
-    // ctx.fillText(y, WIDTH - Y_AXIS_PADD_RIGHT + 15, canvasY)
+    // draw text
+    const y = floor(toY({
+      canvasHeight: height,
+      canvasY: (NUM_HORIZONTAL_INTERVALS - i) * interval,
+      yMin,
+      yMax
+    }))
+    ctx.fillText(y, width + 5, i * interval)
   }
 }
 
@@ -66,18 +71,28 @@ class Candlestick extends Component {
       this.ctx.background.canvas.height,
     )
 
-    this.ctx.background.fillStyle = this.props.backgroundColor
+    this.ctx.background.fillStyle = "white" || this.props.backgroundColor
     this.ctx.background.fillRect(
       0, 0,
       this.ctx.background.canvas.width - SCALE_Y_WIDTH,
       this.ctx.background.canvas.height - SCALE_X_HEIGHT,
     )
 
-    // draw horizontal lines
+    // translate by half pixel to draw thin lines
+    this.ctx.background.translate(0.5, 0.5)
+
+    // style lines
+    this.ctx.background.lineWidth = 1
+    this.ctx.background.strokeStyle = "lightgrey"
+
+    // style labels
+    this.ctx.background.font = "12px Arial"
+    this.ctx.background.fillStyle = "black"
+    this.ctx.background.textBaseline = "middle"
+
     drawHorizontalLines(this.ctx.background, this.props, {
-      yMin, yMax, scaleY,
+      yMin, yMax,
     })
-    // draw vertical lines
     drawVerticalLines(this.ctx.background)
 
     // ------ data layer -----------
