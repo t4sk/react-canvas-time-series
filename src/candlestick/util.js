@@ -3,14 +3,13 @@ export function floor(x: number): number {
   return x ^ 0
 }
 
-type ToYArgs = {
-  canvasHeight: number,
-  canvasY: number,
-  yMin: number,
-  yMax: number,
+type LinearArgs = {
+  dx: number,
+  dy: number,
+  x: number,
+  y0: number,
 }
 
-// convert canvas y to data point y
-export function toY({canvasHeight, canvasY, yMin, yMax}: ToYArgs): number {
-  return (yMax - yMin) / canvasHeight * canvasY + yMin
+export function linear({dx, dy, x, y0}: LinearArgs): number {
+  return dy / dx * x + y0
 }

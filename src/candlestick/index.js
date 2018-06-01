@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {floor, toY} from './util'
+import {floor, linear} from './util'
 import drawCandlestick from './candlestick'
 
 const SCALE_Y_WIDTH = 50
@@ -14,6 +14,7 @@ const SCALE_X_HEIGHT = 50
 // TODO use requestAnimationFrame?
 
 const NUM_HORIZONTAL_INTERVALS = 6
+const NUM_VERTICAL_INTERVALS = 6
 
 function drawHorizontalLines(ctx, props, metric) {
   const {yMin, yMax} = metric
@@ -29,17 +30,38 @@ function drawHorizontalLines(ctx, props, metric) {
     ctx.stroke()
 
     // draw text
-    const y = floor(toY({
-      canvasHeight: height,
-      canvasY: (NUM_HORIZONTAL_INTERVALS - i) * interval,
-      yMin,
-      yMax
+    const y = floor(linear({
+      dy: yMax - yMin,
+      dx: height,
+      x: (NUM_HORIZONTAL_INTERVALS - i) * interval,
+      y0: yMin,
     }))
-    ctx.fillText(y, width + 5, i * interval)
+    ctx.fillText(y, width + 10, i * interval)
   }
 }
 
-function drawVerticalLines(ctx) {
+function drawVerticalLines(ctx, props, metric) {
+  const {xMin, xMax} = metric
+
+  const width = ctx.canvas.width - SCALE_Y_WIDTH
+  const height = ctx.canvas.height - SCALE_X_HEIGHT
+  const interval = floor(width / NUM_VERTICAL_INTERVALS)
+
+  for (let i = 0; i <= NUM_VERTICAL_INTERVALS; i++) {
+    // draw line
+    ctx.moveTo(i * interval, 0)
+    ctx.lineTo(i * interval, height)
+    ctx.stroke()
+
+    // draw text
+    const x = floor(linear({
+      dy: xMax - xMin,
+      dx: width,
+      x: i * interval,
+      y0: xMin,
+    }))
+    ctx.fillText(x, i * interval, height + 10)
+  }
 }
 
 class Candlestick extends Component {
@@ -89,11 +111,16 @@ class Candlestick extends Component {
     this.ctx.background.font = "12px Arial"
     this.ctx.background.fillStyle = "black"
     this.ctx.background.textBaseline = "middle"
+    this.ctx.background.textAlign = "center"
 
     drawHorizontalLines(this.ctx.background, this.props, {
       yMin, yMax,
     })
-    drawVerticalLines(this.ctx.background)
+
+
+    drawVerticalLines(this.ctx.background, this.props, {
+      xMin, xMax,
+    })
 
     // ------ data layer -----------
     // candlesticks
