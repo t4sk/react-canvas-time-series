@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {floor, linear} from './util'
-import drawCandlestick from './candlestick'
+import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
@@ -75,33 +75,7 @@ class Candlestick extends Component {
 
     // ------ data layer -----------
     // candlesticks
-    const x1 = 20
-    const x0 = 10
-    const width = scaleX * (x1 - x0)
-
-    drawCandlestick(this.ctx.dataLayer, this.props, {
-      x: x0,
-      width,
-      yMin,
-      scaleY,
-    }, {
-      high: 85,
-      low: 65,
-      open: 70,
-      close: 80,
-    })
-
-    drawCandlestick(this.ctx.dataLayer, this.props, {
-      x: width + x1,
-      width,
-      yMin,
-      scaleY,
-    }, {
-      high: 75,
-      low: 55,
-      open: 70,
-      close: 60,
-    })
+    drawCandlesticks(this.ctx.dataLayer, this.props)
   }
 
   render() {
