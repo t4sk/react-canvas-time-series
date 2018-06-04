@@ -1,5 +1,5 @@
 //@flow
-import {floor} from './util'
+import {floor, linear, linearTransformer} from './util'
 
 type Canvas = any
 
@@ -28,12 +28,18 @@ type Data = {
   close: number,
 }
 
+// TODO fix flow
 export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data: Data) {
-  const {x, width, yMin, scaleY,} = metric
-  const {high, low, open, close} = data
+  const {xMin, xMax, yMin, yMax, xInterval, toCanvasX, toCanvasY} = metric
+  const {high, low, open, close, timestamp} = data
 
-  const y = ctx.canvas.height - scaleY * (Math.max(open, close) - yMin)
-  const height = scaleY * Math.abs(open - close)
+  const x = floor(toCanvasX(timestamp))
+  const y = floor(toCanvasY(Math.max(open, close)))
+
+  const scaleX = ctx.canvas.width / (xMin - xMax)
+  const scaleY = ctx.canvas.height / (yMax - yMin)
+  const width = floor(scaleX * xInterval)
+  const height = floor(scaleY * Math.abs(open - close))
 
   if (open <= close) {
     ctx.strokeStyle = props.candlestick.bull.color
@@ -49,35 +55,44 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   // top wick
   ctx.beginPath()
   ctx.moveTo(xCenter, y)
-  ctx.lineTo(xCenter, y - scaleY * (high - Math.max(open, close)))
+  ctx.lineTo(xCenter, floor(toCanvasY(high)))
   ctx.stroke()
 
   // bottom wick
   ctx.beginPath()
   ctx.moveTo(xCenter, y + height)
-  ctx.lineTo(xCenter, y + height + scaleY * (Math.min(open, close) - low))
+  ctx.lineTo(xCenter, floor(toCanvasY(low)))
   ctx.stroke()
 }
 
 export function drawCandlesticks(ctx: Canvas, props: Props) {
   const xMin = 100
   const xMax = 200
+  const xInterval = 10
   const yMin = 30
   const yMax = 100
 
-  const scaleX = floor(ctx.canvas.width / (xMax - xMin))
-  const scaleY = floor(ctx.canvas.height / (yMax - yMin))
+  const toCanvasX = linearTransformer({
+    dy: ctx.canvas.width,
+    dx: xMax - xMin,
+    y0: -ctx.canvas.width * xMin / (xMax - xMin),
+  })
 
-  const x1 = 110
-  const x0 = 100
-  const width = scaleX * (x1 - x0)
+  const toCanvasY = linearTransformer({
+    dy: -ctx.canvas.height,
+    dx: yMax - yMin,
+    y0: ctx.canvas.height * yMax / (yMax - yMin)
+  })
 
   for (let i = 0; i < DATA.length; i++) {
     drawCandlestick(ctx, props, {
-      x: i * width,
-      width,
+      xMin,
+      xMax,
+      xInterval,
       yMin,
-      scaleY,
+      yMax,
+      toCanvasX,
+      toCanvasY,
     }, DATA[i])
   }
 }

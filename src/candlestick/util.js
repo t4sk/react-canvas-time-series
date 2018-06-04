@@ -13,3 +13,10 @@ type LinearArgs = {
 export function linear({dx, dy, x, y0}: LinearArgs): number {
   return dy / dx * x + y0
 }
+
+// TODO flow
+// TODO test
+export function linearTransformer({dx, dy, y0}) {
+  const df = dy / dx
+  return x => df * x + y0
+}
