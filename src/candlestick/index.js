@@ -33,9 +33,6 @@ class Candlestick extends Component {
     const yMin = 30
     const yMax = 100
 
-    const scaleX = floor(this.ctx.dataLayer.canvas.width / (xMax - xMin))
-    const scaleY = floor(this.ctx.dataLayer.canvas.height / (yMax - yMin))
-
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.background.width, this.ctx.background.height)
 
     // -------- background layer --------
@@ -66,13 +63,9 @@ class Candlestick extends Component {
     this.ctx.background.textBaseline = "middle"
     this.ctx.background.textAlign = "center"
 
-    drawHorizontalLines(this.ctx.background, this.props, {
-      yMin, yMax,
-    })
+    drawHorizontalLines(this.ctx.background, this.props, {yMin, yMax})
 
-    drawVerticalLines(this.ctx.background, this.props, {
-      xMin, xMax,
-    })
+    drawVerticalLines(this.ctx.background, this.props, {xMin, xMax})
 
     // ------ data layer -----------
     // candlesticks

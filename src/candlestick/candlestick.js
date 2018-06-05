@@ -38,6 +38,7 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
 
   const height = floor(scaleY * Math.abs(open - close))
 
+  // TODO draw with black
   if (open <= close) {
     ctx.strokeStyle = props.candlestick.bull.color
     ctx.fillStyle = props.candlestick.bull.color
