@@ -62,7 +62,7 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   ctx.stroke()
 }
 
-export function drawCandlesticks(ctx: Canvas, props: Props) {
+export function drawCandlesticks(ctx: Canvas, props: Props, data: Array<Data>) {
   const xMin = 100
   const xMax = 200
   const xInterval = 10
@@ -86,80 +86,12 @@ export function drawCandlesticks(ctx: Canvas, props: Props) {
   // width of each candle
   const width = floor(scaleX * xInterval)
 
-  for (let i = 0; i < DATA.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     drawCandlestick(ctx, props, {
       width,
       scaleY,
       toCanvasX,
       toCanvasY,
-    }, DATA[i])
+    }, data[i])
   }
 }
-
-const DATA = [{
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 100
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 110,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 120
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 130,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 140
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 150,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 160
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 170,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 180
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 190,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 200
-}]

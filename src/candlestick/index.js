@@ -75,7 +75,7 @@ class Candlestick extends Component {
 
     // ------ data layer -----------
     // candlesticks
-    drawCandlesticks(this.ctx.dataLayer, this.props)
+    drawCandlesticks(this.ctx.dataLayer, this.props, DATA)
   }
 
   render() {
@@ -147,3 +147,71 @@ Candlestick.propTypes = {
 }
 
 export default Candlestick
+
+const DATA = [{
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 100
+}, {
+  high: 75,
+  low: 55,
+  open: 70,
+  close: 60,
+  timestamp: 110,
+}, {
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 120
+}, {
+  high: 75,
+  low: 55,
+  open: 70,
+  close: 60,
+  timestamp: 130,
+}, {
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 140
+}, {
+  high: 75,
+  low: 55,
+  open: 70,
+  close: 60,
+  timestamp: 150,
+}, {
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 160
+}, {
+  high: 75,
+  low: 55,
+  open: 70,
+  close: 60,
+  timestamp: 170,
+}, {
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 180
+}, {
+  high: 75,
+  low: 55,
+  open: 70,
+  close: 60,
+  timestamp: 190,
+}, {
+  high: 85,
+  low: 65,
+  open: 70,
+  close: 80,
+  timestamp: 200
+}]
