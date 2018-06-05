@@ -15,10 +15,10 @@ type Props = {
 }
 
 type Metric = {
-  x: number,
   width: number,
-  yMin: number,
   scaleY: number,
+  toCanvasX: number => number,
+  toCanvasY: number => number,
 }
 
 type Data = {
@@ -26,19 +26,16 @@ type Data = {
   low: number,
   open: number,
   close: number,
+  timestamp: number,
 }
 
-// TODO fix flow
 export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data: Data) {
-  const {xMin, xMax, yMin, yMax, xInterval, toCanvasX, toCanvasY} = metric
+  const {width, scaleY, toCanvasX, toCanvasY} = metric
   const {high, low, open, close, timestamp} = data
 
   const x = floor(toCanvasX(timestamp))
   const y = floor(toCanvasY(Math.max(open, close)))
 
-  const scaleX = ctx.canvas.width / (xMin - xMax)
-  const scaleY = ctx.canvas.height / (yMax - yMin)
-  const width = floor(scaleX * xInterval)
   const height = floor(scaleY * Math.abs(open - close))
 
   if (open <= close) {
@@ -84,13 +81,15 @@ export function drawCandlesticks(ctx: Canvas, props: Props) {
     y0: ctx.canvas.height * yMax / (yMax - yMin)
   })
 
+  const scaleX = ctx.canvas.width / (xMin - xMax)
+  const scaleY = ctx.canvas.height / (yMax - yMin)
+  // width of each candle
+  const width = floor(scaleX * xInterval)
+
   for (let i = 0; i < DATA.length; i++) {
     drawCandlestick(ctx, props, {
-      xMin,
-      xMax,
-      xInterval,
-      yMin,
-      yMax,
+      width,
+      scaleY,
       toCanvasX,
       toCanvasY,
     }, DATA[i])
