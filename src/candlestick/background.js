@@ -1,5 +1,5 @@
 //@flow
-import {floor, linear} from './util'
+import {floor, linearTransformer} from './util'
 
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
@@ -23,6 +23,11 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
   const width = ctx.canvas.width - SCALE_Y_WIDTH
   const height = ctx.canvas.height - SCALE_X_HEIGHT
   const interval = floor(height / NUM_HORIZONTAL_INTERVALS)
+  const toY = linearTransformer({
+    dy: yMax - yMin,
+    dx: height,
+    y0: yMin,
+  })
 
   for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS; i++) {
     // draw line
@@ -31,12 +36,7 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     ctx.stroke()
 
     // draw text
-    const y = floor(linear({
-      dy: yMax - yMin,
-      dx: height,
-      x: (NUM_HORIZONTAL_INTERVALS - i) * interval,
-      y0: yMin,
-    }))
+    const y = floor(toY((NUM_HORIZONTAL_INTERVALS - i) * interval))
     ctx.fillText(y, width + 10, i * interval)
   }
 }
@@ -52,6 +52,11 @@ function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
   const width = ctx.canvas.width - SCALE_Y_WIDTH
   const height = ctx.canvas.height - SCALE_X_HEIGHT
   const interval = floor(width / NUM_VERTICAL_INTERVALS)
+  const toX = linearTransformer({
+    dy: xMax - xMin,
+    dx: width,
+    y0: xMin,
+  })
 
   for (let i = 0; i <= NUM_VERTICAL_INTERVALS; i++) {
     // draw line
@@ -60,12 +65,7 @@ function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
     ctx.stroke()
 
     // draw text
-    const x = floor(linear({
-      dy: xMax - xMin,
-      dx: width,
-      x: i * interval,
-      y0: xMin,
-    }))
+    const x = floor(toX(i * interval,))
     ctx.fillText(x, i * interval, height + 10)
   }
 }
