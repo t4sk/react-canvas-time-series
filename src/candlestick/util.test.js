@@ -1,10 +1,10 @@
-import {floor, linear} from './util'
+import {floor, linear, linearTransformer} from './util'
 
 test("floor", () => {
   expect(floor(1.9)).toEqual(1)
 })
 
-test("convert canvas Y to data point Y", () => {
+test("linear", () => {
   // y max
   expect(floor(linear({
     dy: 100,
@@ -28,4 +28,16 @@ test("convert canvas Y to data point Y", () => {
     x: 125,
     y0: 10,
   }))).toEqual(60)
+})
+
+test("linear transformer", () => {
+  const toY = linearTransformer({
+    dy: 100,
+    dx: 250,
+    y0: 10,
+  })
+
+  expect(toY(250)).toEqual(110)
+  expect(toY(0)).toEqual(10)
+  expect(toY(125)).toEqual(60)
 })
