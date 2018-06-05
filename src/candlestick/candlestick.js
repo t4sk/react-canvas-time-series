@@ -62,12 +62,16 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   ctx.stroke()
 }
 
-export function drawCandlesticks(ctx: Canvas, props: Props, data: Array<Data>) {
-  const xMin = 100
-  const xMax = 200
-  const xInterval = 10
-  const yMin = 30
-  const yMax = 100
+type GlobalMetric = {
+  xMin: number,
+  xMax: number,
+  xInterval: number,
+  yMin: number,
+  yMax: number,
+}
+
+export function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Data>) {
+  const {xMin, xMax, xInterval, yMin, yMax} = metric
 
   const toCanvasX = linearTransformer({
     dy: ctx.canvas.width,

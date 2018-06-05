@@ -29,6 +29,7 @@ class Candlestick extends Component {
   draw() {
     const xMin = 100
     const xMax = 200
+    const xInterval = 10
     const yMin = 30
     const yMax = 100
 
@@ -75,7 +76,13 @@ class Candlestick extends Component {
 
     // ------ data layer -----------
     // candlesticks
-    drawCandlesticks(this.ctx.dataLayer, this.props, DATA)
+    drawCandlesticks(this.ctx.dataLayer, this.props, {
+      xMin,
+      xMax,
+      xInterval,
+      yMin,
+      yMax,
+    }, DATA)
   }
 
   render() {
