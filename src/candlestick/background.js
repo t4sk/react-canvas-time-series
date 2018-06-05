@@ -8,14 +8,16 @@ const NUM_HORIZONTAL_INTERVALS = 6
 const NUM_VERTICAL_INTERVALS = 6
 
 type Canvas = any
-type Props = {}
+type Props = {
+  backgroundColor: string
+}
 
 type YMetric = {
   yMin: number,
   yMax: number,
 }
 
-export function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
+function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
   const {yMin, yMax} = metric
 
   const width = ctx.canvas.width - SCALE_Y_WIDTH
@@ -44,7 +46,7 @@ type XMetric = {
   xMax: number,
 }
 
-export function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
+function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
   const {xMin, xMax} = metric
 
   const width = ctx.canvas.width - SCALE_Y_WIDTH
@@ -66,4 +68,44 @@ export function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
     }))
     ctx.fillText(x, i * interval, height + 10)
   }
+}
+
+type Metric = {
+  xMin: number,
+  xMax: number,
+  xInterval: number,
+  yMin: number,
+  yMax: number,
+}
+
+export function drawBackground(ctx: Canvas, props: Props, metric: Metric) {
+  ctx.fillStyle = "lightgrey"
+  ctx.fillRect(
+    0, 0,
+    ctx.canvas.width,
+    ctx.canvas.height,
+  )
+
+  ctx.fillStyle = "white" || props.backgroundColor
+  ctx.fillRect(
+    0, 0,
+    ctx.canvas.width - SCALE_Y_WIDTH,
+    ctx.canvas.height - SCALE_X_HEIGHT,
+  )
+
+  // translate by half pixel to draw thin lines
+  ctx.translate(0.5, 0.5)
+
+  // style lines
+  ctx.lineWidth = 1
+  ctx.strokeStyle = "lightgrey"
+
+  // style labels
+  ctx.font = "12px Arial"
+  ctx.fillStyle = "black"
+  ctx.textBaseline = "middle"
+  ctx.textAlign = "center"
+
+  drawHorizontalLines(ctx, props, metric)
+  drawVerticalLines(ctx, props, metric)
 }

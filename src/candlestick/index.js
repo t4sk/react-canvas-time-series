@@ -5,8 +5,7 @@ import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
-  drawVerticalLines,
-  drawHorizontalLines
+  drawBackground,
 } from './background'
 
 // TODO queue real time data
@@ -36,36 +35,9 @@ class Candlestick extends Component {
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.background.width, this.ctx.background.height)
 
     // -------- background layer --------
-    this.ctx.background.fillStyle = "lightgrey"
-    this.ctx.background.fillRect(
-      0, 0,
-      this.ctx.background.canvas.width,
-      this.ctx.background.canvas.height,
-    )
-
-    this.ctx.background.fillStyle = "white" || this.props.backgroundColor
-    this.ctx.background.fillRect(
-      0, 0,
-      this.ctx.background.canvas.width - SCALE_Y_WIDTH,
-      this.ctx.background.canvas.height - SCALE_X_HEIGHT,
-    )
-
-    // translate by half pixel to draw thin lines
-    this.ctx.background.translate(0.5, 0.5)
-
-    // style lines
-    this.ctx.background.lineWidth = 1
-    this.ctx.background.strokeStyle = "lightgrey"
-
-    // style labels
-    this.ctx.background.font = "12px Arial"
-    this.ctx.background.fillStyle = "black"
-    this.ctx.background.textBaseline = "middle"
-    this.ctx.background.textAlign = "center"
-
-    drawHorizontalLines(this.ctx.background, this.props, {yMin, yMax})
-
-    drawVerticalLines(this.ctx.background, this.props, {xMin, xMax})
+    drawBackground(this.ctx.background, this.props, {
+      xMin, xMax, xInterval, yMin, yMax,
+    })
 
     // ------ data layer -----------
     // candlesticks
