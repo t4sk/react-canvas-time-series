@@ -37,16 +37,18 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   const y = floor(toCanvasY(Math.max(open, close)))
 
   const height = floor(scaleY * Math.abs(open - close))
+  const halfWidth = floor(width / 2)
 
-  // TODO draw with black
+  ctx.strokeStyle ="black"
   if (open <= close) {
-    ctx.strokeStyle = props.candlestick.bull.color
+    //TODO google function to fill and stroke at once?
     ctx.fillStyle = props.candlestick.bull.color
-    ctx.fillRect(x - floor(width / 2), y, width, height)
+    ctx.fillRect(x - halfWidth, y, width, height)
+    ctx.strokeRect(x - halfWidth, y, width, height)
   } else {
-    ctx.strokeStyle = props.candlestick.bear.color
     ctx.fillStyle = props.candlestick.bear.color
-    ctx.fillRect(x - floor(width / 2), y, width, height)
+    ctx.fillRect(x - halfWidth, y, width, height)
+    ctx.strokeRect(x - halfWidth, y, width, height)
   }
 
   // top wick
