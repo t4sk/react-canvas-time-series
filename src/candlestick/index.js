@@ -5,6 +5,7 @@ import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
+  NUM_HORIZONTAL_INTERVALS,
   drawBackground,
 } from './background'
 
@@ -26,11 +27,15 @@ class Candlestick extends Component {
   }
 
   draw() {
-    const xMin = 100
-    const xMax = 200
-    const xInterval = 10
-    const yMin = 30
-    const yMax = 100
+    const xMin = DATA[0].timestamp
+    const xMax = DATA[DATA.length - 1].timestamp
+    const xInterval = (xMax - xMin) / (DATA.length - 1)
+    const minLow = Math.min(...DATA.map(d => d.low))
+    const maxHigh = Math.max(...DATA.map(d => d.high))
+    // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
+    const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
+    const yMin = minLow - yInterval
+    const yMax = maxHigh + yInterval
 
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.background.width, this.ctx.background.height)
 
