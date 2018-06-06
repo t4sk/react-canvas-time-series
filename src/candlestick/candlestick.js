@@ -42,24 +42,23 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   if (open <= close) {
     ctx.strokeStyle = props.candlestick.bull.color
     ctx.fillStyle = props.candlestick.bull.color
-    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(x - floor(width / 2), y, width, height)
   } else {
     ctx.strokeStyle = props.candlestick.bear.color
     ctx.fillStyle = props.candlestick.bear.color
-    ctx.fillRect(x, y, width, height)
+    ctx.fillRect(x - floor(width / 2), y, width, height)
   }
 
-  const xCenter = x + floor(width / 2)
   // top wick
   ctx.beginPath()
-  ctx.moveTo(xCenter, y)
-  ctx.lineTo(xCenter, floor(toCanvasY(high)))
+  ctx.moveTo(x, y)
+  ctx.lineTo(x, floor(toCanvasY(high)))
   ctx.stroke()
 
   // bottom wick
   ctx.beginPath()
-  ctx.moveTo(xCenter, y + height)
-  ctx.lineTo(xCenter, floor(toCanvasY(low)))
+  ctx.moveTo(x, y + height)
+  ctx.lineTo(x, floor(toCanvasY(low)))
   ctx.stroke()
 }
 
