@@ -125,70 +125,26 @@ Candlestick.propTypes = {
 
 export default Candlestick
 
-const DATA = [{
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 100
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 110,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 120
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 130,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 140
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 150,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 160
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 170,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 180
-}, {
-  high: 75,
-  low: 55,
-  open: 70,
-  close: 60,
-  timestamp: 190,
-}, {
-  high: 85,
-  low: 65,
-  open: 70,
-  close: 80,
-  timestamp: 200
-}]
+let DATA = []
+for (let i = 0; i < 10; i++) {
+  const high = randInt(60, 100)
+  const low = randInt(0, 30)
+  const open = randInt(low, high)
+  const close = randInt(low, high)
+
+  DATA[i] = {
+    high,
+    low,
+    open,
+    close,
+    timestamp: i * 100 + 100
+  }
+}
+
+function rand(min, max) {
+  return Math.random() * (max - min) + min
+}
+
+function randInt(min, max) {
+  return Math.floor(rand(min, max))
+}
