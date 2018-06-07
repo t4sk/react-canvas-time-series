@@ -15,6 +15,7 @@ import {
 // TODO render elements off screen
 // TODO bitwise operator for math
 // TODO use requestAnimationFrame?
+// TODO render streamed data
 
 class Candlestick extends Component {
   componentDidMount() {
@@ -72,6 +73,13 @@ class Candlestick extends Component {
           height={this.props.height - SCALE_X_HEIGHT}
         >
         </canvas>
+        <canvas
+          style={style.uiLayer}
+          ref="uiLayer"
+          width={this.props.width}
+          height={this.props.height}
+        >
+        </canvas>
       </div>
     )
   }
@@ -88,6 +96,12 @@ const style = {
     zIndex: 1
   },
   dataLayer: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 2,
+  },
+  uiLayer: {
     position: "absolute",
     left: 0,
     top: 0,
