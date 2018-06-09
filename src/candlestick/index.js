@@ -32,6 +32,8 @@ class Candlestick extends Component {
     this.ctx.uiLayer.translate(0.5, 0.5)
 
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
+      const xMin = DATA[0].timestamp
+      const xMax = DATA[DATA.length - 1].timestamp
       const minLow = Math.min(...DATA.map(d => d.low))
       const maxHigh = Math.max(...DATA.map(d => d.high))
       // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
@@ -61,7 +63,7 @@ class Candlestick extends Component {
         return
       }
 
-      // line
+      // price line
       this.ctx.uiLayer.strokeStyle = "black"
       this.ctx.uiLayer.setLineDash([5, 5])
 
@@ -91,12 +93,14 @@ class Candlestick extends Component {
       )
       this.ctx.uiLayer.fill()
 
+      // label rect
       this.ctx.uiLayer.fillRect(
         this.ctx.dataLayer.canvas.width,
         canvasY - floor(labelHeight / 2),
         labelWidth, labelHeight
       )
 
+      // label text
       this.ctx.uiLayer.font = "12px Arial"
       this.ctx.uiLayer.fillStyle = "white"
       this.ctx.uiLayer.textBaseline = "middle"
@@ -109,9 +113,65 @@ class Candlestick extends Component {
       })
 
       this.ctx.uiLayer.fillText(
-        y,
+        y.toFixed(2),
         this.ctx.dataLayer.canvas.width + 10,
         canvasY,
+      )
+
+      // timestamp line
+      this.ctx.uiLayer.strokeStyle = "black"
+      this.ctx.uiLayer.setLineDash([5, 5])
+
+      this.ctx.uiLayer.moveTo(canvasX, 0)
+      this.ctx.uiLayer.lineTo(canvasX, this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT)
+      this.ctx.uiLayer.stroke()
+
+      // timestamp label
+      // label
+      this.ctx.uiLayer.fillStyle = "black"
+
+      const xLabelHeight = 20
+      const xLabelWidth = 80
+      // label tip
+      this.ctx.uiLayer.beginPath()
+      this.ctx.uiLayer.moveTo(
+        canvasX,
+        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT - 5,
+      )
+      this.ctx.uiLayer.lineTo(
+        canvasX - 5,
+        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
+      )
+      this.ctx.uiLayer.lineTo(
+        canvasX + 5,
+        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
+      )
+      this.ctx.uiLayer.fill()
+
+      // label rect
+      this.ctx.uiLayer.fillRect(
+        canvasX - floor(xLabelWidth / 2),
+        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
+        xLabelWidth,
+        xLabelHeight,
+      )
+
+      // label text
+      this.ctx.uiLayer.font = "12px Arial"
+      this.ctx.uiLayer.fillStyle = "white"
+      this.ctx.uiLayer.textAlign = "center"
+
+      const x = linear({
+        dy: xMax - xMin,
+        dx: this.ctx.uiLayer.canvas.width - SCALE_Y_WIDTH,
+        x: canvasX,
+        y0: xMin,
+      })
+
+      this.ctx.uiLayer.fillText(
+        x,
+        canvasX,
+        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT + 10,
       )
     })
 
