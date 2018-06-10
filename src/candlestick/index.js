@@ -103,6 +103,7 @@ class Candlestick extends Component {
       // label text
       this.ctx.uiLayer.font = "12px Arial"
       this.ctx.uiLayer.fillStyle = "white"
+      this.ctx.uiLayer.textAlign = "left"
       this.ctx.uiLayer.textBaseline = "middle"
 
       const y = linear({
@@ -156,7 +157,7 @@ class Candlestick extends Component {
         xLabelHeight,
       )
 
-      // label text
+      //label text
       this.ctx.uiLayer.font = "12px Arial"
       this.ctx.uiLayer.fillStyle = "white"
       this.ctx.uiLayer.textAlign = "center"
