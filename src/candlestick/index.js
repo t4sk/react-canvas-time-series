@@ -32,6 +32,7 @@ class Candlestick extends Component {
     this.ctx.uiLayer.translate(0.5, 0.5)
 
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
+      // TODO refactor
       const xMin = DATA[0].timestamp
       const xMax = DATA[DATA.length - 1].timestamp
       const minLow = Math.min(...DATA.map(d => d.low))
