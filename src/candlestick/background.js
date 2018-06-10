@@ -97,9 +97,6 @@ export function drawBackground(ctx: Canvas, props: Props, metric: Metric) {
     ctx.canvas.height - SCALE_X_HEIGHT,
   )
 
-  // translate by half pixel to draw thin lines
-  ctx.translate(0.5, 0.5)
-
   // style lines
   ctx.lineWidth = 1
   ctx.strokeStyle = "lightgrey"

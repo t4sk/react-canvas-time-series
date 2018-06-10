@@ -17,18 +17,28 @@ import {
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO change floor to round
-// TODO render mouseY -> price
-// TODO render mouseX -> timestamp
+// TODO render mouseY -> price (changing with data)
+// TODO render mouseX -> timestamp (changing with data)
 
 class Candlestick extends Component {
   componentDidMount() {
     this.ctx = {
       dataLayer: this.refs.dataLayer.getContext("2d"),
-      background: this.refs.background.getContext("2d"),
+      backgroundLayer: this.refs.backgroundLayer.getContext("2d"),
       uiLayer: this.refs.uiLayer.getContext("2d"),
     }
 
+    // TODO remove me
+    setInterval(() => {
+      genFakeData()
+      if (DATA.length > 20) {
+        DATA.shift()
+      }
+      this.draw()
+    }, 1000)
+
     // translate by half pixel to draw thin lines
+    this.ctx.backgroundLayer.translate(0.5, 0.5)
     this.ctx.uiLayer.translate(0.5, 0.5)
 
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
@@ -191,10 +201,10 @@ class Candlestick extends Component {
     const yMin = minLow - yInterval
     const yMax = maxHigh + yInterval
 
-    this.ctx.dataLayer.clearRect(0, 0, this.ctx.background.width, this.ctx.background.height)
+    this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)
 
     // -------- background layer --------
-    drawBackground(this.ctx.background, this.props, {
+    drawBackground(this.ctx.backgroundLayer, this.props, {
       xMin, xMax, xInterval, yMin, yMax,
     })
 
@@ -213,8 +223,8 @@ class Candlestick extends Component {
     return (
       <div style={style.container}>
         <canvas
-          style={style.background}
-          ref="background"
+          style={style.backgroundLayer}
+          ref="backgroundLayer"
           width={this.props.width}
           height={this.props.height}
         >
@@ -242,7 +252,7 @@ const style = {
   container: {
     position: "relative",
   },
-  background: {
+  backgroundLayer: {
     position: "absolute",
     left: 0,
     top: 0,
@@ -293,7 +303,7 @@ Candlestick.propTypes = {
 export default Candlestick
 
 let DATA = []
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 5; i++) {
   const high = randInt(60, 100)
   const low = randInt(0, 30)
   const open = randInt(low, high)
@@ -306,6 +316,24 @@ for (let i = 0; i < 10; i++) {
     close,
     timestamp: i * 100 + 100
   }
+}
+
+// TODO remove me
+let i = 0
+function genFakeData() {
+  i++
+  const high = randInt(60, 100)
+  const low = randInt(0, 30)
+  const open = randInt(low, high)
+  const close = randInt(low, high)
+
+  DATA.push({
+    high,
+    low,
+    open,
+    close,
+    timestamp: i * 100 + 100
+  })
 }
 
 function rand(min, max) {
