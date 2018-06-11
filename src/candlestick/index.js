@@ -8,6 +8,7 @@ import {
   NUM_HORIZONTAL_INTERVALS,
   drawBackground,
 } from './background'
+import {drawUI} from './ui'
 
 // TODO queue real time data
 // TODO object pool
@@ -17,8 +18,8 @@ import {
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO change floor to round
-// TODO render mouseY -> price (changing with data)
-// TODO render mouseX -> timestamp (changing with data)
+// TODO render mouseY -> price (reactive to changing with data)
+// TODO render mouseX -> timestamp (reactive to changing with data)
 
 class Candlestick extends Component {
   componentDidMount() {
@@ -42,149 +43,7 @@ class Candlestick extends Component {
     this.ctx.uiLayer.translate(0.5, 0.5)
 
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
-      // TODO refactor
-      const xMin = DATA[0].timestamp
-      const xMax = DATA[DATA.length - 1].timestamp
-      const minLow = Math.min(...DATA.map(d => d.low))
-      const maxHigh = Math.max(...DATA.map(d => d.high))
-      // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-      const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
-      const yMin = minLow - yInterval
-      const yMax = maxHigh + yInterval
-
-      const rect = this.ctx.uiLayer.canvas.getBoundingClientRect()
-
-      // TODO remove me
-      console.log({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      })
-
-      this.ctx.uiLayer.clearRect(0, 0, this.ctx.uiLayer.canvas.width, this.ctx.uiLayer.canvas.height)
-
-      // ui layer
-      const canvasX = e.clientX - rect.left
-      const canvasY = e.clientY - rect.top
-
-      if (canvasX <= 0 || canvasX > this.ctx.uiLayer.canvas.width - SCALE_Y_WIDTH) {
-        return
-      }
-
-      if (canvasY <= 0 || canvasY > this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT) {
-        return
-      }
-
-      // price line
-      this.ctx.uiLayer.strokeStyle = "black"
-      this.ctx.uiLayer.setLineDash([5, 5])
-
-      this.ctx.uiLayer.moveTo(0, canvasY)
-      this.ctx.uiLayer.lineTo(this.ctx.dataLayer.canvas.width, canvasY)
-      this.ctx.uiLayer.stroke()
-
-      // price labels
-      // label
-      this.ctx.uiLayer.fillStyle = "black"
-
-      const labelHeight = 20
-      const labelWidth = SCALE_Y_WIDTH
-      // label tip
-      this.ctx.uiLayer.beginPath()
-      this.ctx.uiLayer.moveTo(
-        this.ctx.dataLayer.canvas.width - 5,
-        canvasY,
-      )
-      this.ctx.uiLayer.lineTo(
-        this.ctx.dataLayer.canvas.width,
-        canvasY - floor(labelHeight / 2),
-      )
-      this.ctx.uiLayer.lineTo(
-        this.ctx.dataLayer.canvas.width,
-        canvasY + floor(labelHeight / 2),
-      )
-      this.ctx.uiLayer.fill()
-
-      // label rect
-      this.ctx.uiLayer.fillRect(
-        this.ctx.dataLayer.canvas.width,
-        canvasY - floor(labelHeight / 2),
-        labelWidth, labelHeight
-      )
-
-      // label text
-      this.ctx.uiLayer.font = "12px Arial"
-      this.ctx.uiLayer.fillStyle = "white"
-      this.ctx.uiLayer.textAlign = "left"
-      this.ctx.uiLayer.textBaseline = "middle"
-
-      const y = linear({
-        dy: yMax - yMin,
-        dx: this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
-        x: this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT - canvasY,
-        y0: yMin,
-      })
-
-      this.ctx.uiLayer.fillText(
-        y.toFixed(2),
-        this.ctx.dataLayer.canvas.width + 10,
-        canvasY,
-      )
-
-      // timestamp line
-      this.ctx.uiLayer.strokeStyle = "black"
-      this.ctx.uiLayer.setLineDash([5, 5])
-
-      this.ctx.uiLayer.moveTo(canvasX, 0)
-      this.ctx.uiLayer.lineTo(canvasX, this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT)
-      this.ctx.uiLayer.stroke()
-
-      // timestamp label
-      // label
-      this.ctx.uiLayer.fillStyle = "black"
-
-      const xLabelHeight = 20
-      const xLabelWidth = 80
-      // label tip
-      this.ctx.uiLayer.beginPath()
-      this.ctx.uiLayer.moveTo(
-        canvasX,
-        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT - 5,
-      )
-      this.ctx.uiLayer.lineTo(
-        canvasX - 5,
-        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
-      )
-      this.ctx.uiLayer.lineTo(
-        canvasX + 5,
-        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
-      )
-      this.ctx.uiLayer.fill()
-
-      // label rect
-      this.ctx.uiLayer.fillRect(
-        canvasX - floor(xLabelWidth / 2),
-        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT,
-        xLabelWidth,
-        xLabelHeight,
-      )
-
-      //label text
-      this.ctx.uiLayer.font = "12px Arial"
-      this.ctx.uiLayer.fillStyle = "white"
-      this.ctx.uiLayer.textAlign = "center"
-
-      const x = linear({
-        dy: xMax - xMin,
-        dx: this.ctx.uiLayer.canvas.width - SCALE_Y_WIDTH,
-        x: canvasX,
-        y0: xMin,
-      })
-
-      this.ctx.uiLayer.fillText(
-        x,
-        canvasX,
-        this.ctx.uiLayer.canvas.height - SCALE_X_HEIGHT + 10,
-      )
+      drawUI(e, this.ctx.uiLayer, DATA)
     })
 
     this.draw()
