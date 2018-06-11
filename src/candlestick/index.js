@@ -15,6 +15,7 @@ import {drawUI} from './ui'
 // TODO render elements off screen
 // TODO use requestAnimationFrame?
 // TODO render streamed data
+// TODO render latest close
 
 class Candlestick extends Component {
   componentDidMount() {
