@@ -8,6 +8,11 @@ import {
 
 type Canvas = any
 
+type DataLayer = {
+  width: number,
+  height: number,
+}
+
 type Metric = {
   xMin: number,
   xMax: number,
@@ -71,11 +76,16 @@ export function drawUI(e: MouseEvent, ctx: Canvas, data: Data) {
     return
   }
 
-  drawPriceLine(ctx, mouse, metric)
-  drawTimestampLine(ctx, mouse, metric)
+  const dataLayer = {
+    width: ctx.canvas.width - SCALE_Y_WIDTH,
+    height: ctx.canvas.height - SCALE_X_HEIGHT,
+  }
+
+  drawPriceLine(ctx, dataLayer, mouse, metric)
+  drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
-function drawPriceLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
+function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
   const {canvasY} = mouse
   const {yMin, yMax} = metric
 
@@ -84,7 +94,7 @@ function drawPriceLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(0, canvasY)
-  ctx.lineTo(ctx.canvas.width - SCALE_Y_WIDTH, canvasY)
+  ctx.lineTo(dataLayer.width, canvasY)
   ctx.stroke()
 
   // label
@@ -96,22 +106,22 @@ function drawPriceLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   // label tip
   ctx.beginPath()
   ctx.moveTo(
-    ctx.canvas.width - SCALE_Y_WIDTH - 5,
+    dataLayer.width - 5,
     canvasY,
   )
   ctx.lineTo(
-    ctx.canvas.width - SCALE_Y_WIDTH,
+    dataLayer.width,
     canvasY - floor(labelHeight / 2),
   )
   ctx.lineTo(
-    ctx.canvas.width - SCALE_Y_WIDTH,
+    dataLayer.width,
     canvasY + floor(labelHeight / 2),
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
-    ctx.canvas.width - SCALE_Y_WIDTH,
+    dataLayer.width,
     canvasY - floor(labelHeight / 2),
     labelWidth, labelHeight
   )
@@ -124,19 +134,19 @@ function drawPriceLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
 
   const y = linear({
     dy: yMax - yMin,
-    dx: ctx.canvas.height - SCALE_X_HEIGHT,
-    x: ctx.canvas.height - SCALE_X_HEIGHT - canvasY,
+    dx: dataLayer.height,
+    x: dataLayer.height - canvasY,
     y0: yMin,
   })
 
   ctx.fillText(
     y.toFixed(2),
-    ctx.canvas.width - SCALE_Y_WIDTH + 10,
+    dataLayer.width + 10,
     canvasY,
   )
 }
 
-function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
+function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
   const {canvasX} = mouse
   const {xMin, xMax} = metric
 
@@ -145,7 +155,7 @@ function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(canvasX, 0)
-  ctx.lineTo(canvasX, ctx.canvas.height - SCALE_X_HEIGHT)
+  ctx.lineTo(canvasX, dataLayer.height)
   ctx.stroke()
 
   // label
@@ -158,22 +168,22 @@ function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   ctx.beginPath()
   ctx.moveTo(
     canvasX,
-    ctx.canvas.height - SCALE_X_HEIGHT - 5,
+    dataLayer.height - 5,
   )
   ctx.lineTo(
     canvasX - 5,
-    ctx.canvas.height - SCALE_X_HEIGHT,
+    dataLayer.height,
   )
   ctx.lineTo(
     canvasX + 5,
-    ctx.canvas.height - SCALE_X_HEIGHT,
+    dataLayer.height,
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
     canvasX - floor(xLabelWidth / 2),
-    ctx.canvas.height - SCALE_X_HEIGHT,
+    dataLayer.height,
     xLabelWidth,
     xLabelHeight,
   )
@@ -185,7 +195,7 @@ function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
 
   const x = linear({
     dy: xMax - xMin,
-    dx: ctx.canvas.width - SCALE_Y_WIDTH,
+    dx: dataLayer.width,
     x: canvasX,
     y0: xMin,
   })
@@ -193,6 +203,6 @@ function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   ctx.fillText(
     x.toFixed(1),
     canvasX,
-    ctx.canvas.height - SCALE_X_HEIGHT + 10,
+    dataLayer.height + 10,
   )
 }
