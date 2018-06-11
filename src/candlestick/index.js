@@ -18,8 +18,6 @@ import {drawUI} from './ui'
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO change floor to round
-// TODO render mouseY -> price (reactive to changing with data)
-// TODO render mouseX -> timestamp (reactive to changing with data)
 
 class Candlestick extends Component {
   componentDidMount() {
@@ -30,13 +28,13 @@ class Candlestick extends Component {
     }
 
     // TODO remove me
-    setInterval(() => {
-      genFakeData()
-      if (DATA.length > 20) {
-        DATA.shift()
-      }
-      this.draw()
-    }, 1000)
+    // setInterval(() => {
+    //   genFakeData()
+    //   if (DATA.length > 20) {
+    //     DATA.shift()
+    //   }
+    //   this.draw()
+    // }, 1000)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
