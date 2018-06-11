@@ -1,7 +1,17 @@
-import {floor, linear, linearTransformer} from './util'
+import {floor, round, linear, linearTransformer} from './util'
 
 test("floor", () => {
   expect(floor(1.9)).toEqual(1)
+})
+
+describe("round", () => {
+  test("up", () => {
+    expect(round(1.5)).toEqual(2)
+  })
+
+  test("down", () => {
+    expect(round(1.4)).toEqual(1)
+  })
 })
 
 test("linear", () => {
