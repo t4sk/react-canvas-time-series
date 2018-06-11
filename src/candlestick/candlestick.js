@@ -1,5 +1,5 @@
 //@flow
-import {floor, linear, linearTransformer} from './util'
+import {round, linear, linearTransformer} from './util'
 
 type Canvas = any
 
@@ -33,11 +33,11 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   const {width, scaleY, toCanvasX, toCanvasY} = metric
   const {high, low, open, close, timestamp} = data
 
-  const x = floor(toCanvasX(timestamp))
-  const y = floor(toCanvasY(Math.max(open, close)))
+  const x = round(toCanvasX(timestamp))
+  const y = round(toCanvasY(Math.max(open, close)))
 
-  const height = floor(scaleY * Math.abs(open - close))
-  const halfWidth = floor(width / 2)
+  const height = round(scaleY * Math.abs(open - close))
+  const halfWidth = round(width / 2)
 
   ctx.strokeStyle ="black"
   if (open <= close) {
@@ -54,13 +54,13 @@ export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data:
   // top wick
   ctx.beginPath()
   ctx.moveTo(x, y)
-  ctx.lineTo(x, floor(toCanvasY(high)))
+  ctx.lineTo(x, round(toCanvasY(high)))
   ctx.stroke()
 
   // bottom wick
   ctx.beginPath()
   ctx.moveTo(x, y + height)
-  ctx.lineTo(x, floor(toCanvasY(low)))
+  ctx.lineTo(x, round(toCanvasY(low)))
   ctx.stroke()
 }
 
@@ -90,7 +90,7 @@ export function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric
   const scaleX = ctx.canvas.width / (xMin - xMax)
   const scaleY = ctx.canvas.height / (yMax - yMin)
   // width of each candle
-  const width = floor(scaleX * xInterval)
+  const width = round(scaleX * xInterval)
 
   for (let i = 0; i < data.length; i++) {
     drawCandlestick(ctx, props, {

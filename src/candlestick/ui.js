@@ -1,5 +1,5 @@
 //@flow
-import {floor, linear} from './util'
+import {round, linear} from './util'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
@@ -112,18 +112,18 @@ function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: 
   )
   ctx.lineTo(
     dataLayer.width,
-    canvasY - floor(labelHeight / 2),
+    canvasY - round(labelHeight / 2),
   )
   ctx.lineTo(
     dataLayer.width,
-    canvasY + floor(labelHeight / 2),
+    canvasY + round(labelHeight / 2),
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
     dataLayer.width,
-    canvasY - floor(labelHeight / 2),
+    canvasY - round(labelHeight / 2),
     labelWidth, labelHeight
   )
 
@@ -183,7 +183,7 @@ function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
 
   // label rect
   ctx.fillRect(
-    canvasX - floor(xLabelWidth / 2),
+    canvasX - round(xLabelWidth / 2),
     dataLayer.height,
     xLabelWidth,
     xLabelHeight,

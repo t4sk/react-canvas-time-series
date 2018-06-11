@@ -1,5 +1,5 @@
 //@flow
-import {floor, linearTransformer} from './util'
+import {round, linearTransformer} from './util'
 
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
@@ -30,7 +30,7 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
   })
 
   for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS; i++) {
-    const canvasY = floor(i * interval)
+    const canvasY = round(i * interval)
 
     // draw line
     ctx.moveTo(0, canvasY)
@@ -38,7 +38,7 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     ctx.stroke()
 
     // draw text
-    const y = floor(toY((NUM_HORIZONTAL_INTERVALS - i) * interval))
+    const y = round(toY((NUM_HORIZONTAL_INTERVALS - i) * interval))
     ctx.fillText(y, width + 10, canvasY)
   }
 }
@@ -61,7 +61,7 @@ function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
   })
 
   for (let i = 0; i <= NUM_VERTICAL_INTERVALS; i++) {
-    const canvasX = floor(i * interval)
+    const canvasX = round(i * interval)
 
     // draw line
     ctx.moveTo(canvasX, 0)
@@ -69,7 +69,7 @@ function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
     ctx.stroke()
 
     // draw text
-    const x = floor(toX(canvasX))
+    const x = round(toX(canvasX))
     ctx.fillText(x, canvasX, height + 10)
   }
 }

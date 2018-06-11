@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {floor, linear} from './util'
 import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
@@ -14,10 +13,8 @@ import {drawUI} from './ui'
 // TODO object pool
 // TODO use more than one canvas
 // TODO render elements off screen
-// TODO bitwise operator for math
 // TODO use requestAnimationFrame?
 // TODO render streamed data
-// TODO change floor to round
 
 class Candlestick extends Component {
   componentDidMount() {
@@ -34,7 +31,7 @@ class Candlestick extends Component {
     //     DATA.shift()
     //   }
     //   this.draw()
-    // }, 1000)
+    // }, 100)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
