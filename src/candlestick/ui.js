@@ -1,3 +1,4 @@
+//@flow
 import {floor, linear} from './util'
 import {
   SCALE_X_HEIGHT,
@@ -5,27 +6,49 @@ import {
   NUM_HORIZONTAL_INTERVALS,
 } from './background'
 
+type Canvas = any
+
+type Metric = {
+  xMin: number,
+  xMax: number,
+  yMin: number,
+  yMax: number,
+}
+
+type Data = {
+  high: number,
+  low: number,
+  open: number,
+  close: number,
+  timestamp: number,
+  // generic array propertis and methods
+  length: number,
+  map: any,
+}
+
+type MouseEvent = {
+  clientX: number,
+  clientY: number,
+}
+
+type Mouse = {
+  canvasX: number,
+  canvasY: number,
+}
+
 // TODO render mouseY -> price (reactive to changing with data)
 // TODO render mouseX -> timestamp (reactive to changing with data)
-// TODO flow
-export function drawUI(e, ctx, data) {
+
+export function drawUI(e: MouseEvent, ctx: Canvas, data: Data) {
   // TODO pass min / max data as input
-  const xMin = data[0].timestamp
-  const xMax = data[data.length - 1].timestamp
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
-  // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
+  // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
   const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
-  const yMin = minLow - yInterval
-  const yMax = maxHigh + yInterval
 
   const metric = {
     xMin: data[0].timestamp,
     xMax: data[data.length - 1].timestamp,
-    minLow: Math.min(...data.map(d => d.low)),
-    maxHigh: Math.max(...data.map(d => d.high)),
-    // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-    yInterval: Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2)),
     yMin: minLow - yInterval,
     yMax: maxHigh + yInterval,
   }
@@ -33,10 +56,6 @@ export function drawUI(e, ctx, data) {
   const rect = ctx.canvas.getBoundingClientRect()
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
-  // ui layer
-  const canvasX = e.clientX - rect.left
-  const canvasY = e.clientY - rect.top
 
   const mouse = {
     canvasX: e.clientX - rect.left,
@@ -56,7 +75,7 @@ export function drawUI(e, ctx, data) {
   drawTimestampLine(ctx, mouse, metric)
 }
 
-function drawPriceLine(ctx, mouse, metric) {
+function drawPriceLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   const {canvasY} = mouse
   const {yMin, yMax} = metric
 
@@ -117,7 +136,7 @@ function drawPriceLine(ctx, mouse, metric) {
   )
 }
 
-function drawTimestampLine(ctx, mouse, metric) {
+function drawTimestampLine(ctx: Canvas, mouse: Mouse, metric: Metric) {
   const {canvasX} = mouse
   const {xMin, xMax} = metric
 
