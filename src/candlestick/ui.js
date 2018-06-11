@@ -76,6 +76,7 @@ export function drawUI(e: MouseEvent, ctx: Canvas, data: Data) {
     return
   }
 
+  // TODO pass data layer size as input
   const dataLayer = {
     width: ctx.canvas.width - SCALE_Y_WIDTH,
     height: ctx.canvas.height - SCALE_X_HEIGHT,
