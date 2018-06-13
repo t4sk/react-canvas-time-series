@@ -20,7 +20,16 @@ type Metric = {
   yMax: number,
 }
 
+type Price = {
+  high: number,
+  low: number,
+  open: number,
+  close: number,
+  timestamp: number,
+}
+
 type Data = {
+  // TODO fix flow type, should be DATA = []Price
   high: number,
   low: number,
   open: number,
@@ -142,6 +151,78 @@ function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: 
 
   ctx.fillText(
     y.toFixed(2),
+    dataLayer.width + 10,
+    canvasY,
+  )
+}
+
+type YMetric = {
+  yMin: number,
+  yMax: number,
+}
+
+type LatestPriceLabelProps = {
+  bull: {
+    color: string,
+  },
+  bear: {
+    color: string,
+  },
+}
+
+// TODO flow
+export function drawLatestPriceLabel(ctx: Canvas, props: LatestPriceLabelProps, metric: YMetric, price) {
+  const {open, close} = price
+
+  const dataLayer = {
+    width: ctx.canvas.width - SCALE_Y_WIDTH,
+    height: ctx.canvas.height - SCALE_X_HEIGHT,
+  }
+
+  const {yMin, yMax} = metric
+  const canvasY = linear({
+    dy: dataLayer.height,
+    dx: yMax - yMin,
+    x: yMax - close,
+    y0: 0,
+  })
+
+  ctx.fillStyle = open <= close ? props.bull.color : props.bear.color
+
+  const labelHeight = 20
+  const labelWidth = SCALE_Y_WIDTH
+
+  // tip
+  ctx.beginPath()
+  ctx.moveTo(
+    dataLayer.width - 5,
+    canvasY,
+  )
+  ctx.lineTo(
+    dataLayer.width,
+    canvasY - round(labelHeight / 2),
+  )
+  ctx.lineTo(
+    dataLayer.width,
+    canvasY + round(labelHeight / 2),
+  )
+  ctx.fill()
+
+  // rect
+  ctx.fillRect(
+    dataLayer.width,
+    canvasY - round(labelHeight / 2),
+    labelWidth, labelHeight
+  )
+
+  // text
+  ctx.font = "12px Arial"
+  ctx.fillStyle = "white"
+  ctx.textAlign = "left"
+  ctx.textBaseline = "middle"
+
+  ctx.fillText(
+    close.toFixed(2),
     dataLayer.width + 10,
     canvasY,
   )

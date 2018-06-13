@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {round} from './util'
 import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
@@ -7,7 +8,7 @@ import {
   NUM_HORIZONTAL_INTERVALS,
   drawBackground,
 } from './background'
-import {drawUI} from './ui'
+import {drawUI, drawLatestPriceLabel} from './ui'
 
 // TODO queue real time data
 // TODO object pool
@@ -58,13 +59,12 @@ class Candlestick extends Component {
 
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)
 
-    // -------- background layer --------
+    // background layer-
     drawBackground(this.ctx.backgroundLayer, this.props, {
       xMin, xMax, xInterval, yMin, yMax,
     })
 
-    // ------ data layer -----------
-    // candlesticks
+    // data layer
     drawCandlesticks(this.ctx.dataLayer, this.props, {
       xMin,
       xMax,
@@ -72,6 +72,13 @@ class Candlestick extends Component {
       yMin,
       yMax,
     }, DATA)
+
+    drawLatestPriceLabel(
+      this.ctx.uiLayer,
+      this.props.latestPriceLabel,
+      {yMin, yMax},
+      DATA[DATA.length - 1]
+    )
   }
 
   render() {
@@ -138,7 +145,15 @@ Candlestick.defaultProps = {
     bear: {
       color: "red"
     },
-  }
+  },
+  latestPriceLabel: {
+    bull: {
+      color: "green",
+    },
+    bear: {
+      color: "red",
+    },
+  },
 }
 
 Candlestick.propTypes = {
