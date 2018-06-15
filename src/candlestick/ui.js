@@ -28,18 +28,6 @@ type Price = {
   timestamp: number,
 }
 
-type Data = {
-  // TODO fix flow type, should be DATA = []Price
-  high: number,
-  low: number,
-  open: number,
-  close: number,
-  timestamp: number,
-  // generic array propertis and methods
-  length: number,
-  map: any,
-}
-
 type MouseEvent = {
   clientX: number,
   clientY: number,
@@ -53,7 +41,7 @@ type Mouse = {
 // TODO render mouseY -> price (reactive to changing with data)
 // TODO render mouseX -> timestamp (reactive to changing with data)
 
-export function drawUI(e: MouseEvent, ctx: Canvas, data: Data) {
+export function drawUI(e: MouseEvent, ctx: Canvas, data: Array<Price>) {
   // TODO pass min / max data as input
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
@@ -170,8 +158,9 @@ type LatestPriceLabelProps = {
   },
 }
 
-// TODO flow
-export function drawLatestPriceLabel(ctx: Canvas, props: LatestPriceLabelProps, metric: YMetric, price) {
+export function drawLatestPriceLabel(
+  ctx: Canvas, props: LatestPriceLabelProps, metric: YMetric, price: Price
+) {
   const {open, close} = price
 
   const dataLayer = {

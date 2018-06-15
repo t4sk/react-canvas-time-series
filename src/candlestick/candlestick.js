@@ -21,7 +21,7 @@ type Metric = {
   toCanvasY: number => number,
 }
 
-type Data = {
+type Price = {
   high: number,
   low: number,
   open: number,
@@ -29,9 +29,9 @@ type Data = {
   timestamp: number,
 }
 
-export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, data: Data) {
+export function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price) {
   const {width, scaleY, toCanvasX, toCanvasY} = metric
-  const {high, low, open, close, timestamp} = data
+  const {high, low, open, close, timestamp} = price
 
   const x = round(toCanvasX(timestamp))
   const y = round(toCanvasY(Math.max(open, close)))
@@ -72,7 +72,7 @@ type GlobalMetric = {
   yMax: number,
 }
 
-export function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Data>) {
+export function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
   const {xMin, xMax, xInterval, yMin, yMax} = metric
 
   const toCanvasX = linearTransformer({
