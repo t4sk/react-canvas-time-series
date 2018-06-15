@@ -73,6 +73,8 @@ class Candlestick extends Component {
       yMax,
     }, DATA)
 
+    this.ctx.uiLayer.clearRect(0, 0, this.ctx.uiLayer.canvas.width, this.ctx.uiLayer.canvas.height)
+
     drawLatestPriceLabel(
       this.ctx.uiLayer,
       this.props.latestPriceLabel,
