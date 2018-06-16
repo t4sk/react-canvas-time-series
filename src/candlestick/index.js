@@ -29,7 +29,7 @@ class Candlestick extends Component {
     // TODO remove me
     // setInterval(() => {
     //   genFakeData()
-    //   if (DATA.length > 20) {
+    //   if (DATA.length > 50) {
     //     DATA.shift()
     //   }
     //   this.draw()
