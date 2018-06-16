@@ -38,19 +38,23 @@ type Mouse = {
   canvasY: number,
 }
 
+// TODO render open, high, low, close at mouse x
 // TODO render mouseY -> price (reactive to changing with data)
 // TODO render mouseX -> timestamp (reactive to changing with data)
 
 export function drawUI(e: MouseEvent, ctx: Canvas, data: Array<Price>) {
   // TODO pass min / max data as input
+  const minTimestamp = data[0].timestamp
+  const maxTimestamp = data[data.length - 1].timestamp
+  const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (data.length - 1))
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
   // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
   const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
 
   const metric = {
-    xMin: data[0].timestamp,
-    xMax: data[data.length - 1].timestamp,
+    xMin: minTimestamp - round(xInterval / 2),
+    xMax: maxTimestamp + round(xInterval / 2),
     yMin: minLow - yInterval,
     yMax: maxHigh + yInterval,
   }

@@ -5,6 +5,7 @@ import {drawCandlesticks} from './candlestick'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
+  NUM_VERTICAL_INTERVALS,
   NUM_HORIZONTAL_INTERVALS,
   drawBackground,
 } from './background'
@@ -16,7 +17,6 @@ import {drawUI, drawLatestPriceLabel} from './ui'
 // TODO render elements off screen
 // TODO use requestAnimationFrame?
 // TODO render streamed data
-// TODO render open, high, low, close at mouse x
 
 class Candlestick extends Component {
   componentDidMount() {
@@ -47,9 +47,11 @@ class Candlestick extends Component {
   }
 
   draw() {
-    const xMin = DATA[0].timestamp
-    const xMax = DATA[DATA.length - 1].timestamp
-    const xInterval = (xMax - xMin) / (DATA.length - 1)
+    const minTimestamp = DATA[0].timestamp
+    const maxTimestamp = DATA[DATA.length - 1].timestamp
+    const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (DATA.length - 1))
+    const xMin = minTimestamp - round(xInterval / 2)
+    const xMax = maxTimestamp + round(xInterval / 2)
     const minLow = Math.min(...DATA.map(d => d.low))
     const maxHigh = Math.max(...DATA.map(d => d.high))
     // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
