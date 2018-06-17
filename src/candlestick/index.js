@@ -47,7 +47,7 @@ class Candlestick extends Component {
         canvasY: e.clientY - rect.top,
       }
 
-      drawUI(this.ctx.uiLayer, mouse, DATA)
+      drawUI(this.ctx.uiLayer, this.props.ui, mouse, DATA)
     })
 
     this.draw()
@@ -86,7 +86,7 @@ class Candlestick extends Component {
 
     drawLatestPriceLabel(
       this.ctx.uiLayer,
-      this.props.latestPriceLabel,
+      this.props.ui.latestPriceLabel,
       {yMin, yMax},
       DATA[DATA.length - 1]
     )
@@ -157,14 +157,16 @@ Candlestick.defaultProps = {
       color: "red"
     },
   },
-  latestPriceLabel: {
-    bull: {
-      color: "green",
+  ui: {
+    latestPriceLabel: {
+      bull: {
+        color: "green",
+      },
+      bear: {
+        color: "red",
+      },
     },
-    bear: {
-      color: "red",
-    },
-  },
+  }
 }
 
 Candlestick.propTypes = {
@@ -177,6 +179,16 @@ Candlestick.propTypes = {
     }).isRequired,
     bear: PropTypes.shape({
       color: PropTypes.string.isRequired
+    }).isRequired,
+  }).isRequired,
+  ui: PropTypes.shape({
+    latestPriceLabel: PropTypes.shape({
+      bull: PropTypes.shape({
+        color: PropTypes.string.isRequired,
+      }).isRequired,
+      bear: PropTypes.shape({
+        color: PropTypes.string.isRequired
+      }).isRequired,
     }).isRequired,
   }).isRequired,
 }

@@ -8,6 +8,10 @@ import {
 
 type Canvas = any
 
+type Props = {
+
+}
+
 type DataLayer = {
   width: number,
   height: number,
@@ -37,7 +41,7 @@ type Mouse = {
 // TODO render mouseY -> price (reactive to changing with data)
 // TODO render mouseX -> timestamp (reactive to changing with data)
 
-export function drawUI(ctx: Canvas, mouse: Mouse, data: Array<Price>) {
+export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Price>) {
   // TODO pass min / max data as input
   const minTimestamp = data[0].timestamp
   const maxTimestamp = data[data.length - 1].timestamp
