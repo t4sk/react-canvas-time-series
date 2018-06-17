@@ -37,6 +37,7 @@ class Candlestick extends Component {
     }
 
     // TODO remove me
+    // TODO render at 10 ms
     // setInterval(() => {
     //   genFakeData()
     //   if (DATA.length > 50) {
