@@ -19,6 +19,16 @@ import {drawUI, drawLatestPriceLabel} from './ui'
 // TODO render streamed data
 
 class Candlestick extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      mouse: {
+        x: undefined,
+        y: undefined,
+      }
+    }
+  }
+
   componentDidMount() {
     this.ctx = {
       dataLayer: this.refs.dataLayer.getContext("2d"),
@@ -33,7 +43,7 @@ class Candlestick extends Component {
     //     DATA.shift()
     //   }
     //   this.draw()
-    // }, 100)
+    // }, 10)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
@@ -47,10 +57,17 @@ class Candlestick extends Component {
         canvasY: e.clientY - rect.top,
       }
 
-      drawUI(this.ctx.uiLayer, this.props.ui, mouse, DATA)
+      this.setState({mouse}, () => {
+        this.draw()
+      })
     })
 
     this.draw()
+  }
+
+  shouldComponentUpdate() {
+    // let canvas render
+    return false
   }
 
   draw() {
@@ -82,6 +99,7 @@ class Candlestick extends Component {
       yMax,
     }, DATA)
 
+    // ui layer
     this.ctx.uiLayer.clearRect(0, 0, this.ctx.uiLayer.canvas.width, this.ctx.uiLayer.canvas.height)
 
     drawLatestPriceLabel(
@@ -90,6 +108,8 @@ class Candlestick extends Component {
       {yMin, yMax},
       DATA[DATA.length - 1]
     )
+
+    drawUI(this.ctx.uiLayer, this.props.ui, this.state.mouse, DATA)
   }
 
   render() {
