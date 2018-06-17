@@ -28,21 +28,16 @@ type Price = {
   timestamp: number,
 }
 
-type MouseEvent = {
-  clientX: number,
-  clientY: number,
-}
-
 type Mouse = {
   canvasX: number,
   canvasY: number,
 }
 
-// TODO render open, high, low, close at mouse x
+// TODO render open, high, low, close at mouse x <-
 // TODO render mouseY -> price (reactive to changing with data)
 // TODO render mouseX -> timestamp (reactive to changing with data)
 
-export function drawUI(e: MouseEvent, ctx: Canvas, data: Array<Price>) {
+export function drawUI(ctx: Canvas, mouse: Mouse, data: Array<Price>) {
   // TODO pass min / max data as input
   const minTimestamp = data[0].timestamp
   const maxTimestamp = data[data.length - 1].timestamp
@@ -59,14 +54,7 @@ export function drawUI(e: MouseEvent, ctx: Canvas, data: Array<Price>) {
     yMax: maxHigh + yInterval,
   }
 
-  const rect = ctx.canvas.getBoundingClientRect()
-
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
-  const mouse = {
-    canvasX: e.clientX - rect.left,
-    canvasY: e.clientY - rect.top,
-  }
 
   // dont draw if mouse not inside data layer
   if (mouse.canvasX <= 0 || mouse.canvasX > ctx.canvas.width - SCALE_Y_WIDTH) {

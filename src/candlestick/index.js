@@ -40,7 +40,14 @@ class Candlestick extends Component {
     this.ctx.uiLayer.translate(0.5, 0.5)
 
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
-      drawUI(e, this.ctx.uiLayer, DATA)
+      const rect = this.ctx.uiLayer.canvas.getBoundingClientRect()
+
+      const mouse = {
+        canvasX: e.clientX - rect.left,
+        canvasY: e.clientY - rect.top,
+      }
+
+      drawUI(this.ctx.uiLayer, mouse, DATA)
     })
 
     this.draw()
