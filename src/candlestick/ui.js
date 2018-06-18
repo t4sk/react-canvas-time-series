@@ -80,8 +80,60 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     height: ctx.canvas.height - SCALE_X_HEIGHT,
   }
 
+  drawDataAtMouseX(ctx, data[0])
   drawPriceLine(ctx, dataLayer, mouse, metric)
   drawTimestampLine(ctx, dataLayer, mouse, metric)
+}
+
+function drawDataAtMouseX(ctx: Canvas, price: Price) {
+  const {open, high, low, close} = price
+  const color = open <= close ? "green" : "red"
+  const margin = 5
+  const numWidth = ctx.measureText("9999.99").width
+  let x = 5
+  const y = 15
+
+  // open
+  ctx.fillStyle = "black"
+  ctx.fillText("Open:", x, y)
+
+  x += ctx.measureText("Open:").width + margin
+
+  ctx.fillStyle = color
+  ctx.fillText(open.toFixed(2), x, y)
+
+  x += numWidth
+
+  // high
+  ctx.fillStyle = "black"
+  ctx.fillText("High:", x, y)
+
+  x += ctx.measureText("High:").width + margin
+
+  ctx.fillStyle = color
+  ctx.fillText(high.toFixed(2), x, y)
+
+  x += numWidth
+
+  // low
+  ctx.fillStyle = "black"
+  ctx.fillText("Low:", x, y)
+
+  x += ctx.measureText("Low:").width + margin
+
+  ctx.fillStyle = color
+  ctx.fillText(low.toFixed(2), x, y)
+
+  x += numWidth
+
+  // close
+  ctx.fillStyle = "black"
+  ctx.fillText("Close:", x, y)
+
+  x += ctx.measureText("Close:").width + margin
+
+  ctx.fillStyle = color
+  ctx.fillText(close.toFixed(2), x, y)
 }
 
 function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
