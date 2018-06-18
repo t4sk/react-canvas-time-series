@@ -37,7 +37,7 @@ type Mouse = {
   canvasY: number,
 }
 
-// TODO render open, high, low, close at mouse x <-
+// TODO render open, high, low, close at mouse x
 
 export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Price>) {
   // TODO pass min / max data as input
@@ -55,6 +55,15 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     yMin: minLow - yInterval,
     yMax: maxHigh + yInterval,
   }
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+  drawLatestPriceLabel(
+    ctx,
+    props.latestPriceLabel,
+    metric,
+    data[data.length - 1]
+  )
 
   // dont draw if mouse not inside data layer
   if (mouse.canvasX <= 0 || mouse.canvasX > ctx.canvas.width - SCALE_Y_WIDTH) {

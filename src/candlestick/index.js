@@ -44,7 +44,7 @@ class Candlestick extends Component {
     //     DATA.shift()
     //   }
     //   this.draw()
-    // }, 10)
+    // }, 100)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
@@ -101,15 +101,6 @@ class Candlestick extends Component {
     }, DATA)
 
     // ui layer
-    this.ctx.uiLayer.clearRect(0, 0, this.ctx.uiLayer.canvas.width, this.ctx.uiLayer.canvas.height)
-
-    drawLatestPriceLabel(
-      this.ctx.uiLayer,
-      this.props.ui.latestPriceLabel,
-      {yMin, yMax},
-      DATA[DATA.length - 1]
-    )
-
     drawUI(this.ctx.uiLayer, this.props.ui, this.state.mouse, DATA)
   }
 
