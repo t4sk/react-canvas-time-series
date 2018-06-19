@@ -59,6 +59,7 @@ class Candlestick extends Component {
       }
 
       this.setState({mouse}, () => {
+        /* TODO? only render UI*/
         this.draw()
       })
     })
