@@ -66,11 +66,11 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   )
 
   // dont draw if mouse not inside data layer
-  if (mouse.canvasX <= 0 || mouse.canvasX > ctx.canvas.width - SCALE_Y_WIDTH) {
+  if (!mouse.canvasX || mouse.canvasX <= 0 || mouse.canvasX > ctx.canvas.width - SCALE_Y_WIDTH) {
     return
   }
 
-  if (mouse.canvasY <= 0 || mouse.canvasY > ctx.canvas.height - SCALE_X_HEIGHT) {
+  if (!mouse.canvasY || mouse.canvasY <= 0 || mouse.canvasY > ctx.canvas.height - SCALE_X_HEIGHT) {
     return
   }
 
@@ -85,6 +85,8 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
+// TODO draw price at mouse
+// TODO render color from props
 function drawDataAtMouseX(ctx: Canvas, price: Price) {
   const {open, high, low, close} = price
   const color = open <= close ? "green" : "red"

@@ -23,8 +23,8 @@ class Candlestick extends Component {
     super(props)
     this.state = {
       mouse: {
-        x: undefined,
-        y: undefined,
+        canvasX: undefined,
+        canvasY: undefined,
       }
     }
   }
