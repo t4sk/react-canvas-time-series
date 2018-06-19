@@ -37,7 +37,24 @@ type Mouse = {
   canvasY: number,
 }
 
-// TODO render open, high, low, close at mouse x
+// TODO test, refactor
+function getNearestDataAtX(x, delta, data) {
+  let low = 0, high = data.length - 1
+
+  while (low < high) {
+    let mid = (low + high) / 2 >> 0
+
+    if (data[mid].timestamp - x > delta) {
+      high = mid
+    } else if (x - data[mid].timestamp > delta) {
+      low = mid + 1
+    } else {
+      return data[mid]
+    }
+  }
+
+  return data[low]
+}
 
 export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Price>) {
   // TODO pass min / max data as input
@@ -80,14 +97,23 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     height: ctx.canvas.height - SCALE_X_HEIGHT,
   }
 
-  drawDataAtMouseX(ctx, data[0])
+  // TODO refactor getNearestDataAtX & drawDataAtMouseX
+  const x = linear({
+    dy: metric.xMax - metric.xMin,
+    dx: dataLayer.width,
+    x: mouse.canvasX,
+    y0: metric.xMin,
+  })
+
+  const priceAtMouse = getNearestDataAtX(x, round(xInterval / 2), data)
+
+  drawDataAtX(ctx, priceAtMouse)
   drawPriceLine(ctx, dataLayer, mouse, metric)
   drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
-// TODO draw price at mouse
-// TODO render color from props
-function drawDataAtMouseX(ctx: Canvas, price: Price) {
+// TODO test & refactor
+function drawDataAtX(ctx: Canvas, price: Price) {
   const {open, high, low, close} = price
   const color = open <= close ? "green" : "red"
   const margin = 5
