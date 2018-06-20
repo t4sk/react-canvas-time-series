@@ -22,6 +22,8 @@ type Metric = {
   xMax: number,
   yMin: number,
   yMax: number,
+  xInterval: number,
+  yInterval: number,
 }
 
 type Price = {
@@ -72,6 +74,8 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     xMax: maxTimestamp + round(xInterval / 2),
     yMin: minLow - yInterval,
     yMax: maxHigh + yInterval,
+    xInterval,
+    yInterval,
   }
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -103,7 +107,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
-function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouser, metric: Metric, data: Array<Price>) {
+function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric, data: Array<Price>) {
   const xAtMouse = linear({
     dy: metric.xMax - metric.xMin,
     dx: dataLayer.width,
