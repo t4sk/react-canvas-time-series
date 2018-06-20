@@ -9,7 +9,7 @@ import {
 type Canvas = any
 
 type Props = {
-
+  latestPriceLabel: LatestPriceLabelProps,
 }
 
 type DataLayer = {
@@ -38,7 +38,7 @@ type Mouse = {
 }
 
 // TODO test, refactor
-function getNearestDataAtX(x, delta, data) {
+function getNearestDataAtX(x: number, delta: number, data: Array<Price>): Price {
   let low = 0, high = data.length - 1
 
   while (low < high) {
@@ -97,6 +97,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     height: ctx.canvas.height - SCALE_X_HEIGHT,
   }
 
+  // WIP HERE
   // TODO refactor getNearestDataAtX & drawDataAtMouseX
   const x = linear({
     dy: metric.xMax - metric.xMin,
@@ -112,7 +113,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
-// TODO test & refactor
+// TODO test & refactor <-
 function drawDataAtX(ctx: Canvas, price: Price) {
   const {open, high, low, close} = price
   const color = open <= close ? "green" : "red"
