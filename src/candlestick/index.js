@@ -21,11 +21,10 @@ import {drawUI, drawLatestPriceLabel} from './ui'
 class Candlestick extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      mouse: {
-        canvasX: undefined,
-        canvasY: undefined,
-      }
+
+    this.mouse = {
+      canvasX: undefined,
+      canvaxY: undefined,
     }
   }
 
@@ -44,7 +43,7 @@ class Candlestick extends Component {
     //     DATA.shift()
     //   }
     //   this.draw()
-    // }, 100)
+    // }, 10)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
@@ -53,15 +52,10 @@ class Candlestick extends Component {
     this.ctx.uiLayer.canvas.addEventListener('mousemove', e => {
       const rect = this.ctx.uiLayer.canvas.getBoundingClientRect()
 
-      const mouse = {
-        canvasX: e.clientX - rect.left,
-        canvasY: e.clientY - rect.top,
-      }
+      this.mouse.canvasX = e.clientX - rect.left
+      this.mouse.canvasY = e.clientY - rect.top
 
-      this.setState({mouse}, () => {
-        /* TODO? only render UI*/
-        this.draw()
-      })
+      drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
     })
 
     this.draw()
@@ -102,7 +96,7 @@ class Candlestick extends Component {
     }, DATA)
 
     // ui layer
-    drawUI(this.ctx.uiLayer, this.props.ui, this.state.mouse, DATA)
+    drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
   }
 
   render() {
