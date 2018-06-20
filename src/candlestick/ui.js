@@ -37,18 +37,19 @@ type Mouse = {
   canvasY: number,
 }
 
-// TODO test, refactor
-function getNearestDataAtX(x: number, delta: number, data: Array<Price>): Price {
+export function getNearestPriceAtX(x: number, delta: number, data: Array<Price>): Price {
   let low = 0, high = data.length - 1
 
+  // binary search
   while (low < high) {
     let mid = (low + high) / 2 >> 0
 
-    if (data[mid].timestamp - x > delta) {
+    if (data[mid].timestamp > x + delta) {
       high = mid
-    } else if (x - data[mid].timestamp > delta) {
+    } else if (data[mid].timestamp < x - delta) {
       low = mid + 1
     } else {
+      // Math.abs(data[mid].timestamp - x) <= delta
       return data[mid]
     }
   }
@@ -97,24 +98,21 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     height: ctx.canvas.height - SCALE_X_HEIGHT,
   }
 
-  // WIP HERE
-  // TODO refactor getNearestDataAtX & drawDataAtMouseX
-  const x = linear({
+  drawPriceAtMouseX(ctx, dataLayer, mouse, metric, data)
+  drawPriceLine(ctx, dataLayer, mouse, metric)
+  drawTimestampLine(ctx, dataLayer, mouse, metric)
+}
+
+function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouser, metric: Metric, data: Array<Price>) {
+  const xAtMouse = linear({
     dy: metric.xMax - metric.xMin,
     dx: dataLayer.width,
     x: mouse.canvasX,
     y0: metric.xMin,
   })
 
-  const priceAtMouse = getNearestDataAtX(x, round(xInterval / 2), data)
+  const price = getNearestPriceAtX(xAtMouse, round(metric.xInterval / 2), data)
 
-  drawDataAtX(ctx, priceAtMouse)
-  drawPriceLine(ctx, dataLayer, mouse, metric)
-  drawTimestampLine(ctx, dataLayer, mouse, metric)
-}
-
-// TODO test & refactor <-
-function drawDataAtX(ctx: Canvas, price: Price) {
   const {open, high, low, close} = price
   const color = open <= close ? "green" : "red"
   const margin = 5
