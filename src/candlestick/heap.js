@@ -1,7 +1,7 @@
 function bubbleUp(arr, val, sort = 1) {
   arr.push(val)
 
-  let i = arr.length
+  let i = arr.length - 1
   while (i > 0) {
     let v = arr[i]
     let parentIndex = (i - 1) / 2 >> 0
@@ -74,7 +74,8 @@ function buildHeap(arr = [], sort = 1) {
 export default class Heap {
   constructor(arr = [], sort = 1) {
     this.sort = sort
-    this.heap = buildHeap(arr, sort)
+    this.heap = arr.slice()
+    buildHeap(this.heap, sort)
   }
 
   push(val) {
