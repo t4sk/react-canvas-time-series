@@ -17,7 +17,7 @@ import {drawUI, drawLatestPriceLabel} from './ui'
 // TODO render elements off screen
 // TODO use requestAnimationFrame?
 // TODO render streamed data
-
+// TODO zoom
 class Candlestick extends Component {
   constructor(props) {
     super(props)
@@ -203,7 +203,7 @@ Candlestick.propTypes = {
 export default Candlestick
 
 let DATA = []
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 10; i++) {
   const high = randInt(60, 100)
   const low = randInt(0, 30)
   const open = randInt(low, high)
