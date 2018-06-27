@@ -18,6 +18,7 @@ import {drawUI, drawLatestPriceLabel} from './ui'
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO zoom
+// TODO render volume
 class Candlestick extends Component {
   constructor(props) {
     super(props)
