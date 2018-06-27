@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {round} from './util'
-import {drawCandlesticks} from './candlestick'
+import {drawCandlesticks} from './data'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
@@ -233,7 +233,7 @@ function genFakeData() {
     low,
     open,
     close,
-    timestamp: i * 100 + 100
+    timestamp: i * 100 + 100,
   })
 }
 
