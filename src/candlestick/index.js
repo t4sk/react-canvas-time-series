@@ -209,13 +209,15 @@ for (let i = 0; i < 10; i++) {
   const low = randInt(0, 30)
   const open = randInt(low, high)
   const close = randInt(low, high)
+  const volume = randInt(0, 100)
 
   DATA[i] = {
     high,
     low,
     open,
     close,
-    timestamp: i * 100 + 100
+    timestamp: i * 100 + 100,
+    volume,
   }
 }
 
@@ -227,6 +229,7 @@ function genFakeData() {
   const low = randInt(0, 30)
   const open = randInt(low, high)
   const close = randInt(low, high)
+  const volume = randInt(0, 100)
 
   DATA.push({
     high,
@@ -234,6 +237,7 @@ function genFakeData() {
     open,
     close,
     timestamp: i * 100 + 100,
+    volume,
   })
 }
 

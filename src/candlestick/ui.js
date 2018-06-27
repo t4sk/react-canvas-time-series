@@ -32,6 +32,7 @@ type Price = {
   open: number,
   close: number,
   timestamp: number,
+  volume: number,
 }
 
 type Mouse = {
@@ -117,7 +118,7 @@ function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
 
   const price = getNearestPriceAtX(xAtMouse, round(metric.xInterval / 2), data)
 
-  const {open, high, low, close} = price
+  const {open, high, low, close, volume} = price
   const color = open <= close ? "green" : "red"
   const margin = 5
   const numWidth = ctx.measureText("9999.99").width
@@ -165,6 +166,17 @@ function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
 
   ctx.fillStyle = color
   ctx.fillText(close.toFixed(2), x, y)
+
+  x += numWidth
+
+  // volume
+  ctx.fillStyle = "black"
+  ctx.fillText("Volume:", x, y)
+
+  x += ctx.measureText("Volume:").width + margin
+
+  ctx.fillStyle = color
+  ctx.fillText(volume, x, y)
 }
 
 function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
