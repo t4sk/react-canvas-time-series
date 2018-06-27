@@ -1,5 +1,5 @@
 //@flow
-import {round, linear, linearTransformer} from './util'
+import {round, floor, linear, linearTransformer} from './util'
 
 type Canvas = any
 
@@ -27,6 +27,14 @@ type Price = {
   open: number,
   close: number,
   timestamp: number,
+}
+
+type GlobalMetric = {
+  xMin: number,
+  xMax: number,
+  xInterval: number,
+  yMin: number,
+  yMax: number,
 }
 
 function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price) {
@@ -64,15 +72,8 @@ function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price
   ctx.stroke()
 }
 
-type GlobalMetric = {
-  xMin: number,
-  xMax: number,
-  xInterval: number,
-  yMin: number,
-  yMax: number,
-}
-
 function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
+  // TODO move computation to drawData
   const {xMin, xMax, xInterval, yMin, yMax} = metric
 
   const toCanvasX = linearTransformer({
@@ -102,6 +103,63 @@ function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data:
   }
 }
 
+function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
+  // TODO move computation to drawData
+  const {xMin, xMax, yInterval, xInterval, yMin, yMax} = metric
+
+  const toCanvasX = linearTransformer({
+    dy: ctx.canvas.width,
+    dx: xMax - xMin,
+    y0: -ctx.canvas.width * xMin / (xMax - xMin),
+  })
+
+  const NUM_HORIZONTAL_INTERVALS = 6
+  const CANVAS_HORIZONTAL_INTERVAL_HEIGHT = floor(ctx.canvas.height / NUM_HORIZONTAL_INTERVALS)
+
+  const maxVolume = Math.max(...data.map(price => price.volume))
+
+  const toCanvasY = linearTransformer({
+    dy: CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
+    dx: maxVolume,
+    y0: ctx.canvas.height - CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
+  })
+
+  const toCanvasHeight = linearTransformer({
+    dy: CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
+    dx: maxVolume,
+    y0: 0,
+  })
+
+  const scaleX = ctx.canvas.width / (xMin - xMax)
+  const scaleY = yInterval
+  // width of each candle
+  const width = round(scaleX * xInterval)
+
+  for (let i = 0; i < data.length; i++) {
+    const price = data[i]
+    const {high, low, open, close, timestamp, volume} = price
+
+    const x = round(toCanvasX(timestamp))
+
+    const height = round(toCanvasHeight(volume))
+    const y = ctx.canvas.height - height
+    const halfWidth = round(width / 2)
+
+    ctx.strokeStyle ="black"
+    if (open <= close) {
+      //TODO google function to fill and stroke at once?
+      ctx.fillStyle = props.candlestick.bull.color
+      ctx.fillRect(x - halfWidth, y, width, height)
+      ctx.strokeRect(x - halfWidth, y, width, height)
+    } else {
+      ctx.fillStyle = props.candlestick.bear.color
+      ctx.fillRect(x - halfWidth, y, width, height)
+      ctx.strokeRect(x - halfWidth, y, width, height)
+    }
+  }
+}
+
 export function drawData(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
   drawCandlesticks(ctx, props, metric, data)
+  drawVolumesBarChart(ctx, props, metric, data)
 }
