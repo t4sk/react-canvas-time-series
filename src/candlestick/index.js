@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {round} from './util'
-import {drawCandlesticks} from './data'
+import {drawData} from './data'
 import {
   SCALE_X_HEIGHT,
   SCALE_Y_WIDTH,
@@ -88,7 +88,7 @@ class Candlestick extends Component {
     })
 
     // data layer
-    drawCandlesticks(this.ctx.dataLayer, this.props, {
+    drawData(this.ctx.dataLayer, this.props, {
       xMin,
       xMax,
       xInterval,
