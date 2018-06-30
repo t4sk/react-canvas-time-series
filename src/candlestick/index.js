@@ -44,7 +44,7 @@ class Candlestick extends Component {
     //     DATA.shift()
     //   }
     //   this.draw()
-    // }, 10)
+    // }, 100)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
@@ -77,7 +77,7 @@ class Candlestick extends Component {
     const maxHigh = Math.max(...DATA.map(d => d.high))
     // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
     const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
-    const yMin = minLow - 2 * yInterval
+    const yMin = minLow - 3 * yInterval
     const yMax = maxHigh + yInterval
 
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)

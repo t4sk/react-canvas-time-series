@@ -4,7 +4,7 @@ import {round, linearTransformer} from './util'
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
 
-export const NUM_HORIZONTAL_INTERVALS = 7
+export const NUM_HORIZONTAL_INTERVALS = 8
 export const NUM_VERTICAL_INTERVALS = 6
 
 type Canvas = any
@@ -29,7 +29,8 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     y0: yMin,
   })
 
-  for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS; i++) {
+  // skip last 2 lines where bar chart is rendered
+  for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS - 2; i++) {
     const canvasY = round(i * interval)
 
     // draw line

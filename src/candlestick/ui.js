@@ -73,7 +73,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   const metric = {
     xMin: minTimestamp - round(xInterval / 2),
     xMax: maxTimestamp + round(xInterval / 2),
-    yMin: minLow - 2 * yInterval,
+    yMin: minLow - 3 * yInterval,
     yMax: maxHigh + yInterval,
     xInterval,
     yInterval,

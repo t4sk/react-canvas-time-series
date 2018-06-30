@@ -1,5 +1,6 @@
 //@flow
 import {round, floor, linear, linearTransformer} from './util'
+import {NUM_HORIZONTAL_INTERVALS} from './background'
 
 type Canvas = any
 
@@ -113,8 +114,9 @@ function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, da
     y0: -ctx.canvas.width * xMin / (xMax - xMin),
   })
 
-  const NUM_HORIZONTAL_INTERVALS = 6
-  const CANVAS_HORIZONTAL_INTERVAL_HEIGHT = floor(ctx.canvas.height / NUM_HORIZONTAL_INTERVALS)
+  const CANVAS_HORIZONTAL_INTERVAL_HEIGHT = floor(
+     2 * ctx.canvas.height / NUM_HORIZONTAL_INTERVALS
+  )
 
   const maxVolume = Math.max(...data.map(price => price.volume))
 
@@ -131,23 +133,20 @@ function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, da
   })
 
   const scaleX = ctx.canvas.width / (xMin - xMax)
-  const scaleY = yInterval
-  // width of each candle
+  // width of each bar
   const width = round(scaleX * xInterval)
+  const halfWidth = round(width / 2)
 
   for (let i = 0; i < data.length; i++) {
     const price = data[i]
-    const {high, low, open, close, timestamp, volume} = price
-
-    const x = round(toCanvasX(timestamp))
+    const {open, close, timestamp, volume} = price
 
     const height = round(toCanvasHeight(volume))
+    const x = round(toCanvasX(timestamp))
     const y = ctx.canvas.height - height
-    const halfWidth = round(width / 2)
 
     ctx.strokeStyle ="black"
     if (open <= close) {
-      //TODO google function to fill and stroke at once?
       ctx.fillStyle = props.candlestick.bull.color
       ctx.fillRect(x - halfWidth, y, width, height)
       ctx.strokeRect(x - halfWidth, y, width, height)
