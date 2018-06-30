@@ -4,7 +4,7 @@ import {round, linearTransformer} from './util'
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
 
-export const NUM_HORIZONTAL_INTERVALS = 6
+export const NUM_HORIZONTAL_INTERVALS = 7
 export const NUM_VERTICAL_INTERVALS = 6
 
 type Canvas = any
