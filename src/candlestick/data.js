@@ -50,7 +50,6 @@ function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price
 
   ctx.strokeStyle ="black"
   if (open <= close) {
-    //TODO google function to fill and stroke at once?
     ctx.fillStyle = props.candlestick.bull.color
     ctx.fillRect(x - halfWidth, y, width, height)
     ctx.strokeRect(x - halfWidth, y, width, height)

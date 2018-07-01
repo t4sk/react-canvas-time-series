@@ -12,13 +12,10 @@ import {
 import {drawUI, drawLatestPriceLabel} from './ui'
 
 // TODO queue real time data
-// TODO object pool
-// TODO use more than one canvas
-// TODO render elements off screen
+// TODO? object pool
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO zoom
-// TODO render volume
 class Candlestick extends Component {
   constructor(props) {
     super(props)
