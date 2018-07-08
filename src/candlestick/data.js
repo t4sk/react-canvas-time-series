@@ -147,15 +147,12 @@ function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, da
     const x = round(toCanvasX(timestamp))
     const y = ctx.canvas.height - height
 
-    ctx.strokeStyle ="black"
     if (open <= close) {
       ctx.fillStyle = props.candlestick.bull.color
       ctx.fillRect(x - halfWidth, y, width, height)
-      ctx.strokeRect(x - halfWidth, y, width, height)
     } else {
       ctx.fillStyle = props.candlestick.bear.color
       ctx.fillRect(x - halfWidth, y, width, height)
-      ctx.strokeRect(x - halfWidth, y, width, height)
     }
   }
 }
