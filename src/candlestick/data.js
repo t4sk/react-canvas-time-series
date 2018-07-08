@@ -48,15 +48,18 @@ function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price
   const height = round(scaleY * Math.abs(open - close))
   const halfWidth = round(width / 2)
 
-  ctx.strokeStyle ="black"
+  if (open <= close) {
+    ctx.strokeStyle = props.candlestick.bull.color
+  } else {
+    ctx.strokeStyle = props.candlestick.bear.color
+  }
+
   if (open <= close) {
     ctx.fillStyle = props.candlestick.bull.color
     ctx.fillRect(x - halfWidth, y, width, height)
-    ctx.strokeRect(x - halfWidth, y, width, height)
   } else {
     ctx.fillStyle = props.candlestick.bear.color
     ctx.fillRect(x - halfWidth, y, width, height)
-    ctx.strokeRect(x - halfWidth, y, width, height)
   }
 
   // top wick
