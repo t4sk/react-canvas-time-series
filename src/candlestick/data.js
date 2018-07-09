@@ -4,6 +4,10 @@ import {NUM_HORIZONTAL_INTERVALS} from './background'
 
 type Canvas = any
 
+type BarChart = {
+  height: number,
+}
+
 type Props = {
   candlestick: {
     bull: {
@@ -106,9 +110,9 @@ function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data:
   }
 }
 
-function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
+function drawVolumesBarChart(ctx: Canvas, barChart: BarChart, props: Props, metric: GlobalMetric, data: Array<Price>) {
   // TODO move computation to drawData
-  const {xMin, xMax, yInterval, xInterval, yMin, yMax} = metric
+  const {xMin, xMax, yInterval, xInterval} = metric
 
   const toCanvasX = linearTransformer({
     dy: ctx.canvas.width,
@@ -116,23 +120,20 @@ function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, da
     y0: -ctx.canvas.width * xMin / (xMax - xMin),
   })
 
-  const CANVAS_HORIZONTAL_INTERVAL_HEIGHT = floor(
-     2 * ctx.canvas.height / NUM_HORIZONTAL_INTERVALS
-  )
-
   const maxVolume = Math.max(...data.map(price => price.volume))
 
-  const toCanvasY = linearTransformer({
-    dy: CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
-    dx: maxVolume,
-    y0: ctx.canvas.height - CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
-  })
-
   const toCanvasHeight = linearTransformer({
-    dy: CANVAS_HORIZONTAL_INTERVAL_HEIGHT,
+    dy: barChart.height,
     dx: maxVolume,
     y0: 0,
   })
+
+  // draw line at max volume
+  ctx.strokeStyle = "lightgrey"
+  const canvasYMax = ctx.canvas.height - toCanvasHeight(maxVolume)
+  ctx.moveTo(0, canvasYMax + 0.5)
+  ctx.lineTo(ctx.canvas.width, canvasYMax + 0.5)
+  ctx.stroke()
 
   const scaleX = ctx.canvas.width / (xMin - xMax)
   // width of each bar
@@ -157,7 +158,18 @@ function drawVolumesBarChart(ctx: Canvas, props: Props, metric: GlobalMetric, da
   }
 }
 
+const BAR_CHART_MARGIN_TOP = 10
+
 export function drawData(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
   drawCandlesticks(ctx, props, metric, data)
-  drawVolumesBarChart(ctx, props, metric, data)
+
+  const barChartHeight = floor(
+     2 * ctx.canvas.height / NUM_HORIZONTAL_INTERVALS
+  ) - BAR_CHART_MARGIN_TOP
+
+  const barChart = {
+    height: barChartHeight,
+  }
+
+  drawVolumesBarChart(ctx, barChart, props, metric, data)
 }
