@@ -73,7 +73,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   const metric = {
     xMin: minTimestamp - round(xInterval / 2),
     xMax: maxTimestamp + round(xInterval / 2),
-    yMin: minLow - 3 * yInterval,
+    yMin: minLow - yInterval,
     yMax: maxHigh + yInterval,
     xInterval,
     yInterval,
@@ -101,7 +101,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   const BAR_CHART_HEIGHT = 73
   const dataLayer = {
     width: ctx.canvas.width - SCALE_Y_WIDTH,
-    height: ctx.canvas.height - SCALE_X_HEIGHT,
+    height: ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT,
   }
 
   drawPriceAtMouseX(ctx, dataLayer, mouse, metric, data)
@@ -261,9 +261,11 @@ export function drawLatestPriceLabel(
 ) {
   const {open, close} = price
 
+  // TODO move bar chart height up
+  const BAR_CHART_HEIGHT = 73
   const dataLayer = {
     width: ctx.canvas.width - SCALE_Y_WIDTH,
-    height: ctx.canvas.height - SCALE_X_HEIGHT,
+    height: ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT,
   }
 
   const {yMin, yMax} = metric
