@@ -98,6 +98,7 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
   }
 
   // TODO pass data layer size as input
+  const BAR_CHART_HEIGHT = 73
   const dataLayer = {
     width: ctx.canvas.width - SCALE_Y_WIDTH,
     height: ctx.canvas.height - SCALE_X_HEIGHT,
@@ -226,6 +227,7 @@ function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: 
   ctx.textAlign = "left"
   ctx.textBaseline = "middle"
 
+  // TODO
   const y = linear({
     dy: yMax - yMin,
     dx: dataLayer.height,

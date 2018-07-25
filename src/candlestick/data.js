@@ -128,6 +128,7 @@ function drawVolumesBarChart(ctx: Canvas, barChart: BarChart, props: Props, metr
     y0: 0,
   })
 
+  // TODO move to background
   // draw line at max volume
   ctx.strokeStyle = "lightgrey"
   const canvasYMax = ctx.canvas.height - toCanvasHeight(maxVolume)
@@ -163,13 +164,5 @@ const BAR_CHART_MARGIN_TOP = 10
 export function drawData(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
   drawCandlesticks(ctx, props, metric, data)
 
-  const barChartHeight = floor(
-     2 * ctx.canvas.height / NUM_HORIZONTAL_INTERVALS
-  ) - BAR_CHART_MARGIN_TOP
-
-  const barChart = {
-    height: barChartHeight,
-  }
-
-  drawVolumesBarChart(ctx, barChart, props, metric, data)
+  //drawVolumesBarChart(ctx, barChart, props, metric, data)
 }

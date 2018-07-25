@@ -11,6 +11,9 @@ import {
 } from './background'
 import {drawUI, drawLatestPriceLabel} from './ui'
 
+// TODO SCALE_X_HEIGHT, SCALE_Y_WIDTH should be defined here
+const BAR_CHART_HEIGHT = 73
+
 // TODO queue real time data
 // TODO? object pool
 // TODO use requestAnimationFrame?
@@ -75,7 +78,7 @@ class Candlestick extends Component {
     const maxHigh = Math.max(...DATA.map(d => d.high))
     // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
     const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
-    const yMin = minLow - 3 * yInterval
+    const yMin = minLow - yInterval
     const yMax = maxHigh + yInterval
 
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)
@@ -112,7 +115,7 @@ class Candlestick extends Component {
           style={style.dataLayer}
           ref="dataLayer"
           width={this.props.width - SCALE_Y_WIDTH}
-          height={this.props.height - SCALE_X_HEIGHT}
+          height={this.props.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT}
         >
         </canvas>
         <canvas

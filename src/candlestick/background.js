@@ -4,7 +4,7 @@ import {round, linearTransformer} from './util'
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
 
-export const NUM_HORIZONTAL_INTERVALS = 8
+export const NUM_HORIZONTAL_INTERVALS = 6
 export const NUM_VERTICAL_INTERVALS = 6
 
 type Canvas = any
@@ -20,8 +20,11 @@ type YMetric = {
 function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
   const {yMin, yMax} = metric
 
+  // TODO lift computation
+  const barChartHeight = 73
+
   const width = ctx.canvas.width - SCALE_Y_WIDTH
-  const height = ctx.canvas.height - SCALE_X_HEIGHT
+  const height = ctx.canvas.height - barChartHeight - SCALE_X_HEIGHT
   const interval = height / NUM_HORIZONTAL_INTERVALS
   const toY = linearTransformer({
     dy: yMax - yMin,
@@ -29,8 +32,7 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     y0: yMin,
   })
 
-  // skip last 2 lines where bar chart is rendered
-  for (let i = 0; i <= NUM_HORIZONTAL_INTERVALS - 2; i++) {
+  for (let i = 1; i < NUM_HORIZONTAL_INTERVALS; i++) {
     const canvasY = round(i * interval)
 
     // draw line
@@ -42,6 +44,8 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     const y = round(toY((NUM_HORIZONTAL_INTERVALS - i) * interval))
     ctx.fillText(y, width + 10, canvasY)
   }
+
+  // TODO draw max volume label at i = NUM_HORIZONTAL_INTERVALS
 }
 
 type XMetric = {
