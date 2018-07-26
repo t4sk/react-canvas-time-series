@@ -1,30 +1,25 @@
 //@flow
 import {round, linearTransformer} from './util'
 
+// TODO should be defined in index.js
 export const SCALE_Y_WIDTH = 50
 export const SCALE_X_HEIGHT = 50
-
+// TODO should be defined in index.js
 export const NUM_HORIZONTAL_INTERVALS = 6
 export const NUM_VERTICAL_INTERVALS = 6
 
-type Canvas = any
-type Props = {
-  backgroundColor: string
-}
+function drawHorizontalLines(ctx, props, metric) {
+  const {yMin, yMax, maxVolume} = metric
 
-type YMetric = {
-  yMin: number,
-  yMax: number,
-}
+  const {
+    volumeBarChart
+  } = props
 
-function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
-  const {yMin, yMax} = metric
-
-  // TODO lift computation
   const barChartHeight = 73
 
+  // TODO define candlestick and barchart height in index.js
   const width = ctx.canvas.width - SCALE_Y_WIDTH
-  const height = ctx.canvas.height - barChartHeight - SCALE_X_HEIGHT
+  const height = ctx.canvas.height - volumeBarChart.height - SCALE_X_HEIGHT
   const interval = height / NUM_HORIZONTAL_INTERVALS
   const toY = linearTransformer({
     dy: yMax - yMin,
@@ -45,7 +40,13 @@ function drawHorizontalLines(ctx: Canvas, props: Props, metric: YMetric) {
     ctx.fillText(y, width + 10, canvasY)
   }
 
-  // TODO draw max volume label at i = NUM_HORIZONTAL_INTERVALS
+  // draw max volume line
+  const canvasY = round(NUM_HORIZONTAL_INTERVALS * interval)
+  ctx.moveTo(0, canvasY)
+  ctx.lineTo(width, canvasY)
+  ctx.stroke()
+
+  ctx.fillText(maxVolume, width + 10, canvasY)
 }
 
 type XMetric = {
@@ -53,7 +54,7 @@ type XMetric = {
   xMax: number,
 }
 
-function drawVerticalLines(ctx: Canvas, props: Props, metric: XMetric) {
+function drawVerticalLines(ctx, props, metric) {
   const {xMin, xMax} = metric
 
   const width = ctx.canvas.width - SCALE_Y_WIDTH
@@ -87,7 +88,7 @@ type Metric = {
   yMax: number,
 }
 
-export function drawBackground(ctx: Canvas, props: Props, metric: Metric) {
+export function drawBackground(ctx, props, metric) {
   ctx.fillStyle = "lightgrey"
   ctx.fillRect(
     0, 0,
@@ -95,7 +96,7 @@ export function drawBackground(ctx: Canvas, props: Props, metric: Metric) {
     ctx.canvas.height,
   )
 
-  ctx.fillStyle = "white" || props.backgroundColor
+  ctx.fillStyle = "white" || props.background.color
   ctx.fillRect(
     0, 0,
     ctx.canvas.width - SCALE_Y_WIDTH,

@@ -12,8 +12,6 @@ import {
 import {drawUI, drawLatestPriceLabel} from './ui'
 
 // TODO SCALE_X_HEIGHT, SCALE_Y_WIDTH should be defined here
-const BAR_CHART_HEIGHT = 73
-
 // TODO queue real time data
 // TODO? object pool
 // TODO use requestAnimationFrame?
@@ -80,25 +78,26 @@ class Candlestick extends Component {
     const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
     const yMin = minLow - yInterval
     const yMax = maxHigh + yInterval
+    const maxVolume = Math.max(...DATA.map(price => price.volume))
 
     this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)
 
     // background layer-
     drawBackground(this.ctx.backgroundLayer, this.props, {
-      xMin, xMax, xInterval, yMin, yMax,
+      xMin, xMax, xInterval, yMin, yMax, maxVolume
     })
 
     // data layer
-    drawData(this.ctx.dataLayer, this.props, {
-      xMin,
-      xMax,
-      xInterval,
-      yMin,
-      yMax,
-    }, DATA)
+    // drawData(this.ctx.dataLayer, this.props, {
+    //   xMin,
+    //   xMax,
+    //   xInterval,
+    //   yMin,
+    //   yMax,
+    // }, DATA)
 
     // ui layer
-    drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
+    // drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
   }
 
   render() {
@@ -115,7 +114,7 @@ class Candlestick extends Component {
           style={style.dataLayer}
           ref="dataLayer"
           width={this.props.width - SCALE_Y_WIDTH}
-          height={this.props.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT}
+          height={this.props.height - SCALE_X_HEIGHT}
         >
         </canvas>
         <canvas
@@ -155,7 +154,9 @@ const style = {
 }
 
 Candlestick.defaultProps = {
-  backgroundColor: "#2f3d45",
+  background: {
+    color: "#2f3d45",
+  },
   width: 500,
   height: 300,
   candlestick: {
@@ -165,6 +166,9 @@ Candlestick.defaultProps = {
     bear: {
       color: "red"
     },
+  },
+  volumeBarChart: {
+    height: 73,
   },
   ui: {
     latestPriceLabel: {
@@ -179,9 +183,14 @@ Candlestick.defaultProps = {
 }
 
 Candlestick.propTypes = {
-  backgroundColor: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  background :PropTypes.shape({
+    color: PropTypes.string.isRequired,
+  }).isRequired,
+  volumeBarChart: PropTypes.shape({
+    height: PropTypes.number.isRequired,
+  }).isRequired,
   candlestick: PropTypes.shape({
     bull: PropTypes.shape({
       color: PropTypes.string.isRequired,
