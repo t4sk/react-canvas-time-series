@@ -318,6 +318,9 @@ export function drawLatestPriceLabel(
 }
 
 function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
+  // TODO height from input
+  const height = ctx.canvas.height - SCALE_X_HEIGHT
+
   const {canvasX} = mouse
   const {xMin, xMax} = metric
 
@@ -326,7 +329,7 @@ function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(canvasX, 0)
-  ctx.lineTo(canvasX, dataLayer.height)
+  ctx.lineTo(canvasX, height)
   ctx.stroke()
 
   // label
@@ -339,22 +342,22 @@ function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
   ctx.beginPath()
   ctx.moveTo(
     canvasX,
-    dataLayer.height - 5,
+    height - 5,
   )
   ctx.lineTo(
     canvasX - 5,
-    dataLayer.height,
+    height,
   )
   ctx.lineTo(
     canvasX + 5,
-    dataLayer.height,
+    height,
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
     canvasX - round(xLabelWidth / 2),
-    dataLayer.height,
+    height,
     xLabelWidth,
     xLabelHeight,
   )
@@ -374,6 +377,6 @@ function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
   ctx.fillText(
     x.toFixed(1),
     canvasX,
-    dataLayer.height + 10,
+    height + 10,
   )
 }
