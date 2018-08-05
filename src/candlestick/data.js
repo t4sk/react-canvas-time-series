@@ -1,48 +1,8 @@
-//@flow
 import {round, floor, linear, linearTransformer} from './util'
 import {NUM_HORIZONTAL_INTERVALS} from './background'
 
-type Canvas = any
-
-type BarChart = {
-  height: number,
-}
-
-type Props = {
-  candlestick: {
-    bull: {
-      color: string,
-    },
-    bear: {
-      color: string,
-    },
-  },
-}
-
-type Metric = {
-  width: number,
-  scaleY: number,
-  toCanvasX: number => number,
-  toCanvasY: number => number,
-}
-
-type Price = {
-  high: number,
-  low: number,
-  open: number,
-  close: number,
-  timestamp: number,
-}
-
-type GlobalMetric = {
-  xMin: number,
-  xMax: number,
-  xInterval: number,
-  yMin: number,
-  yMax: number,
-}
-
-function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price) {
+// TODO put metric inside data
+function drawCandlestick(ctx, props, metric, price) {
   const {width, scaleY, toCanvasX, toCanvasY} = metric
   const {high, low, open, close, timestamp} = price
 
@@ -79,9 +39,16 @@ function drawCandlestick(ctx: Canvas, props: Props, metric: Metric, price: Price
   ctx.stroke()
 }
 
-function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
+function drawCandlesticks(ctx, props, metric, data) {
   // TODO move computation to drawData
   const {xMin, xMax, xInterval, yMin, yMax} = metric
+
+  // TODO set volume bar chart height and candlestick chart
+  // height in index.js
+  const {
+    volumeBarChart
+  } = props
+  const height = ctx.canvas.height - volumeBarChart.height
 
   const toCanvasX = linearTransformer({
     dy: ctx.canvas.width,
@@ -90,13 +57,13 @@ function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data:
   })
 
   const toCanvasY = linearTransformer({
-    dy: -ctx.canvas.height,
+    dy: -height,
     dx: yMax - yMin,
-    y0: ctx.canvas.height * yMax / (yMax - yMin)
+    y0: height * yMax / (yMax - yMin)
   })
 
   const scaleX = ctx.canvas.width / (xMin - xMax)
-  const scaleY = ctx.canvas.height / (yMax - yMin)
+  const scaleY = height / (yMax - yMin)
   // width of each candle
   const width = round(scaleX * xInterval)
 
@@ -110,9 +77,13 @@ function drawCandlesticks(ctx: Canvas, props: Props, metric: GlobalMetric, data:
   }
 }
 
-function drawVolumesBarChart(ctx: Canvas, barChart: BarChart, props: Props, metric: GlobalMetric, data: Array<Price>) {
+function drawVolumesBarChart(ctx, props, metric, data) {
   // TODO move computation to drawData
   const {xMin, xMax, yInterval, xInterval} = metric
+  // TODO move volume bar chart to index.js
+  const {
+    volumeBarChart
+  } = props
 
   const toCanvasX = linearTransformer({
     dy: ctx.canvas.width,
@@ -123,18 +94,10 @@ function drawVolumesBarChart(ctx: Canvas, barChart: BarChart, props: Props, metr
   const maxVolume = Math.max(...data.map(price => price.volume))
 
   const toCanvasHeight = linearTransformer({
-    dy: barChart.height,
+    dy: volumeBarChart.height,
     dx: maxVolume,
     y0: 0,
   })
-
-  // TODO move to background
-  // draw line at max volume
-  ctx.strokeStyle = "lightgrey"
-  const canvasYMax = ctx.canvas.height - toCanvasHeight(maxVolume)
-  ctx.moveTo(0, canvasYMax + 0.5)
-  ctx.lineTo(ctx.canvas.width, canvasYMax + 0.5)
-  ctx.stroke()
 
   const scaleX = ctx.canvas.width / (xMin - xMax)
   // width of each bar
@@ -159,10 +122,7 @@ function drawVolumesBarChart(ctx: Canvas, barChart: BarChart, props: Props, metr
   }
 }
 
-const BAR_CHART_MARGIN_TOP = 10
-
-export function drawData(ctx: Canvas, props: Props, metric: GlobalMetric, data: Array<Price>) {
+export function drawData(ctx, props, metric, data) {
   drawCandlesticks(ctx, props, metric, data)
-
-  //drawVolumesBarChart(ctx, barChart, props, metric, data)
+  drawVolumesBarChart(ctx, props, metric, data)
 }

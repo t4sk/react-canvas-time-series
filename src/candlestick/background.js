@@ -11,13 +11,10 @@ export const NUM_VERTICAL_INTERVALS = 6
 function drawHorizontalLines(ctx, props, metric) {
   const {yMin, yMax, maxVolume} = metric
 
+  // TODO define candlestick and barchart height in index.js
   const {
     volumeBarChart
   } = props
-
-  const barChartHeight = 73
-
-  // TODO define candlestick and barchart height in index.js
   const width = ctx.canvas.width - SCALE_Y_WIDTH
   const height = ctx.canvas.height - volumeBarChart.height - SCALE_X_HEIGHT
   const interval = height / NUM_HORIZONTAL_INTERVALS

@@ -88,13 +88,13 @@ class Candlestick extends Component {
     })
 
     // data layer
-    // drawData(this.ctx.dataLayer, this.props, {
-    //   xMin,
-    //   xMax,
-    //   xInterval,
-    //   yMin,
-    //   yMax,
-    // }, DATA)
+    drawData(this.ctx.dataLayer, this.props, {
+      xMin,
+      xMax,
+      xInterval,
+      yMin,
+      yMax,
+    }, DATA)
 
     // ui layer
     // drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
