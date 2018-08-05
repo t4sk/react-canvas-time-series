@@ -1,4 +1,3 @@
-//@flow
 import {round, linear} from './util'
 import {
   SCALE_X_HEIGHT,
@@ -6,41 +5,7 @@ import {
   NUM_HORIZONTAL_INTERVALS,
 } from './background'
 
-type Canvas = any
-
-type Props = {
-  latestPriceLabel: LatestPriceLabelProps,
-}
-
-type DataLayer = {
-  width: number,
-  height: number,
-}
-
-type Metric = {
-  xMin: number,
-  xMax: number,
-  yMin: number,
-  yMax: number,
-  xInterval: number,
-  yInterval: number,
-}
-
-type Price = {
-  high: number,
-  low: number,
-  open: number,
-  close: number,
-  timestamp: number,
-  volume: number,
-}
-
-type Mouse = {
-  canvasX: number,
-  canvasY: number,
-}
-
-export function getNearestPriceAtX(x: number, delta: number, data: Array<Price>): Price {
+export function getNearestPriceAtX(x, delta, data) {
   let low = 0, high = data.length - 1
 
   // binary search
@@ -60,17 +25,20 @@ export function getNearestPriceAtX(x: number, delta: number, data: Array<Price>)
   return data[low]
 }
 
-export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Price>) {
+export function drawUI(ctx, props, mouse, data) {
   // TODO pass min / max data as input
   const minTimestamp = data[0].timestamp
   const maxTimestamp = data[data.length - 1].timestamp
   const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (data.length - 1))
+  const maxVolume = Math.max(...data.map(d => d.volume))
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
   // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
   const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
 
+  // TODO put metric inside data
   const metric = {
+    maxVolume,
     xMin: minTimestamp - round(xInterval / 2),
     xMax: maxTimestamp + round(xInterval / 2),
     yMin: minLow - yInterval,
@@ -97,19 +65,27 @@ export function drawUI(ctx: Canvas, props: Props, mouse: Mouse, data: Array<Pric
     return
   }
 
-  // TODO pass data layer size as input
+  // TODO pass data layer size as input from index.js
   const BAR_CHART_HEIGHT = 73
+  // TODO remove me
+  // dataLayer does not make sense?
   const dataLayer = {
     width: ctx.canvas.width - SCALE_Y_WIDTH,
     height: ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT,
   }
 
-  drawPriceAtMouseX(ctx, dataLayer, mouse, metric, data)
-  drawPriceLine(ctx, dataLayer, mouse, metric)
+  drawDataAtMouseX(ctx, dataLayer, mouse, metric, data)
+
+  if (mouse.canvasY < ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT) {
+    drawPriceLine(ctx, dataLayer, mouse, metric)
+  } else {
+    drawVolumeLine(ctx, dataLayer, mouse, metric)
+  }
+
   drawTimestampLine(ctx, dataLayer, mouse, metric)
 }
 
-function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric, data: Array<Price>) {
+function drawDataAtMouseX(ctx, dataLayer, mouse, metric, data) {
   const xAtMouse = linear({
     dy: metric.xMax - metric.xMin,
     dx: dataLayer.width,
@@ -180,17 +156,11 @@ function drawPriceAtMouseX(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metr
   ctx.fillText(volume, x, y)
 }
 
-function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
-  const {canvasY} = mouse
-  const {yMin, yMax} = metric
-
-  // price line
-  ctx.strokeStyle = "black"
-  ctx.setLineDash([5, 5])
-
-  ctx.moveTo(0, canvasY)
-  ctx.lineTo(dataLayer.width, canvasY)
-  ctx.stroke()
+function drawYLabel(ctx, dataLayer, props) {
+  const {
+    canvasY,
+    y,
+  } = props
 
   // label
   ctx.fillStyle = "black"
@@ -227,14 +197,6 @@ function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: 
   ctx.textAlign = "left"
   ctx.textBaseline = "middle"
 
-  // TODO
-  const y = linear({
-    dy: yMax - yMin,
-    dx: dataLayer.height,
-    x: dataLayer.height - canvasY,
-    y0: yMin,
-  })
-
   ctx.fillText(
     y.toFixed(2),
     dataLayer.width + 10,
@@ -242,22 +204,8 @@ function drawPriceLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: 
   )
 }
 
-type YMetric = {
-  yMin: number,
-  yMax: number,
-}
-
-type LatestPriceLabelProps = {
-  bull: {
-    color: string,
-  },
-  bear: {
-    color: string,
-  },
-}
-
-export function drawLatestPriceLabel(
-  ctx: Canvas, props: LatestPriceLabelProps, metric: YMetric, price: Price
+function drawLatestPriceLabel(
+  ctx, props, metric, price
 ) {
   const {open, close} = price
 
@@ -278,46 +226,98 @@ export function drawLatestPriceLabel(
 
   ctx.fillStyle = open <= close ? props.bull.color : props.bear.color
 
-  const labelHeight = 20
-  const labelWidth = SCALE_Y_WIDTH
-
-  // tip
-  ctx.beginPath()
-  ctx.moveTo(
-    dataLayer.width - 5,
-    canvasY,
-  )
-  ctx.lineTo(
-    dataLayer.width,
-    canvasY - round(labelHeight / 2),
-  )
-  ctx.lineTo(
-    dataLayer.width,
-    canvasY + round(labelHeight / 2),
-  )
-  ctx.fill()
-
-  // rect
-  ctx.fillRect(
-    dataLayer.width,
-    canvasY - round(labelHeight / 2),
-    labelWidth, labelHeight
-  )
-
-  // text
-  ctx.font = "12px Arial"
-  ctx.fillStyle = "white"
-  ctx.textAlign = "left"
-  ctx.textBaseline = "middle"
-
-  ctx.fillText(
-    close.toFixed(2),
-    dataLayer.width + 10,
-    canvasY,
-  )
+  // const labelHeight = 20
+  // const labelWidth = SCALE_Y_WIDTH
+  //
+  // // tip
+  // ctx.beginPath()
+  // ctx.moveTo(
+  //   dataLayer.width - 5,
+  //   canvasY,
+  // )
+  // ctx.lineTo(
+  //   dataLayer.width,
+  //   canvasY - round(labelHeight / 2),
+  // )
+  // ctx.lineTo(
+  //   dataLayer.width,
+  //   canvasY + round(labelHeight / 2),
+  // )
+  // ctx.fill()
+  //
+  // // rect
+  // ctx.fillRect(
+  //   dataLayer.width,
+  //   canvasY - round(labelHeight / 2),
+  //   labelWidth, labelHeight
+  // )
+  //
+  // // text
+  // ctx.font = "12px Arial"
+  // ctx.fillStyle = "white"
+  // ctx.textAlign = "left"
+  // ctx.textBaseline = "middle"
+  //
+  // ctx.fillText(
+  //   close.toFixed(2),
+  //   dataLayer.width + 10,
+  //   canvasY,
+  // )
 }
 
-function drawTimestampLine(ctx: Canvas, dataLayer: DataLayer, mouse: Mouse, metric: Metric) {
+function drawPriceLine(ctx, dataLayer, mouse, metric) {
+  const {canvasY} = mouse
+  const {yMin, yMax} = metric
+
+  // line
+  ctx.strokeStyle = "black"
+  ctx.setLineDash([5, 5])
+
+  ctx.moveTo(0, canvasY)
+  ctx.lineTo(dataLayer.width, canvasY)
+  ctx.stroke()
+
+  const y = linear({
+    dy: yMax - yMin,
+    dx: dataLayer.height,
+    x: dataLayer.height - canvasY,
+    y0: yMin,
+  })
+
+  drawYLabel(ctx, dataLayer, {
+    canvasY,
+    y,
+  })
+}
+
+function drawVolumeLine(ctx, dataLayer, mouse, metric) {
+  const {canvasY} = mouse
+  const {maxVolume} = metric
+
+  // line
+  ctx.strokeStyle = "black"
+  ctx.setLineDash([5, 5])
+
+  ctx.moveTo(0, canvasY)
+  ctx.lineTo(dataLayer.width, canvasY)
+  ctx.stroke()
+
+  // TODO get bar chart height from inde.js
+  const barChartHeight = 73
+  const y = linear({
+    dy: maxVolume,
+    dx: barChartHeight,
+    x: dataLayer.height - canvasY,
+    y0: maxVolume,
+  })
+
+  drawYLabel(ctx, dataLayer, {
+    canvasY,
+    y,
+  })
+}
+
+function drawTimestampLine(ctx, dataLayer, mouse, metric) {
   // TODO height from input
   const height = ctx.canvas.height - SCALE_X_HEIGHT
 

@@ -37,6 +37,7 @@ class Candlestick extends Component {
 
     // TODO remove me
     // TODO render at 10 ms
+    // TODO fix initial render does not work
     // setInterval(() => {
     //   genFakeData()
     //   if (DATA.length > 50) {
@@ -97,7 +98,7 @@ class Candlestick extends Component {
     }, DATA)
 
     // ui layer
-    // drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
+    drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
   }
 
   render() {
@@ -168,6 +169,7 @@ Candlestick.defaultProps = {
     },
   },
   volumeBarChart: {
+    // TODO compute volume bar chart height from easier setting than pixel
     height: 73,
   },
   ui: {
