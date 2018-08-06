@@ -160,10 +160,11 @@ function drawYLabel(ctx, dataLayer, props) {
   const {
     canvasY,
     y,
+    fillStyle,
   } = props
 
   // label
-  ctx.fillStyle = "black"
+  ctx.fillStyle = fillStyle || "black"
 
   const labelHeight = 20
   const labelWidth = SCALE_Y_WIDTH
@@ -224,45 +225,11 @@ function drawLatestPriceLabel(
     y0: 0,
   })
 
-  ctx.fillStyle = open <= close ? props.bull.color : props.bear.color
-
-  // const labelHeight = 20
-  // const labelWidth = SCALE_Y_WIDTH
-  //
-  // // tip
-  // ctx.beginPath()
-  // ctx.moveTo(
-  //   dataLayer.width - 5,
-  //   canvasY,
-  // )
-  // ctx.lineTo(
-  //   dataLayer.width,
-  //   canvasY - round(labelHeight / 2),
-  // )
-  // ctx.lineTo(
-  //   dataLayer.width,
-  //   canvasY + round(labelHeight / 2),
-  // )
-  // ctx.fill()
-  //
-  // // rect
-  // ctx.fillRect(
-  //   dataLayer.width,
-  //   canvasY - round(labelHeight / 2),
-  //   labelWidth, labelHeight
-  // )
-  //
-  // // text
-  // ctx.font = "12px Arial"
-  // ctx.fillStyle = "white"
-  // ctx.textAlign = "left"
-  // ctx.textBaseline = "middle"
-  //
-  // ctx.fillText(
-  //   close.toFixed(2),
-  //   dataLayer.width + 10,
-  //   canvasY,
-  // )
+  drawYLabel(ctx, dataLayer, {
+    canvasY,
+    y: close,
+    fillStyle: open <= close ? props.bull.color : props.bear.color,
+  })
 }
 
 function drawPriceLine(ctx, dataLayer, mouse, metric) {
