@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import {round} from './util'
 import {drawData} from './data'
 import {
-  SCALE_X_HEIGHT,
-  SCALE_Y_WIDTH,
   NUM_VERTICAL_INTERVALS,
   NUM_HORIZONTAL_INTERVALS,
   drawBackground,
@@ -114,8 +112,8 @@ class Candlestick extends Component {
         <canvas
           style={style.dataLayer}
           ref="dataLayer"
-          width={this.props.width - SCALE_Y_WIDTH}
-          height={this.props.height - SCALE_X_HEIGHT}
+          width={this.props.width - this.props.background.yAxisPaddRight}
+          height={this.props.height - this.props.background.xAxisPaddBottom}
         >
         </canvas>
         <canvas
@@ -157,6 +155,8 @@ const style = {
 Candlestick.defaultProps = {
   background: {
     color: "#2f3d45",
+    xAxisPaddBottom: 50,
+    yAxisPaddRight: 50,
   },
   width: 500,
   height: 300,
@@ -189,6 +189,8 @@ Candlestick.propTypes = {
   height: PropTypes.number.isRequired,
   background :PropTypes.shape({
     color: PropTypes.string.isRequired,
+    yAxisPaddRight: PropTypes.number.isRequired,
+    xAxisPaddBottom: PropTypes.number.isRequired,
   }).isRequired,
   volumeBarChart: PropTypes.shape({
     height: PropTypes.number.isRequired,

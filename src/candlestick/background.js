@@ -15,8 +15,8 @@ function drawHorizontalLines(ctx, props, metric) {
   const {
     volumeBarChart
   } = props
-  const width = ctx.canvas.width - SCALE_Y_WIDTH
-  const height = ctx.canvas.height - volumeBarChart.height - SCALE_X_HEIGHT
+  const width = ctx.canvas.width - props.background.yAxisPaddRight
+  const height = ctx.canvas.height - volumeBarChart.height - props.background.xAxisPaddBottom
   const interval = height / NUM_HORIZONTAL_INTERVALS
   const toY = linearTransformer({
     dy: yMax - yMin,
@@ -54,8 +54,8 @@ type XMetric = {
 function drawVerticalLines(ctx, props, metric) {
   const {xMin, xMax} = metric
 
-  const width = ctx.canvas.width - SCALE_Y_WIDTH
-  const height = ctx.canvas.height - SCALE_X_HEIGHT
+  const width = ctx.canvas.width - props.background.yAxisPaddRight
+  const height = ctx.canvas.height - props.background.xAxisPaddBottom
   const interval = width / NUM_VERTICAL_INTERVALS
   const toX = linearTransformer({
     dy: xMax - xMin,
@@ -96,8 +96,8 @@ export function drawBackground(ctx, props, metric) {
   ctx.fillStyle = "white" || props.background.color
   ctx.fillRect(
     0, 0,
-    ctx.canvas.width - SCALE_Y_WIDTH,
-    ctx.canvas.height - SCALE_X_HEIGHT,
+    ctx.canvas.width - props.background.yAxisPaddRight,
+    ctx.canvas.height - props.background.xAxisPaddBottom,
   )
 
   // style lines
