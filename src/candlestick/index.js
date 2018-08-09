@@ -5,13 +5,11 @@ import {drawData} from './data'
 import {drawBackground} from './background'
 import {drawUI, drawLatestPriceLabel} from './ui'
 
-// TODO SCALE_X_HEIGHT, SCALE_Y_WIDTH should be defined here
 // TODO queue real time data
 // TODO? object pool
 // TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO zoom
-// TODO rendering price label inside bar chart?
 class Candlestick extends Component {
   constructor(props) {
     super(props)
@@ -75,7 +73,11 @@ class Candlestick extends Component {
     const yMax = maxHigh + yInterval
     const maxVolume = Math.max(...DATA.map(price => price.volume))
 
-    this.ctx.dataLayer.clearRect(0, 0, this.ctx.backgroundLayer.canvas.width, this.ctx.backgroundLayer.canvas.height)
+    this.ctx.dataLayer.clearRect(
+      0, 0,
+      this.ctx.backgroundLayer.canvas.width,
+      this.ctx.backgroundLayer.canvas.height
+    )
 
     // background layer-
     drawBackground(this.ctx.backgroundLayer, this.props, {
