@@ -54,7 +54,7 @@ class Candlestick extends Component {
       this.mouse.canvasX = e.clientX - rect.left
       this.mouse.canvasY = e.clientY - rect.top
 
-      drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
+      drawUI(this.ctx.uiLayer, this.props, this.mouse, DATA)
     })
 
     this.draw()
@@ -96,7 +96,7 @@ class Candlestick extends Component {
     }, DATA)
 
     // ui layer
-    drawUI(this.ctx.uiLayer, this.props.ui, this.mouse, DATA)
+    drawUI(this.ctx.uiLayer, this.props, this.mouse, DATA)
   }
 
   render() {

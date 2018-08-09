@@ -1,9 +1,11 @@
 import {round, linear} from './util'
+// TODO remove num horizontal intervals
 import {
-  SCALE_X_HEIGHT,
-  SCALE_Y_WIDTH,
   NUM_HORIZONTAL_INTERVALS,
 } from './background'
+
+const Y_LABEL_WIDTH = 50
+const Y_LABEL_HEIGHT = 20
 
 export function getNearestPriceAtX(x, delta, data) {
   let low = 0, high = data.length - 1
@@ -49,19 +51,22 @@ export function drawUI(ctx, props, mouse, data) {
 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-  drawLatestPriceLabel(
-    ctx,
-    props.latestPriceLabel,
-    metric,
-    data[data.length - 1]
-  )
+  drawLatestPriceLabel(ctx, props, metric, data[data.length - 1])
 
   // dont draw if mouse not inside data layer
-  if (!mouse.canvasX || mouse.canvasX <= 0 || mouse.canvasX > ctx.canvas.width - SCALE_Y_WIDTH) {
+  if (
+    !mouse.canvasX ||
+    mouse.canvasX <= 0 ||
+    mouse.canvasX > ctx.canvas.width - props.background.yAxisPaddRight
+  ) {
     return
   }
 
-  if (!mouse.canvasY || mouse.canvasY <= 0 || mouse.canvasY > ctx.canvas.height - SCALE_X_HEIGHT) {
+  if (
+    !mouse.canvasY ||
+    mouse.canvasY <= 0 ||
+    mouse.canvasY > ctx.canvas.height - props.background.xAxisPaddBottom
+  ) {
     return
   }
 
@@ -70,19 +75,19 @@ export function drawUI(ctx, props, mouse, data) {
   // TODO remove me
   // dataLayer does not make sense?
   const dataLayer = {
-    width: ctx.canvas.width - SCALE_Y_WIDTH,
-    height: ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT,
+    width: ctx.canvas.width - props.background.yAxisPaddRight,
+    height: ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom
   }
 
   drawDataAtMouseX(ctx, dataLayer, mouse, metric, data)
 
-  if (mouse.canvasY < ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT) {
+  if (mouse.canvasY < ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom) {
     drawPriceLine(ctx, dataLayer, mouse, metric)
   } else {
     drawVolumeLine(ctx, dataLayer, mouse, metric)
   }
 
-  drawTimestampLine(ctx, dataLayer, mouse, metric)
+  drawTimestampLine(ctx, props, dataLayer, mouse, metric)
 }
 
 function drawDataAtMouseX(ctx, dataLayer, mouse, metric, data) {
@@ -166,9 +171,6 @@ function drawYLabel(ctx, dataLayer, props) {
   // label
   ctx.fillStyle = fillStyle || "black"
 
-  const labelHeight = 20
-  const labelWidth = SCALE_Y_WIDTH
-
   // label tip
   ctx.beginPath()
   ctx.moveTo(
@@ -177,19 +179,19 @@ function drawYLabel(ctx, dataLayer, props) {
   )
   ctx.lineTo(
     dataLayer.width,
-    canvasY - round(labelHeight / 2),
+    canvasY - round(Y_LABEL_HEIGHT / 2),
   )
   ctx.lineTo(
     dataLayer.width,
-    canvasY + round(labelHeight / 2),
+    canvasY + round(Y_LABEL_HEIGHT / 2),
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
     dataLayer.width,
-    canvasY - round(labelHeight / 2),
-    labelWidth, labelHeight
+    canvasY - round(Y_LABEL_HEIGHT / 2),
+    Y_LABEL_WIDTH, Y_LABEL_HEIGHT
   )
 
   // label text
@@ -205,16 +207,14 @@ function drawYLabel(ctx, dataLayer, props) {
   )
 }
 
-function drawLatestPriceLabel(
-  ctx, props, metric, price
-) {
+function drawLatestPriceLabel(ctx, props, metric, price) {
   const {open, close} = price
 
   // TODO move bar chart height up
   const BAR_CHART_HEIGHT = 73
   const dataLayer = {
-    width: ctx.canvas.width - SCALE_Y_WIDTH,
-    height: ctx.canvas.height - BAR_CHART_HEIGHT - SCALE_X_HEIGHT,
+    width: ctx.canvas.width - props.background.yAxisPaddRight,
+    height: ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom,
   }
 
   const {yMin, yMax} = metric
@@ -228,7 +228,7 @@ function drawLatestPriceLabel(
   drawYLabel(ctx, dataLayer, {
     canvasY,
     y: close,
-    fillStyle: open <= close ? props.bull.color : props.bear.color,
+    fillStyle: open <= close ? props.ui.latestPriceLabel.bull.color : props.ui.latestPriceLabel.bear.color,
   })
 }
 
@@ -284,9 +284,9 @@ function drawVolumeLine(ctx, dataLayer, mouse, metric) {
   })
 }
 
-function drawTimestampLine(ctx, dataLayer, mouse, metric) {
+function drawTimestampLine(ctx, props, dataLayer, mouse, metric) {
   // TODO height from input
-  const height = ctx.canvas.height - SCALE_X_HEIGHT
+  const height = ctx.canvas.height - props.background.xAxisPaddBottom
 
   const {canvasX} = mouse
   const {xMin, xMax} = metric
@@ -302,8 +302,8 @@ function drawTimestampLine(ctx, dataLayer, mouse, metric) {
   // label
   ctx.fillStyle = "black"
 
-  const xLabelHeight = 20
-  const xLabelWidth = 80
+  const X_LABEL_HEIGHT = 20
+  const X_LABEL_WIDTH = 80
 
   // label tip
   ctx.beginPath()
@@ -323,10 +323,10 @@ function drawTimestampLine(ctx, dataLayer, mouse, metric) {
 
   // label rect
   ctx.fillRect(
-    canvasX - round(xLabelWidth / 2),
+    canvasX - round(X_LABEL_WIDTH / 2),
     height,
-    xLabelWidth,
-    xLabelHeight,
+    X_LABEL_WIDTH,
+    X_LABEL_HEIGHT,
   )
 
   //label text
