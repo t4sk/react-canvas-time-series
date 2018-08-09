@@ -1,10 +1,6 @@
 //@flow
 import {round, linearTransformer} from './util'
 
-// TODO should be defined in index.js
-export const NUM_HORIZONTAL_INTERVALS = 6
-export const NUM_VERTICAL_INTERVALS = 6
-
 function drawHorizontalLines(ctx, props, metric) {
   const {yMin, yMax, maxVolume} = metric
 
@@ -14,14 +10,14 @@ function drawHorizontalLines(ctx, props, metric) {
   } = props
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - volumeBarChart.height - props.background.xAxisPaddBottom
-  const interval = height / NUM_HORIZONTAL_INTERVALS
+  const interval = height / props.background.numHorizontalIntervals
   const toY = linearTransformer({
     dy: yMax - yMin,
     dx: height,
     y0: yMin,
   })
 
-  for (let i = 1; i < NUM_HORIZONTAL_INTERVALS; i++) {
+  for (let i = 1; i < props.background.numHorizontalIntervals; i++) {
     const canvasY = round(i * interval)
 
     // draw line
@@ -30,12 +26,12 @@ function drawHorizontalLines(ctx, props, metric) {
     ctx.stroke()
 
     // draw text
-    const y = round(toY((NUM_HORIZONTAL_INTERVALS - i) * interval))
+    const y = round(toY((props.background.numHorizontalIntervals - i) * interval))
     ctx.fillText(y, width + 10, canvasY)
   }
 
   // draw max volume line
-  const canvasY = round(NUM_HORIZONTAL_INTERVALS * interval)
+  const canvasY = round(props.background.numHorizontalIntervals * interval)
   ctx.moveTo(0, canvasY)
   ctx.lineTo(width, canvasY)
   ctx.stroke()
@@ -53,14 +49,14 @@ function drawVerticalLines(ctx, props, metric) {
 
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
-  const interval = width / NUM_VERTICAL_INTERVALS
+  const interval = width / props.background.numVerticalIntervals
   const toX = linearTransformer({
     dy: xMax - xMin,
     dx: width,
     y0: xMin,
   })
 
-  for (let i = 0; i <= NUM_VERTICAL_INTERVALS; i++) {
+  for (let i = 0; i <= props.background.numVerticalIntervals; i++) {
     const canvasX = round(i * interval)
 
     // draw line

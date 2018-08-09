@@ -2,11 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {round} from './util'
 import {drawData} from './data'
-import {
-  NUM_VERTICAL_INTERVALS,
-  NUM_HORIZONTAL_INTERVALS,
-  drawBackground,
-} from './background'
+import {drawBackground} from './background'
 import {drawUI, drawLatestPriceLabel} from './ui'
 
 // TODO SCALE_X_HEIGHT, SCALE_Y_WIDTH should be defined here
@@ -74,7 +70,7 @@ class Candlestick extends Component {
     const minLow = Math.min(...DATA.map(d => d.low))
     const maxHigh = Math.max(...DATA.map(d => d.high))
     // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-    const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
+    const yInterval = Math.ceil((maxHigh - minLow) / (this.props.background.numVertialIntervals - 2))
     const yMin = minLow - yInterval
     const yMax = maxHigh + yInterval
     const maxVolume = Math.max(...DATA.map(price => price.volume))
@@ -157,6 +153,8 @@ Candlestick.defaultProps = {
     color: "#2f3d45",
     xAxisPaddBottom: 50,
     yAxisPaddRight: 50,
+    numVertialIntervals: 6,
+    numHorizontalIntervals: 6,
   },
   width: 500,
   height: 300,

@@ -1,5 +1,4 @@
 import {round, floor, linear, linearTransformer} from './util'
-import {NUM_HORIZONTAL_INTERVALS} from './background'
 
 // TODO put metric inside data
 function drawCandlestick(ctx, props, metric, price) {

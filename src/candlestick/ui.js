@@ -1,11 +1,10 @@
 import {round, linear} from './util'
-// TODO remove num horizontal intervals
-import {
-  NUM_HORIZONTAL_INTERVALS,
-} from './background'
 
 const Y_LABEL_WIDTH = 50
 const Y_LABEL_HEIGHT = 20
+
+const X_LABEL_HEIGHT = 20
+const X_LABEL_WIDTH = 80
 
 export function getNearestPriceAtX(x, delta, data) {
   let low = 0, high = data.length - 1
@@ -36,7 +35,7 @@ export function drawUI(ctx, props, mouse, data) {
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
   // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-  const yInterval = Math.ceil((maxHigh - minLow) / (NUM_HORIZONTAL_INTERVALS - 2))
+  const yInterval = Math.ceil((maxHigh - minLow) / (props.background.numVertialIntervals - 2))
 
   // TODO put metric inside data
   const metric = {
@@ -301,9 +300,6 @@ function drawTimestampLine(ctx, props, dataLayer, mouse, metric) {
 
   // label
   ctx.fillStyle = "black"
-
-  const X_LABEL_HEIGHT = 20
-  const X_LABEL_WIDTH = 80
 
   // label tip
   ctx.beginPath()
