@@ -35,7 +35,7 @@ export function drawUI(ctx, props, mouse, data) {
   const minLow = Math.min(...data.map(d => d.low))
   const maxHigh = Math.max(...data.map(d => d.high))
   // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-  const yInterval = Math.ceil((maxHigh - minLow) / (props.background.numVertialIntervals - 2))
+  const yInterval = Math.ceil((maxHigh - minLow) / (props.background.numVerticalIntervals - 2))
 
   // TODO put metric inside data
   const metric = {
