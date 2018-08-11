@@ -1,6 +1,5 @@
 import {round, floor, linear, linearTransformer} from './util'
 
-// TODO put metric inside data
 function drawCandlestick(ctx, props, price) {
   const {width, scaleY, toCanvasX, toCanvasY} = props
   const {high, low, open, close, timestamp} = price
