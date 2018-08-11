@@ -69,18 +69,16 @@ export function drawUI(ctx, props, mouse, data) {
     return
   }
 
-  // TODO pass data layer size as input from index.js
-  const BAR_CHART_HEIGHT = 73
   // TODO remove me
   // dataLayer does not make sense?
   const dataLayer = {
     width: ctx.canvas.width - props.background.yAxisPaddRight,
-    height: ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom
+    height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom
   }
 
   drawDataAtMouseX(ctx, dataLayer, mouse, metric, data)
 
-  if (mouse.canvasY < ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom) {
+  if (mouse.canvasY < ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom) {
     drawPriceLine(ctx, dataLayer, mouse, metric)
   } else {
     drawVolumeLine(ctx, dataLayer, mouse, metric)
@@ -209,11 +207,9 @@ function drawYLabel(ctx, dataLayer, props) {
 function drawLatestPriceLabel(ctx, props, metric, price) {
   const {open, close} = price
 
-  // TODO move bar chart height up
-  const BAR_CHART_HEIGHT = 73
   const dataLayer = {
     width: ctx.canvas.width - props.background.yAxisPaddRight,
-    height: ctx.canvas.height - BAR_CHART_HEIGHT - props.background.xAxisPaddBottom,
+    height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom,
   }
 
   const {yMin, yMax} = metric
