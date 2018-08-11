@@ -92,7 +92,8 @@ class Candlestick extends Component {
     })
 
     // data layer
-    drawData(this.ctx.dataLayer, this.props, {
+    drawData(this.ctx.dataLayer, {
+      ...this.props,
       xMin,
       xMax,
       xInterval,

@@ -1,8 +1,8 @@
 import {round, floor, linear, linearTransformer} from './util'
 
 // TODO put metric inside data
-function drawCandlestick(ctx, props, metric, price) {
-  const {width, scaleY, toCanvasX, toCanvasY} = metric
+function drawCandlestick(ctx, props, price) {
+  const {width, scaleY, toCanvasX, toCanvasY} = props
   const {high, low, open, close, timestamp} = price
 
   const x = round(toCanvasX(timestamp))
@@ -38,12 +38,14 @@ function drawCandlestick(ctx, props, metric, price) {
   ctx.stroke()
 }
 
-function drawCandlesticks(ctx, props, metric, data) {
-  // TODO move computation to drawData
-  const {xMin, xMax, xInterval, yMin, yMax} = metric
-
+function drawCandlesticks(ctx, props, data) {
   const {
-    volumeBarChart
+    xMin,
+    xMax,
+    xInterval,
+    yMin,
+    yMax,
+    volumeBarChart,
   } = props
   const height = ctx.canvas.height - volumeBarChart.height
 
@@ -65,7 +67,8 @@ function drawCandlesticks(ctx, props, metric, data) {
   const width = round(scaleX * xInterval)
 
   for (let i = 0; i < data.length; i++) {
-    drawCandlestick(ctx, props, {
+    drawCandlestick(ctx, {
+      ...props,
       width,
       scaleY,
       toCanvasX,
@@ -74,11 +77,13 @@ function drawCandlesticks(ctx, props, metric, data) {
   }
 }
 
-function drawVolumesBarChart(ctx, props, metric, data) {
-  // TODO move computation to drawData
-  const {xMin, xMax, yInterval, xInterval} = metric
+function drawVolumesBarChart(ctx, props, data) {
   const {
-    volumeBarChart
+    xMin,
+    xMax,
+    yInterval,
+    xInterval,
+    volumeBarChart,
   } = props
 
   const toCanvasX = linearTransformer({
@@ -118,7 +123,7 @@ function drawVolumesBarChart(ctx, props, metric, data) {
   }
 }
 
-export function drawData(ctx, props, metric, data) {
-  drawCandlesticks(ctx, props, metric, data)
-  drawVolumesBarChart(ctx, props, metric, data)
+export function drawData(ctx, props, data) {
+  drawCandlesticks(ctx, props, data)
+  drawVolumesBarChart(ctx, props, data)
 }
