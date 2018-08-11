@@ -42,8 +42,6 @@ function drawCandlesticks(ctx, props, metric, data) {
   // TODO move computation to drawData
   const {xMin, xMax, xInterval, yMin, yMax} = metric
 
-  // TODO set volume bar chart height and candlestick chart
-  // height in index.js
   const {
     volumeBarChart
   } = props
@@ -79,7 +77,6 @@ function drawCandlesticks(ctx, props, metric, data) {
 function drawVolumesBarChart(ctx, props, metric, data) {
   // TODO move computation to drawData
   const {xMin, xMax, yInterval, xInterval} = metric
-  // TODO move volume bar chart to index.js
   const {
     volumeBarChart
   } = props

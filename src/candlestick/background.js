@@ -4,7 +4,6 @@ import {round, linearTransformer} from './util'
 function drawHorizontalLines(ctx, props, metric) {
   const {yMin, yMax, maxVolume} = metric
 
-  // TODO define candlestick and barchart height in index.js
   const {
     volumeBarChart
   } = props
@@ -68,14 +67,6 @@ function drawVerticalLines(ctx, props, metric) {
     const x = round(toX(canvasX))
     ctx.fillText(x, canvasX, height + 10)
   }
-}
-
-type Metric = {
-  xMin: number,
-  xMax: number,
-  xInterval: number,
-  yMin: number,
-  yMax: number,
 }
 
 export function drawBackground(ctx, props, metric) {
