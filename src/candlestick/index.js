@@ -48,7 +48,10 @@ class Candlestick extends Component {
       this.mouse.canvasX = e.clientX - rect.left
       this.mouse.canvasY = e.clientY - rect.top
 
-      drawUI(this.ctx.uiLayer, this.props, this.mouse, DATA)
+      drawUI(this.ctx.uiLayer, {
+        ...this.props,
+        ...this.getMetrics(),
+      }, this.mouse, DATA)
     })
 
     this.draw()
@@ -59,7 +62,7 @@ class Candlestick extends Component {
     return false
   }
 
-  draw() {
+  getMetrics() {
     const minTimestamp = DATA[0].timestamp
     const maxTimestamp = DATA[DATA.length - 1].timestamp
     const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (DATA.length - 1))
@@ -73,36 +76,44 @@ class Candlestick extends Component {
     const yMax = maxHigh + yInterval
     const maxVolume = Math.max(...DATA.map(price => price.volume))
 
+    return {
+      maxVolume,
+      xMin,
+      xMax,
+      yMin,
+      yMax,
+      xInterval,
+      yInterval,
+    }
+  }
+
+  draw() {
     this.ctx.dataLayer.clearRect(
       0, 0,
       this.ctx.backgroundLayer.canvas.width,
       this.ctx.backgroundLayer.canvas.height
     )
 
+    const metrics = this.getMetrics()
+
     // background layer-
     drawBackground(
       this.ctx.backgroundLayer, {
       ...this.props,
-      xMin,
-      xMax,
-      xInterval,
-      yMin,
-      yMax,
-      maxVolume
+      ...metrics,
     })
 
     // data layer
     drawData(this.ctx.dataLayer, {
       ...this.props,
-      xMin,
-      xMax,
-      xInterval,
-      yMin,
-      yMax,
+      ...metrics,
     }, DATA)
 
     // ui layer
-    drawUI(this.ctx.uiLayer, this.props, this.mouse, DATA)
+    drawUI(this.ctx.uiLayer, {
+      ...this.props,
+      ...metrics,
+    }, this.mouse, DATA)
   }
 
   render() {

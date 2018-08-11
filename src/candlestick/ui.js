@@ -27,30 +27,9 @@ export function getNearestPriceAtX(x, delta, data) {
 }
 
 export function drawUI(ctx, props, mouse, data) {
-  // TODO pass min / max data as input
-  const minTimestamp = data[0].timestamp
-  const maxTimestamp = data[data.length - 1].timestamp
-  const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (data.length - 1))
-  const maxVolume = Math.max(...data.map(d => d.volume))
-  const minLow = Math.min(...data.map(d => d.low))
-  const maxHigh = Math.max(...data.map(d => d.high))
-  // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-  const yInterval = Math.ceil((maxHigh - minLow) / (props.background.numVerticalIntervals - 2))
-
-  // TODO put metric inside data
-  const metric = {
-    maxVolume,
-    xMin: minTimestamp - round(xInterval / 2),
-    xMax: maxTimestamp + round(xInterval / 2),
-    yMin: minLow - yInterval,
-    yMax: maxHigh + yInterval,
-    xInterval,
-    yInterval,
-  }
-
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-  drawLatestPriceLabel(ctx, props, metric, data[data.length - 1])
+  drawLatestPriceLabel(ctx, props, data[data.length - 1])
 
   // dont draw if mouse not inside data layer
   if (
@@ -76,26 +55,30 @@ export function drawUI(ctx, props, mouse, data) {
     height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom
   }
 
-  drawDataAtMouseX(ctx, dataLayer, mouse, metric, data)
+  drawDataAtMouseX(ctx, props, dataLayer, mouse, data)
 
   if (mouse.canvasY < ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom) {
-    drawPriceLine(ctx, dataLayer, mouse, metric)
+    drawPriceLine(ctx, props, dataLayer, mouse)
   } else {
-    drawVolumeLine(ctx, dataLayer, mouse, metric)
+    drawVolumeLine(ctx, props, dataLayer, mouse)
   }
 
-  drawTimestampLine(ctx, props, dataLayer, mouse, metric)
+  drawTimestampLine(ctx, props, dataLayer, mouse)
 }
 
-function drawDataAtMouseX(ctx, dataLayer, mouse, metric, data) {
+function drawDataAtMouseX(ctx, props, dataLayer, mouse, data) {
+  const {
+    xMax, xMin, xInterval
+  } = props
+
   const xAtMouse = linear({
-    dy: metric.xMax - metric.xMin,
+    dy: xMax - xMin,
     dx: dataLayer.width,
     x: mouse.canvasX,
-    y0: metric.xMin,
+    y0: xMin,
   })
 
-  const price = getNearestPriceAtX(xAtMouse, round(metric.xInterval / 2), data)
+  const price = getNearestPriceAtX(xAtMouse, round(xInterval / 2), data)
 
   const {open, high, low, close, volume} = price
   const color = open <= close ? "green" : "red"
@@ -204,15 +187,16 @@ function drawYLabel(ctx, dataLayer, props) {
   )
 }
 
-function drawLatestPriceLabel(ctx, props, metric, price) {
+function drawLatestPriceLabel(ctx, props, price) {
+  const {yMin, yMax} = props
   const {open, close} = price
 
+  // TODO remove dataLayer?
   const dataLayer = {
     width: ctx.canvas.width - props.background.yAxisPaddRight,
     height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom,
   }
 
-  const {yMin, yMax} = metric
   const canvasY = linear({
     dy: dataLayer.height,
     dx: yMax - yMin,
@@ -227,9 +211,9 @@ function drawLatestPriceLabel(ctx, props, metric, price) {
   })
 }
 
-function drawPriceLine(ctx, dataLayer, mouse, metric) {
+function drawPriceLine(ctx, props, dataLayer, mouse) {
+  const {yMin, yMax} = props
   const {canvasY} = mouse
-  const {yMin, yMax} = metric
 
   // line
   ctx.strokeStyle = "black"
@@ -252,9 +236,9 @@ function drawPriceLine(ctx, dataLayer, mouse, metric) {
   })
 }
 
-function drawVolumeLine(ctx, dataLayer, mouse, metric) {
+function drawVolumeLine(ctx, props, dataLayer, mouse) {
   const {canvasY} = mouse
-  const {maxVolume} = metric
+  const {maxVolume} = props
 
   // line
   ctx.strokeStyle = "black"
@@ -279,12 +263,12 @@ function drawVolumeLine(ctx, dataLayer, mouse, metric) {
   })
 }
 
-function drawTimestampLine(ctx, props, dataLayer, mouse, metric) {
+function drawTimestampLine(ctx, props, dataLayer, mouse) {
   // TODO height from input
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
 
   const {canvasX} = mouse
-  const {xMin, xMax} = metric
+  const {xMin, xMax} = props
 
   // timestamp line
   ctx.strokeStyle = "black"
