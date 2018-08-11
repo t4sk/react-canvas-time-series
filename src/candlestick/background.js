@@ -38,11 +38,6 @@ function drawHorizontalLines(ctx, props, metric) {
   ctx.fillText(maxVolume, width + 10, canvasY)
 }
 
-type XMetric = {
-  xMin: number,
-  xMax: number,
-}
-
 function drawVerticalLines(ctx, props, metric) {
   const {xMin, xMax} = metric
 
