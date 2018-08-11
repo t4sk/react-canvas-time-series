@@ -1,11 +1,12 @@
 //@flow
 import {round, linearTransformer} from './util'
 
-function drawHorizontalLines(ctx, props, metric) {
-  const {yMin, yMax, maxVolume} = metric
-
+function drawHorizontalLines(ctx, props) {
   const {
-    volumeBarChart
+    yMin,
+    yMax,
+    maxVolume,
+    volumeBarChart,
   } = props
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - volumeBarChart.height - props.background.xAxisPaddBottom
@@ -38,8 +39,8 @@ function drawHorizontalLines(ctx, props, metric) {
   ctx.fillText(maxVolume, width + 10, canvasY)
 }
 
-function drawVerticalLines(ctx, props, metric) {
-  const {xMin, xMax} = metric
+function drawVerticalLines(ctx, props) {
+  const {xMin, xMax} = props
 
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
@@ -64,7 +65,7 @@ function drawVerticalLines(ctx, props, metric) {
   }
 }
 
-export function drawBackground(ctx, props, metric) {
+export function drawBackground(ctx, props) {
   ctx.fillStyle = "lightgrey"
   ctx.fillRect(
     0, 0,
@@ -89,6 +90,6 @@ export function drawBackground(ctx, props, metric) {
   ctx.textBaseline = "middle"
   ctx.textAlign = "center"
 
-  drawHorizontalLines(ctx, props, metric)
-  drawVerticalLines(ctx, props, metric)
+  drawHorizontalLines(ctx, props)
+  drawVerticalLines(ctx, props)
 }

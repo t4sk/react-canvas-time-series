@@ -80,8 +80,15 @@ class Candlestick extends Component {
     )
 
     // background layer-
-    drawBackground(this.ctx.backgroundLayer, this.props, {
-      xMin, xMax, xInterval, yMin, yMax, maxVolume
+    drawBackground(
+      this.ctx.backgroundLayer, {
+      ...this.props,
+      xMin,
+      xMax,
+      xInterval,
+      yMin,
+      yMax,
+      maxVolume
     })
 
     // data layer
