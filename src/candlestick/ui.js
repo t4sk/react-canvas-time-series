@@ -29,7 +29,15 @@ export function getNearestPriceAtX(x, delta, data) {
 export function drawUI(ctx, props, mouse, data) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-  drawLatestPriceLabel(ctx, props, data[data.length - 1])
+  const candlestickChart = {
+    width: ctx.canvas.width - props.background.yAxisPaddRight,
+    height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom
+  }
+
+  drawLatestPriceLabel(ctx, {
+    ...props,
+    candlestickChart,
+  }, data[data.length - 1])
 
   // dont draw if mouse not inside data layer
   if (
@@ -48,32 +56,37 @@ export function drawUI(ctx, props, mouse, data) {
     return
   }
 
-  // TODO remove me
-  // dataLayer does not make sense?
-  const dataLayer = {
-    width: ctx.canvas.width - props.background.yAxisPaddRight,
-    height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom
-  }
-
-  drawDataAtMouseX(ctx, props, dataLayer, mouse, data)
+  drawDataAtMouseX(ctx, {
+    ...props,
+    candlestickChart,
+  }, mouse, data)
 
   if (mouse.canvasY < ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom) {
-    drawPriceLine(ctx, props, dataLayer, mouse)
+    drawPriceLine(ctx, {
+      ...props,
+      candlestickChart,
+    }, mouse)
   } else {
-    drawVolumeLine(ctx, props, dataLayer, mouse)
+    drawVolumeLine(ctx, {
+      ...props,
+      candlestickChart,
+    }, mouse)
   }
 
-  drawTimestampLine(ctx, props, dataLayer, mouse)
+  drawTimestampLine(ctx, {
+    ...props,
+    candlestickChart,
+  }, mouse)
 }
 
-function drawDataAtMouseX(ctx, props, dataLayer, mouse, data) {
+function drawDataAtMouseX(ctx, props, mouse, data) {
   const {
-    xMax, xMin, xInterval
+    xMax, xMin, xInterval, candlestickChart
   } = props
 
   const xAtMouse = linear({
     dy: xMax - xMin,
-    dx: dataLayer.width,
+    dx: candlestickChart.width,
     x: mouse.canvasX,
     y0: xMin,
   })
@@ -141,11 +154,12 @@ function drawDataAtMouseX(ctx, props, dataLayer, mouse, data) {
   ctx.fillText(volume, x, y)
 }
 
-function drawYLabel(ctx, dataLayer, props) {
+function drawYLabel(ctx, props) {
   const {
     canvasY,
     y,
     fillStyle,
+    candlestickChart,
   } = props
 
   // label
@@ -154,22 +168,22 @@ function drawYLabel(ctx, dataLayer, props) {
   // label tip
   ctx.beginPath()
   ctx.moveTo(
-    dataLayer.width - 5,
+    candlestickChart.width - 5,
     canvasY,
   )
   ctx.lineTo(
-    dataLayer.width,
+    candlestickChart.width,
     canvasY - round(Y_LABEL_HEIGHT / 2),
   )
   ctx.lineTo(
-    dataLayer.width,
+    candlestickChart.width,
     canvasY + round(Y_LABEL_HEIGHT / 2),
   )
   ctx.fill()
 
   // label rect
   ctx.fillRect(
-    dataLayer.width,
+    candlestickChart.width,
     canvasY - round(Y_LABEL_HEIGHT / 2),
     Y_LABEL_WIDTH, Y_LABEL_HEIGHT
   )
@@ -182,37 +196,32 @@ function drawYLabel(ctx, dataLayer, props) {
 
   ctx.fillText(
     y.toFixed(2),
-    dataLayer.width + 10,
+    candlestickChart.width + 10,
     canvasY,
   )
 }
 
 function drawLatestPriceLabel(ctx, props, price) {
-  const {yMin, yMax} = props
+  const {yMin, yMax, candlestickChart} = props
   const {open, close} = price
 
-  // TODO remove dataLayer?
-  const dataLayer = {
-    width: ctx.canvas.width - props.background.yAxisPaddRight,
-    height: ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom,
-  }
-
   const canvasY = linear({
-    dy: dataLayer.height,
+    dy: candlestickChart.height,
     dx: yMax - yMin,
     x: yMax - close,
     y0: 0,
   })
 
-  drawYLabel(ctx, dataLayer, {
+  drawYLabel(ctx, {
     canvasY,
     y: close,
     fillStyle: open <= close ? props.ui.latestPriceLabel.bull.color : props.ui.latestPriceLabel.bear.color,
+    candlestickChart
   })
 }
 
-function drawPriceLine(ctx, props, dataLayer, mouse) {
-  const {yMin, yMax} = props
+function drawPriceLine(ctx, props, mouse) {
+  const {yMin, yMax, candlestickChart} = props
   const {canvasY} = mouse
 
   // line
@@ -220,55 +229,54 @@ function drawPriceLine(ctx, props, dataLayer, mouse) {
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(0, canvasY)
-  ctx.lineTo(dataLayer.width, canvasY)
+  ctx.lineTo(candlestickChart.width, canvasY)
   ctx.stroke()
 
   const y = linear({
     dy: yMax - yMin,
-    dx: dataLayer.height,
-    x: dataLayer.height - canvasY,
+    dx: candlestickChart.height,
+    x: candlestickChart.height - canvasY,
     y0: yMin,
   })
 
-  drawYLabel(ctx, dataLayer, {
+  drawYLabel(ctx, {
     canvasY,
     y,
+    candlestickChart,
   })
 }
 
-function drawVolumeLine(ctx, props, dataLayer, mouse) {
+function drawVolumeLine(ctx, props, mouse) {
   const {canvasY} = mouse
-  const {maxVolume} = props
+  const {maxVolume, volumeBarChart, candlestickChart} = props
 
   // line
   ctx.strokeStyle = "black"
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(0, canvasY)
-  ctx.lineTo(dataLayer.width, canvasY)
+  ctx.lineTo(candlestickChart.width, canvasY)
   ctx.stroke()
 
-  // TODO get bar chart height from inde.js
-  const barChartHeight = 73
   const y = linear({
     dy: maxVolume,
-    dx: barChartHeight,
-    x: dataLayer.height - canvasY,
+    dx: volumeBarChart.height,
+    x: candlestickChart.height - canvasY,
     y0: maxVolume,
   })
 
-  drawYLabel(ctx, dataLayer, {
+  drawYLabel(ctx, {
     canvasY,
     y,
+    candlestickChart,
   })
 }
 
-function drawTimestampLine(ctx, props, dataLayer, mouse) {
-  // TODO height from input
+function drawTimestampLine(ctx, props, mouse) {
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
 
   const {canvasX} = mouse
-  const {xMin, xMax} = props
+  const {xMin, xMax, candlestickChart} = props
 
   // timestamp line
   ctx.strokeStyle = "black"
@@ -312,7 +320,7 @@ function drawTimestampLine(ctx, props, dataLayer, mouse) {
 
   const x = linear({
     dy: xMax - xMin,
-    dx: dataLayer.width,
+    dx: candlestickChart.width,
     x: canvasX,
     y0: xMin,
   })
