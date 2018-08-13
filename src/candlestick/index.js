@@ -9,7 +9,8 @@ import {drawUI} from './ui'
 // TODO? object pool
 // TODO use requestAnimationFrame?
 // TODO render streamed data
-// TODO zoom
+// TODO zoom (here)
+// TODO? show price at mouse next to the cursor
 class Candlestick extends Component {
   constructor(props) {
     super(props)

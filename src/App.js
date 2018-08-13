@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Candlestick from './candlestick'
 
+// TODO render price graph
 class App extends Component {
   render() {
     return (
