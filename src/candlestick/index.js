@@ -29,14 +29,13 @@ class Candlestick extends Component {
 
     // TODO remove me
     // TODO render at 10 ms
-    // TODO fix initial render does not work (here)
-    // setInterval(() => {
-    //   genFakeData()
-    //   if (DATA.length > 50) {
-    //     DATA.shift()
-    //   }
-    //   this.draw()
-    // }, 100)
+    setInterval(() => {
+      genFakeData()
+      if (DATA.length > 50) {
+        DATA.shift()
+      }
+      this.draw()
+    }, 100)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
@@ -251,15 +250,13 @@ for (let i = 0; i < 50; i++) {
     low,
     open,
     close,
-    timestamp: i * 100 + 100,
+    timestamp: Date.now() - (50 * 100) + 100 * i,
     volume,
   }
 }
 
 // TODO remove me
-let i = 0
 function genFakeData() {
-  i++
   const high = randInt(60, 100)
   const low = randInt(0, 30)
   const open = randInt(low, high)
@@ -271,7 +268,7 @@ function genFakeData() {
     low,
     open,
     close,
-    timestamp: i * 100 + 100,
+    timestamp: Date.now(),
     volume,
   })
 }
