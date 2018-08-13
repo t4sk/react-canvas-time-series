@@ -1,4 +1,4 @@
-import {round, floor, linear, linearTransformer} from './util'
+import {round, linearTransformer} from './util'
 
 function drawCandlestick(ctx, props, price) {
   const {width, scaleY, toCanvasX, toCanvasY} = props
@@ -80,7 +80,6 @@ function drawVolumesBarChart(ctx, props, data) {
   const {
     xMin,
     xMax,
-    yInterval,
     xInterval,
     volumeBarChart,
   } = props

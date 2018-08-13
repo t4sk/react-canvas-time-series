@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {round} from './util'
 import {drawData} from './data'
 import {drawBackground} from './background'
-import {drawUI, drawLatestPriceLabel} from './ui'
+import {drawUI} from './ui'
 
 // TODO queue real time data
 // TODO? object pool
@@ -29,7 +29,7 @@ class Candlestick extends Component {
 
     // TODO remove me
     // TODO render at 10 ms
-    // TODO fix initial render does not work
+    // TODO fix initial render does not work (here)
     // setInterval(() => {
     //   genFakeData()
     //   if (DATA.length > 50) {
