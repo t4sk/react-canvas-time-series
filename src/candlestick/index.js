@@ -29,13 +29,13 @@ class Candlestick extends Component {
 
     // TODO remove me
     // TODO render at 10 ms
-    setInterval(() => {
-      genFakeData()
-      if (DATA.length > 50) {
-        DATA.shift()
-      }
-      this.draw()
-    }, 100)
+    // setInterval(() => {
+    //   genFakeData()
+    //   if (DATA.length > 50) {
+    //     DATA.shift()
+    //   }
+    //   this.draw()
+    // }, 100)
 
     // translate by half pixel to draw thin lines
     this.ctx.backgroundLayer.translate(0.5, 0.5)
