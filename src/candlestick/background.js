@@ -1,5 +1,5 @@
 //@flow
-import {round, linearTransformer} from './util'
+import {round, linearTransformer} from '../util'
 
 function drawHorizontalLines(ctx, props) {
   const {

@@ -1,4 +1,4 @@
-import {round, linear} from './util'
+import {round, linear} from '../util'
 
 const Y_LABEL_WIDTH = 50
 const Y_LABEL_HEIGHT = 20

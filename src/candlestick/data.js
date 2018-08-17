@@ -1,4 +1,4 @@
-import {round, linearTransformer} from './util'
+import {round, linearTransformer} from '../util'
 
 function drawCandlestick(ctx, props, price) {
   const {width, scaleY, toCanvasX, toCanvasY} = props
