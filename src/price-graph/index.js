@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {round} from '../util'
-// import {drawData} from './data'
+import {drawData} from './data'
 import {drawBackground} from './background'
-// import {drawUI} from './ui'
 
 class PriceGraph extends Component {
   componentDidMount() {
@@ -66,24 +65,16 @@ class PriceGraph extends Component {
 
     const metrics = this.getMetrics()
 
-    // background layer-
     drawBackground(
       this.ctx.backgroundLayer, {
       ...this.props,
       ...metrics,
     })
 
-    // data layer
-    // drawData(this.ctx.dataLayer, {
-    //   ...this.props,
-    //   ...metrics,
-    // }, DATA)
-    //
-    // // ui layer
-    // drawUI(this.ctx.uiLayer, {
-    //   ...this.props,
-    //   ...metrics,
-    // }, this.mouse, DATA)
+    drawData(this.ctx.dataLayer, {
+      ...this.props,
+      ...metrics,
+    }, DATA)
   }
 
   render() {
@@ -136,17 +127,8 @@ PriceGraph.defaultProps = {
     numVerticalIntervals: 6,
     numHorizontalIntervals: 6,
   },
-  candlestick: {
-    bull: {
-      color: "lightgreen",
-    },
-    bear: {
-      color: "red"
-    },
-  },
-  volumeBarChart: {
-    // TODO compute volume bar chart height from easier setting than pixel
-    height: 73,
+  priceLine: {
+    color: "green",
   },
 }
 
