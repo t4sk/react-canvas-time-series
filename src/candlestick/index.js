@@ -11,6 +11,7 @@ import {drawUI} from './ui'
 // TODO render streamed data
 // TODO zoom
 // TODO? show price at mouse next to the cursor
+// TODO separate volume chart and candlestick
 class Candlestick extends Component {
   constructor(props) {
     super(props)
