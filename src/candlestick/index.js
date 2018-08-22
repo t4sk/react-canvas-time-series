@@ -118,7 +118,11 @@ class Candlestick extends Component {
 
   render() {
     return (
-      <div style={style.container}>
+      <div style={{
+        ...style.container,
+        width: this.props.width,
+        height: this.props.height,
+      }}>
         <canvas
           style={style.backgroundLayer}
           ref="backgroundLayer"

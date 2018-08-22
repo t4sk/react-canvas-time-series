@@ -4,6 +4,7 @@ import {round} from '../util'
 import {drawData} from './data'
 import {drawBackground} from './background'
 
+// TODO render csv data
 class PriceGraph extends Component {
   componentDidMount() {
     this.ctx = {
@@ -79,7 +80,11 @@ class PriceGraph extends Component {
 
   render() {
     return (
-      <div style={style.container}>
+      <div style={{
+        ...style.container,
+        width: this.props.width,
+        height: this.props.height,
+      }}>
         <canvas
           style={style.backgroundLayer}
           ref="backgroundLayer"
