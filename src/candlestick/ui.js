@@ -1,5 +1,9 @@
 import {round, linear} from '../util'
 
+// min mouse x y to render ui
+const MOUSE_X_MIN = 2
+const MOUSE_Y_MIN = 2
+
 const Y_LABEL_WIDTH = 50
 const Y_LABEL_HEIGHT = 20
 
@@ -42,7 +46,7 @@ export function drawUI(ctx, props, mouse, data) {
   // dont draw if mouse not inside data layer
   if (
     !mouse.canvasX ||
-    mouse.canvasX <= 0 ||
+    mouse.canvasX <= MOUSE_X_MIN ||
     mouse.canvasX > ctx.canvas.width - props.background.yAxisPaddRight
   ) {
     return
@@ -50,7 +54,7 @@ export function drawUI(ctx, props, mouse, data) {
 
   if (
     !mouse.canvasY ||
-    mouse.canvasY <= 0 ||
+    mouse.canvasY <= MOUSE_Y_MIN ||
     mouse.canvasY > ctx.canvas.height - props.background.xAxisPaddBottom
   ) {
     return
