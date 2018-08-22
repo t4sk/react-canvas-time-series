@@ -5,13 +5,12 @@ import {drawData} from './data'
 import {drawBackground} from './background'
 import {drawUI} from './ui'
 
-// TODO queue real time data
-// TODO? object pool
-// TODO use requestAnimationFrame?
 // TODO render streamed data
 // TODO zoom
+// TODO drag to slide
 // TODO? show price at mouse next to the cursor
 // TODO separate volume chart and candlestick
+// TODO replace timestamp line with highlight of time interval
 class Candlestick extends Component {
   constructor(props) {
     super(props)
