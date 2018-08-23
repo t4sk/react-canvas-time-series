@@ -33,11 +33,11 @@ class PriceGraph extends Component {
   }
 
   getMetrics() {
-    const minTimestamp = DATA[0].timestamp
-    const maxTimestamp = DATA[DATA.length - 1].timestamp
-    const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (DATA.length - 1))
-    const xMin = minTimestamp - round(xInterval / 2)
-    const xMax = maxTimestamp + round(xInterval / 2)
+    const minUnixTime = DATA[0].unixTime
+    const maxUnixTime = DATA[DATA.length - 1].unixTime
+    const xInterval = Math.ceil((maxUnixTime - minUnixTime) / (DATA.length - 1))
+    const xMin = minUnixTime - round(xInterval / 2)
+    const xMax = maxUnixTime + round(xInterval / 2)
     const minLow = Math.min(...DATA.map(d => d.low))
     const maxHigh = Math.max(...DATA.map(d => d.high))
     // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
@@ -159,12 +159,14 @@ for (let i = 0; i < 50; i++) {
   const close = randInt(low, high)
   const volume = randInt(0, 100)
 
+  const date = new Date()
+
   DATA[i] = {
     high,
     low,
     open,
     close,
-    timestamp: Date.now() - (50 * 100) + 100 * i,
+    unixTime: Date.now() - (50 * 100) + 100 * i,
     volume,
   }
 }
@@ -177,12 +179,14 @@ function genFakeData() {
   const close = randInt(low, high)
   const volume = randInt(0, 100)
 
+  const date = new Date()
+
   DATA.push({
     high,
     low,
     open,
     close,
-    timestamp: Date.now(),
+    unixTime: Date.now(),
     volume,
   })
 }

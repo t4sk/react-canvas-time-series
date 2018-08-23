@@ -25,12 +25,12 @@ function drawLineGraph(ctx, props, data) {
   ctx.strokeStyle = props.priceLine.color
 
   for (let i = 1; i < data.length; i++) {
-    const {timestamp, close} = data[i]
+    const {unixTime, close} = data[i]
 
-    const x0 = round(toCanvasX(data[i - 1].timestamp))
+    const x0 = round(toCanvasX(data[i - 1].unixTime))
     const y0 = round(toCanvasY(data[i - 1].close))
 
-    const x = round(toCanvasX(timestamp))
+    const x = round(toCanvasX(unixTime))
     const y = round(toCanvasY(close))
 
     ctx.beginPath()

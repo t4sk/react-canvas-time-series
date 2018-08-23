@@ -51,7 +51,12 @@ function drawVerticalLines(ctx, props) {
 
     // draw text
     const x = round(toX(canvasX))
-    ctx.fillText(x, canvasX, height + 10)
+    const date = new Date(x)
+    ctx.fillText(
+      `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+      canvasX,
+      height + 10
+    )
   }
 }
 
