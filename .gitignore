@@ -1,8 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
-data
 
 # dependencies
-/node_modules
+node_modules
 
 # testing
 /coverage
@@ -20,3 +19,7 @@ data
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+server/data/*.csv
+server/data/*.png
+!server/data/huya0815.csv
