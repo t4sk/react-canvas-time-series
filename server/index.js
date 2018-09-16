@@ -9,6 +9,7 @@ const server = http.createServer(app)
 const wss = new WebSocket.Server({server})
 
 async function main() {
+  // TODO zmq
   const DATA = await readCSV('./data/huya0815.csv')
 
   wss.on('connection', socket => {
