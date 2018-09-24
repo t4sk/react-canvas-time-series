@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {round} from '../util'
+import {round} from '../common/util'
 import {drawData} from './data'
 import {drawBackground} from './background'
 

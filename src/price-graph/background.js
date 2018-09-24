@@ -1,4 +1,4 @@
-import {round, linearTransformer} from '../util'
+import {round, linearTransformer} from '../common/util'
 
 function drawHorizontalLines(ctx, props) {
   const {

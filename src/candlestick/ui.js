@@ -1,4 +1,4 @@
-import {round, linear} from '../util'
+import {round, linear} from '../common/util'
 
 // min mouse x y to render ui
 const MOUSE_X_MIN = 2
