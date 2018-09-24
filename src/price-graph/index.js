@@ -14,6 +14,8 @@ class PriceGraph extends Component {
 
     // TODO remove me
     // TODO render at 10 ms
+    // TODO simulate data over network
+    // TODO render data in interval
     // setInterval(() => {
     //   genFakeData()
     //   if (DATA.length > 50) {
