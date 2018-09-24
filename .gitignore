@@ -23,3 +23,5 @@ yarn-error.log*
 server/data/*.csv
 server/data/*.png
 !server/data/huya0815.csv
+
+flow-typed
