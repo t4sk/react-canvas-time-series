@@ -1,4 +1,4 @@
-import {round, linear} from '../common/util'
+import { round, linear } from '../common/util'
 
 // min mouse x y to render ui
 const MOUSE_X_MIN = 2
@@ -10,8 +10,8 @@ const Y_LABEL_HEIGHT = 20
 const X_LABEL_HEIGHT = 20
 const X_LABEL_WIDTH = 80
 
-export function getNearestPriceAtX(x, delta, data) {
-  let low = 0, high = data.length - 1
+export function getNearestPriceAtX (x, delta, data) {
+  let low = 0; let high = data.length - 1
 
   // binary search
   while (low < high) {
@@ -30,7 +30,7 @@ export function getNearestPriceAtX(x, delta, data) {
   return data[low]
 }
 
-export function drawUI(ctx, props, mouse, data) {
+export function drawUI (ctx, props, mouse, data) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
   const candlestickChart = {
@@ -40,7 +40,7 @@ export function drawUI(ctx, props, mouse, data) {
 
   drawLatestPriceLabel(ctx, {
     ...props,
-    candlestickChart,
+    candlestickChart
   }, data[data.length - 1])
 
   // dont draw if mouse not inside data layer
@@ -62,28 +62,28 @@ export function drawUI(ctx, props, mouse, data) {
 
   drawDataAtMouseX(ctx, {
     ...props,
-    candlestickChart,
+    candlestickChart
   }, mouse, data)
 
   if (mouse.canvasY < ctx.canvas.height - props.volumeBarChart.height - props.background.xAxisPaddBottom) {
     drawPriceLine(ctx, {
       ...props,
-      candlestickChart,
+      candlestickChart
     }, mouse)
   } else {
     drawVolumeLine(ctx, {
       ...props,
-      candlestickChart,
+      candlestickChart
     }, mouse)
   }
 
   drawTimestampLine(ctx, {
     ...props,
-    candlestickChart,
+    candlestickChart
   }, mouse)
 }
 
-function drawDataAtMouseX(ctx, props, mouse, data) {
+function drawDataAtMouseX (ctx, props, mouse, data) {
   const {
     xMax, xMin, xInterval, candlestickChart
   } = props
@@ -92,23 +92,23 @@ function drawDataAtMouseX(ctx, props, mouse, data) {
     dy: xMax - xMin,
     dx: candlestickChart.width,
     x: mouse.canvasX,
-    y0: xMin,
+    y0: xMin
   })
 
   const price = getNearestPriceAtX(xAtMouse, round(xInterval / 2), data)
 
-  const {open, high, low, close, volume} = price
-  const color = open <= close ? "green" : "red"
+  const { open, high, low, close, volume } = price
+  const color = open <= close ? 'green' : 'red'
   const margin = 5
-  const numWidth = ctx.measureText("9999.99").width
+  const numWidth = ctx.measureText('9999.99').width
   let x = 5
   const y = 15
 
   // open
-  ctx.fillStyle = "black"
-  ctx.fillText("Open:", x, y)
+  ctx.fillStyle = 'black'
+  ctx.fillText('Open:', x, y)
 
-  x += ctx.measureText("Open:").width + margin
+  x += ctx.measureText('Open:').width + margin
 
   ctx.fillStyle = color
   ctx.fillText(open.toFixed(2), x, y)
@@ -116,10 +116,10 @@ function drawDataAtMouseX(ctx, props, mouse, data) {
   x += numWidth
 
   // high
-  ctx.fillStyle = "black"
-  ctx.fillText("High:", x, y)
+  ctx.fillStyle = 'black'
+  ctx.fillText('High:', x, y)
 
-  x += ctx.measureText("High:").width + margin
+  x += ctx.measureText('High:').width + margin
 
   ctx.fillStyle = color
   ctx.fillText(high.toFixed(2), x, y)
@@ -127,10 +127,10 @@ function drawDataAtMouseX(ctx, props, mouse, data) {
   x += numWidth
 
   // low
-  ctx.fillStyle = "black"
-  ctx.fillText("Low:", x, y)
+  ctx.fillStyle = 'black'
+  ctx.fillText('Low:', x, y)
 
-  x += ctx.measureText("Low:").width + margin
+  x += ctx.measureText('Low:').width + margin
 
   ctx.fillStyle = color
   ctx.fillText(low.toFixed(2), x, y)
@@ -138,10 +138,10 @@ function drawDataAtMouseX(ctx, props, mouse, data) {
   x += numWidth
 
   // close
-  ctx.fillStyle = "black"
-  ctx.fillText("Close:", x, y)
+  ctx.fillStyle = 'black'
+  ctx.fillText('Close:', x, y)
 
-  x += ctx.measureText("Close:").width + margin
+  x += ctx.measureText('Close:').width + margin
 
   ctx.fillStyle = color
   ctx.fillText(close.toFixed(2), x, y)
@@ -149,39 +149,39 @@ function drawDataAtMouseX(ctx, props, mouse, data) {
   x += numWidth
 
   // volume
-  ctx.fillStyle = "black"
-  ctx.fillText("Volume:", x, y)
+  ctx.fillStyle = 'black'
+  ctx.fillText('Volume:', x, y)
 
-  x += ctx.measureText("Volume:").width + margin
+  x += ctx.measureText('Volume:').width + margin
 
   ctx.fillStyle = color
   ctx.fillText(volume, x, y)
 }
 
-function drawYLabel(ctx, props) {
+function drawYLabel (ctx, props) {
   const {
     canvasY,
     y,
     fillStyle,
-    candlestickChart,
+    candlestickChart
   } = props
 
   // label
-  ctx.fillStyle = fillStyle || "black"
+  ctx.fillStyle = fillStyle || 'black'
 
   // label tip
   ctx.beginPath()
   ctx.moveTo(
     candlestickChart.width - 5,
-    canvasY,
+    canvasY
   )
   ctx.lineTo(
     candlestickChart.width,
-    canvasY - round(Y_LABEL_HEIGHT / 2),
+    canvasY - round(Y_LABEL_HEIGHT / 2)
   )
   ctx.lineTo(
     candlestickChart.width,
-    canvasY + round(Y_LABEL_HEIGHT / 2),
+    canvasY + round(Y_LABEL_HEIGHT / 2)
   )
   ctx.fill()
 
@@ -193,27 +193,27 @@ function drawYLabel(ctx, props) {
   )
 
   // label text
-  ctx.font = "12px Arial"
-  ctx.fillStyle = "white"
-  ctx.textAlign = "left"
-  ctx.textBaseline = "middle"
+  ctx.font = '12px Arial'
+  ctx.fillStyle = 'white'
+  ctx.textAlign = 'left'
+  ctx.textBaseline = 'middle'
 
   ctx.fillText(
     y.toFixed(2),
     candlestickChart.width + 10,
-    canvasY,
+    canvasY
   )
 }
 
-function drawLatestPriceLabel(ctx, props, price) {
-  const {yMin, yMax, candlestickChart} = props
-  const {open, close} = price
+function drawLatestPriceLabel (ctx, props, price) {
+  const { yMin, yMax, candlestickChart } = props
+  const { open, close } = price
 
   const canvasY = linear({
     dy: candlestickChart.height,
     dx: yMax - yMin,
     x: yMax - close,
-    y0: 0,
+    y0: 0
   })
 
   drawYLabel(ctx, {
@@ -224,12 +224,12 @@ function drawLatestPriceLabel(ctx, props, price) {
   })
 }
 
-function drawPriceLine(ctx, props, mouse) {
-  const {yMin, yMax, candlestickChart} = props
-  const {canvasY} = mouse
+function drawPriceLine (ctx, props, mouse) {
+  const { yMin, yMax, candlestickChart } = props
+  const { canvasY } = mouse
 
   // line
-  ctx.strokeStyle = "black"
+  ctx.strokeStyle = 'black'
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(0, canvasY)
@@ -240,22 +240,22 @@ function drawPriceLine(ctx, props, mouse) {
     dy: yMax - yMin,
     dx: candlestickChart.height,
     x: candlestickChart.height - canvasY,
-    y0: yMin,
+    y0: yMin
   })
 
   drawYLabel(ctx, {
     canvasY,
     y,
-    candlestickChart,
+    candlestickChart
   })
 }
 
-function drawVolumeLine(ctx, props, mouse) {
-  const {canvasY} = mouse
-  const {maxVolume, volumeBarChart, candlestickChart} = props
+function drawVolumeLine (ctx, props, mouse) {
+  const { canvasY } = mouse
+  const { maxVolume, volumeBarChart, candlestickChart } = props
 
   // line
-  ctx.strokeStyle = "black"
+  ctx.strokeStyle = 'black'
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(0, canvasY)
@@ -266,24 +266,24 @@ function drawVolumeLine(ctx, props, mouse) {
     dy: maxVolume,
     dx: volumeBarChart.height,
     x: candlestickChart.height - canvasY,
-    y0: maxVolume,
+    y0: maxVolume
   })
 
   drawYLabel(ctx, {
     canvasY,
     y,
-    candlestickChart,
+    candlestickChart
   })
 }
 
-function drawTimestampLine(ctx, props, mouse) {
+function drawTimestampLine (ctx, props, mouse) {
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
 
-  const {canvasX} = mouse
-  const {xMin, xMax, candlestickChart} = props
+  const { canvasX } = mouse
+  const { xMin, xMax, candlestickChart } = props
 
   // timestamp line
-  ctx.strokeStyle = "black"
+  ctx.strokeStyle = 'black'
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(canvasX, 0)
@@ -291,21 +291,21 @@ function drawTimestampLine(ctx, props, mouse) {
   ctx.stroke()
 
   // label
-  ctx.fillStyle = "black"
+  ctx.fillStyle = 'black'
 
   // label tip
   ctx.beginPath()
   ctx.moveTo(
     canvasX,
-    height - 5,
+    height - 5
   )
   ctx.lineTo(
     canvasX - 5,
-    height,
+    height
   )
   ctx.lineTo(
     canvasX + 5,
-    height,
+    height
   )
   ctx.fill()
 
@@ -314,24 +314,24 @@ function drawTimestampLine(ctx, props, mouse) {
     canvasX - round(X_LABEL_WIDTH / 2),
     height,
     X_LABEL_WIDTH,
-    X_LABEL_HEIGHT,
+    X_LABEL_HEIGHT
   )
 
-  //label text
-  ctx.font = "12px Arial"
-  ctx.fillStyle = "white"
-  ctx.textAlign = "center"
+  // label text
+  ctx.font = '12px Arial'
+  ctx.fillStyle = 'white'
+  ctx.textAlign = 'center'
 
   const x = linear({
     dy: xMax - xMin,
     dx: candlestickChart.width,
     x: canvasX,
-    y0: xMin,
+    y0: xMin
   })
 
   ctx.fillText(
     x.toFixed(1),
     canvasX,
-    height + 10,
+    height + 10
   )
 }

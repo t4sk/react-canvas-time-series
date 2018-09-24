@@ -1,19 +1,19 @@
-import {round, linear} from '../common/util'
+import { round, linear } from '../common/util'
 
-function drawLineGraph(ctx, props, data) {
+function drawLineGraph (ctx, props, data) {
   const {
     xMin,
     xMax,
     xInterval,
     yMin,
-    yMax,
+    yMax
   } = props
   const height = ctx.canvas.height
 
   const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
-    y0: -ctx.canvas.width * xMin / (xMax - xMin),
+    y0: -ctx.canvas.width * xMin / (xMax - xMin)
   })
 
   const toCanvasY = linear({
@@ -25,7 +25,7 @@ function drawLineGraph(ctx, props, data) {
   ctx.strokeStyle = props.priceLine.color
 
   for (let i = 1; i < data.length; i++) {
-    const {unixTime, close} = data[i]
+    const { unixTime, close } = data[i]
 
     const x0 = round(toCanvasX(data[i - 1].unixTime))
     const y0 = round(toCanvasY(data[i - 1].close))
@@ -40,6 +40,6 @@ function drawLineGraph(ctx, props, data) {
   }
 }
 
-export function drawData(ctx, props, data) {
+export function drawData (ctx, props, data) {
   drawLineGraph(ctx, props, data)
 }

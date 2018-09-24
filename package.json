@@ -13,10 +13,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "lint": "eslint src --fix",
     "flow": "flow",
     "install-flow-typed": "flow-typed install"
   },
   "devDependencies": {
+    "eslint": "^5.6.0",
     "flow-bin": "^0.71.0",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0"

@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {round} from '../common/util'
-import {drawData} from './data'
-import {drawBackground} from './background'
-import {drawUI} from './ui'
+import { round } from '../common/util'
+import { drawData } from './data'
+import { drawBackground } from './background'
+import { drawUI } from './ui'
 
 // TODO render streamed data
 // TODO zoom
@@ -12,20 +12,20 @@ import {drawUI} from './ui'
 // TODO separate volume chart and candlestick
 // TODO replace timestamp line with highlight of time interval
 class Candlestick extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.mouse = {
       canvasX: undefined,
-      canvaxY: undefined,
+      canvaxY: undefined
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.ctx = {
-      dataLayer: this.refs.dataLayer.getContext("2d"),
-      backgroundLayer: this.refs.backgroundLayer.getContext("2d"),
-      uiLayer: this.refs.uiLayer.getContext("2d"),
+      dataLayer: this.refs.dataLayer.getContext('2d'),
+      backgroundLayer: this.refs.backgroundLayer.getContext('2d'),
+      uiLayer: this.refs.uiLayer.getContext('2d')
     }
 
     // TODO remove me
@@ -50,19 +50,19 @@ class Candlestick extends Component {
 
       drawUI(this.ctx.uiLayer, {
         ...this.props,
-        ...this.getMetrics(),
+        ...this.getMetrics()
       }, this.mouse, DATA)
     })
 
     this.draw()
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     // let canvas render
     return false
   }
 
-  getMetrics() {
+  getMetrics () {
     const minTimestamp = DATA[0].timestamp
     const maxTimestamp = DATA[DATA.length - 1].timestamp
     const xInterval = Math.ceil((maxTimestamp - minTimestamp) / (DATA.length - 1))
@@ -83,11 +83,11 @@ class Candlestick extends Component {
       yMin,
       yMax,
       xInterval,
-      yInterval,
+      yInterval
     }
   }
 
-  draw() {
+  draw () {
     this.ctx.dataLayer.clearRect(
       0, 0,
       this.ctx.backgroundLayer.canvas.width,
@@ -99,29 +99,29 @@ class Candlestick extends Component {
     // background layer-
     drawBackground(
       this.ctx.backgroundLayer, {
-      ...this.props,
-      ...metrics,
-    })
+        ...this.props,
+        ...metrics
+      })
 
     // data layer
     drawData(this.ctx.dataLayer, {
       ...this.props,
-      ...metrics,
+      ...metrics
     }, DATA)
 
     // ui layer
     drawUI(this.ctx.uiLayer, {
       ...this.props,
-      ...metrics,
+      ...metrics
     }, this.mouse, DATA)
   }
 
-  render() {
+  render () {
     return (
       <div style={{
         ...style.container,
         width: this.props.width,
-        height: this.props.height,
+        height: this.props.height
       }}>
         <canvas
           style={style.backgroundLayer}
@@ -151,93 +151,93 @@ class Candlestick extends Component {
 
 const style = {
   container: {
-    position: "relative",
+    position: 'relative'
   },
   backgroundLayer: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
     zIndex: 1
   },
   dataLayer: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
-    zIndex: 2,
+    zIndex: 2
   },
   uiLayer: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
-    zIndex: 2,
-  },
+    zIndex: 2
+  }
 }
 
 Candlestick.defaultProps = {
   background: {
-    color: "#2f3d45",
+    color: '#2f3d45',
     xAxisPaddBottom: 50,
     yAxisPaddRight: 50,
     numVerticalIntervals: 6,
-    numHorizontalIntervals: 6,
+    numHorizontalIntervals: 6
   },
   width: 500,
   height: 300,
   candlestick: {
     bull: {
-      color: "lightgreen",
+      color: 'lightgreen'
     },
     bear: {
-      color: "red"
-    },
+      color: 'red'
+    }
   },
   volumeBarChart: {
     // TODO compute volume bar chart height from easier setting than pixel
-    height: 73,
+    height: 73
   },
   ui: {
     latestPriceLabel: {
       bull: {
-        color: "green",
+        color: 'green'
       },
       bear: {
-        color: "red",
-      },
-    },
+        color: 'red'
+      }
+    }
   }
 }
 
 Candlestick.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  background :PropTypes.shape({
+  background: PropTypes.shape({
     color: PropTypes.string.isRequired,
     yAxisPaddRight: PropTypes.number.isRequired,
     xAxisPaddBottom: PropTypes.number.isRequired,
     numHorizontalIntervals: PropTypes.number.isRequired,
-    numVerticalIntervals: PropTypes.number.isRequired,
+    numVerticalIntervals: PropTypes.number.isRequired
   }).isRequired,
   volumeBarChart: PropTypes.shape({
-    height: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired
   }).isRequired,
   candlestick: PropTypes.shape({
     bull: PropTypes.shape({
-      color: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired
     }).isRequired,
     bear: PropTypes.shape({
       color: PropTypes.string.isRequired
-    }).isRequired,
+    }).isRequired
   }).isRequired,
   ui: PropTypes.shape({
     latestPriceLabel: PropTypes.shape({
       bull: PropTypes.shape({
-        color: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired
       }).isRequired,
       bear: PropTypes.shape({
         color: PropTypes.string.isRequired
-      }).isRequired,
-    }).isRequired,
-  }).isRequired,
+      }).isRequired
+    }).isRequired
+  }).isRequired
 }
 
 export default Candlestick
@@ -256,12 +256,12 @@ for (let i = 0; i < 50; i++) {
     open,
     close,
     timestamp: Date.now() - (50 * 100) + 100 * i,
-    volume,
+    volume
   }
 }
 
 // TODO remove me
-function genFakeData() {
+function genFakeData () {
   const high = randInt(60, 100)
   const low = randInt(0, 30)
   const open = randInt(low, high)
@@ -274,14 +274,14 @@ function genFakeData() {
     open,
     close,
     timestamp: Date.now(),
-    volume,
+    volume
   })
 }
 
-function rand(min, max) {
+function rand (min, max) {
   return Math.random() * (max - min) + min
 }
 
-function randInt(min, max) {
+function randInt (min, max) {
   return Math.floor(rand(min, max))
 }

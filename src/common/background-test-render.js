@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './background'
 
 class BackgroundTestRender extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.ctx = {
-      yAxisRight: this.refs.yAxisRight.getContext("2d"),
-      yAxisLeft: this.refs.yAxisLeft.getContext("2d"),
+      yAxisRight: this.refs.yAxisRight.getContext('2d'),
+      yAxisLeft: this.refs.yAxisLeft.getContext('2d')
     }
 
     // translate by half pixel to draw thin lines
@@ -15,11 +15,11 @@ class BackgroundTestRender extends Component {
     this.draw()
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     return false
   }
 
-  getMetrics() {
+  getMetrics () {
     // const minUnixTime = DATA[0].unixTime
     // const maxUnixTime = DATA[DATA.length - 1].unixTime
     // const xInterval = Math.ceil((maxUnixTime - minUnixTime) / (DATA.length - 1))
@@ -35,58 +35,58 @@ class BackgroundTestRender extends Component {
 
     return {
       yMin: 10,
-      yMax: 110,
+      yMax: 110
     }
   }
 
-  draw() {
+  draw () {
     const metrics = this.getMetrics()
 
     background.draw(
       this.ctx.yAxisLeft, {
-      ...this.props,
-      // TODO util function to merge
-      y: {
-        line: {
-          color: "red",
-        },
-        axis: {
-          at: "left",
-          label: {
-            font: "12px Arial",
-            color: "black",
-            render: x => x,
+        ...this.props,
+        // TODO util function to merge
+        y: {
+          line: {
+            color: 'red'
           },
-          width: 50,
+          axis: {
+            at: 'left',
+            label: {
+              font: '12px Arial',
+              color: 'black',
+              render: x => x
+            },
+            width: 50
+          },
+          intervals: 8
         },
-        intervals: 8,
-      },
-      ...metrics,
-    })
+        ...metrics
+      })
 
     background.draw(
       this.ctx.yAxisRight, {
-      ...this.props,
-      y: {
-        line: {
-          color: "red",
-        },
-        axis: {
-          at: "right",
-          label: {
-            font: "12px Arial",
-            color: "black",
-            render: x => x,
+        ...this.props,
+        y: {
+          line: {
+            color: 'red'
           },
-          width: 50,
+          axis: {
+            at: 'right',
+            label: {
+              font: '12px Arial',
+              color: 'black',
+              render: x => x
+            },
+            width: 50
+          },
+          intervals: 8
         },
-        intervals: 8,
-      },
-      ...metrics,
-    })
+        ...metrics
+      })
   }
 
-  render() {
+  render () {
     return (
       <div>
         <h3>Y Axis Left</h3>
@@ -110,44 +110,44 @@ class BackgroundTestRender extends Component {
 BackgroundTestRender.defaultProps = {
   width: 500,
   height: 300,
-  backgroundColor: "lightgrey",
+  backgroundColor: 'lightgrey',
   y: {
     line: {
-      color: "red",
+      color: 'red'
     },
     axis: {
-      at: "left",
+      at: 'left',
       label: {
-        font: "12px Arial",
-        color: "black",
-        render: x => x,
+        font: '12px Arial',
+        color: 'black',
+        render: x => x
       },
-      width: 50,
+      width: 50
     },
-    intervals: 8,
+    intervals: 8
   },
   x: {
     line: {
-      color: "red",
+      color: 'red'
     },
     axis: {
-      at: "bottom",
+      at: 'bottom',
       // label: {
       //   color: "",
       //   font: "",
       //   render: x => x,
       // }
-      height: 50,
+      height: 50
     },
-    intervals: 8,
-  },
+    intervals: 8
+  }
 }
 
 BackgroundTestRender.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   background: PropTypes.shape({
-  }).isRequired,
+  }).isRequired
 }
 
 export default BackgroundTestRender

@@ -1,7 +1,7 @@
-import {round, linear} from './util'
+import { round, linear } from './util'
 
-function getYAxisTextAlign(props) {
-  switch(props.y.axis.at) {
+function getYAxisTextAlign (props) {
+  switch (props.y.axis.at) {
     case 'left':
       return 'right'
     case 'right':
@@ -11,8 +11,8 @@ function getYAxisTextAlign(props) {
   }
 }
 
-function getYAxisCanvasX(props) {
-  switch(props.y.axis.at) {
+function getYAxisCanvasX (props) {
+  switch (props.y.axis.at) {
     case 'left':
       return props.y.axis.width
     case 'right':
@@ -22,8 +22,8 @@ function getYAxisCanvasX(props) {
   }
 }
 
-function getLabelCanvasX(props) {
-  switch(props.y.axis.at) {
+function getLabelCanvasX (props) {
+  switch (props.y.axis.at) {
     case 'left':
       return props.y.axis.width - 10
     case 'right':
@@ -33,10 +33,10 @@ function getLabelCanvasX(props) {
   }
 }
 
-function drawYLines(ctx, props) {
+function drawYLines (ctx, props) {
   const {
     yMin,
-    yMax,
+    yMax
   } = props
 
   // style line
@@ -45,7 +45,7 @@ function drawYLines(ctx, props) {
   // style labels
   ctx.font = props.y.axis.label.font
   ctx.fillStyle = props.y.axis.label.color
-  ctx.textBaseline = "middle"
+  ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
   const width = props.width - props.y.axis.width
@@ -54,7 +54,7 @@ function drawYLines(ctx, props) {
   const toY = linear({
     dy: yMax - yMin,
     dx: height,
-    y0: yMin,
+    y0: yMin
   })
 
   const yAxisCanvasX = getYAxisCanvasX(props)
@@ -74,12 +74,12 @@ function drawYLines(ctx, props) {
   }
 }
 
-export function draw(ctx, props) {
+export function draw (ctx, props) {
   ctx.fillStyle = props.backgroundColor
   ctx.fillRect(
     0, 0,
     ctx.canvas.width,
-    ctx.canvas.height,
+    ctx.canvas.height
   )
 
   // style lines

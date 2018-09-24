@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import BackgroundTestRender from './common/background-test-render'
 import PriceGraph from './price-graph'
 import Candlestick from './candlestick'
 
 // TODO render price graph
 class App extends Component {
-  render() {
+  render () {
     return (
       <div className="App">
-        {/*}
+        {/* }
         <div style={{margin: 10}}>
           <Candlestick />
         </div>
@@ -25,8 +25,8 @@ class App extends Component {
 
         <BackgroundTestRender />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

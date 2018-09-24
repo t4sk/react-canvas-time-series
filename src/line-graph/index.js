@@ -1,15 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {round} from '../common/util'
+import { round } from '../common/util'
 // import {drawData} from './data'
 import * as background from '../common/background'
 
 // TODO render csv data
 class PriceGraph extends Component {
-  componentDidMount() {
+  componentDidMount () {
     this.ctx = {
-      dataLayer: this.refs.dataLayer.getContext("2d"),
-      backgroundLayer: this.refs.backgroundLayer.getContext("2d"),
+      dataLayer: this.refs.dataLayer.getContext('2d'),
+      backgroundLayer: this.refs.backgroundLayer.getContext('2d')
     }
 
     // TODO remove me
@@ -29,12 +29,12 @@ class PriceGraph extends Component {
     this.draw()
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     // let canvas render
     return false
   }
 
-  getMetrics() {
+  getMetrics () {
     const minUnixTime = DATA[0].unixTime
     const maxUnixTime = DATA[DATA.length - 1].unixTime
     const xInterval = Math.ceil((maxUnixTime - minUnixTime) / (DATA.length - 1))
@@ -55,11 +55,11 @@ class PriceGraph extends Component {
       yMin,
       yMax,
       xInterval,
-      yInterval,
+      yInterval
     }
   }
 
-  draw() {
+  draw () {
     this.ctx.dataLayer.clearRect(
       0, 0,
       this.ctx.backgroundLayer.canvas.width,
@@ -70,9 +70,9 @@ class PriceGraph extends Component {
 
     background.draw(
       this.ctx.backgroundLayer, {
-      ...this.props,
-      ...metrics,
-    })
+        ...this.props,
+        ...metrics
+      })
 
     // drawData(this.ctx.dataLayer, {
     //   ...this.props,
@@ -80,12 +80,12 @@ class PriceGraph extends Component {
     // }, DATA)
   }
 
-  render() {
+  render () {
     return (
       <div style={{
         ...style.container,
         width: this.props.width,
-        height: this.props.height,
+        height: this.props.height
       }}>
         <canvas
           style={style.backgroundLayer}
@@ -108,47 +108,47 @@ class PriceGraph extends Component {
 
 const style = {
   container: {
-    position: "relative",
+    position: 'relative'
   },
   backgroundLayer: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
     zIndex: 1
   },
   dataLayer: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     top: 0,
-    zIndex: 2,
-  },
+    zIndex: 2
+  }
 }
 
 PriceGraph.defaultProps = {
   width: 500,
   height: 300,
   background: {
-    color: "#2f3d45",
+    color: '#2f3d45',
     xAxisPaddBottom: 50,
     yAxisPaddRight: 50,
     numVerticalIntervals: 6,
-    numHorizontalIntervals: 6,
+    numHorizontalIntervals: 6
   },
   priceLine: {
-    color: "green",
-  },
+    color: 'green'
+  }
 }
 
 PriceGraph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  background :PropTypes.shape({
+  background: PropTypes.shape({
     color: PropTypes.string.isRequired,
     yAxisPaddRight: PropTypes.number.isRequired,
     xAxisPaddBottom: PropTypes.number.isRequired,
     numHorizontalIntervals: PropTypes.number.isRequired,
-    numVerticalIntervals: PropTypes.number.isRequired,
-  }).isRequired,
+    numVerticalIntervals: PropTypes.number.isRequired
+  }).isRequired
 }
 
 export default PriceGraph
@@ -169,12 +169,12 @@ for (let i = 0; i < 50; i++) {
     open,
     close,
     unixTime: Date.now() - (50 * 100) + 100 * i,
-    volume,
+    volume
   }
 }
 
 // TODO remove me
-function genFakeData() {
+function genFakeData () {
   const high = randInt(60, 100)
   const low = randInt(0, 30)
   const open = randInt(low, high)
@@ -189,14 +189,14 @@ function genFakeData() {
     open,
     close,
     unixTime: Date.now(),
-    volume,
+    volume
   })
 }
 
-function rand(min, max) {
+function rand (min, max) {
   return Math.random() * (max - min) + min
 }
 
-function randInt(min, max) {
+function randInt (min, max) {
   return Math.floor(rand(min, max))
 }

@@ -1,8 +1,8 @@
-import {round, linear} from '../common/util'
+import { round, linear } from '../common/util'
 
-function drawCandlestick(ctx, props, price) {
-  const {width, scaleY, toCanvasX, toCanvasY} = props
-  const {high, low, open, close, timestamp} = price
+function drawCandlestick (ctx, props, price) {
+  const { width, scaleY, toCanvasX, toCanvasY } = props
+  const { high, low, open, close, timestamp } = price
 
   const x = round(toCanvasX(timestamp))
   const y = round(toCanvasY(Math.max(open, close)))
@@ -37,21 +37,21 @@ function drawCandlestick(ctx, props, price) {
   ctx.stroke()
 }
 
-function drawCandlesticks(ctx, props, data) {
+function drawCandlesticks (ctx, props, data) {
   const {
     xMin,
     xMax,
     xInterval,
     yMin,
     yMax,
-    volumeBarChart,
+    volumeBarChart
   } = props
   const height = ctx.canvas.height - volumeBarChart.height
 
   const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
-    y0: -ctx.canvas.width * xMin / (xMax - xMin),
+    y0: -ctx.canvas.width * xMin / (xMax - xMin)
   })
 
   const toCanvasY = linear({
@@ -71,23 +71,23 @@ function drawCandlesticks(ctx, props, data) {
       width,
       scaleY,
       toCanvasX,
-      toCanvasY,
+      toCanvasY
     }, data[i])
   }
 }
 
-function drawVolumesBarChart(ctx, props, data) {
+function drawVolumesBarChart (ctx, props, data) {
   const {
     xMin,
     xMax,
     xInterval,
-    volumeBarChart,
+    volumeBarChart
   } = props
 
   const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
-    y0: -ctx.canvas.width * xMin / (xMax - xMin),
+    y0: -ctx.canvas.width * xMin / (xMax - xMin)
   })
 
   const maxVolume = Math.max(...data.map(price => price.volume))
@@ -95,7 +95,7 @@ function drawVolumesBarChart(ctx, props, data) {
   const toCanvasHeight = linear({
     dy: volumeBarChart.height,
     dx: maxVolume,
-    y0: 0,
+    y0: 0
   })
 
   const scaleX = ctx.canvas.width / (xMin - xMax)
@@ -105,7 +105,7 @@ function drawVolumesBarChart(ctx, props, data) {
 
   for (let i = 0; i < data.length; i++) {
     const price = data[i]
-    const {open, close, timestamp, volume} = price
+    const { open, close, timestamp, volume } = price
 
     const height = round(toCanvasHeight(volume))
     const x = round(toCanvasX(timestamp))
@@ -121,7 +121,7 @@ function drawVolumesBarChart(ctx, props, data) {
   }
 }
 
-export function drawData(ctx, props, data) {
+export function drawData (ctx, props, data) {
   drawCandlesticks(ctx, props, data)
   drawVolumesBarChart(ctx, props, data)
 }
