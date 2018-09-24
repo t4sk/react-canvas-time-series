@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import BackgroundTestRender from './common/background-test-render'
 import PriceGraph from './price-graph'
 import Candlestick from './candlestick'
-import LineGraph from './line-graph'
 
 // TODO render price graph
 class App extends Component {
@@ -22,6 +22,8 @@ class App extends Component {
           <PriceGraph />
         </div>
         */}
+
+        <BackgroundTestRender />
       </div>
     );
   }
