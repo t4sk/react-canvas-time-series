@@ -1,3 +1,4 @@
+// @flow
 import {floor, round, linear, linearTransformer} from './util'
 
 test("floor", () => {
