@@ -1,4 +1,3 @@
-//@flow
 import {round, linear} from './util'
 
 function getYAxisTextAlign(props) {

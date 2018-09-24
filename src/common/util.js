@@ -14,7 +14,7 @@ type LinearArgs = {
   y0: number,
 }
 
-export function linear({dx, dy, y0}: LinearTransformerArgs): (x: number) => number {
+export function linear({dx, dy, y0}: LinearArgs): (x: number) => number {
   const df = dy / dx
   return x => df * x + y0
 }
