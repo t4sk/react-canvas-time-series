@@ -5,11 +5,13 @@ import * as background from './background'
 class BackgroundTestRender extends Component {
   componentDidMount() {
     this.ctx = {
-      background: this.refs.background.getContext("2d"),
+      yAxisRight: this.refs.yAxisRight.getContext("2d"),
+      yAxisLeft: this.refs.yAxisLeft.getContext("2d"),
     }
 
     // translate by half pixel to draw thin lines
-    this.ctx.background.translate(0.5, 0.5)
+    this.ctx.yAxisLeft.translate(0.5, 0.5)
+    this.ctx.yAxisRight.translate(0.5, 0.5)
     this.draw()
   }
 
@@ -41,8 +43,45 @@ class BackgroundTestRender extends Component {
     const metrics = this.getMetrics()
 
     background.draw(
-      this.ctx.background, {
-      ...this.props.background,
+      this.ctx.yAxisLeft, {
+      ...this.props,
+      // TODO util function to merge
+      y: {
+        line: {
+          color: "red",
+        },
+        axis: {
+          at: "left",
+          label: {
+            font: "12px Arial",
+            color: "black",
+            render: x => x,
+          },
+          width: 50,
+        },
+        intervals: 8,
+      },
+      ...metrics,
+    })
+
+    background.draw(
+      this.ctx.yAxisRight, {
+      ...this.props,
+      y: {
+        line: {
+          color: "red",
+        },
+        axis: {
+          at: "right",
+          label: {
+            font: "12px Arial",
+            color: "black",
+            render: x => x,
+          },
+          width: 50,
+        },
+        intervals: 8,
+      },
       ...metrics,
     })
   }
@@ -50,8 +89,16 @@ class BackgroundTestRender extends Component {
   render() {
     return (
       <div>
+        <h3>Y Axis Left</h3>
         <canvas
-          ref="background"
+          ref="yAxisLeft"
+          width={this.props.width}
+          height={this.props.height}
+        />
+
+        <h3>Y Axis Right</h3>
+        <canvas
+          ref="yAxisRight"
           width={this.props.width}
           height={this.props.height}
         />
@@ -63,38 +110,36 @@ class BackgroundTestRender extends Component {
 BackgroundTestRender.defaultProps = {
   width: 500,
   height: 300,
-  background: {
-    backgroundColor: "lightgrey",
-    y: {
-      line: {
-        color: "red",
-      },
-      axis: {
-        at: "left",
-        label: {
-          font: "12px Arial",
-          color: "black",
-          render: x => x,
-        },
-        width: 50,
-      },
-      intervals: 8,
+  backgroundColor: "lightgrey",
+  y: {
+    line: {
+      color: "red",
     },
-    x: {
-      line: {
-        color: "red",
+    axis: {
+      at: "left",
+      label: {
+        font: "12px Arial",
+        color: "black",
+        render: x => x,
       },
-      axis: {
-        at: "bottom",
-        // label: {
-        //   color: "",
-        //   font: "",
-        //   render: x => x,
-        // }
-        height: 50,
-      },
-      intervals: 8,
+      width: 50,
     },
+    intervals: 8,
+  },
+  x: {
+    line: {
+      color: "red",
+    },
+    axis: {
+      at: "bottom",
+      // label: {
+      //   color: "",
+      //   font: "",
+      //   render: x => x,
+      // }
+      height: 50,
+    },
+    intervals: 8,
   },
 }
 

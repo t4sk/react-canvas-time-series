@@ -23,6 +23,17 @@ function getYAxisCanvasX(props) {
   }
 }
 
+function getLabelCanvasX(props) {
+  switch(props.y.axis.at) {
+    case 'left':
+      return props.y.axis.width - 10
+    case 'right':
+      return props.width - props.y.axis.width + 10
+    default:
+      throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
+  }
+}
+
 function drawYLines(ctx, props) {
   const {
     yMin,
@@ -38,8 +49,8 @@ function drawYLines(ctx, props) {
   ctx.textBaseline = "middle"
   ctx.textAlign = getYAxisTextAlign(props)
 
-  const width = ctx.canvas.width - props.y.axis.width
-  const height = ctx.canvas.height - props.x.axis.height
+  const width = props.width - props.y.axis.width
+  const height = props.height - props.x.axis.height
   const interval = height / props.y.intervals
   const toY = linear({
     dy: yMax - yMin,
@@ -47,19 +58,20 @@ function drawYLines(ctx, props) {
     y0: yMin,
   })
 
-  const canvasX = getYAxisCanvasX(props)
+  const yAxisCanvasX = getYAxisCanvasX(props)
+  const labelCanvasX = getLabelCanvasX(props)
 
   for (let i = 0; i <= props.y.intervals; i++) {
     const canvasY = round(i * interval)
 
     // draw line
-    ctx.moveTo(canvasX, canvasY)
-    ctx.lineTo(canvasX + width, canvasY)
+    ctx.moveTo(yAxisCanvasX, canvasY)
+    ctx.lineTo(yAxisCanvasX + width, canvasY)
     ctx.stroke()
 
     // draw text
     const y = round(toY((props.y.intervals - i) * interval))
-    ctx.fillText(props.y.axis.label.render(y), canvasX - 10, canvasY)
+    ctx.fillText(props.y.axis.label.render(y), labelCanvasX, canvasY)
   }
 }
 
