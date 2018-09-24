@@ -1,4 +1,4 @@
-import {round, linearTransformer} from '../common/util'
+import {round, linear} from '../common/util'
 
 function drawHorizontalLines(ctx, props) {
   const {
@@ -10,7 +10,7 @@ function drawHorizontalLines(ctx, props) {
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - volumeBarChart.height - props.background.xAxisPaddBottom
   const interval = height / props.background.numHorizontalIntervals
-  const toY = linearTransformer({
+  const toY = linear({
     dy: yMax - yMin,
     dx: height,
     y0: yMin,
@@ -44,7 +44,7 @@ function drawVerticalLines(ctx, props) {
   const width = ctx.canvas.width - props.background.yAxisPaddRight
   const height = ctx.canvas.height - props.background.xAxisPaddBottom
   const interval = width / props.background.numVerticalIntervals
-  const toX = linearTransformer({
+  const toX = linear({
     dy: xMax - xMin,
     dx: width,
     y0: xMin,

@@ -1,4 +1,16 @@
-import {round, linearTransformer} from './util'
+//@flow
+import {round, linear} from './util'
+
+function getYAxisTextAlign(props) {
+  switch(props.y.axis.at) {
+    case 'left':
+      return 'right'
+    case 'right':
+      return 'left'
+    default:
+      throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
+  }
+}
 
 function getYAxisCanvasX(props) {
   switch(props.y.axis.at) {
@@ -21,15 +33,15 @@ function drawYLines(ctx, props) {
   ctx.strokeStyle = props.y.line.color
 
   // style labels
-  // ctx.font = "12px Arial"
-  // ctx.fillStyle = "black"
-  // ctx.textBaseline = "middle"
-  // ctx.textAlign = "center"
+  ctx.font = props.y.axis.label.font
+  ctx.fillStyle = props.y.axis.label.color
+  ctx.textBaseline = "middle"
+  ctx.textAlign = getYAxisTextAlign(props)
 
   const width = ctx.canvas.width - props.y.axis.width
   const height = ctx.canvas.height - props.x.axis.height
   const interval = height / props.y.intervals
-  const toY = linearTransformer({
+  const toY = linear({
     dy: yMax - yMin,
     dx: height,
     y0: yMin,
@@ -46,8 +58,8 @@ function drawYLines(ctx, props) {
     ctx.stroke()
 
     // draw text
-    // const y = round(toY((props.y.intervals - i) * interval))
-    // ctx.fillText(y, canvasX - 10, canvasY)
+    const y = round(toY((props.y.intervals - i) * interval))
+    ctx.fillText(props.y.axis.label.render(y), canvasX - 10, canvasY)
   }
 }
 

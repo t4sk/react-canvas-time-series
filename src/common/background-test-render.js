@@ -71,11 +71,11 @@ BackgroundTestRender.defaultProps = {
       },
       axis: {
         at: "left",
-        // label: {
-        //   color: "",
-        //   font: "",
-        //   render: x => x,
-        // }
+        label: {
+          font: "12px Arial",
+          color: "black",
+          render: x => x,
+        },
         width: 50,
       },
       intervals: 8,

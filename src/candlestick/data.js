@@ -1,4 +1,4 @@
-import {round, linearTransformer} from '../common/util'
+import {round, linear} from '../common/util'
 
 function drawCandlestick(ctx, props, price) {
   const {width, scaleY, toCanvasX, toCanvasY} = props
@@ -48,13 +48,13 @@ function drawCandlesticks(ctx, props, data) {
   } = props
   const height = ctx.canvas.height - volumeBarChart.height
 
-  const toCanvasX = linearTransformer({
+  const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
     y0: -ctx.canvas.width * xMin / (xMax - xMin),
   })
 
-  const toCanvasY = linearTransformer({
+  const toCanvasY = linear({
     dy: -height,
     dx: yMax - yMin,
     y0: height * yMax / (yMax - yMin)
@@ -84,7 +84,7 @@ function drawVolumesBarChart(ctx, props, data) {
     volumeBarChart,
   } = props
 
-  const toCanvasX = linearTransformer({
+  const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
     y0: -ctx.canvas.width * xMin / (xMax - xMin),
@@ -92,7 +92,7 @@ function drawVolumesBarChart(ctx, props, data) {
 
   const maxVolume = Math.max(...data.map(price => price.volume))
 
-  const toCanvasHeight = linearTransformer({
+  const toCanvasHeight = linear({
     dy: volumeBarChart.height,
     dx: maxVolume,
     y0: 0,

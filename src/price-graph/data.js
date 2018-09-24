@@ -1,4 +1,4 @@
-import {round, linearTransformer} from '../common/util'
+import {round, linear} from '../common/util'
 
 function drawLineGraph(ctx, props, data) {
   const {
@@ -10,13 +10,13 @@ function drawLineGraph(ctx, props, data) {
   } = props
   const height = ctx.canvas.height
 
-  const toCanvasX = linearTransformer({
+  const toCanvasX = linear({
     dy: ctx.canvas.width,
     dx: xMax - xMin,
     y0: -ctx.canvas.width * xMin / (xMax - xMin),
   })
 
-  const toCanvasY = linearTransformer({
+  const toCanvasY = linear({
     dy: -height,
     dx: yMax - yMin,
     y0: height * yMax / (yMax - yMin)
