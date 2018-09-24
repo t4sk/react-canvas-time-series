@@ -1,4 +1,3 @@
-//@flow
 import {round, linearTransformer} from '../common/util'
 
 function drawHorizontalLines(ctx, props) {
