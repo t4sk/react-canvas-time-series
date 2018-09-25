@@ -1,5 +1,5 @@
 // @flow
-import {floor, round, linear} from './util'
+import {floor, round, linear} from './math'
 
 test("floor", () => {
   expect(floor(1.9)).toEqual(1)

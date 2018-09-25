@@ -1,4 +1,4 @@
-import { round, linear } from '../common/util'
+import { round, linear } from '../common/math'
 
 function drawLineGraph (ctx, props, data) {
   const {

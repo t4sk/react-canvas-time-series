@@ -1,4 +1,4 @@
-import { round, linear } from '../common/util'
+import { round, linear } from '../common/math'
 
 function drawCandlestick (ctx, props, price) {
   const { width, scaleY, toCanvasX, toCanvasY } = props

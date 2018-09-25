@@ -1,4 +1,4 @@
-import { round, linear } from './util'
+import { round, linear } from './math'
 
 function getYAxisTextAlign (props) {
   switch (props.y.axis.at) {

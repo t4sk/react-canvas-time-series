@@ -1,4 +1,4 @@
-import { round, linear } from '../common/util'
+import { round, linear } from '../common/math'
 
 function drawHorizontalLines (ctx, props) {
   const {
