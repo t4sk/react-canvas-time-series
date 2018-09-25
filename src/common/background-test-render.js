@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './background'
+import {merge} from './util'
 
 class BackgroundTestRender extends Component {
   componentDidMount () {
@@ -44,44 +45,25 @@ class BackgroundTestRender extends Component {
 
     background.draw(
       this.ctx.yAxisLeft, {
-        ...this.props,
-        // TODO util function to merge
-        y: {
-          line: {
-            color: 'red'
-          },
-          axis: {
-            at: 'left',
-            label: {
-              font: '12px Arial',
-              color: 'black',
-              render: x => x
-            },
-            width: 50
-          },
-          intervals: 8
-        },
+        ...merge(this.props, {
+          y: {
+            axis: {
+              at: 'left'
+            }
+          }
+        }),
         ...metrics
       })
 
     background.draw(
       this.ctx.yAxisRight, {
-        ...this.props,
-        y: {
-          line: {
-            color: 'red'
-          },
-          axis: {
-            at: 'right',
-            label: {
-              font: '12px Arial',
-              color: 'black',
-              render: x => x
-            },
-            width: 50
-          },
-          intervals: 8
-        },
+        ...merge(this.props, {
+          y: {
+            axis: {
+              at: 'right'
+            }
+          }
+        }),
         ...metrics
       })
   }
