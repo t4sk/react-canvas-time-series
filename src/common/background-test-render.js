@@ -6,11 +6,15 @@ import {merge} from './util'
 class BackgroundTestRender extends Component {
   componentDidMount () {
     this.ctx = {
+      xAxisTop: this.refs.xAxisTop.getContext('2d'),
+      xAxisBottom: this.refs.xAxisBottom.getContext('2d'),
       yAxisRight: this.refs.yAxisRight.getContext('2d'),
       yAxisLeft: this.refs.yAxisLeft.getContext('2d')
     }
 
     // translate by half pixel to draw thin lines
+    this.ctx.xAxisTop.translate(0.5, 0.5)
+    this.ctx.xAxisBottom.translate(0.5, 0.5)
     this.ctx.yAxisLeft.translate(0.5, 0.5)
     this.ctx.yAxisRight.translate(0.5, 0.5)
     this.draw()
@@ -36,13 +40,39 @@ class BackgroundTestRender extends Component {
 
     return {
       yMin: 10,
-      yMax: 110
+      yMax: 110,
+      xMin: 1900,
+      xMax: 2010,
     }
   }
 
   draw () {
     const metrics = this.getMetrics()
 
+    background.draw(
+      this.ctx.xAxisBottom, {
+        ...merge(this.props, {
+          x: {
+            axis: {
+              at: 'bottom'
+            }
+          }
+        }),
+        ...metrics
+      }
+    )
+    background.draw(
+      this.ctx.xAxisTop, {
+        ...merge(this.props, {
+          x: {
+            axis: {
+              at: 'top'
+            }
+          }
+        }),
+        ...metrics
+      }
+    )
     background.draw(
       this.ctx.yAxisLeft, {
         ...merge(this.props, {
@@ -53,7 +83,8 @@ class BackgroundTestRender extends Component {
           }
         }),
         ...metrics
-      })
+      }
+    )
 
     background.draw(
       this.ctx.yAxisRight, {
@@ -65,12 +96,27 @@ class BackgroundTestRender extends Component {
           }
         }),
         ...metrics
-      })
+      }
+    )
   }
 
   render () {
     return (
       <div>
+        <h3>X Axis Bottom</h3>
+        <canvas
+          ref="xAxisBottom"
+          width={this.props.width}
+          height={this.props.height}
+        />
+
+        <h3>X Axis Top</h3>
+        <canvas
+          ref="xAxisTop"
+          width={this.props.width}
+          height={this.props.height}
+        />
+
         <h3>Y Axis Left</h3>
         <canvas
           ref="yAxisLeft"
@@ -106,7 +152,7 @@ BackgroundTestRender.defaultProps = {
       label: {
         font: '12px Arial',
         color: 'black',
-        render: x => x
+        render: y => y
       },
       width: 50
     },
@@ -114,18 +160,18 @@ BackgroundTestRender.defaultProps = {
   },
   x: {
     line: {
-      color: 'red'
+      color: 'blue'
     },
     axis: {
       at: 'bottom',
-      // label: {
-      //   color: "",
-      //   font: "",
-      //   render: x => x,
-      // }
+      label: {
+        font: "12px Arial",
+        color: "black",
+        render: x => x,
+      },
       height: 50
     },
-    intervals: 8
+    intervals: 10
   }
 }
 
