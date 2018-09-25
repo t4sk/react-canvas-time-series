@@ -141,6 +141,8 @@ BackgroundTestRender.defaultProps = {
   margin: {
     top: 10,
     bottom: 10,
+    left: 10,
+    right: 10,
   },
   backgroundColor: 'lightgrey',
   y: {

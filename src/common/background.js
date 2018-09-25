@@ -2,11 +2,22 @@
 import { round, linear } from './math'
 
 function getWidth(props) {
-  return props.width - props.y.axis.width
+  return props.width - props.y.axis.width - (props.margin.left + props.margin.right)
 }
 
 function getHeight(props) {
   return props.height - props.x.axis.height - (props.margin.top + props.margin.bottom)
+}
+
+function getXLineCanvasXStart (props) {
+  switch (props.y.axis.at) {
+    case 'left':
+      return props.y.axis.width + props.margin.left
+    case 'right':
+      return props.margin.right
+    default:
+      throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
+  }
 }
 
 function getXLineCanvasYStart (props) {
@@ -17,17 +28,6 @@ function getXLineCanvasYStart (props) {
       return props.margin.top
     default:
       throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
-  }
-}
-
-function getXLineCanvasXStart (props) {
-  switch (props.y.axis.at) {
-    case 'left':
-      return props.y.axis.width
-    case 'right':
-      return 0
-    default:
-      throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
 }
 
@@ -76,12 +76,12 @@ function getYAxisTextAlign (props) {
   }
 }
 
-function getYAxisCanvasX (props) {
+function getYLineCanvasXStart (props) {
   switch (props.y.axis.at) {
     case 'left':
-      return props.y.axis.width
+      return props.y.axis.width + props.margin.left
     case 'right':
-      return 0
+      return props.margin.right
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
@@ -98,12 +98,12 @@ function getYLineCanvasYStart (props) {
   }
 }
 
-function getLabelCanvasX (props) {
+function getYLabelCanvasX (props) {
   switch (props.y.axis.at) {
     case 'left':
-      return props.y.axis.width - 10
+      return props.y.axis.width - 10 + props.margin.left
     case 'right':
-      return props.width - props.y.axis.width + 10
+      return props.width - props.y.axis.width + 10 - props.margin.right
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
@@ -133,16 +133,16 @@ function drawYLines (ctx, props) {
     y0: yMin
   })
 
-  const yAxisCanvasX = getYAxisCanvasX(props)
-  const labelCanvasX = getLabelCanvasX(props)
+  const yLineCanvasXStart = getYLineCanvasXStart(props)
   const yLineCanvasYStart = getYLineCanvasYStart(props)
+  const labelCanvasX = getYLabelCanvasX(props)
 
   for (let i = 0; i <= props.y.intervals; i++) {
     const canvasY = round(i * interval) + props.margin.top + yLineCanvasYStart
 
     // draw line
-    ctx.moveTo(yAxisCanvasX, canvasY)
-    ctx.lineTo(yAxisCanvasX + width, canvasY)
+    ctx.moveTo(yLineCanvasXStart, canvasY)
+    ctx.lineTo(yLineCanvasXStart + width, canvasY)
     ctx.stroke()
 
     // draw text
@@ -155,8 +155,8 @@ export function draw (ctx, props) {
   ctx.fillStyle = props.backgroundColor
   ctx.fillRect(
     0, 0,
-    ctx.canvas.width,
-    ctx.canvas.height
+    props.width,
+    props.height
   )
 
   // style lines
