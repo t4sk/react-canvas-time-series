@@ -110,6 +110,10 @@ class BackgroundTestRender extends Component {
 BackgroundTestRender.defaultProps = {
   width: 500,
   height: 300,
+  margin: {
+    top: 10,
+    bottom: 10,
+  },
   backgroundColor: 'lightgrey',
   y: {
     line: {

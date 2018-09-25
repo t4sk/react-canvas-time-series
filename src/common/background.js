@@ -49,7 +49,7 @@ function drawYLines (ctx, props) {
   ctx.textAlign = getYAxisTextAlign(props)
 
   const width = props.width - props.y.axis.width
-  const height = props.height - props.x.axis.height
+  const height = props.height - props.x.axis.height - (props.margin.top + props.margin.bottom)
   const interval = height / props.y.intervals
   const toY = linear({
     dy: yMax - yMin,
@@ -61,7 +61,7 @@ function drawYLines (ctx, props) {
   const labelCanvasX = getLabelCanvasX(props)
 
   for (let i = 0; i <= props.y.intervals; i++) {
-    const canvasY = round(i * interval)
+    const canvasY = round(i * interval) + props.margin.top
 
     // draw line
     ctx.moveTo(yAxisCanvasX, canvasY)
