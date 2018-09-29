@@ -1,6 +1,6 @@
 // @flow
 import { round, linear } from '../math'
-import {getHeight, getWidth} from './common'
+import { getHeight, getWidth } from './common'
 
 function getXAxisTextAlign (props) {
   switch (props.x.axis.at) {
@@ -37,7 +37,7 @@ function getXLineCanvasYStart (props) {
 
 const X_LABEL_VERTICAL_PADDING = 10
 
-function getXLabelCanvasY(props) {
+function getXLabelCanvasY (props) {
   const height = getHeight(props)
 
   switch (props.x.axis.at) {
@@ -50,7 +50,7 @@ function getXLabelCanvasY(props) {
   }
 }
 
-export function drawXLines(ctx, props) {
+export function drawXLines (ctx, props) {
   const {
     xMin,
     xMax

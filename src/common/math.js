@@ -1,10 +1,10 @@
-//@flow
+// @flow
 
-export function floor(x: number): number {
+export function floor (x: number): number {
   return x ^ 0
 }
 
-export function round(x: number): number {
+export function round (x: number): number {
   return (x + 0.5) | 0
 }
 
@@ -14,7 +14,7 @@ type LinearArgs = {
   y0: number,
 }
 
-export function linear({dx, dy, y0}: LinearArgs): (x: number) => number {
+export function linear ({ dx, dy, y0 }: LinearArgs): (x: number) => number {
   const df = dy / dx
   return x => df * x + y0
 }

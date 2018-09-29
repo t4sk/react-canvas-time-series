@@ -1,6 +1,6 @@
 // @flow
 import { round, linear } from '../math'
-import {getHeight, getWidth} from './common'
+import { getHeight, getWidth } from './common'
 
 function getYAxisTextAlign (props) {
   switch (props.y.axis.at) {

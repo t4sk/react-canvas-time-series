@@ -1,5 +1,5 @@
 // @flow
-export function merge(obj1: {} = {}, obj2: {} = {}): {} {
+export function merge (obj1: {} = {}, obj2: {} = {}): {} {
   const keys1 = new Set(Object.keys(obj1))
   const keys2 = new Set(Object.keys(obj2))
 

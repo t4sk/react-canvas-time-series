@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './index'
-import {merge} from '../util'
+import { merge } from '../util'
 
 class BackgroundTestRender extends Component {
   componentDidMount () {
@@ -25,24 +25,11 @@ class BackgroundTestRender extends Component {
   }
 
   getMetrics () {
-    // const minUnixTime = DATA[0].unixTime
-    // const maxUnixTime = DATA[DATA.length - 1].unixTime
-    // const xInterval = Math.ceil((maxUnixTime - minUnixTime) / (DATA.length - 1))
-    // const xMin = minUnixTime - round(xInterval / 2)
-    // const xMax = maxUnixTime + round(xInterval / 2)
-    // const minLow = Math.min(...DATA.map(d => d.low))
-    // const maxHigh = Math.max(...DATA.map(d => d.high))
-    // // yInterval >= ceil((yMax - yMin) / (num intervals - 2))
-    // const yInterval = Math.ceil((maxHigh - minLow) / (this.props.background.numVerticalIntervals - 2))
-    // const yMin = minLow - yInterval
-    // const yMax = maxHigh + yInterval
-    // const maxVolume = Math.max(...DATA.map(price => price.volume))
-
     return {
       yMin: 10,
       yMax: 110,
       xMin: 1900,
-      xMax: 2010,
+      xMax: 2010
     }
   }
 
@@ -142,7 +129,7 @@ BackgroundTestRender.defaultProps = {
     top: 10,
     bottom: 20,
     left: 20,
-    right: 30,
+    right: 30
   },
   backgroundColor: 'lightgrey',
   y: {
@@ -167,9 +154,9 @@ BackgroundTestRender.defaultProps = {
     axis: {
       at: 'bottom',
       label: {
-        font: "12px Arial",
-        color: "black",
-        render: x => x,
+        font: '12px Arial',
+        color: 'black',
+        render: x => x
       },
       height: 50
     },

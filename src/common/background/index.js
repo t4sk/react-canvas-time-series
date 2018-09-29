@@ -1,5 +1,5 @@
-import {drawXLines} from './x-axis'
-import {drawYLines} from './y-axis'
+import { drawXLines } from './x-axis'
+import { drawYLines } from './y-axis'
 
 export function draw (ctx, props) {
   ctx.fillStyle = props.backgroundColor
