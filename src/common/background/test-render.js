@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import * as background from './background'
-import {merge} from './util'
+import * as background from './index'
+import {merge} from '../util'
 
 class BackgroundTestRender extends Component {
   componentDidMount () {
