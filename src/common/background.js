@@ -9,6 +9,17 @@ function getHeight(props) {
   return props.height - props.x.axis.height - (props.margin.top + props.margin.bottom)
 }
 
+function getXAxisTextAlign (props) {
+  switch (props.x.axis.at) {
+    case 'top':
+      return 'bottom'
+    case 'bottom':
+      return 'top'
+    default:
+      throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
+  }
+}
+
 function getXLineCanvasXStart (props) {
   switch (props.y.axis.at) {
     case 'left':
@@ -31,8 +42,30 @@ function getXLineCanvasYStart (props) {
   }
 }
 
+const X_LABEL_VERTICAL_PADD = 5
+
+function getXLabelCanvasY(props) {
+  switch (props.x.axis.at) {
+    case 'top':
+      return props.x.axis.height + props.margin.top - X_LABEL_VERTICAL_PADD
+    case 'bottom':
+      return props.height - props.x.axis.height + props.margin.top - props.margin.bottom + X_LABEL_VERTICAL_PADD
+    default:
+      throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
+  }
+}
+
 function drawXLines(ctx, props) {
   const { xMin, xMax } = props
+
+  // style line
+  ctx.strokeStyle = props.x.line.color
+
+  // style labels
+  ctx.font = props.x.axis.label.font
+  ctx.fillStyle = props.x.axis.label.color
+  ctx.textBaseline = getXAxisTextAlign(props)
+  ctx.textAlign = 'center'
 
   const width = getWidth(props)
   const height = getHeight(props)
@@ -45,6 +78,7 @@ function drawXLines(ctx, props) {
 
   const xLineCanvasYStart = getXLineCanvasYStart(props)
   const xLineCanvasXStart = getXLineCanvasXStart(props)
+  const labelCanvasY = getXLabelCanvasY(props)
 
   for (let i = 0; i <= props.x.intervals; i++) {
     const canvasX = round(i * interval) + xLineCanvasXStart
@@ -55,13 +89,13 @@ function drawXLines(ctx, props) {
     ctx.stroke()
 
     // draw text
-    // const x = round(toX(canvasX))
-    // const date = new Date(x)
-    // ctx.fillText(
-    //   `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
-    //   canvasX,
-    //   height + 10
-    // )
+    const x = round(toX(i * interval))
+
+    ctx.fillText(
+      props.x.axis.label.render(x),
+      canvasX,
+      labelCanvasY
+    )
   }
 }
 
@@ -103,7 +137,7 @@ function getYLabelCanvasX (props) {
     case 'left':
       return props.y.axis.width - 10 + props.margin.left
     case 'right':
-      return props.width - props.y.axis.width + 10 - props.margin.right
+      return props.width - props.y.axis.width + 10 + props.margin.left - props.margin.right
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
