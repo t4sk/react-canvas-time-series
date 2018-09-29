@@ -1,7 +1,9 @@
+// @flow
+import type { Props } from './types'
 import { drawXLines } from './x-axis'
 import { drawYLines } from './y-axis'
 
-export function draw (ctx, props) {
+export function draw (ctx: any, props: Props) {
   ctx.fillStyle = props.backgroundColor
   ctx.fillRect(
     0, 0,

@@ -1,8 +1,9 @@
 // @flow
+import type { Props } from './types'
 import { round, linear } from '../math'
 import { getHeight, getWidth } from './common'
 
-function getYAxisTextAlign (props) {
+function getYAxisTextAlign (props: Props): 'left' | 'right' {
   switch (props.y.axis.at) {
     case 'left':
       return 'right'
@@ -13,7 +14,7 @@ function getYAxisTextAlign (props) {
   }
 }
 
-function getYLineCanvasXStart (props) {
+function getYLineCanvasXStart (props: Props): number {
   switch (props.y.axis.at) {
     case 'left':
       return props.y.axis.width + props.margin.left
@@ -24,7 +25,7 @@ function getYLineCanvasXStart (props) {
   }
 }
 
-function getYLineCanvasYStart (props) {
+function getYLineCanvasYStart (props: Props): number {
   switch (props.x.axis.at) {
     case 'top':
       return props.x.axis.height + props.margin.top
@@ -37,7 +38,7 @@ function getYLineCanvasYStart (props) {
 
 const Y_LABEL_HORIZONTAL_PADDING = 10
 
-function getYLabelCanvasX (props) {
+function getYLabelCanvasX (props: Props): number {
   const width = getWidth(props)
 
   switch (props.y.axis.at) {
@@ -50,7 +51,7 @@ function getYLabelCanvasX (props) {
   }
 }
 
-export function drawYLines (ctx, props) {
+export function drawYLines (ctx: any, props: Props) {
   const {
     yMin,
     yMax
