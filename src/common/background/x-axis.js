@@ -18,7 +18,7 @@ function getXLineCanvasXStart (props) {
     case 'left':
       return props.y.axis.width + props.margin.left
     case 'right':
-      return props.margin.right
+      return props.margin.left
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }

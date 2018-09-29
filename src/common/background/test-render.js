@@ -140,9 +140,9 @@ BackgroundTestRender.defaultProps = {
   height: 300,
   margin: {
     top: 10,
-    bottom: 10,
+    bottom: 20,
     left: 10,
-    right: 25,
+    right: 20,
   },
   backgroundColor: 'lightgrey',
   y: {
