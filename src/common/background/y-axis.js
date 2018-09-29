@@ -18,7 +18,7 @@ function getYLineCanvasXStart (props) {
     case 'left':
       return props.y.axis.width + props.margin.left
     case 'right':
-      return props.margin.right
+      return props.margin.left
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
@@ -27,9 +27,9 @@ function getYLineCanvasXStart (props) {
 function getYLineCanvasYStart (props) {
   switch (props.x.axis.at) {
     case 'top':
-      return props.x.axis.height
+      return props.x.axis.height + props.margin.top
     case 'bottom':
-      return 0
+      return props.margin.top
     default:
       throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
   }
@@ -38,11 +38,13 @@ function getYLineCanvasYStart (props) {
 const Y_LABEL_HORIZONTAL_PADDING = 10
 
 function getYLabelCanvasX (props) {
+  const width = getWidth(props)
+
   switch (props.y.axis.at) {
     case 'left':
-      return props.y.axis.width - Y_LABEL_HORIZONTAL_PADDING + props.margin.left
+      return props.margin.left + props.y.axis.width - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
-      return props.width - props.y.axis.width + Y_LABEL_HORIZONTAL_PADDING + props.margin.left - props.margin.right
+      return width + props.margin.left + Y_LABEL_HORIZONTAL_PADDING
     default:
       throw new Error(`invalid y.axis.at ${props.y.axis.at}`)
   }
@@ -77,7 +79,7 @@ export function drawYLines (ctx, props) {
   const labelCanvasX = getYLabelCanvasX(props)
 
   for (let i = 0; i <= props.y.intervals; i++) {
-    const canvasY = round(i * interval) + props.margin.top + yLineCanvasYStart
+    const canvasY = round(i * interval) + yLineCanvasYStart
 
     // draw line
     ctx.moveTo(yLineCanvasXStart, canvasY)
