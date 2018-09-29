@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import * as background from './index'
 import { merge } from '../util'
 
@@ -162,13 +161,6 @@ BackgroundTestRender.defaultProps = {
     },
     intervals: 10
   }
-}
-
-BackgroundTestRender.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  background: PropTypes.shape({
-  }).isRequired
 }
 
 export default BackgroundTestRender
