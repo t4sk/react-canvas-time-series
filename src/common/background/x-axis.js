@@ -16,7 +16,7 @@ function getXAxisTextAlign (props) {
 function getXLineCanvasXStart (props) {
   switch (props.y.axis.at) {
     case 'left':
-      return props.y.axis.width + props.margin.left
+      return props.margin.left + props.y.axis.width
     case 'right':
       return props.margin.left
     default:
@@ -27,7 +27,7 @@ function getXLineCanvasXStart (props) {
 function getXLineCanvasYStart (props) {
   switch (props.x.axis.at) {
     case 'top':
-      return props.x.axis.height + props.margin.top
+      return props.margin.top + props.x.axis.height
     case 'bottom':
       return props.margin.top
     default:
@@ -35,14 +35,16 @@ function getXLineCanvasYStart (props) {
   }
 }
 
-const X_LABEL_VERTICAL_PADDING = 5
+const X_LABEL_VERTICAL_PADDING = 10
 
 function getXLabelCanvasY(props) {
+  const height = getHeight(props)
+
   switch (props.x.axis.at) {
     case 'top':
-      return props.x.axis.height + props.margin.top - X_LABEL_VERTICAL_PADDING
+      return props.margin.top + props.x.axis.height - X_LABEL_VERTICAL_PADDING
     case 'bottom':
-      return props.height - props.x.axis.height + props.margin.top - props.margin.bottom + X_LABEL_VERTICAL_PADDING
+      return height + props.margin.top + X_LABEL_VERTICAL_PADDING
     default:
       throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
   }
