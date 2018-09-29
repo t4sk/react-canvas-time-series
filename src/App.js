@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 import BackgroundTestRender from './common/background/test-render'
+import UITestRender from './common/ui/test-render'
 import PriceGraph from './price-graph'
 import Candlestick from './candlestick'
 
@@ -23,6 +24,7 @@ class App extends Component {
         </div>
         */}
 
+        <UITestRender />
         <BackgroundTestRender />
       </div>
     )
