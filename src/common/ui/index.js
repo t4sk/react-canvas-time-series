@@ -44,7 +44,40 @@ function drawYLine (ctx: any, props: Props) {
   drawYLabel(ctx, props)
 }
 
+function getYLabelTextAlign (props: Props): 'left' | 'right' {
+  switch (props.y.label.at) {
+    case 'left':
+      return 'right'
+    case 'right':
+      return 'left'
+    default:
+      throw new Error(`invalid y.label.at ${props.y.label.at}`)
+  }
+}
+
+function getYLabelCanvasX(props) {
+  switch (props.y.label.at) {
+    case 'left':
+      return props.graph.x - props.y.label.width
+    case 'right':
+      return props.graph.x + props.graph.width
+    default:
+      throw new Error(`invalid y.label.at ${props.y.label.at}`)
+  }
+}
+
 const Y_LABEL_HORIZONTAL_PADDING = 5
+
+function getYLabelTextCanvasX(props) {
+  switch (props.y.label.at) {
+    case 'left':
+      return props.graph.x - Y_LABEL_HORIZONTAL_PADDING
+    case 'right':
+      return props.graph.x + props.graph.width + Y_LABEL_HORIZONTAL_PADDING
+    default:
+      throw new Error(`invalid y.label.at ${props.y.label.at}`)
+  }
+}
 
 function drawYLabel (ctx, props) {
   const {
@@ -57,7 +90,7 @@ function drawYLabel (ctx, props) {
   ctx.fillStyle = props.y.label.backgroundColor
 
   ctx.fillRect(
-    props.graph.x - props.y.label.width,
+    getYLabelCanvasX(props),
     mouse.y - round(props.y.label.height / 2),
     props.y.label.width,
     props.y.label.height
@@ -66,7 +99,7 @@ function drawYLabel (ctx, props) {
   // label text
   ctx.font = props.y.label.font
   ctx.fillStyle = props.y.label.color
-  ctx.textAlign = 'left'
+  ctx.textAlign = getYLabelTextAlign(props)
   ctx.textBaseline = 'middle'
 
   const y = linear({
@@ -77,7 +110,7 @@ function drawYLabel (ctx, props) {
 
   ctx.fillText(
     props.y.label.render(y),
-    props.graph.x - props.y.label.width + 10,
+    getYLabelTextCanvasX(props),
     mouse.y
   )
 }
