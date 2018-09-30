@@ -25,7 +25,7 @@ function getXLineCanvasYStart (props: Props): number {
   }
 }
 
-const X_LABEL_VERTICAL_PADDING = 10
+const X_LABEL_VERTICAL_PADDING = 15
 
 function getXLabelCanvasY (props: Props): number {
   const height = getHeight(props)
