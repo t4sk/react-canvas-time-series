@@ -2,7 +2,7 @@
 import { round, linear } from '../math'
 import type { Props } from './types'
 
-export function draw(ctx: any, props: Props) {
+export function draw (ctx: any, props: Props) {
   ctx.clearRect(
     0, 0,
     props.canvas.width,
@@ -55,7 +55,7 @@ function getYLabelTextAlign (props: Props): 'left' | 'right' {
   }
 }
 
-function getYLabelCanvasX(props) {
+function getYLabelCanvasX (props: Props): number {
   switch (props.y.label.at) {
     case 'left':
       return props.graph.x - props.y.label.width
@@ -68,7 +68,7 @@ function getYLabelCanvasX(props) {
 
 const Y_LABEL_HORIZONTAL_PADDING = 5
 
-function getYLabelTextCanvasX(props) {
+function getYLabelTextCanvasX (props: Props): number {
   switch (props.y.label.at) {
     case 'left':
       return props.graph.x - Y_LABEL_HORIZONTAL_PADDING
@@ -79,7 +79,7 @@ function getYLabelTextCanvasX(props) {
   }
 }
 
-function drawYLabel (ctx, props) {
+function drawYLabel (ctx: any, props: Props) {
   const {
     mouse,
     yMax,
@@ -129,7 +129,7 @@ function drawXLine (ctx: any, props: Props) {
   drawXLabel(ctx, props)
 }
 
-function getXLabelCanvasY(props) {
+function getXLabelCanvasY (props: Props): number {
   switch (props.x.label.at) {
     case 'top':
       return props.graph.y - props.x.label.height
@@ -142,7 +142,7 @@ function getXLabelCanvasY(props) {
 
 const X_LABEL_VERTICAL_PADDING = 10
 
-function getXLabelTextCanvasY(props) {
+function getXLabelTextCanvasY (props: Props): number {
   switch (props.x.label.at) {
     case 'top':
       return props.graph.y - X_LABEL_VERTICAL_PADDING
@@ -153,7 +153,7 @@ function getXLabelTextCanvasY(props) {
   }
 }
 
-function drawXLabel (ctx, props) {
+function drawXLabel (ctx: any, props: Props) {
   const {
     xMin,
     xMax,

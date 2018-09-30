@@ -1,15 +1,13 @@
-// @flow
 import React, { Component } from 'react'
 import * as ui from './index'
-import { merge } from '../util'
 
 class TestUICanvas extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.mouse = {
       x: undefined,
-      y: undefined,
+      y: undefined
     }
   }
 
@@ -37,15 +35,15 @@ class TestUICanvas extends Component {
     return false
   }
 
-  drawBackground(ctx, props) {
-    ctx.fillStyle = "lightgrey"
+  drawBackground (ctx, props) {
+    ctx.fillStyle = 'lightgrey'
     ctx.fillRect(
       0, 0,
       props.canvas.width,
       props.canvas.height
     )
 
-    ctx.fillStyle = "white"
+    ctx.fillStyle = 'white'
     ctx.fillRect(
       props.graph.x,
       props.graph.y,
@@ -70,31 +68,31 @@ class TestUICanvas extends Component {
       this.ctx.ui, {
         ...this.props,
         mouse: this.mouse,
-        ...this.getMetrics(),
+        ...this.getMetrics()
       }
     )
   }
 
   render () {
     return (
-        <div style={{
-          ...style.container,
-          width: this.props.canvas.width,
-          height: this.props.canvas.height,
-        }}>
-          <canvas
-            style={style.background}
-            ref="background"
-            width={this.props.canvas.width}
-            height={this.props.canvas.height}
-          />
-          <canvas
-            style={style.ui}
-            ref="ui"
-            width={this.props.canvas.width}
-            height={this.props.canvas.height}
-          />
-        </div>
+      <div style={{
+        ...style.container,
+        width: this.props.canvas.width,
+        height: this.props.canvas.height
+      }}>
+        <canvas
+          style={style.background}
+          ref="background"
+          width={this.props.canvas.width}
+          height={this.props.canvas.height}
+        />
+        <canvas
+          style={style.ui}
+          ref="ui"
+          width={this.props.canvas.width}
+          height={this.props.canvas.height}
+        />
+      </div>
     )
   }
 }
@@ -114,7 +112,7 @@ const style = {
     left: 0,
     top: 0,
     zIndex: 2
-  },
+  }
 }
 
 TestUICanvas.defaultProps = {
@@ -126,8 +124,8 @@ TestUICanvas.defaultProps = {
     x: 60, // margin.left + x.axis.width
     y: 20, // margin.
     width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
-    height: 220, // canvas.height - (margin.top + margin.bottom + y.axis.height)
-  },
+    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
+  }
 }
 
 export default TestUICanvas

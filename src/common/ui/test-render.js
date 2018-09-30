@@ -1,6 +1,4 @@
-// @flow
 import React, { Component } from 'react'
-import * as ui from './index'
 import { merge } from '../util'
 import TestUICanvas from './test-ui-canvas'
 
@@ -11,50 +9,50 @@ class UITestRender extends Component {
         <h3>X Label Bottom</h3>
         <TestUICanvas
           {...merge(this.props, {
-              x: {
-                label: {
-                  at: 'bottom'
-                }
+            x: {
+              label: {
+                at: 'bottom'
               }
+            }
           })}
         />
 
         <h3>X Label Top</h3>
         <TestUICanvas
           {...merge(this.props, {
-              graph: {
-                y: 60,
-              },
-              x: {
-                label: {
-                  at: 'top'
-                }
+            graph: {
+              y: 60
+            },
+            x: {
+              label: {
+                at: 'top'
               }
+            }
           })}
         />
 
         <h3>Y Label Left</h3>
         <TestUICanvas
           {...merge(this.props, {
-              y: {
-                label: {
-                  at: 'left'
-                }
+            y: {
+              label: {
+                at: 'left'
               }
+            }
           })}
         />
 
         <h3>Y Label Right</h3>
         <TestUICanvas
           {...merge(this.props, {
-              graph: {
-                x: 10,
-              },
-              y: {
-                label: {
-                  at: 'right'
-                }
+            graph: {
+              x: 10
+            },
+            y: {
+              label: {
+                at: 'right'
               }
+            }
           })}
         />
       </div>
@@ -72,11 +70,11 @@ UITestRender.defaultProps = {
     x: 60, // margin.left + x.axis.width
     y: 20, // margin.
     width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
-    height: 220, // canvas.height - (margin.top + margin.bottom + y.axis.height)
+    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   x: {
     line: {
-      color: 'blue',
+      color: 'blue'
     },
     label: {
       at: 'bottom',
@@ -90,7 +88,7 @@ UITestRender.defaultProps = {
   },
   y: {
     line: {
-      color: 'green',
+      color: 'green'
     },
     label: {
       at: 'left',
@@ -103,6 +101,5 @@ UITestRender.defaultProps = {
     }
   }
 }
-
 
 export default UITestRender
