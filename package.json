@@ -4,10 +4,10 @@
   "private": true,
   "dependencies": {
     "babel-eslint": "^10.0.1",
-    "prop-types": "^15.6.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-scripts": "1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -19,7 +19,7 @@
     "install-flow-typed": "flow-typed install"
   },
   "devDependencies": {
-    "eslint": "^5.6.0",
+    "eslint": "^5.6.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-flow": "^1.0.1",
     "eslint-plugin-flowtype": "^2.50.3",
@@ -27,7 +27,7 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "flow-bin": "^0.71.0",
+    "flow-bin": "^0.81.0",
     "flow-typed": "^2.5.1",
     "jest": "^23.6.0"
   }
