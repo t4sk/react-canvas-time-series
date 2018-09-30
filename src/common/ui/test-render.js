@@ -8,6 +8,31 @@ class UITestRender extends Component {
   render () {
     return (
       <div>
+        <h3>X Label Bottom</h3>
+        <TestUICanvas
+          {...merge(this.props, {
+              x: {
+                label: {
+                  at: 'bottom'
+                }
+              }
+          })}
+        />
+
+        <h3>X Label Top</h3>
+        <TestUICanvas
+          {...merge(this.props, {
+              graph: {
+                y: 60,
+              },
+              x: {
+                label: {
+                  at: 'top'
+                }
+              }
+          })}
+        />
+
         <h3>Y Label Left</h3>
         <TestUICanvas
           {...merge(this.props, {

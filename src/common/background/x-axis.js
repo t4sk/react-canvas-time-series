@@ -3,17 +3,6 @@ import type { Props } from './types'
 import { round, linear } from '../math'
 import { getHeight, getWidth } from './common'
 
-function getXAxisTextAlign (props: Props): 'top' | 'bottom' {
-  switch (props.x.axis.at) {
-    case 'top':
-      return 'bottom'
-    case 'bottom':
-      return 'top'
-    default:
-      throw new Error(`invalid x.axis.at ${props.x.axis.at}`)
-  }
-}
-
 function getXLineCanvasXStart (props: Props): number {
   switch (props.y.axis.at) {
     case 'left':
@@ -63,8 +52,8 @@ export function drawXLines (ctx: any, props: Props) {
   // style labels
   ctx.font = props.x.axis.label.font
   ctx.fillStyle = props.x.axis.label.color
-  ctx.textBaseline = getXAxisTextAlign(props)
   ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
 
   const width = getWidth(props)
   const height = getHeight(props)

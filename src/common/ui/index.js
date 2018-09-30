@@ -129,7 +129,29 @@ function drawXLine (ctx: any, props: Props) {
   drawXLabel(ctx, props)
 }
 
+function getXLabelCanvasY(props) {
+  switch (props.x.label.at) {
+    case 'top':
+      return props.graph.y - props.x.label.height
+    case 'bottom':
+      return props.graph.y + props.graph.height
+    default:
+      throw new Error(`invalid x.label.at ${props.x.label.at}`)
+  }
+}
+
 const X_LABEL_VERTICAL_PADDING = 10
+
+function getXLabelTextCanvasY(props) {
+  switch (props.x.label.at) {
+    case 'top':
+      return props.graph.y - X_LABEL_VERTICAL_PADDING
+    case 'bottom':
+      return props.graph.y + props.graph.height + X_LABEL_VERTICAL_PADDING
+    default:
+      throw new Error(`invalid x.label.at ${props.x.label.at}`)
+  }
+}
 
 function drawXLabel (ctx, props) {
   const {
@@ -144,7 +166,7 @@ function drawXLabel (ctx, props) {
   // label rect
   ctx.fillRect(
     mouse.x - round(props.x.label.width / 2),
-    props.graph.y + props.graph.height,
+    getXLabelCanvasY(props),
     props.x.label.width,
     props.x.label.height
   )
@@ -164,6 +186,6 @@ function drawXLabel (ctx, props) {
   ctx.fillText(
     props.x.label.render(x),
     mouse.x,
-    props.graph.y + props.graph.height + X_LABEL_VERTICAL_PADDING,
+    getXLabelTextCanvasY(props)
   )
 }
