@@ -5,10 +5,10 @@ import { merge } from '../util'
 class BackgroundTestRender extends Component {
   componentDidMount () {
     this.ctx = {
-      xAxisTop: this.refs.xAxisTop.getContext('2d'),
-      xAxisBottom: this.refs.xAxisBottom.getContext('2d'),
-      yAxisRight: this.refs.yAxisRight.getContext('2d'),
-      yAxisLeft: this.refs.yAxisLeft.getContext('2d')
+      xAxisTop: this.refs.xAxisTop.getContext('2d', {alpha: false}),
+      xAxisBottom: this.refs.xAxisBottom.getContext('2d', {alpha: false}),
+      yAxisRight: this.refs.yAxisRight.getContext('2d', {alpha: false}),
+      yAxisLeft: this.refs.yAxisLeft.getContext('2d', {alpha: false})
     }
 
     // translate by half pixel to draw thin lines

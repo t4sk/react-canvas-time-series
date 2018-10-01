@@ -14,7 +14,7 @@ class TestUICanvas extends Component {
   componentDidMount () {
     this.ctx = {
       ui: this.refs.ui.getContext('2d'),
-      background: this.refs.background.getContext('2d')
+      background: this.refs.background.getContext('2d', { alpha: false })
     }
 
     this.ctx.ui.canvas.addEventListener('mousemove', e => {
@@ -23,7 +23,7 @@ class TestUICanvas extends Component {
       this.mouse.x = e.clientX - rect.left
       this.mouse.y = e.clientY - rect.top
 
-      this.draw()
+      //this.draw()
     })
 
     // translate by half pixel to draw thin lines
@@ -61,7 +61,9 @@ class TestUICanvas extends Component {
     }
   }
 
-  draw () {
+  draw = () => {
+    window.requestAnimationFrame(this.draw)
+
     this.drawBackground(this.ctx.background, this.props)
 
     ui.draw(
