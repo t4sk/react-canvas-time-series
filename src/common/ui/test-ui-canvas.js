@@ -99,7 +99,8 @@ class TestUICanvas extends Component {
 
 const style = {
   container: {
-    position: 'relative'
+    position: 'relative',
+    border: '1px solid black'
   },
   background: {
     position: 'absolute',
