@@ -52,15 +52,6 @@ class TestCanvas extends Component {
     )
   }
 
-  getMetrics () {
-    return {
-      yMin: 10,
-      yMax: 110,
-      xMin: 1900,
-      xMax: 2010
-    }
-  }
-
   draw = () => {
     window.requestAnimationFrame(this.draw)
 
@@ -70,7 +61,6 @@ class TestCanvas extends Component {
       this.ctx.ui, {
         ...this.props,
         mouse: this.mouse,
-        ...this.getMetrics()
       }
     )
   }

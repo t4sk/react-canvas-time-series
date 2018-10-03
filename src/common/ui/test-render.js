@@ -99,7 +99,11 @@ TestRender.defaultProps = {
       color: 'white',
       render: y => y.toFixed(2)
     }
-  }
+  },
+  yMin: 10,
+  yMax: 110,
+  xMin: 1900,
+  xMax: 2010
 }
 
 export default TestRender
