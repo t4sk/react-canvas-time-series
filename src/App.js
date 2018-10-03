@@ -4,7 +4,6 @@ import BackgroundTestRender from './common/background/test-render'
 import UITestRender from './common/ui/test-render'
 import LineTestRender from './common/line/test-render'
 
-import PriceGraph from './price-graph'
 import Candlestick from './candlestick'
 
 // TODO render price graph
@@ -17,13 +16,6 @@ class App extends Component {
           <Candlestick />
         </div>
 
-        <div style={{margin: 10}}>
-          <PriceGraph />
-        </div>
-
-        <div style={{margin: 10}}>
-          <PriceGraph />
-        </div>
         */}
 
         <LineTestRender />
