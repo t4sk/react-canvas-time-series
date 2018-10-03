@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { merge } from '../util'
 import TestCanvas from './test-canvas'
 
-class UITestRender extends Component {
+class TestRender extends Component {
   render () {
     return (
       <div>
@@ -60,7 +60,7 @@ class UITestRender extends Component {
   }
 }
 
-UITestRender.defaultProps = {
+TestRender.defaultProps = {
   canvas: {
     width: 500,
     height: 300
@@ -102,4 +102,4 @@ UITestRender.defaultProps = {
   }
 }
 
-export default UITestRender
+export default TestRender
