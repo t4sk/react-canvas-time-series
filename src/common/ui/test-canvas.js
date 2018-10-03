@@ -22,8 +22,6 @@ class TestCanvas extends Component {
 
       this.mouse.x = e.clientX - rect.left
       this.mouse.y = e.clientY - rect.top
-
-      //this.draw()
     })
 
     // translate by half pixel to draw thin lines
