@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import * as ui from './index'
 
-class TestUICanvas extends Component {
+class TestCanvas extends Component {
   constructor (props) {
     super(props)
 
@@ -118,7 +118,7 @@ const style = {
   }
 }
 
-TestUICanvas.defaultProps = {
+TestCanvas.defaultProps = {
   canvas: {
     width: 500,
     height: 300
@@ -131,4 +131,4 @@ TestUICanvas.defaultProps = {
   }
 }
 
-export default TestUICanvas
+export default TestCanvas

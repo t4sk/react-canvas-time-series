@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { merge } from '../util'
-import TestUICanvas from './test-ui-canvas'
+import TestCanvas from './test-canvas'
 
 class UITestRender extends Component {
   render () {
     return (
       <div>
         <h3>X Label Bottom</h3>
-        <TestUICanvas
+        <TestCanvas
           {...merge(this.props, {
             x: {
               label: {
@@ -18,7 +18,7 @@ class UITestRender extends Component {
         />
 
         <h3>X Label Top</h3>
-        <TestUICanvas
+        <TestCanvas
           {...merge(this.props, {
             graph: {
               y: 60
@@ -32,7 +32,7 @@ class UITestRender extends Component {
         />
 
         <h3>Y Label Left</h3>
-        <TestUICanvas
+        <TestCanvas
           {...merge(this.props, {
             y: {
               label: {
@@ -43,7 +43,7 @@ class UITestRender extends Component {
         />
 
         <h3>Y Label Right</h3>
-        <TestUICanvas
+        <TestCanvas
           {...merge(this.props, {
             graph: {
               x: 10
