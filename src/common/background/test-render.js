@@ -23,18 +23,7 @@ class BackgroundTestRender extends Component {
     return false
   }
 
-  getMetrics () {
-    return {
-      yMin: 10,
-      yMax: 110,
-      xMin: 1900,
-      xMax: 2010
-    }
-  }
-
   draw () {
-    const metrics = this.getMetrics()
-
     background.draw(
       this.ctx.xAxisBottom, {
         ...merge(this.props, {
@@ -44,7 +33,6 @@ class BackgroundTestRender extends Component {
             }
           }
         }),
-        ...metrics
       }
     )
     background.draw(
@@ -56,7 +44,6 @@ class BackgroundTestRender extends Component {
             }
           }
         }),
-        ...metrics
       }
     )
     background.draw(
@@ -68,7 +55,6 @@ class BackgroundTestRender extends Component {
             }
           }
         }),
-        ...metrics
       }
     )
 
@@ -81,7 +67,6 @@ class BackgroundTestRender extends Component {
             }
           }
         }),
-        ...metrics
       }
     )
   }
@@ -160,7 +145,11 @@ BackgroundTestRender.defaultProps = {
       height: 50
     },
     intervals: 10
-  }
+  },
+  yMin: 10,
+  yMax: 110,
+  xMin: 1900,
+  xMax: 2010
 }
 
 export default BackgroundTestRender
