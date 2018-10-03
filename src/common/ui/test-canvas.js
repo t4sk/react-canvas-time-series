@@ -58,7 +58,7 @@ class TestCanvas extends Component {
     ui.draw(
       this.ctx.ui, {
         ...this.props,
-        mouse: this.mouse,
+        mouse: this.mouse
       }
     )
   }

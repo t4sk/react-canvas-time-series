@@ -5,10 +5,10 @@ import { merge } from '../test-util'
 class BackgroundTestRender extends Component {
   componentDidMount () {
     this.ctx = {
-      xAxisTop: this.refs.xAxisTop.getContext('2d', {alpha: false}),
-      xAxisBottom: this.refs.xAxisBottom.getContext('2d', {alpha: false}),
-      yAxisRight: this.refs.yAxisRight.getContext('2d', {alpha: false}),
-      yAxisLeft: this.refs.yAxisLeft.getContext('2d', {alpha: false})
+      xAxisTop: this.refs.xAxisTop.getContext('2d', { alpha: false }),
+      xAxisBottom: this.refs.xAxisBottom.getContext('2d', { alpha: false }),
+      yAxisRight: this.refs.yAxisRight.getContext('2d', { alpha: false }),
+      yAxisLeft: this.refs.yAxisLeft.getContext('2d', { alpha: false })
     }
 
     // translate by half pixel to draw thin lines
@@ -32,7 +32,7 @@ class BackgroundTestRender extends Component {
               at: 'bottom'
             }
           }
-        }),
+        })
       }
     )
     background.draw(
@@ -43,7 +43,7 @@ class BackgroundTestRender extends Component {
               at: 'top'
             }
           }
-        }),
+        })
       }
     )
     background.draw(
@@ -54,7 +54,7 @@ class BackgroundTestRender extends Component {
               at: 'left'
             }
           }
-        }),
+        })
       }
     )
 
@@ -66,7 +66,7 @@ class BackgroundTestRender extends Component {
               at: 'right'
             }
           }
-        }),
+        })
       }
     )
   }
