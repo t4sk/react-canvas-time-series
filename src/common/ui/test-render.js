@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { merge } from '../util'
+import { merge } from '../test-util'
 import TestCanvas from './test-canvas'
 
 class TestRender extends Component {

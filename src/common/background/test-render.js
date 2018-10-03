@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import * as background from './index'
-import { merge } from '../util'
+import { merge } from '../test-util'
 
 class BackgroundTestRender extends Component {
   componentDidMount () {

@@ -1,5 +1,5 @@
 // @flow
-import {merge} from './util'
+import {merge} from './test-util'
 
 test("merge", () => {
   expect(merge({
