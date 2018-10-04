@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { rand } from '../test-util'
-import TestCanvas from './test-canvas'
+import TestCanvas from '../test-canvas'
+import * as line from './index'
 
 const X_MIN = 1900
 const X_MAX = 2018
@@ -31,12 +32,14 @@ class TestRender extends Component {
         <h3>Line Graph</h3>
         <TestCanvas
           {...this.props}
+          draw={line.draw}
           data={DATA}
         />
 
         <h3>Line Graph (Random)</h3>
         <TestCanvas
           {...this.props}
+          draw={line.draw}
           data={RANDOM_DATA}
         />
       </div>
@@ -45,6 +48,7 @@ class TestRender extends Component {
 }
 
 TestRender.defaultProps = {
+  draw: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300

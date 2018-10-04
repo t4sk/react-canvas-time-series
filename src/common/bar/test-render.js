@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { rand } from '../test-util'
-import TestCanvas from './test-canvas'
+import * as bar from './index'
+import TestCanvas from '../test-canvas'
 
 const Y_MIN = 0
 const Y_MAX = 100
@@ -47,24 +48,28 @@ class TestRender extends Component {
         <h3>Bar (Fixed data)</h3>
         <TestCanvas
           {...this.props}
+          draw={bar.draw}
           data={FIXED_DATA}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          draw={bar.draw}
           data={RANDOM_DATA_SMALL}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          draw={bar.draw}
           data={RANDOM_DATA_MEDIUM}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          draw={bar.draw}
           data={RANDOM_DATA_LARGE}
         />
       </div>
@@ -73,6 +78,7 @@ class TestRender extends Component {
 }
 
 TestRender.defaultProps = {
+  draw: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300

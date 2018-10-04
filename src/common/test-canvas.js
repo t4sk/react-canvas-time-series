@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
-import * as bar from './index'
 
 class TestCanvas extends Component {
   componentDidMount () {
     this.ctx = {
-      bar: this.refs.bar.getContext('2d'),
+      testCanvas: this.refs.testCanvas.getContext('2d'),
       background: this.refs.background.getContext('2d', { alpha: false })
     }
 
     // translate by half pixel to draw thin lines
-    this.ctx.bar.translate(0.5, 0.5)
+    this.ctx.testCanvas.translate(0.5, 0.5)
     this.draw()
   }
 
@@ -36,7 +35,7 @@ class TestCanvas extends Component {
 
   draw () {
     this.drawBackground(this.ctx.background, this.props)
-    bar.draw(this.ctx.bar, this.props)
+    this.props.draw(this.ctx.testCanvas, this.props)
   }
 
   render () {
@@ -53,8 +52,8 @@ class TestCanvas extends Component {
           height={this.props.canvas.height}
         />
         <canvas
-          style={style.bar}
-          ref="bar"
+          style={style.testCanvas}
+          ref="testCanvas"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
@@ -74,7 +73,7 @@ const style = {
     top: 0,
     zIndex: 1
   },
-  bar: {
+  testCanvas: {
     position: 'absolute',
     left: 0,
     top: 0,
@@ -83,6 +82,8 @@ const style = {
 }
 
 TestCanvas.defaultProps = {
+  draw: (ctx, props) => {},
+  showUI: false,
   canvas: {
     width: 500,
     height: 300
@@ -92,7 +93,7 @@ TestCanvas.defaultProps = {
     y: 20, // margin.
     width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
-  }
+  },
 }
 
 export default TestCanvas
