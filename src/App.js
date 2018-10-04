@@ -3,6 +3,7 @@ import './App.css'
 import BackgroundTestRender from './common/background/test-render'
 import UITestRender from './common/ui/test-render'
 import LineTestRender from './common/line/test-render'
+import BarTestRender from './common/bar/test-render'
 
 import Candlestick from './candlestick'
 
@@ -15,9 +16,9 @@ class App extends Component {
         <div style={{margin: 10}}>
           <Candlestick />
         </div>
-
         */}
 
+        <BarTestRender />
         <LineTestRender />
         <UITestRender />
         <BackgroundTestRender />
