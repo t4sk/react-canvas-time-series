@@ -8,7 +8,7 @@ const X_MAX = 2018
 const Y_MIN = 0
 const Y_MAX = 100
 
-function generateRandomData(length) {
+function generateRandomData (length) {
   let data = []
 
   for (let i = 0; i < length; i++) {
@@ -32,12 +32,12 @@ const FIXED_DATA = [{
   high: Y_MAX - 10,
   low: Y_MIN,
   open: Y_MIN + 10,
-  close: Y_MAX - 20,
+  close: Y_MAX - 20
 }, {
   high: Y_MAX,
   low: Y_MIN + 10,
   open: Y_MAX - 10,
-  close: Y_MIN + 20,
+  close: Y_MIN + 20
 }]
 
 const RANDOM_DATA_SMALL = generateRandomData(10)
@@ -101,7 +101,7 @@ TestRender.defaultProps = {
     body: {
       line: {
         width: 1,
-        getColor: (d) => d.open <= d.close ? 'green' : 'red',
+        getColor: (d) => d.open <= d.close ? 'green' : 'red'
       },
       getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
     }

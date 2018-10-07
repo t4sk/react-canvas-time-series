@@ -24,7 +24,7 @@ export function draw (ctx: any, props: Props) {
       high,
       low,
       open,
-      close,
+      close
     } = data[i]
 
     const x = graph.x + i * xInterval

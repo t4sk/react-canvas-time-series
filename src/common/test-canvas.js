@@ -93,7 +93,7 @@ TestCanvas.defaultProps = {
     y: 20, // margin.
     width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
-  },
+  }
 }
 
 export default TestCanvas

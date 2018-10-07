@@ -24,9 +24,11 @@ export function draw (ctx: any, props: Props) {
     const y = round(toCanvasY(data[i].y))
     const barHeight = graph.y + graph.height - y
 
+    // TODO function to get backgroundColor
     ctx.fillStyle = data[i].backgroundColor
     ctx.fillRect(x, y, barWidth, barHeight)
 
+    // TODO function to get backgroundColor
     ctx.beginPath()
     ctx.strokeStyle = data[i].lineColor
     ctx.rect(x, y, barWidth, barHeight)

@@ -6,17 +6,17 @@ import TestCanvas from '../test-canvas'
 const Y_MIN = 0
 const Y_MAX = 100
 
-function generateRandomData(length) {
+function generateRandomData (length) {
   let data = []
 
   for (let i = 0; i < length; i++) {
     const backgroundColor = Math.random() > 0.5 ? 'red' : 'green'
-    const lineColor = Math.random() > 0.5 ? 'yellow': 'blue'
+    const lineColor = Math.random() > 0.5 ? 'yellow' : 'blue'
 
     data.push({
       y: rand(Y_MIN, Y_MAX),
       backgroundColor,
-      lineColor,
+      lineColor
     })
   }
 
@@ -26,7 +26,7 @@ function generateRandomData(length) {
 }
 
 const FIXED_DATA = [{
-  y: Y_MIN,
+  y: Y_MIN
 }, {
   y: Math.round((Y_MAX - Y_MIN) / 2),
   lineColor: 'red',
@@ -34,7 +34,7 @@ const FIXED_DATA = [{
 }, {
   y: Y_MAX,
   lineColor: 'blue',
-  backgroundColor: 'green',
+  backgroundColor: 'green'
 }]
 
 const RANDOM_DATA_SMALL = generateRandomData(10)
