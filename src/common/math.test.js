@@ -1,5 +1,10 @@
 // @flow
-import {floor, round, linear} from './math'
+import {
+  floor,
+  round,
+  linear,
+  nearestStepBelow
+} from './math'
 
 test("floor", () => {
   expect(floor(1.9)).toEqual(1)
@@ -25,4 +30,10 @@ test("linear", () => {
   expect(toY(250)).toEqual(110)
   expect(toY(0)).toEqual(10)
   expect(toY(125)).toEqual(60)
+})
+
+test("nearest step", () => {
+  expect(nearestStepBelow(1901, 5)).toEqual(1900)
+  expect(nearestStepBelow(1904, 5)).toEqual(1900)
+  expect(nearestStepBelow(1905, 5)).toEqual(1905)
 })
