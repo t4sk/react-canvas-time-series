@@ -78,9 +78,9 @@ export function drawXLines (ctx: any, props: Props) {
   ctx.lineTo(xLineCanvasXStart + width, xLineCanvasYStart + height)
   ctx.stroke()
 
-  let x = nearestStepBelow(xMin, props.x.interval)
+  const xStart = nearestStepBelow(xMin, props.x.interval)
 
-  while (x <= xMax) {
+  for (let x = xStart; x <= xMax; x += props.x.interval) {
     const canvasX = round(toCanvasX(x) + xLineCanvasXStart)
 
     if (canvasX >= xLineCanvasXStart && canvasX <= xLineCanvasXStart + width) {
@@ -96,7 +96,5 @@ export function drawXLines (ctx: any, props: Props) {
         labelCanvasY
       )
     }
-    
-    x += props.x.interval
   }
 }
