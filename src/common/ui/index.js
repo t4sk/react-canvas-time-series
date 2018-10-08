@@ -189,3 +189,27 @@ function drawXLabel (ctx: any, props: Props) {
     getXLabelTextCanvasY(props)
   )
 }
+
+export function getNearestDataAtX (
+  x: number,
+  delta: number,
+  data: Array<{x: number}>
+): {x: number} {
+  let low = 0; let high = data.length - 1
+
+  // binary search
+  while (low < high) {
+    let mid = (low + high) / 2 >> 0
+
+    if (data[mid].x > x + delta) {
+      high = mid
+    } else if (data[mid].x < x - delta) {
+      low = mid + 1
+    } else {
+      // Math.abs(data[mid].timestamp - x) <= delta
+      return data[mid]
+    }
+  }
+
+  return data[low]
+}
