@@ -94,8 +94,6 @@ export function drawYLines (ctx: any, props: Props) {
   for (let y = yStart; y <= yMax; y += props.y.interval) {
     const canvasY = round(toCanvasY(y)) + yLineCanvasYStart
 
-    console.log(canvasY)
-
     if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
       // draw line
       ctx.moveTo(yLineCanvasXStart, canvasY)
