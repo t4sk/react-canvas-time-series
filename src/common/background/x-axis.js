@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { round, linear } from '../math'
+import { round, linear, nearestStepBelow } from '../math'
 import { getHeight, getWidth } from './common'
 
 function getXLineCanvasXStart (props: Props): number {
@@ -57,32 +57,46 @@ export function drawXLines (ctx: any, props: Props) {
 
   const width = getWidth(props)
   const height = getHeight(props)
-  const interval = width / props.x.intervals
-  const toX = linear({
-    dy: xMax - xMin,
-    dx: width,
-    y0: xMin
+
+  const toCanvasX = linear({
+    dy: width,
+    dx: xMax - xMin,
+    y0: - width * xMin / (xMax - xMin),
   })
 
   const xLineCanvasYStart = getXLineCanvasYStart(props)
   const xLineCanvasXStart = getXLineCanvasXStart(props)
   const labelCanvasY = getXLabelCanvasY(props)
 
-  for (let i = 0; i <= props.x.intervals; i++) {
-    const canvasX = round(i * interval) + xLineCanvasXStart
+  // draw x line at start
+  ctx.moveTo(xLineCanvasXStart, xLineCanvasYStart)
+  ctx.lineTo(xLineCanvasXStart, xLineCanvasYStart + height)
+  ctx.stroke()
 
-    // draw line
-    ctx.moveTo(canvasX, xLineCanvasYStart)
-    ctx.lineTo(canvasX, xLineCanvasYStart + height)
-    ctx.stroke()
+  // draw x line at end
+  ctx.moveTo(xLineCanvasXStart + width, xLineCanvasYStart)
+  ctx.lineTo(xLineCanvasXStart + width, xLineCanvasYStart + height)
+  ctx.stroke()
 
-    // draw text
-    const x = round(toX(i * interval))
+  let x = nearestStepBelow(xMin, props.x.interval)
 
-    ctx.fillText(
-      props.x.axis.label.render(x),
-      canvasX,
-      labelCanvasY
-    )
+  while (x <= xMax) {
+    const canvasX = round(toCanvasX(x) + xLineCanvasXStart)
+
+    if (canvasX >= xLineCanvasXStart && canvasX <= xLineCanvasXStart + width) {
+      // draw line
+      ctx.moveTo(canvasX, xLineCanvasYStart)
+      ctx.lineTo(canvasX, xLineCanvasYStart + height)
+      ctx.stroke()
+
+      // draw text
+      ctx.fillText(
+        props.x.axis.label.render(x),
+        canvasX,
+        labelCanvasY
+      )
+    }
+    
+    x += props.x.interval
   }
 }

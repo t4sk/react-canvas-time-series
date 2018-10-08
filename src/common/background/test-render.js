@@ -144,7 +144,7 @@ BackgroundTestRender.defaultProps = {
       },
       height: 50
     },
-    intervals: 10
+    interval: 15
   },
   yMin: 10,
   yMax: 110,
