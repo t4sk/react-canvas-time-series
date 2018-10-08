@@ -61,7 +61,7 @@ export function drawXLines (ctx: any, props: Props) {
   const toCanvasX = linear({
     dy: width,
     dx: xMax - xMin,
-    y0: - width * xMin / (xMax - xMin),
+    y0: -width * xMin / (xMax - xMin)
   })
 
   const xLineCanvasYStart = getXLineCanvasYStart(props)

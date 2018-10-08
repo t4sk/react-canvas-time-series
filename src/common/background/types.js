@@ -23,7 +23,7 @@ export type Props = {
       },
       width: number,
     },
-    intervals: number,
+    interval: number,
   },
   x: {
     line: {
@@ -38,7 +38,7 @@ export type Props = {
       },
       height: number
     },
-    intervals: number
+    interval: number
   },
   xMin: number,
   xMax: number,

@@ -129,7 +129,7 @@ BackgroundTestRender.defaultProps = {
       },
       width: 50
     },
-    intervals: 8
+    interval: 10
   },
   x: {
     line: {

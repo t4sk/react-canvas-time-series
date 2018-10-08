@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { round, linear } from '../math'
+import { round, linear, nearestStepBelow } from '../math'
 import { getHeight, getWidth } from './common'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
@@ -68,27 +68,46 @@ export function drawYLines (ctx: any, props: Props) {
 
   const width = getWidth(props)
   const height = getHeight(props)
-  const interval = height / props.y.intervals
-  const toY = linear({
-    dy: yMax - yMin,
-    dx: height,
-    y0: yMin
+
+  const toCanvasY = linear({
+    dy: -height,
+    dx: yMax - yMin,
+    y0: height * yMax / (yMax - yMin)
   })
 
   const yLineCanvasXStart = getYLineCanvasXStart(props)
   const yLineCanvasYStart = getYLineCanvasYStart(props)
   const labelCanvasX = getYLabelCanvasX(props)
 
-  for (let i = 0; i <= props.y.intervals; i++) {
-    const canvasY = round(i * interval) + yLineCanvasYStart
+  // draw y line top
+  ctx.moveTo(yLineCanvasXStart, yLineCanvasYStart)
+  ctx.lineTo(yLineCanvasXStart + width, yLineCanvasYStart)
+  ctx.stroke()
 
-    // draw line
-    ctx.moveTo(yLineCanvasXStart, canvasY)
-    ctx.lineTo(yLineCanvasXStart + width, canvasY)
-    ctx.stroke()
+  // draw y line bottom
+  ctx.moveTo(yLineCanvasXStart, yLineCanvasYStart + height)
+  ctx.lineTo(yLineCanvasXStart + width, yLineCanvasYStart + height)
+  ctx.stroke()
 
-    // draw text
-    const y = round(toY((props.y.intervals - i) * interval))
-    ctx.fillText(props.y.axis.label.render(y), labelCanvasX, canvasY)
+  const yStart = nearestStepBelow(yMin, props.y.interval)
+
+  for (let y = yStart; y <= yMax; y += props.y.interval) {
+    const canvasY = round(toCanvasY(y)) + yLineCanvasYStart
+
+    console.log(canvasY)
+
+    if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
+      // draw line
+      ctx.moveTo(yLineCanvasXStart, canvasY)
+      ctx.lineTo(yLineCanvasXStart + width, canvasY)
+      ctx.stroke()
+
+      // draw text
+      ctx.fillText(
+        props.y.axis.label.render(y),
+        labelCanvasX,
+        canvasY
+      )
+    }
   }
 }
