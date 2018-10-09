@@ -7,6 +7,20 @@ class TestRender extends Component {
   render () {
     return (
       <div>
+        <h3>X Drag</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            x: {
+              label: {
+                at: 'bottom'
+              }
+            }
+          })}
+          showBackground={true}
+          showUI={true}
+          drawUI={ui.draw}
+        />
+
         <h3>X Label Bottom</h3>
         <TestCanvas
           {...merge(this.props, {

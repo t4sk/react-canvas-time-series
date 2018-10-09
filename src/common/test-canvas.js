@@ -6,7 +6,10 @@ class TestCanvas extends Component {
 
     this.mouse = {
       x: undefined,
-      y: undefined
+      y: undefined,
+      isDragging: false,
+      mouseDownX: undefined,
+      mouseDownY: undefined,
     }
   }
 
@@ -23,6 +26,27 @@ class TestCanvas extends Component {
 
         this.mouse.x = e.clientX - rect.left
         this.mouse.y = e.clientY - rect.top
+      })
+
+      this.ctx.ui.canvas.addEventListener('mousedown', e => {
+        this.mouse.isDragging = true
+        this.mouse.mouseDownX = this.mouse.x
+        this.mouse.mouseDownY = this.mouse.y
+      })
+
+      this.ctx.ui.canvas.addEventListener('mouseup', e => {
+        this.mouse.isDragging = false
+        this.mouse.mouseDownX = undefined
+        this.mouse.mouseDownY = undefined
+      })
+
+      this.ctx.ui.canvas.addEventListener('mouseout', e => {
+        this.mouse.x = undefined
+        this.mouse.y = undefined
+
+        this.mouse.isDragging = false
+        this.mouse.mouseDownX = undefined
+        this.mouse.mouseDownY = undefined
       })
     }
 
