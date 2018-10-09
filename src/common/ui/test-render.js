@@ -16,7 +16,7 @@ class TestRender extends Component {
               }
             }
           })}
-          drawBackground={true}
+          showBackground={true}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -33,7 +33,7 @@ class TestRender extends Component {
               }
             }
           })}
-          drawBackground={true}
+          showBackground={true}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -47,7 +47,7 @@ class TestRender extends Component {
               }
             }
           })}
-          drawBackground={true}
+          showBackground={true}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -64,7 +64,7 @@ class TestRender extends Component {
               }
             }
           })}
-          drawBackground={true}
+          showBackground={true}
           showUI={true}
           drawUI={ui.draw}
         />

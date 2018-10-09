@@ -50,7 +50,7 @@ class TestRender extends Component {
           {...this.props}
           draw={bar.draw}
           data={FIXED_DATA}
-          drawBackground={true}
+          showBackground={true}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
@@ -58,7 +58,7 @@ class TestRender extends Component {
           {...this.props}
           draw={bar.draw}
           data={RANDOM_DATA_SMALL}
-          drawBackground={true}
+          showBackground={true}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
@@ -66,7 +66,7 @@ class TestRender extends Component {
           {...this.props}
           draw={bar.draw}
           data={RANDOM_DATA_MEDIUM}
-          drawBackground={true}
+          showBackground={true}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
@@ -74,7 +74,7 @@ class TestRender extends Component {
           {...this.props}
           draw={bar.draw}
           data={RANDOM_DATA_LARGE}
-          drawBackground={true}
+          showBackground={true}
         />
       </div>
     )
