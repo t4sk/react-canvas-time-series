@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { merge } from '../test-util'
-import TestCanvas from './test-canvas'
+import TestCanvas from '../test-canvas'
+import * as ui from './index'
 
 class TestRender extends Component {
   render () {
@@ -15,6 +16,9 @@ class TestRender extends Component {
               }
             }
           })}
+          drawBackground={true}
+          showUI={true}
+          drawUI={ui.draw}
         />
 
         <h3>X Label Top</h3>
@@ -29,6 +33,9 @@ class TestRender extends Component {
               }
             }
           })}
+          drawBackground={true}
+          showUI={true}
+          drawUI={ui.draw}
         />
 
         <h3>Y Label Left</h3>
@@ -40,6 +47,9 @@ class TestRender extends Component {
               }
             }
           })}
+          drawBackground={true}
+          showUI={true}
+          drawUI={ui.draw}
         />
 
         <h3>Y Label Right</h3>
@@ -54,6 +64,9 @@ class TestRender extends Component {
               }
             }
           })}
+          drawBackground={true}
+          showUI={true}
+          drawUI={ui.draw}
         />
       </div>
     )

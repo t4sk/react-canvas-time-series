@@ -1,15 +1,39 @@
 import React, { Component } from 'react'
 
 class TestCanvas extends Component {
+  constructor (props) {
+    super(props)
+
+    this.mouse = {
+      x: undefined,
+      y: undefined
+    }
+  }
+
   componentDidMount () {
     this.ctx = {
+      ui: this.refs.ui.getContext('2d'),
       testCanvas: this.refs.testCanvas.getContext('2d'),
       background: this.refs.background.getContext('2d', { alpha: false })
     }
 
+    if (this.props.showUI) {
+      this.ctx.ui.canvas.addEventListener('mousemove', e => {
+        const rect = this.ctx.ui.canvas.getBoundingClientRect()
+
+        this.mouse.x = e.clientX - rect.left
+        this.mouse.y = e.clientY - rect.top
+      })
+    }
+
     // translate by half pixel to draw thin lines
     this.ctx.testCanvas.translate(0.5, 0.5)
-    this.draw()
+
+    if (this.props.showUI) {
+      this.animate()
+    } else {
+      this.draw()
+    }
   }
 
   shouldComponentUpdate () {
@@ -40,6 +64,19 @@ class TestCanvas extends Component {
     this.props.draw(this.ctx.testCanvas, this.props)
   }
 
+  animate = () => {
+    window.requestAnimationFrame(this.animate)
+
+    this.draw()
+
+    this.props.drawUI(
+      this.ctx.ui, {
+        ...this.props,
+        mouse: this.mouse
+      }
+    )
+  }
+
   render () {
     return (
       <div style={{
@@ -56,6 +93,12 @@ class TestCanvas extends Component {
         <canvas
           style={style.testCanvas}
           ref="testCanvas"
+          width={this.props.canvas.width}
+          height={this.props.canvas.height}
+        />
+        <canvas
+          style={style.ui}
+          ref="ui"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
@@ -80,12 +123,19 @@ const style = {
     left: 0,
     top: 0,
     zIndex: 2
+  },
+  ui: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 3
   }
 }
 
 TestCanvas.defaultProps = {
   draw: (ctx, props) => {},
   showUI: false,
+  drawUI: (ctx, props) => {},
   drawBackground: false,
   canvas: {
     width: 500,
