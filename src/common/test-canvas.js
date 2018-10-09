@@ -34,7 +34,9 @@ class TestCanvas extends Component {
   }
 
   draw () {
-    this.drawBackground(this.ctx.background, this.props)
+    if (this.props.drawBackground) {
+      this.drawBackground(this.ctx.background, this.props)
+    }
     this.props.draw(this.ctx.testCanvas, this.props)
   }
 
@@ -84,6 +86,7 @@ const style = {
 TestCanvas.defaultProps = {
   draw: (ctx, props) => {},
   showUI: false,
+  drawBackground: false,
   canvas: {
     width: 500,
     height: 300
