@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { merge } from '../test-util'
 import TestCanvas from '../test-canvas'
+import * as background from '../background'
 import * as ui from './index'
+
+// TODO fix ui
 
 class TestRender extends Component {
   render () {
@@ -19,6 +22,7 @@ class TestRender extends Component {
             }
           })}
           showBackground={true}
+          drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -35,6 +39,7 @@ class TestRender extends Component {
             }
           })}
           showBackground={true}
+          drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -54,6 +59,7 @@ class TestRender extends Component {
             }
           })}
           showBackground={true}
+          drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -70,6 +76,7 @@ class TestRender extends Component {
             }
           })}
           showBackground={true}
+          drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -87,6 +94,7 @@ class TestRender extends Component {
             }
           })}
           showBackground={true}
+          drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
         />
@@ -100,11 +108,48 @@ TestRender.defaultProps = {
     width: 500,
     height: 300
   },
+  margin: {
+    top: 10,
+    bottom: 20,
+    left: 20,
+    right: 30
+  },
+  backgroundColor: 'lightgrey',
+  y: {
+    line: {
+      color: 'red'
+    },
+    axis: {
+      at: 'left',
+      label: {
+        font: '12px Arial',
+        color: 'black',
+        render: y => y
+      },
+      width: 50
+    },
+    interval: 10
+  },
+  x: {
+    line: {
+      color: 'blue'
+    },
+    axis: {
+      at: 'bottom',
+      label: {
+        font: '12px Arial',
+        color: 'black',
+        render: x => x
+      },
+      height: 50
+    },
+    interval: 10
+  },
   graph: {
     // y label left, x label bottom
-    x: 60, // margin.left + x.axis.width
-    y: 20, // margin.
-    width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
+    x: 70, // margin.left + x.axis.width
+    y: 10, // margin.top
+    width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   ui: {

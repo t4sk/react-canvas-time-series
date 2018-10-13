@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { rand } from '../test-util'
+import * as background from '../background'
 import * as bar from './index'
 import TestCanvas from '../test-canvas'
 
@@ -48,33 +49,45 @@ class TestRender extends Component {
         <h3>Bar (Fixed data)</h3>
         <TestCanvas
           {...this.props}
+          xMin={0}
+          xMax={FIXED_DATA.length}
           draw={bar.draw}
           data={FIXED_DATA}
           showBackground={true}
+          drawBackground={background.draw}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          xMin={0}
+          xMax={RANDOM_DATA_SMALL.length}
           draw={bar.draw}
           data={RANDOM_DATA_SMALL}
           showBackground={true}
+          drawBackground={background.draw}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          xMin={0}
+          xMax={RANDOM_DATA_MEDIUM.length}
           draw={bar.draw}
           data={RANDOM_DATA_MEDIUM}
           showBackground={true}
+          drawBackground={background.draw}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
         <TestCanvas
           {...this.props}
+          xMin={0}
+          xMax={RANDOM_DATA_LARGE.length}
           draw={bar.draw}
           data={RANDOM_DATA_LARGE}
           showBackground={true}
+          drawBackground={background.draw}
         />
       </div>
     )
@@ -87,11 +100,48 @@ TestRender.defaultProps = {
     width: 500,
     height: 300
   },
+  margin: {
+    top: 10,
+    bottom: 20,
+    left: 20,
+    right: 30
+  },
+  backgroundColor: 'lightgrey',
+  y: {
+    line: {
+      color: 'red'
+    },
+    axis: {
+      at: 'left',
+      label: {
+        font: '12px Arial',
+        color: 'black',
+        render: y => y
+      },
+      width: 50
+    },
+    interval: 10
+  },
+  x: {
+    line: {
+      color: 'blue'
+    },
+    axis: {
+      at: 'bottom',
+      label: {
+        font: '12px Arial',
+        color: 'black',
+        render: x => x
+      },
+      height: 50
+    },
+    interval: 1
+  },
   graph: {
     // y label left, x label bottom
-    x: 60, // margin.left + x.axis.width
-    y: 10, // margin.
-    width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
+    x: 70, // margin.left + x.axis.width
+    y: 10, // margin.top
+    width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   bar: {
@@ -103,7 +153,9 @@ TestRender.defaultProps = {
   },
   data: [],
   yMin: Y_MIN,
-  yMax: Y_MAX
+  yMax: Y_MAX,
+  xMin: 0,
+  xMax: 0,
 }
 
 export default TestRender

@@ -3,6 +3,13 @@ import type { Props } from './types'
 import { drawXLines } from './x-axis'
 import { drawYLines } from './y-axis'
 
+// TODO namespace background props
+// TODO fix lien width
+// TODO optional x axis
+// TODO optiona x lines
+// TODO optional y axis
+// TODO optional y lines
+
 export function draw (ctx: any, props: Props) {
   ctx.fillStyle = props.backgroundColor
   ctx.fillRect(
