@@ -69,11 +69,13 @@ export function drawXLines (ctx: any, props: Props) {
   const labelCanvasY = getXLabelCanvasY(props)
 
   // draw x line at start
+  ctx.beginPath()
   ctx.moveTo(xLineCanvasXStart, xLineCanvasYStart)
   ctx.lineTo(xLineCanvasXStart, xLineCanvasYStart + height)
   ctx.stroke()
 
   // draw x line at end
+  ctx.beginPath()
   ctx.moveTo(xLineCanvasXStart + width, xLineCanvasYStart)
   ctx.lineTo(xLineCanvasXStart + width, xLineCanvasYStart + height)
   ctx.stroke()
@@ -85,6 +87,7 @@ export function drawXLines (ctx: any, props: Props) {
 
     if (canvasX >= xLineCanvasXStart && canvasX <= xLineCanvasXStart + width) {
       // draw line
+      ctx.beginPath()
       ctx.moveTo(canvasX, xLineCanvasYStart)
       ctx.lineTo(canvasX, xLineCanvasYStart + height)
       ctx.stroke()
