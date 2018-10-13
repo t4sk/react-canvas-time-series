@@ -7,8 +7,8 @@ export function draw (ctx: any, props: Props) {
   ctx.fillStyle = props.backgroundColor
   ctx.fillRect(
     0, 0,
-    props.width,
-    props.height
+    props.canvas.width,
+    props.canvas.height
   )
 
   // style lines

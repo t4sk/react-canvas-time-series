@@ -1,8 +1,10 @@
 // @flow
 
 export type Props = {
-  width: number,
-  height: number,
+  canvas: {
+    width: number,
+    height: number,
+  },
   margin: {
     top: number,
     bottom: number,
