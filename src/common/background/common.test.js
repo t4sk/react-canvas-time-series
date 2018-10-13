@@ -1,6 +1,11 @@
+// @flow
+import { merge } from '../test-util'
+
 import {
   getGraphWidth,
-  getGraphHeight
+  getGraphHeight,
+  getGraphX,
+  getGraphY,
 } from './common'
 
 const props = {
@@ -17,11 +22,13 @@ const props = {
   background: {
     x: {
       axis: {
+        at: 'bottom',
         height: 50,
       }
     },
     y: {
       axis: {
+        at: 'left',
         width: 50,
       }
     },
@@ -44,4 +51,80 @@ test("get height", () => {
     - props.margin.top
     - props.margin.bottom
   )
+})
+
+describe("get graph y", () => {
+  test("x axis at top", () => {
+    expect(getGraphY(merge(props, {
+      background: {
+        x: {
+          axis: {
+            at: 'top'
+          }
+        }
+      }
+    }))).toEqual(props.margin.top + props.background.x.axis.height)
+  })
+
+  test("x axis at bottom", () => {
+    expect(getGraphY(merge(props, {
+      background: {
+        x: {
+          axis: {
+            at: 'bottom'
+          }
+        }
+      }
+    }))).toEqual(props.margin.top)
+  })
+
+  test("invalid x axis", () => {
+    expect(() => getGraphY(merge(props, {
+      background: {
+        x: {
+          axis: {
+            at: 'invalid'
+          }
+        }
+      }
+    }))).toThrow()
+  })
+})
+
+describe("get graph x", () => {
+  test("y axis at left", () => {
+    expect(getGraphX(merge(props, {
+      background: {
+        y: {
+          axis: {
+            at: 'left'
+          }
+        }
+      }
+    }))).toEqual(props.margin.left + props.background.y.axis.width)
+  })
+
+  test("y axis at right", () => {
+    expect(getGraphX(merge(props, {
+      background: {
+        y: {
+          axis: {
+            at: 'right'
+          }
+        }
+      }
+    }))).toEqual(props.margin.left)
+  })
+
+  test("invalid y axis", () => {
+    expect(() => getGraphX(merge(props, {
+      background: {
+        y: {
+          axis: {
+            at: 'invalid'
+          }
+        }
+      }
+    }))).toThrow()
+  })
 })
