@@ -9,6 +9,7 @@ import { drawYLines } from './y-axis'
 // TODO optiona x lines
 // TODO optional y axis
 // TODO optional y lines
+// TODO round
 
 export function draw (ctx: any, props: Props) {
   ctx.fillStyle = props.backgroundColor
