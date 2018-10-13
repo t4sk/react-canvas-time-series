@@ -11,36 +11,38 @@ export type Props = {
     left: number,
     right: number,
   },
-  backgroundColor: string,
-  y: {
-    line: {
-      color: string,
-    },
-    axis: {
-      at: 'left' | 'right',
-      label: {
-        font: string,
+  background: {
+    backgroundColor: string,
+    y: {
+      line: {
         color: string,
-        render: number => string | number,
       },
-      width: number,
-    },
-    interval: number,
-  },
-  x: {
-    line: {
-      color: number,
-    },
-    axis: {
-      at: 'top' | 'bottom',
-      label: {
-        font: string,
-        color: string,
-        render: number => string | number,
+      axis: {
+        at: 'left' | 'right',
+        label: {
+          font: string,
+          color: string,
+          render: number => string | number,
+        },
+        width: number,
       },
-      height: number
+      interval: number,
     },
-    interval: number
+    x: {
+      line: {
+        color: number,
+      },
+      axis: {
+        at: 'top' | 'bottom',
+        label: {
+          font: string,
+          color: string,
+          render: number => string | number,
+        },
+        height: number
+      },
+      interval: number
+    },
   },
   xMin: number,
   xMax: number,

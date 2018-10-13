@@ -12,7 +12,7 @@ import { drawYLines } from './y-axis'
 // TODO round
 
 export function draw (ctx: any, props: Props) {
-  ctx.fillStyle = props.backgroundColor
+  ctx.fillStyle = props.background.backgroundColor
   ctx.fillRect(
     0, 0,
     props.canvas.width,
