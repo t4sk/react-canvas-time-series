@@ -2,7 +2,7 @@
 import { round, linear } from '../math'
 import type { Props, Mouse, Graph } from './types'
 
-export function isInsideGraph(mouse: Mouse, graph: Graph): bool {
+export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   if (
     !mouse.x ||
     mouse.x < graph.x ||

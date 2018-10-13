@@ -190,7 +190,7 @@ TestRender.defaultProps = {
         color: 'white',
         render: y => y.toFixed(2)
       }
-    },
+    }
   },
   yMin: 10,
   yMax: 110,

@@ -10,7 +10,7 @@ class TestCanvas extends Component {
       y: undefined,
       isDragging: false,
       mouseDownX: undefined,
-      mouseDownY: undefined,
+      mouseDownY: undefined
     }
   }
 
@@ -121,7 +121,7 @@ class TestCanvas extends Component {
 
 const style = {
   container: {
-    position: 'relative',
+    position: 'relative'
   },
   background: {
     position: 'absolute',

@@ -62,7 +62,7 @@ class TestRender extends Component {
 TestRender.defaultProps = {
   canvas: {
     width: 500,
-    height: 300,
+    height: 300
   },
   margin: {
     top: 10,
@@ -101,7 +101,7 @@ TestRender.defaultProps = {
         height: 50
       },
       interval: 15
-    },
+    }
   },
   yMin: 10,
   yMax: 110,

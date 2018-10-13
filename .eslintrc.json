@@ -11,5 +11,10 @@
       "flowtype": {
         "onlyFilesWithFlowAnnotation": false
       }
-    }
+    },
+    "rules": {
+     "no-unused-vars": "warn",
+     "no-console": "warn",
+     "eqeqeq": "warn"
+   }
 }

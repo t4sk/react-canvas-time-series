@@ -164,7 +164,7 @@ TestRender.defaultProps = {
   yMin: Y_MIN,
   yMax: Y_MAX,
   xMin: 0,
-  xMax: 0,
+  xMax: 0
 }
 
 export default TestRender
