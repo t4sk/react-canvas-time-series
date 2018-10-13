@@ -1,7 +1,10 @@
 // @flow
 import type { Props } from './types'
 import { round, linear, nearestStepBelow } from '../math'
-import { getHeight, getWidth } from './common'
+import {
+  getGraphHeight,
+  getGraphWidth
+} from './common'
 
 function getXLineCanvasXStart (props: Props): number {
   switch (props.background.y.axis.at) {
@@ -28,7 +31,7 @@ function getXLineCanvasYStart (props: Props): number {
 const X_LABEL_VERTICAL_PADDING = 12
 
 function getXLabelCanvasY (props: Props): number {
-  const height = getHeight(props)
+  const height = getGraphHeight(props)
 
   switch (props.background.x.axis.at) {
     case 'top':
@@ -56,8 +59,8 @@ export function drawXLines (ctx: any, props: Props) {
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
-  const width = getWidth(props)
-  const height = getHeight(props)
+  const width = getGraphWidth(props)
+  const height = getGraphHeight(props)
 
   const toCanvasX = linear({
     dy: width,

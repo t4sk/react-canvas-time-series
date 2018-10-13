@@ -1,7 +1,10 @@
 // @flow
 import type { Props } from './types'
 import { round, linear, nearestStepBelow } from '../math'
-import { getHeight, getWidth } from './common'
+import {
+  getGraphHeight,
+  getGraphWidth
+} from './common'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
   switch (props.background.y.axis.at) {
@@ -39,7 +42,7 @@ function getYLineCanvasYStart (props: Props): number {
 const Y_LABEL_HORIZONTAL_PADDING = 10
 
 function getYLabelCanvasX (props: Props): number {
-  const width = getWidth(props)
+  const width = getGraphWidth(props)
 
   switch (props.background.y.axis.at) {
     case 'left':
@@ -67,8 +70,8 @@ export function drawYLines (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
-  const width = getWidth(props)
-  const height = getHeight(props)
+  const width = getGraphWidth(props)
+  const height = getGraphHeight(props)
 
   const toCanvasY = linear({
     dy: -height,
