@@ -122,7 +122,6 @@ class TestCanvas extends Component {
 const style = {
   container: {
     position: 'relative',
-    border: '1px solid black'
   },
   background: {
     position: 'absolute',
