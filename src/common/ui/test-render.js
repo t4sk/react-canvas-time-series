@@ -10,9 +10,11 @@ class TestRender extends Component {
         <h3>X Drag</h3>
         <TestCanvas
           {...merge(this.props, {
-            x: {
-              label: {
-                at: 'bottom'
+            ui: {
+              x: {
+                label: {
+                  at: 'bottom'
+                }
               }
             }
           })}
@@ -24,9 +26,11 @@ class TestRender extends Component {
         <h3>X Label Bottom</h3>
         <TestCanvas
           {...merge(this.props, {
-            x: {
-              label: {
-                at: 'bottom'
+            ui: {
+              x: {
+                label: {
+                  at: 'bottom'
+                }
               }
             }
           })}
@@ -41,9 +45,11 @@ class TestRender extends Component {
             graph: {
               y: 60
             },
-            x: {
-              label: {
-                at: 'top'
+            ui: {
+              x: {
+                label: {
+                  at: 'top'
+                }
               }
             }
           })}
@@ -55,9 +61,11 @@ class TestRender extends Component {
         <h3>Y Label Left</h3>
         <TestCanvas
           {...merge(this.props, {
-            y: {
-              label: {
-                at: 'left'
+            ui: {
+              y: {
+                label: {
+                  at: 'left'
+                }
               }
             }
           })}
@@ -99,33 +107,35 @@ TestRender.defaultProps = {
     width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
-  x: {
-    line: {
-      color: 'blue'
+  ui: {
+    x: {
+      line: {
+        color: 'blue'
+      },
+      label: {
+        at: 'bottom',
+        width: 70,
+        height: 20,
+        backgroundColor: 'green',
+        font: '12px Arial',
+        color: 'black',
+        render: x => Math.round(x)
+      }
     },
-    label: {
-      at: 'bottom',
-      width: 70,
-      height: 20,
-      backgroundColor: 'green',
-      font: '12px Arial',
-      color: 'black',
-      render: x => Math.round(x)
-    }
-  },
-  y: {
-    line: {
-      color: 'green'
+    y: {
+      line: {
+        color: 'green'
+      },
+      label: {
+        at: 'left',
+        width: 50,
+        height: 20,
+        backgroundColor: 'black',
+        font: '12px Arial',
+        color: 'white',
+        render: y => y.toFixed(2)
+      }
     },
-    label: {
-      at: 'left',
-      width: 50,
-      height: 20,
-      backgroundColor: 'black',
-      font: '12px Arial',
-      color: 'white',
-      render: y => y.toFixed(2)
-    }
   },
   yMin: 10,
   yMax: 110,
