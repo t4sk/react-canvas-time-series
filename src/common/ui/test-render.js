@@ -11,6 +11,13 @@ class TestRender extends Component {
         <h3>X Drag</h3>
         <TestCanvas
           {...merge(this.props, {
+            background: {
+              x: {
+                axis: {
+                  at: 'bottom'
+                }
+              }
+            },
             ui: {
               x: {
                 label: {
@@ -28,6 +35,13 @@ class TestRender extends Component {
         <h3>X Label Bottom</h3>
         <TestCanvas
           {...merge(this.props, {
+            background: {
+              x: {
+                axis: {
+                  at: 'bottom'
+                }
+              }
+            },
             ui: {
               x: {
                 label: {
@@ -45,9 +59,11 @@ class TestRender extends Component {
         <h3>X Label Top</h3>
         <TestCanvas
           {...merge(this.props, {
-            x: {
-              axis: {
-                at: 'top'
+            background: {
+              x: {
+                axis: {
+                  at: 'top'
+                }
               }
             },
             graph: {
@@ -70,6 +86,13 @@ class TestRender extends Component {
         <h3>Y Label Left</h3>
         <TestCanvas
           {...merge(this.props, {
+            background: {
+              y: {
+                axis: {
+                  at: 'left'
+                }
+              }
+            },
             ui: {
               y: {
                 label: {
@@ -87,9 +110,11 @@ class TestRender extends Component {
         <h3>Y Label Right</h3>
         <TestCanvas
           {...merge(this.props, {
-            y: {
-              axis: {
-                at: 'right'
+            background: {
+              y: {
+                axis: {
+                  at: 'right'
+                }
               }
             },
             graph: {
@@ -124,36 +149,38 @@ TestRender.defaultProps = {
     left: 20,
     right: 30
   },
-  backgroundColor: 'lightgrey',
-  y: {
-    line: {
-      color: 'red'
-    },
-    axis: {
-      at: 'left',
-      label: {
-        font: '12px Arial',
-        color: 'black',
-        render: y => y
+  background: {
+    backgroundColor: 'lightgrey',
+    y: {
+      line: {
+        color: 'red'
       },
-      width: 50
-    },
-    interval: 10
-  },
-  x: {
-    line: {
-      color: 'blue'
-    },
-    axis: {
-      at: 'bottom',
-      label: {
-        font: '12px Arial',
-        color: 'black',
-        render: x => x
+      axis: {
+        at: 'left',
+        label: {
+          font: '12px Arial',
+          color: 'black',
+          render: y => y
+        },
+        width: 50
       },
-      height: 50
+      interval: 10
     },
-    interval: 10
+    x: {
+      line: {
+        color: 'blue'
+      },
+      axis: {
+        at: 'bottom',
+        label: {
+          font: '12px Arial',
+          color: 'black',
+          render: x => x
+        },
+        height: 50
+      },
+      interval: 10
+    },
   },
   graph: {
     // y label left, x label bottom

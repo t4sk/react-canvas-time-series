@@ -109,36 +109,38 @@ TestRender.defaultProps = {
     left: 20,
     right: 30
   },
-  backgroundColor: 'lightgrey',
-  y: {
-    line: {
-      color: 'red'
-    },
-    axis: {
-      at: 'left',
-      label: {
-        font: '12px Arial',
-        color: 'black',
-        render: y => y
+  background: {
+    backgroundColor: 'lightgrey',
+    y: {
+      line: {
+        color: 'red'
       },
-      width: 50
-    },
-    interval: 10
-  },
-  x: {
-    line: {
-      color: 'blue'
-    },
-    axis: {
-      at: 'bottom',
-      label: {
-        font: '12px Arial',
-        color: 'black',
-        render: x => x
+      axis: {
+        at: 'left',
+        label: {
+          font: '12px Arial',
+          color: 'black',
+          render: y => y
+        },
+        width: 50
       },
-      height: 50
+      interval: 10
     },
-    interval: 10
+    x: {
+      line: {
+        color: 'blue'
+      },
+      axis: {
+        at: 'bottom',
+        label: {
+          font: '12px Arial',
+          color: 'black',
+          render: x => x
+        },
+        height: 50
+      },
+      interval: 10
+    },
   },
   graph: {
     // y label left, x label bottom

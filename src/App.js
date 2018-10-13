@@ -10,13 +10,11 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        <BackgroundTestRender />
-        {/* }
         <UITestRender />
         <CandlestickTestRender />
-        <BarTestRender />
         <LineTestRender />
-        */}
+        <BarTestRender />
+        <BackgroundTestRender />
       </div>
     )
   }
