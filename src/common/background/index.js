@@ -19,9 +19,6 @@ export function draw (ctx: any, props: Props) {
     props.canvas.height
   )
 
-  // style lines
-  ctx.lineWidth = 1
-
   drawXLines(ctx, props)
   drawYLines(ctx, props)
 }

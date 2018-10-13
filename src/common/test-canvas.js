@@ -55,9 +55,6 @@ class TestCanvas extends Component {
       })
     }
 
-    // translate by half pixel to draw thin lines
-    this.ctx.testCanvas.translate(0.5, 0.5)
-
     if (this.props.showUI) {
       this.animate()
     } else {
