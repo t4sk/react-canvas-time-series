@@ -1,6 +1,26 @@
 // @flow
 import { round, linear } from '../math'
-import type { Props } from './types'
+import type { Props, Mouse, Graph } from './types'
+
+export function isInsideGraph(mouse: Mouse, graph: Graph): bool {
+  if (
+    !mouse.x ||
+    mouse.x < graph.x ||
+    mouse.x > graph.x + graph.width
+  ) {
+    return false
+  }
+
+  if (
+    !mouse.y ||
+    mouse.y < graph.y ||
+    mouse.y > graph.y + graph.height
+  ) {
+    return false
+  }
+
+  return true
+}
 
 export function draw (ctx: any, props: Props) {
   ctx.clearRect(
@@ -9,20 +29,7 @@ export function draw (ctx: any, props: Props) {
     props.canvas.height
   )
 
-  // dont draw if mouse not inside graph
-  if (
-    !props.mouse.x ||
-    props.mouse.x < props.graph.x ||
-    props.mouse.x > props.graph.x + props.graph.width
-  ) {
-    return
-  }
-
-  if (
-    !props.mouse.y ||
-    props.mouse.y < props.graph.y ||
-    props.mouse.y > props.graph.y + props.graph.height
-  ) {
+  if (!isInsideGraph(props.mouse, props.graph)) {
     return
   }
 
