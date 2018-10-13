@@ -4,8 +4,6 @@ import TestCanvas from '../test-canvas'
 import * as background from '../background'
 import * as ui from './index'
 
-// TODO fix ui
-
 class TestRender extends Component {
   render () {
     return (
@@ -47,6 +45,11 @@ class TestRender extends Component {
         <h3>X Label Top</h3>
         <TestCanvas
           {...merge(this.props, {
+            x: {
+              axis: {
+                at: 'top'
+              }
+            },
             graph: {
               y: 60
             },
@@ -84,12 +87,19 @@ class TestRender extends Component {
         <h3>Y Label Right</h3>
         <TestCanvas
           {...merge(this.props, {
-            graph: {
-              x: 10
-            },
             y: {
-              label: {
+              axis: {
                 at: 'right'
+              }
+            },
+            graph: {
+              x: 20
+            },
+            ui: {
+              y: {
+                label: {
+                  at: 'right'
+                }
               }
             }
           })}
