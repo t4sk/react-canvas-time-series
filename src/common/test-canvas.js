@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import * as ui from './ui'
 
 class TestCanvas extends Component {
   constructor (props) {
@@ -29,9 +30,11 @@ class TestCanvas extends Component {
       })
 
       this.ctx.ui.canvas.addEventListener('mousedown', e => {
-        this.mouse.isDragging = true
-        this.mouse.mouseDownX = this.mouse.x
-        this.mouse.mouseDownY = this.mouse.y
+        if (ui.isInsideGraph(this.mouse, this.props.graph)) {
+          this.mouse.isDragging = true
+          this.mouse.mouseDownX = this.mouse.x
+          this.mouse.mouseDownY = this.mouse.y
+        }
       })
 
       this.ctx.ui.canvas.addEventListener('mouseup', e => {

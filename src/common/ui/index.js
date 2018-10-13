@@ -172,8 +172,8 @@ function drawXLabel (ctx: any, props: Props) {
 
   // label rect
   ctx.fillRect(
-    mouse.x - round(props.x.label.width / 2),
-    getXLabelCanvasY(props),
+    round(mouse.x - props.x.label.width / 2),
+    round(getXLabelCanvasY(props)),
     props.x.label.width,
     props.x.label.height
   )
@@ -184,16 +184,17 @@ function drawXLabel (ctx: any, props: Props) {
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
+  const canvasX = mouse.isDragging ? mouse.mouseDownX : mouse.x
   const x = linear({
     dy: xMax - xMin,
     dx: props.graph.width,
     y0: xMin
-  })(mouse.x - props.graph.x)
+  })(canvasX - props.graph.x)
 
   ctx.fillText(
     props.x.label.render(x),
-    mouse.x,
-    getXLabelTextCanvasY(props)
+    round(mouse.x),
+    round(getXLabelTextCanvasY(props))
   )
 }
 
