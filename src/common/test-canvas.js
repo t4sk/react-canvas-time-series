@@ -27,6 +27,8 @@ class TestCanvas extends Component {
 
         this.mouse.x = e.clientX - rect.left
         this.mouse.y = e.clientY - rect.top
+
+        this.props.onMouseMove(this.mouse)
       })
 
       this.ctx.ui.canvas.addEventListener('mousedown', e => {
@@ -67,26 +69,9 @@ class TestCanvas extends Component {
     return false
   }
 
-  drawBackground (ctx, props) {
-    ctx.fillStyle = 'lightgrey'
-    ctx.fillRect(
-      0, 0,
-      props.canvas.width,
-      props.canvas.height
-    )
-
-    ctx.fillStyle = 'white'
-    ctx.fillRect(
-      props.graph.x,
-      props.graph.y,
-      props.graph.width,
-      props.graph.height
-    )
-  }
-
   draw () {
     if (this.props.showBackground) {
-      this.drawBackground(this.ctx.background, this.props)
+      this.props.drawBackground(this.ctx.background, this.props)
     }
     this.props.draw(this.ctx.testCanvas, this.props)
   }
@@ -160,10 +145,12 @@ const style = {
 }
 
 TestCanvas.defaultProps = {
+  onMouseMove: () => {},
   draw: (ctx, props) => {},
+  showBackground: false,
+  drawBackground: (ctx, props) => {},
   showUI: false,
   drawUI: (ctx, props) => {},
-  showBackground: false,
   canvas: {
     width: 500,
     height: 300
