@@ -85,33 +85,49 @@ export function drawYLines (ctx: any, props: Props) {
 
   // draw y line top
   ctx.beginPath()
-  ctx.moveTo(yLineCanvasXStart, yLineCanvasYStart)
-  ctx.lineTo(yLineCanvasXStart + width, yLineCanvasYStart)
+  ctx.moveTo(
+    round(yLineCanvasXStart),
+    round(yLineCanvasYStart)
+  )
+  ctx.lineTo(
+    round(yLineCanvasXStart + width),
+    round(yLineCanvasYStart)
+  )
   ctx.stroke()
 
   // draw y line bottom
   ctx.beginPath()
-  ctx.moveTo(yLineCanvasXStart, yLineCanvasYStart + height)
-  ctx.lineTo(yLineCanvasXStart + width, yLineCanvasYStart + height)
+  ctx.moveTo(
+    round(yLineCanvasXStart),
+    round(yLineCanvasYStart + height)
+  )
+  ctx.lineTo(
+    round(yLineCanvasXStart + width),
+    round(yLineCanvasYStart + height)
+  )
   ctx.stroke()
 
   const yStart = nearestStepBelow(yMin, props.background.y.interval)
 
   for (let y = yStart; y <= yMax; y += props.background.y.interval) {
-    const canvasY = round(toCanvasY(y)) + yLineCanvasYStart
+    const canvasY = toCanvasY(y) + yLineCanvasYStart
 
     if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
       // draw line
       ctx.beginPath()
-      ctx.moveTo(yLineCanvasXStart, canvasY)
-      ctx.lineTo(yLineCanvasXStart + width, canvasY)
+      ctx.moveTo(
+        round(yLineCanvasXStart), round(canvasY)
+      )
+      ctx.lineTo(
+        round(yLineCanvasXStart + width), round(canvasY)
+      )
       ctx.stroke()
 
       // draw text
       ctx.fillText(
         props.background.y.axis.label.render(y),
-        labelCanvasX,
-        canvasY
+        round(labelCanvasX),
+        round(canvasY)
       )
     }
   }
