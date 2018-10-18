@@ -14,6 +14,8 @@ export type Props = {
   background: {
     backgroundColor: string,
 
+    showYLabel: boolean,
+    showYLine: boolean,
     yLineWidth: number,
     yLineColor: number,
     yAxisAt: 'left' | 'right',
@@ -23,6 +25,8 @@ export type Props = {
     yLabelRender: number => string | number,
     yInterval: number,
 
+    showXLabel: boolean,
+    showXLine: boolean,
     xLineWidth: number,
     xLineColor: number,
     xAxisAt: 'top' | 'bottom',

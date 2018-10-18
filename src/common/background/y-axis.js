@@ -83,29 +83,31 @@ export function drawYLines (ctx: any, props: Props) {
   const yLineCanvasYStart = getYLineCanvasYStart(props)
   const labelCanvasX = getYLabelCanvasX(props)
 
-  // draw y line top
-  ctx.beginPath()
-  ctx.moveTo(
-    round(yLineCanvasXStart),
-    round(yLineCanvasYStart)
-  )
-  ctx.lineTo(
-    round(yLineCanvasXStart + width),
-    round(yLineCanvasYStart)
-  )
-  ctx.stroke()
+  if (props.background.showYLine) {
+    // draw y line top
+    ctx.beginPath()
+    ctx.moveTo(
+      round(yLineCanvasXStart),
+      round(yLineCanvasYStart)
+    )
+    ctx.lineTo(
+      round(yLineCanvasXStart + width),
+      round(yLineCanvasYStart)
+    )
+    ctx.stroke()
 
-  // draw y line bottom
-  ctx.beginPath()
-  ctx.moveTo(
-    round(yLineCanvasXStart),
-    round(yLineCanvasYStart + height)
-  )
-  ctx.lineTo(
-    round(yLineCanvasXStart + width),
-    round(yLineCanvasYStart + height)
-  )
-  ctx.stroke()
+    // draw y line bottom
+    ctx.beginPath()
+    ctx.moveTo(
+      round(yLineCanvasXStart),
+      round(yLineCanvasYStart + height)
+    )
+    ctx.lineTo(
+      round(yLineCanvasXStart + width),
+      round(yLineCanvasYStart + height)
+    )
+    ctx.stroke()
+  }
 
   const yStart = nearestStepBelow(yMin, props.background.yInterval)
 
@@ -114,21 +116,25 @@ export function drawYLines (ctx: any, props: Props) {
 
     if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
       // draw line
-      ctx.beginPath()
-      ctx.moveTo(
-        round(yLineCanvasXStart), round(canvasY)
-      )
-      ctx.lineTo(
-        round(yLineCanvasXStart + width), round(canvasY)
-      )
-      ctx.stroke()
+      if (props.background.showYLine) {
+        ctx.beginPath()
+        ctx.moveTo(
+          round(yLineCanvasXStart), round(canvasY)
+        )
+        ctx.lineTo(
+          round(yLineCanvasXStart + width), round(canvasY)
+        )
+        ctx.stroke()
+      }
 
       // draw text
-      ctx.fillText(
-        props.background.yLabelRender(y),
-        round(labelCanvasX),
-        round(canvasY)
-      )
+      if (props.background.showYLabel) {
+        ctx.fillText(
+          props.background.yLabelRender(y),
+          round(labelCanvasX),
+          round(canvasY)
+        )
+      }
     }
   }
 }

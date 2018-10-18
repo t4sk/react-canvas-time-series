@@ -5,9 +5,48 @@ import TestCanvas from '../test-canvas'
 
 class TestRender extends Component {
   render () {
-    console.log(this.props)
     return (
       <div>
+        <h3>Hide X Labels</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            background: {
+              showXLabel: false,
+            }
+          })}
+          draw={background.draw}
+        />
+
+        <h3>Hide X Lines</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            background: {
+              showXLine: false,
+            }
+          })}
+          draw={background.draw}
+        />
+
+        <h3>Hide Y Labels</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            background: {
+              showYLabel: false,
+            }
+          })}
+          draw={background.draw}
+        />
+
+        <h3>Hide Y Lines</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            background: {
+              showYLine: false,
+            }
+          })}
+          draw={background.draw}
+        />
+
         <h3>X Axis Bottom</h3>
         <TestCanvas
           {...merge(this.props, {
@@ -65,6 +104,9 @@ TestRender.defaultProps = {
   },
   background: {
     backgroundColor: 'lightgrey',
+
+    showYLabel: true,
+    showYLine: true,
     yLineWidth: 1,
     yLineColor: 'red',
     yAxisAt: 'left',
@@ -74,6 +116,8 @@ TestRender.defaultProps = {
     yLabelRender: y => y,
     yInterval: 10,
 
+    showXLabel: true,
+    showXLine: true,
     xLineWidth: 1,
     xLineColor: 'blue',
     xAxisAt: 'bottom',

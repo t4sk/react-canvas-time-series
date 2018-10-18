@@ -73,29 +73,31 @@ export function drawXLines (ctx: any, props: Props) {
   const xLineCanvasXStart = getXLineCanvasXStart(props)
   const labelCanvasY = getXLabelCanvasY(props)
 
-  // draw x line at start
-  ctx.beginPath()
-  ctx.moveTo(
-    round(xLineCanvasXStart),
-    round(xLineCanvasYStart)
-  )
-  ctx.lineTo(
-    round(xLineCanvasXStart),
-    round(xLineCanvasYStart + height)
-  )
-  ctx.stroke()
+  if (props.background.showXLine) {
+    // draw x line at start
+    ctx.beginPath()
+    ctx.moveTo(
+      round(xLineCanvasXStart),
+      round(xLineCanvasYStart)
+    )
+    ctx.lineTo(
+      round(xLineCanvasXStart),
+      round(xLineCanvasYStart + height)
+    )
+    ctx.stroke()
 
-  // draw x line at end
-  ctx.beginPath()
-  ctx.moveTo(
-    round(xLineCanvasXStart + width),
-    round(xLineCanvasYStart)
-  )
-  ctx.lineTo(
-    round(xLineCanvasXStart + width),
-    round(xLineCanvasYStart + height)
-  )
-  ctx.stroke()
+    // draw x line at end
+    ctx.beginPath()
+    ctx.moveTo(
+      round(xLineCanvasXStart + width),
+      round(xLineCanvasYStart)
+    )
+    ctx.lineTo(
+      round(xLineCanvasXStart + width),
+      round(xLineCanvasYStart + height)
+    )
+    ctx.stroke()
+  }
 
   const xStart = nearestStepBelow(xMin, props.background.xInterval)
 
@@ -104,21 +106,25 @@ export function drawXLines (ctx: any, props: Props) {
 
     if (canvasX >= xLineCanvasXStart && canvasX <= xLineCanvasXStart + width) {
       // draw line
-      ctx.beginPath()
-      ctx.moveTo(
-        round(canvasX), round(xLineCanvasYStart)
-      )
-      ctx.lineTo(
-        round(canvasX), round(xLineCanvasYStart + height)
-      )
-      ctx.stroke()
+      if (props.background.showXLine) {
+        ctx.beginPath()
+        ctx.moveTo(
+          round(canvasX), round(xLineCanvasYStart)
+        )
+        ctx.lineTo(
+          round(canvasX), round(xLineCanvasYStart + height)
+        )
+        ctx.stroke()
+      }
 
       // draw text
-      ctx.fillText(
-        props.background.xLabelRender(x),
-        round(canvasX),
-        round(labelCanvasY)
-      )
+      if (props.background.showXLabel) {
+        ctx.fillText(
+          props.background.xLabelRender(x),
+          round(canvasX),
+          round(labelCanvasY)
+        )
+      }
     }
   }
 }
