@@ -7,24 +7,24 @@ import {
 } from './common'
 
 function getXLineCanvasXStart (props: Props): number {
-  switch (props.background.y.axis.at) {
+  switch (props.background.yAxisAt) {
     case 'left':
-      return props.margin.left + props.background.y.axis.width
+      return props.margin.left + props.background.yAxisWidth
     case 'right':
       return props.margin.left
     default:
-      throw new Error(`invalid y.axis.at ${props.background.y.axis.at}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
 function getXLineCanvasYStart (props: Props): number {
-  switch (props.background.x.axis.at) {
+  switch (props.background.xAxisAt) {
     case 'top':
-      return props.margin.top + props.background.x.axis.height
+      return props.margin.top + props.background.xAxisHeight
     case 'bottom':
       return props.margin.top
     default:
-      throw new Error(`invalid x.axis.at ${props.background.x.axis.at}`)
+      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
 }
 
@@ -33,13 +33,13 @@ const X_LABEL_VERTICAL_PADDING = 12
 function getXLabelCanvasY (props: Props): number {
   const height = getGraphHeight(props)
 
-  switch (props.background.x.axis.at) {
+  switch (props.background.xAxisAt) {
     case 'top':
-      return props.margin.top + props.background.x.axis.height - X_LABEL_VERTICAL_PADDING
+      return props.margin.top + props.background.xAxisHeight - X_LABEL_VERTICAL_PADDING
     case 'bottom':
       return height + props.margin.top + X_LABEL_VERTICAL_PADDING
     default:
-      throw new Error(`invalid x.axis.at ${props.background.x.axis.at}`)
+      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
 }
 
@@ -50,17 +50,18 @@ export function drawXLines (ctx: any, props: Props) {
   } = props
 
   // style line
-  ctx.lineWidth = 1
-  ctx.strokeStyle = props.background.x.line.color
-
+  ctx.lineWidth = props.background.xLineWidth
+  ctx.strokeStyle = props.background.xLineColor
   // style labels
-  ctx.font = props.background.x.axis.label.font
-  ctx.fillStyle = props.background.x.axis.label.color
+  ctx.font = props.background.xLabelFont
+  ctx.fillStyle = props.background.xLabelColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
   const width = getGraphWidth(props)
   const height = getGraphHeight(props)
+
+  console.log(width, height)
 
   const toCanvasX = linear({
     dy: width,
@@ -96,9 +97,9 @@ export function drawXLines (ctx: any, props: Props) {
   )
   ctx.stroke()
 
-  const xStart = nearestStepBelow(xMin, props.background.x.interval)
+  const xStart = nearestStepBelow(xMin, props.background.xInterval)
 
-  for (let x = xStart; x <= xMax; x += props.background.x.interval) {
+  for (let x = xStart; x <= xMax; x += props.background.xInterval) {
     const canvasX = toCanvasX(x) + xLineCanvasXStart
 
     if (canvasX >= xLineCanvasXStart && canvasX <= xLineCanvasXStart + width) {
@@ -114,7 +115,7 @@ export function drawXLines (ctx: any, props: Props) {
 
       // draw text
       ctx.fillText(
-        props.background.x.axis.label.render(x),
+        props.background.xLabelRender(x),
         round(canvasX),
         round(labelCanvasY)
       )

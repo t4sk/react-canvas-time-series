@@ -20,25 +20,17 @@ const props = {
     right: 30
   },
   background: {
-    x: {
-      axis: {
-        at: 'bottom',
-        height: 50,
-      }
-    },
-    y: {
-      axis: {
-        at: 'left',
-        width: 50,
-      }
-    },
+    xAxisAt: 'bottom',
+    xAxisHeight: 50,
+    yAxisAt: 'left',
+    yAxisWidth: 50,
   }
 }
 
 test("get width", () => {
   expect(getGraphWidth(props)).toEqual(
     props.canvas.width
-    - props.background.y.axis.width
+    - props.background.yAxisWidth
     - props.margin.left
     - props.margin.right
   )
@@ -47,7 +39,7 @@ test("get width", () => {
 test("get height", () => {
   expect(getGraphHeight(props)).toEqual(
     props.canvas.height
-    - props.background.x.axis.height
+    - props.background.xAxisHeight
     - props.margin.top
     - props.margin.bottom
   )
@@ -57,23 +49,15 @@ describe("get graph y", () => {
   test("x axis at top", () => {
     expect(getGraphY(merge(props, {
       background: {
-        x: {
-          axis: {
-            at: 'top'
-          }
-        }
+        xAxisAt: 'top'
       }
-    }))).toEqual(props.margin.top + props.background.x.axis.height)
+    }))).toEqual(props.margin.top + props.background.xAxisHeight)
   })
 
   test("x axis at bottom", () => {
     expect(getGraphY(merge(props, {
       background: {
-        x: {
-          axis: {
-            at: 'bottom'
-          }
-        }
+        xAxisAt: 'bottom'
       }
     }))).toEqual(props.margin.top)
   })
@@ -81,11 +65,7 @@ describe("get graph y", () => {
   test("invalid x axis", () => {
     expect(() => getGraphY(merge(props, {
       background: {
-        x: {
-          axis: {
-            at: 'invalid'
-          }
-        }
+        xAxisAt: 'invalid'
       }
     }))).toThrow()
   })
@@ -95,23 +75,15 @@ describe("get graph x", () => {
   test("y axis at left", () => {
     expect(getGraphX(merge(props, {
       background: {
-        y: {
-          axis: {
-            at: 'left'
-          }
-        }
+        yAxisAt: 'left'
       }
-    }))).toEqual(props.margin.left + props.background.y.axis.width)
+    }))).toEqual(props.margin.left + props.background.yAxisWidth)
   })
 
   test("y axis at right", () => {
     expect(getGraphX(merge(props, {
       background: {
-        y: {
-          axis: {
-            at: 'right'
-          }
-        }
+        yAxisAt: 'right'
       }
     }))).toEqual(props.margin.left)
   })
@@ -119,11 +91,7 @@ describe("get graph x", () => {
   test("invalid y axis", () => {
     expect(() => getGraphX(merge(props, {
       background: {
-        y: {
-          axis: {
-            at: 'invalid'
-          }
-        }
+        yAxisAt: 'invalid'
       }
     }))).toThrow()
   })

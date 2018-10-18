@@ -13,36 +13,24 @@ export type Props = {
   },
   background: {
     backgroundColor: string,
-    y: {
-      line: {
-        color: string,
-      },
-      axis: {
-        at: 'left' | 'right',
-        label: {
-          font: string,
-          color: string,
-          render: number => string | number,
-        },
-        width: number,
-      },
-      interval: number,
-    },
-    x: {
-      line: {
-        color: number,
-      },
-      axis: {
-        at: 'top' | 'bottom',
-        label: {
-          font: string,
-          color: string,
-          render: number => string | number,
-        },
-        height: number
-      },
-      interval: number
-    },
+
+    yLineWidth: number,
+    yLineColor: number,
+    yAxisAt: 'left' | 'right',
+    yAxisWidth: number,
+    yLabelFont: string,
+    yLabelColor: string,
+    yLabelRender: number => string | number,
+    yInterval: number,
+
+    xLineWidth: number,
+    xLineColor: number,
+    xAxisAt: 'top' | 'bottom',
+    xAxisHeight: number,
+    xLabelFont: string,
+    xLabelColor: string,
+    xLabelRender: number => string | number,
+    xInterval: number,
   },
   xMin: number,
   xMax: number,

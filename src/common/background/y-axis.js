@@ -7,35 +7,35 @@ import {
 } from './common'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
-  switch (props.background.y.axis.at) {
+  switch (props.background.yAxisAt) {
     case 'left':
       return 'right'
     case 'right':
       return 'left'
     default:
-      throw new Error(`invalid y.axis.at ${props.background.y.axis.at}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
 function getYLineCanvasXStart (props: Props): number {
-  switch (props.background.y.axis.at) {
+  switch (props.background.yAxisAt) {
     case 'left':
-      return props.background.y.axis.width + props.margin.left
+      return props.background.yAxisWidth + props.margin.left
     case 'right':
       return props.margin.left
     default:
-      throw new Error(`invalid y.axis.at ${props.background.y.axis.at}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
 function getYLineCanvasYStart (props: Props): number {
-  switch (props.background.x.axis.at) {
+  switch (props.background.xAxisAt) {
     case 'top':
-      return props.background.x.axis.height + props.margin.top
+      return props.background.xAxisHeight + props.margin.top
     case 'bottom':
       return props.margin.top
     default:
-      throw new Error(`invalid x.axis.at ${props.background.x.axis.at}`)
+      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
 }
 
@@ -44,13 +44,13 @@ const Y_LABEL_HORIZONTAL_PADDING = 10
 function getYLabelCanvasX (props: Props): number {
   const width = getGraphWidth(props)
 
-  switch (props.background.y.axis.at) {
+  switch (props.background.yAxisAt) {
     case 'left':
-      return props.margin.left + props.background.y.axis.width - Y_LABEL_HORIZONTAL_PADDING
+      return props.margin.left + props.background.yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
       return width + props.margin.left + Y_LABEL_HORIZONTAL_PADDING
     default:
-      throw new Error(`invalid y.axis.at ${props.background.y.axis.at}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
@@ -61,12 +61,12 @@ export function drawYLines (ctx: any, props: Props) {
   } = props
 
   // style line
-  ctx.lineWidth = 1
-  ctx.strokeStyle = props.background.y.line.color
+  ctx.lineWidth = props.background.yLineWidth
+  ctx.strokeStyle = props.background.yLineColor
 
   // style labels
-  ctx.font = props.background.y.axis.label.font
-  ctx.fillStyle = props.background.y.axis.label.color
+  ctx.font = props.background.yLabelFont
+  ctx.fillStyle = props.background.yLabelColor
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
@@ -107,9 +107,9 @@ export function drawYLines (ctx: any, props: Props) {
   )
   ctx.stroke()
 
-  const yStart = nearestStepBelow(yMin, props.background.y.interval)
+  const yStart = nearestStepBelow(yMin, props.background.yInterval)
 
-  for (let y = yStart; y <= yMax; y += props.background.y.interval) {
+  for (let y = yStart; y <= yMax; y += props.background.yInterval) {
     const canvasY = toCanvasY(y) + yLineCanvasYStart
 
     if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
@@ -125,7 +125,7 @@ export function drawYLines (ctx: any, props: Props) {
 
       // draw text
       ctx.fillText(
-        props.background.y.axis.label.render(y),
+        props.background.yLabelRender(y),
         round(labelCanvasX),
         round(canvasY)
       )

@@ -4,7 +4,7 @@ import type { Props } from './types'
 export function getGraphWidth (props: Props): number {
   return (
     props.canvas.width -
-    props.background.y.axis.width -
+    props.background.yAxisWidth -
     (props.margin.left + props.margin.right)
   )
 }
@@ -12,29 +12,29 @@ export function getGraphWidth (props: Props): number {
 export function getGraphHeight (props: Props): number {
   return (
     props.canvas.height -
-    props.background.x.axis.height -
+    props.background.xAxisHeight -
     (props.margin.top + props.margin.bottom)
   )
 }
 
 export function getGraphX (props: Props): number {
-  switch (props.background.y.axis.at) {
+  switch (props.background.yAxisAt) {
     case 'left':
-      return props.margin.left + props.background.y.axis.width
+      return props.margin.left + props.background.yAxisWidth
     case 'right':
       return props.margin.left
     default:
-      throw new Error(`invalid y.axis.at ${props.background.y.axis.at}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
 export function getGraphY (props: Props): number {
-  switch (props.background.x.axis.at) {
+  switch (props.background.xAxisAt) {
     case 'top':
-      return props.margin.top + props.background.x.axis.height
+      return props.margin.top + props.background.xAxisHeight
     case 'bottom':
       return props.margin.top
     default:
-      throw new Error(`invalid x.axis.at ${props.background.x.axis.at}`)
+      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
 }

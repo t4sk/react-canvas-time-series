@@ -5,15 +5,14 @@ import TestCanvas from '../test-canvas'
 
 class TestRender extends Component {
   render () {
+    console.log(this.props)
     return (
       <div>
         <h3>X Axis Bottom</h3>
         <TestCanvas
           {...merge(this.props, {
-            x: {
-              axis: {
-                at: 'bottom'
-              }
+            background: {
+              xAxisAt: 'bottom'
             }
           })}
           draw={background.draw}
@@ -22,10 +21,8 @@ class TestRender extends Component {
         <h3>X Axis Top</h3>
         <TestCanvas
           {...merge(this.props, {
-            x: {
-              axis: {
-                at: 'top'
-              }
+            background: {
+              xAxisAt: 'top'
             }
           })}
           draw={background.draw}
@@ -34,10 +31,8 @@ class TestRender extends Component {
         <h3>Y Axis Left</h3>
         <TestCanvas
           {...merge(this.props, {
-            y: {
-              axis: {
-                at: 'left'
-              }
+            background: {
+              yAxisAt: 'left'
             }
           })}
           draw={background.draw}
@@ -46,10 +41,8 @@ class TestRender extends Component {
         <h3>Y Axis Right</h3>
         <TestCanvas
           {...merge(this.props, {
-            y: {
-              axis: {
-                at: 'right'
-              }
+            background: {
+              yAxisAt: 'right'
             }
           })}
           draw={background.draw}
@@ -72,36 +65,23 @@ TestRender.defaultProps = {
   },
   background: {
     backgroundColor: 'lightgrey',
-    y: {
-      line: {
-        color: 'red'
-      },
-      axis: {
-        at: 'left',
-        label: {
-          font: '12px Arial',
-          color: 'black',
-          render: y => y
-        },
-        width: 50
-      },
-      interval: 10
-    },
-    x: {
-      line: {
-        color: 'blue'
-      },
-      axis: {
-        at: 'bottom',
-        label: {
-          font: '12px Arial',
-          color: 'black',
-          render: x => x
-        },
-        height: 50
-      },
-      interval: 15
-    }
+    yLineWidth: 1,
+    yLineColor: 'red',
+    yAxisAt: 'left',
+    yAxisWidth: 50,
+    yLabelFont: '12px Arial',
+    yLabelColor: 'black',
+    yLabelRender: y => y,
+    yInterval: 10,
+
+    xLineWidth: 1,
+    xLineColor: 'blue',
+    xAxisAt: 'bottom',
+    xAxisHeight: 50,
+    xLabelFont: '12px Arial',
+    xLabelColor: 'black',
+    xLabelRender: x => x,
+    xInterval: 15,
   },
   yMin: 10,
   yMax: 110,
