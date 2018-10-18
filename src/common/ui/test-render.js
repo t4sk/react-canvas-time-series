@@ -1,10 +1,51 @@
 import React, { Component } from 'react'
 import { merge } from '../test-util'
 import TestCanvas from '../test-canvas'
+import { linear } from '../math'
 import * as background from '../background'
+import { getGraphX, getGraphWidth } from '../background/common'
 import * as ui from './index'
 
 class TestRender extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      xMin: 1900,
+      xMax: 2010
+    }
+  }
+
+  onMouseMove = mouse => {
+    if (!mouse.isDragging) {
+      return
+    }
+
+    if (!ui.isInsideGraph(mouse, this.props.graph)) {
+      return
+    }
+
+    const graphStartCanvasX = getGraphX(this.props)
+    const width = getGraphWidth(this.props)
+
+    const {dragStartXMin, dragStartXMax} = mouse
+
+    const toX = linear({
+      dy: dragStartXMax - dragStartXMin,
+      dx: width,
+      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphStartCanvasX,
+    })
+
+    const diffCanvasX = mouse.x - mouse.dragStartCanvasX
+
+    const xMin = toX(graphStartCanvasX - diffCanvasX)
+    const xMax = toX(graphStartCanvasX + width - diffCanvasX)
+
+    this.setState({
+      xMin,
+      xMax
+    })
+  }
+
   render () {
     return (
       <div>
@@ -24,12 +65,15 @@ class TestRender extends Component {
                   at: 'bottom'
                 }
               }
-            }
+            },
+            xMin: this.state.xMin,
+            xMax: this.state.xMax
           })}
           showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
+          onMouseMove={this.onMouseMove}
         />
 
         <h3>X Label Bottom</h3>

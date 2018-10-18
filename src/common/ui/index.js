@@ -162,8 +162,6 @@ function getXLabelTextCanvasY (props: Props): number {
 
 function drawXLabel (ctx: any, props: Props) {
   const {
-    xMin,
-    xMax,
     mouse
   } = props
 
@@ -184,7 +182,10 @@ function drawXLabel (ctx: any, props: Props) {
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
-  const canvasX = mouse.isDragging ? mouse.mouseDownX : mouse.x
+  const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
+  const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
+  const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
+  
   const x = linear({
     dy: xMax - xMin,
     dx: props.graph.width,

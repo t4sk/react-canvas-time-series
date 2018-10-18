@@ -3,9 +3,10 @@
 export type Mouse = {
   x: number,
   y: number,
-  mouseDownX: number,
-  mouseDownY: number,
   isDragging: boolean
+  dragStartCanvasX: number,
+  dragStartXMin: number,
+  dragStartXMax: number,
 }
 
 export type Graph = {

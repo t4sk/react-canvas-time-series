@@ -9,8 +9,9 @@ class TestCanvas extends Component {
       x: undefined,
       y: undefined,
       isDragging: false,
-      mouseDownX: undefined,
-      mouseDownY: undefined
+      dragStartCanvasX: undefined,
+      dragStartXMin: undefined,
+      dragStartXMax: undefined,
     }
   }
 
@@ -34,15 +35,17 @@ class TestCanvas extends Component {
       this.ctx.ui.canvas.addEventListener('mousedown', e => {
         if (ui.isInsideGraph(this.mouse, this.props.graph)) {
           this.mouse.isDragging = true
-          this.mouse.mouseDownX = this.mouse.x
-          this.mouse.mouseDownY = this.mouse.y
+          this.mouse.dragStartCanvasX = this.mouse.x
+          this.mouse.dragStartXMin = this.props.xMin
+          this.mouse.dragStartXMax = this.props.xMax
         }
       })
 
       this.ctx.ui.canvas.addEventListener('mouseup', e => {
         this.mouse.isDragging = false
-        this.mouse.mouseDownX = undefined
-        this.mouse.mouseDownY = undefined
+        this.mouse.dragStartCanvasX = undefined
+        this.mouse.dragStartXMin = undefined
+        this.mouse.dragStartXMax = undefined
       })
 
       this.ctx.ui.canvas.addEventListener('mouseout', e => {
@@ -50,8 +53,9 @@ class TestCanvas extends Component {
         this.mouse.y = undefined
 
         this.mouse.isDragging = false
-        this.mouse.mouseDownX = undefined
-        this.mouse.mouseDownY = undefined
+        this.mouse.dragStartCanvasX = undefined
+        this.mouse.dragStartXMin = undefined
+        this.mouse.dragStartXMax = undefined
       })
     }
 
