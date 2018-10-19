@@ -15,17 +15,11 @@ export type Props = {
     height: number,
   },
   candlestick: {
-    wick: {
-      width: number,
-      getColor: Price => string
-    },
-    body: {
-      line: {
-        width: number,
-        getColor: Price => string,
-      },
-      getBackgroundColor: Price => string,
-    }
+    wickWidth: number,
+    getWickColor: Price => string
+    lineWidth: number,
+    getLineColor: Price => string,
+    getBackgroundColor: Price => string,
   },
   yMin: number,
   yMax: number,

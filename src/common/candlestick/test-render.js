@@ -142,17 +142,11 @@ TestRender.defaultProps = {
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   candlestick: {
-    wick: {
-      width: 2,
-      getColor: (d) => d.open <= d.close ? 'blue' : 'orange'
-    },
-    body: {
-      line: {
-        width: 1,
-        getColor: (d) => d.open <= d.close ? 'green' : 'red'
-      },
-      getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
-    }
+    wickWidth: 2,
+    getWickColor: (d) => d.open <= d.close ? 'blue' : 'orange',
+    lineWidth: 1,
+    getLineColor: (d) => d.open <= d.close ? 'green' : 'red',
+    getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
   },
   data: [],
   yMin: Y_MIN,
