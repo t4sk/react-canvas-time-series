@@ -135,8 +135,8 @@ TestRender.defaultProps = {
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   bar: {
-    getBackgroundColor: d => Math.random() > 0.5 ? 'red' : 'green',
-    getLineColor: d => Math.random() > 0.5 ? 'yellow' : 'blue',
+    getBackgroundColor: d => 'green',
+    getLineColor: d =>  'yellow',
     lineWidth: 1
   },
   data: [],
