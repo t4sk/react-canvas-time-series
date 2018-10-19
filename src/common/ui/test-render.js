@@ -62,6 +62,7 @@ class TestRender extends Component {
             xMax: this.state.xMax
           })}
           drawBackground={background.draw}
+          drawUI={ui.draw}
           onMouseMove={this.onMouseMove}
         />
 
