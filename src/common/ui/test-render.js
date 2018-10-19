@@ -62,8 +62,6 @@ class TestRender extends Component {
             xMax: this.state.xMax
           })}
           drawBackground={background.draw}
-          showUI={true}
-          drawUI={ui.draw}
           onMouseMove={this.onMouseMove}
         />
 
@@ -78,7 +76,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -96,7 +93,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -111,7 +107,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -129,7 +124,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
       </div>
