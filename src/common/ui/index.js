@@ -39,7 +39,7 @@ export function draw (ctx: any, props: Props) {
 
 function drawYLine (ctx: any, props: Props) {
   // line
-  ctx.strokeStyle = props.ui.y.line.color
+  ctx.strokeStyle = props.ui.yLineColor
   ctx.setLineDash([5, 5])
 
   ctx.beginPath()
@@ -52,37 +52,37 @@ function drawYLine (ctx: any, props: Props) {
 }
 
 function getYLabelTextAlign (props: Props): 'left' | 'right' {
-  switch (props.ui.y.label.at) {
+  switch (props.ui.yLabelAt) {
     case 'left':
       return 'right'
     case 'right':
       return 'left'
     default:
-      throw new Error(`invalid y.label.at ${props.ui.y.label.at}`)
+      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
   }
 }
 
 function getYLabelCanvasX (props: Props): number {
-  switch (props.ui.y.label.at) {
+  switch (props.ui.yLabelAt) {
     case 'left':
-      return props.graph.x - props.ui.y.label.width
+      return props.graph.x - props.ui.yLabelWidth
     case 'right':
       return props.graph.x + props.graph.width
     default:
-      throw new Error(`invalid y.label.at ${props.ui.y.label.at}`)
+      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
   }
 }
 
 const Y_LABEL_HORIZONTAL_PADDING = 5
 
 function getYLabelTextCanvasX (props: Props): number {
-  switch (props.ui.y.label.at) {
+  switch (props.ui.yLabelAt) {
     case 'left':
       return props.graph.x - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
       return props.graph.x + props.graph.width + Y_LABEL_HORIZONTAL_PADDING
     default:
-      throw new Error(`invalid y.label.at ${props.ui.y.label.at}`)
+      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
   }
 }
 
@@ -94,18 +94,18 @@ function drawYLabel (ctx: any, props: Props) {
   } = props
 
   // label
-  ctx.fillStyle = props.ui.y.label.backgroundColor
+  ctx.fillStyle = props.ui.yLabelBackgroundColor
 
   ctx.fillRect(
     getYLabelCanvasX(props),
-    mouse.y - round(props.ui.y.label.height / 2),
-    props.ui.y.label.width,
-    props.ui.y.label.height
+    mouse.y - round(props.ui.yLabelHeight / 2),
+    props.ui.yLabelWidth,
+    props.ui.yLabelHeight
   )
 
   // label text
-  ctx.font = props.ui.y.label.font
-  ctx.fillStyle = props.ui.y.label.color
+  ctx.font = props.ui.yLabelFont
+  ctx.fillStyle = props.ui.yLabelColor
   ctx.textAlign = getYLabelTextAlign(props)
   ctx.textBaseline = 'middle'
 
@@ -116,7 +116,7 @@ function drawYLabel (ctx: any, props: Props) {
   })(props.graph.height - mouse.y + props.graph.y)
 
   ctx.fillText(
-    props.ui.y.label.render(y),
+    props.ui.renderYLabel(y),
     getYLabelTextCanvasX(props),
     mouse.y
   )
@@ -124,7 +124,7 @@ function drawYLabel (ctx: any, props: Props) {
 
 function drawXLine (ctx: any, props: Props) {
   // line
-  ctx.strokeStyle = props.ui.x.line.color
+  ctx.strokeStyle = props.ui.xLineColor
   ctx.setLineDash([5, 5])
 
   ctx.beginPath()
@@ -137,26 +137,26 @@ function drawXLine (ctx: any, props: Props) {
 }
 
 function getXLabelCanvasY (props: Props): number {
-  switch (props.ui.x.label.at) {
+  switch (props.ui.xLabelAt) {
     case 'top':
-      return props.graph.y - props.ui.x.label.height
+      return props.graph.y - props.ui.xLabelHeight
     case 'bottom':
       return props.graph.y + props.graph.height
     default:
-      throw new Error(`invalid x.label.at ${props.ui.x.label.at}`)
+      throw new Error(`invalid xLabelAt ${props.ui.xLabelAt}`)
   }
 }
 
 const X_LABEL_VERTICAL_PADDING = 10
 
 function getXLabelTextCanvasY (props: Props): number {
-  switch (props.ui.x.label.at) {
+  switch (props.ui.xLabelAt) {
     case 'top':
       return props.graph.y - X_LABEL_VERTICAL_PADDING
     case 'bottom':
       return props.graph.y + props.graph.height + X_LABEL_VERTICAL_PADDING
     default:
-      throw new Error(`invalid x.label.at ${props.ui.x.label.at}`)
+      throw new Error(`invalid xLabelAt ${props.ui.xLabelAt}`)
   }
 }
 
@@ -166,26 +166,26 @@ function drawXLabel (ctx: any, props: Props) {
   } = props
 
   // label
-  ctx.fillStyle = props.ui.x.label.backgroundColor
+  ctx.fillStyle = props.ui.xLabelBackgroundColor
 
   // label rect
   ctx.fillRect(
-    round(mouse.x - props.ui.x.label.width / 2),
+    round(mouse.x - props.ui.xLabelWidth / 2),
     round(getXLabelCanvasY(props)),
-    props.ui.x.label.width,
-    props.ui.x.label.height
+    props.ui.xLabelWidth,
+    props.ui.xLabelHeight
   )
 
   // label text
-  ctx.font = props.ui.x.label.font
-  ctx.fillStyle = props.ui.x.label.color
+  ctx.font = props.ui.xLabelFont
+  ctx.fillStyle = props.ui.xLabelColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
   const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
   const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
   const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
-  
+
   const x = linear({
     dy: xMax - xMin,
     dx: props.graph.width,
@@ -193,7 +193,7 @@ function drawXLabel (ctx: any, props: Props) {
   })(canvasX - props.graph.x)
 
   ctx.fillText(
-    props.ui.x.label.render(x),
+    props.ui.renderXLabel(x),
     round(mouse.x),
     round(getXLabelTextCanvasY(props))
   )

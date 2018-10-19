@@ -23,34 +23,25 @@ export type Props = {
   },
   graph: Graph,
   mouse: Mouse,
-  x: {
-    line: {
-      color: string,
-    },
-    label: {
-      at: 'top' | 'bottom',
-      width: number,
-      height: number,
-      backgroundColor: string,
-      font: string,
-      color: string,
-      render: number => string | number,
-    }
-  },
-  y: {
-    line: {
-      color: string,
-    },
-    label: {
-      at: 'left' | 'right',
-      width: number,
-      height: number,
-      backgroundColor: string,
-      font: string,
-      color: string,
-      render: number => string | number,
-    }
-  },
+
+  xLineColor: string,
+  xLabelAt: 'top' | 'bottom',
+  xLabelWidth: number,
+  xLabelHeight: number,
+  xLabelBackgroundColor: string,
+  xLabelFont: string,
+  xLabelColor: string,
+  renderXLabel: number => string | number,
+
+  yLineColor: string,
+  yLabelAt: 'left' | 'right',
+  yLabelWidth: number,
+  yLabelHeight: number,
+  yLabelBackgroundColor: string,
+  yLabelFont: string,
+  yLabelColor: string,
+  renderYLabel: number => string | number,
+  
   yMin: number,
   yMax: number,
   xMin: number,

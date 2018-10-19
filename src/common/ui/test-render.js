@@ -56,11 +56,7 @@ class TestRender extends Component {
               xAxisAt: 'bottom'
             },
             ui: {
-              x: {
-                label: {
-                  at: 'bottom'
-                }
-              }
+              xLabelAt: 'bottom'
             },
             xMin: this.state.xMin,
             xMax: this.state.xMax
@@ -79,11 +75,7 @@ class TestRender extends Component {
               xAxisAt: 'bottom'
             },
             ui: {
-              x: {
-                label: {
-                  at: 'bottom'
-                }
-              }
+              xLabelAt: 'bottom'
             }
           })}
           showBackground={true}
@@ -102,11 +94,7 @@ class TestRender extends Component {
               y: 60
             },
             ui: {
-              x: {
-                label: {
-                  at: 'top'
-                }
-              }
+              xLabelAt: 'top'
             }
           })}
           showBackground={true}
@@ -122,11 +110,7 @@ class TestRender extends Component {
               yAxisAt: 'left'
             },
             ui: {
-              y: {
-                label: {
-                  at: 'left'
-                }
-              }
+              yLabelAt: 'left'
             }
           })}
           showBackground={true}
@@ -145,11 +129,7 @@ class TestRender extends Component {
               x: 20
             },
             ui: {
-              y: {
-                label: {
-                  at: 'right'
-                }
-              }
+              yLabelAt: 'right'
             }
           })}
           showBackground={true}
@@ -206,34 +186,23 @@ TestRender.defaultProps = {
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   ui: {
-    x: {
-      line: {
-        color: 'blue'
-      },
-      label: {
-        at: 'bottom',
-        width: 70,
-        height: 20,
-        backgroundColor: 'green',
-        font: '12px Arial',
-        color: 'black',
-        render: x => Math.round(x)
-      }
-    },
-    y: {
-      line: {
-        color: 'green'
-      },
-      label: {
-        at: 'left',
-        width: 50,
-        height: 20,
-        backgroundColor: 'black',
-        font: '12px Arial',
-        color: 'white',
-        render: y => y.toFixed(2)
-      }
-    }
+    xLineColor: 'blue',
+    xLabelAt: 'bottom',
+    xLabelWidth: 70,
+    xLabelHeight: 20,
+    xLabelBackgroundColor: 'green',
+    xLabelFont: '12px Arial',
+    xLabelColor: 'black',
+    renderXLabel: x => Math.round(x),
+
+    yLineColor: 'green',
+    yLabelAt: 'left',
+    yLabelWidth: 50,
+    yLabelHeight: 20,
+    yLabelBackgroundColor: 'black',
+    yLabelFont: '12px Arial',
+    yLabelColor: 'white',
+    renderYLabel: y => y.toFixed(2)
   },
   yMin: 10,
   yMax: 110,
