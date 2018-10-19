@@ -71,9 +71,7 @@ class TestCanvas extends Component {
   }
 
   draw () {
-    if (this.props.showBackground) {
-      this.props.drawBackground(this.ctx.background, this.props)
-    }
+    this.props.drawBackground(this.ctx.background, this.props)
     this.props.draw(this.ctx.testCanvas, this.props)
   }
 
@@ -147,7 +145,6 @@ const style = {
 TestCanvas.defaultProps = {
   onMouseMove: () => {},
   draw: (ctx, props) => {},
-  showBackground: false,
   drawBackground: (ctx, props) => {},
   showUI: false,
   drawUI: (ctx, props) => {},

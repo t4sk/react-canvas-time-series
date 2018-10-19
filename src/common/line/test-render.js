@@ -35,7 +35,6 @@ class TestRender extends Component {
           {...this.props}
           draw={line.draw}
           data={DATA}
-          showBackground={true}
           drawBackground={background.draw}
         />
 
@@ -44,7 +43,6 @@ class TestRender extends Component {
           {...this.props}
           draw={line.draw}
           data={RANDOM_DATA}
-          showBackground={true}
           drawBackground={background.draw}
         />
       </div>

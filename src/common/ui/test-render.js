@@ -61,7 +61,6 @@ class TestRender extends Component {
             xMin: this.state.xMin,
             xMax: this.state.xMax
           })}
-          showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
@@ -78,7 +77,6 @@ class TestRender extends Component {
               xLabelAt: 'bottom'
             }
           })}
-          showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
@@ -97,7 +95,6 @@ class TestRender extends Component {
               xLabelAt: 'top'
             }
           })}
-          showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
@@ -113,7 +110,6 @@ class TestRender extends Component {
               yLabelAt: 'left'
             }
           })}
-          showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
@@ -132,7 +128,6 @@ class TestRender extends Component {
               yLabelAt: 'right'
             }
           })}
-          showBackground={true}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}

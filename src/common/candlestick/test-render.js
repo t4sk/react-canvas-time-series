@@ -56,7 +56,6 @@ class TestRender extends Component {
           xMax={FIXED_DATA.length}
           draw={candlestick.draw}
           data={FIXED_DATA}
-          showBackground={true}
           drawBackground={background.draw}
         />
 
@@ -67,7 +66,6 @@ class TestRender extends Component {
           xMax={RANDOM_DATA_SMALL.length}
           draw={candlestick.draw}
           data={RANDOM_DATA_SMALL}
-          showBackground={true}
           drawBackground={background.draw}
         />
 
@@ -78,7 +76,6 @@ class TestRender extends Component {
           xMax={RANDOM_DATA_MEDIUM.length}
           draw={candlestick.draw}
           data={RANDOM_DATA_MEDIUM}
-          showBackground={true}
           drawBackground={background.draw}
         />
 
@@ -89,7 +86,6 @@ class TestRender extends Component {
           xMax={RANDOM_DATA_LARGE.length}
           draw={candlestick.draw}
           data={RANDOM_DATA_LARGE}
-          showBackground={true}
           drawBackground={background.draw}
         />
       </div>
