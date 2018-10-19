@@ -12,8 +12,8 @@ class App extends Component {
       <div className="App">
         {/*}
         <UITestRender />
-        <CandlestickTestRender />
         */}
+        <CandlestickTestRender />
         <BarTestRender />
         <LineTestRender />
         <BackgroundTestRender />
