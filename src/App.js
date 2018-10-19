@@ -13,8 +13,8 @@ class App extends Component {
         {/*}
         <UITestRender />
         <CandlestickTestRender />
-        <BarTestRender />
         */}
+        <BarTestRender />
         <LineTestRender />
         <BackgroundTestRender />
       </div>
