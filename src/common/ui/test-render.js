@@ -51,16 +51,9 @@ class TestRender extends Component {
       <div>
         <h3>X Drag</h3>
         <TestCanvas
-          {...merge(this.props, {
-            background: {
-              xAxisAt: 'bottom'
-            },
-            ui: {
-              xLabelAt: 'bottom'
-            },
-            xMin: this.state.xMin,
-            xMax: this.state.xMax
-          })}
+          {...this.props}
+          xMin={this.state.xMin}
+          xMax={this.state.xMax}
           drawBackground={background.draw}
           drawUI={ui.draw}
           onMouseMove={this.onMouseMove}
