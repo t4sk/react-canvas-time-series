@@ -61,8 +61,6 @@ export function drawXLines (ctx: any, props: Props) {
   const width = getGraphWidth(props)
   const height = getGraphHeight(props)
 
-  console.log(width, height)
-
   const toCanvasX = linear({
     dy: width,
     dx: xMax - xMin,
