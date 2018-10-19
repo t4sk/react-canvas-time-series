@@ -28,8 +28,8 @@ export function draw (ctx: any, props: Props) {
     ctx.fillRect(x, y, barWidth, barHeight)
 
     ctx.beginPath()
-    ctx.lineWidth = props.bar.line.width
-    ctx.strokeStyle = props.bar.line.getColor(data[i])
+    ctx.lineWidth = props.bar.lineWidth
+    ctx.strokeStyle = props.bar.getLineColor(data[i])
     ctx.rect(x, y, barWidth, barHeight)
     ctx.stroke()
   }

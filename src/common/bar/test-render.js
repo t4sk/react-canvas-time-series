@@ -140,10 +140,8 @@ TestRender.defaultProps = {
   },
   bar: {
     getBackgroundColor: d => Math.random() > 0.5 ? 'red' : 'green',
-    line: {
-      getColor: d => Math.random() > 0.5 ? 'yellow' : 'blue',
-      width: 1
-    }
+    getLineColor: d => Math.random() > 0.5 ? 'yellow' : 'blue',
+    lineWidth: 1
   },
   data: [],
   yMin: Y_MIN,

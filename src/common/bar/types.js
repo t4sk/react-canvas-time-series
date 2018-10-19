@@ -13,10 +13,8 @@ export type Props = {
   },
   bar: {
     getBackgroundColor: Bar => string,
-    line: {
-      width: number,
-      getColor: Bar => string,
-    }
+    lineWidth: number,
+    getLineColor: Bar => string,
   },
   yMin: number,
   yMax: number,
