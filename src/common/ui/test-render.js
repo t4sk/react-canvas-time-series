@@ -53,11 +53,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              x: {
-                axis: {
-                  at: 'bottom'
-                }
-              }
+              xAxisAt: 'bottom'
             },
             ui: {
               x: {
@@ -80,11 +76,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              x: {
-                axis: {
-                  at: 'bottom'
-                }
-              }
+              xAxisAt: 'bottom'
             },
             ui: {
               x: {
@@ -104,11 +96,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              x: {
-                axis: {
-                  at: 'top'
-                }
-              }
+              xAxisAt: 'top'
             },
             graph: {
               y: 60
@@ -131,11 +119,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              y: {
-                axis: {
-                  at: 'left'
-                }
-              }
+              yAxisAt: 'left'
             },
             ui: {
               y: {
@@ -155,11 +139,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              y: {
-                axis: {
-                  at: 'right'
-                }
-              }
+              yAxisAt: 'right'
             },
             graph: {
               x: 20
@@ -195,36 +175,28 @@ TestRender.defaultProps = {
   },
   background: {
     backgroundColor: 'lightgrey',
-    y: {
-      line: {
-        color: 'red'
-      },
-      axis: {
-        at: 'left',
-        label: {
-          font: '12px Arial',
-          color: 'black',
-          render: y => y
-        },
-        width: 50
-      },
-      interval: 10
-    },
-    x: {
-      line: {
-        color: 'blue'
-      },
-      axis: {
-        at: 'bottom',
-        label: {
-          font: '12px Arial',
-          color: 'black',
-          render: x => x
-        },
-        height: 50
-      },
-      interval: 10
-    },
+
+    showYLabel: true,
+    showYLine: true,
+    yLineWidth: 1,
+    yLineColor: 'red',
+    yAxisAt: 'left',
+    yAxisWidth: 50,
+    yLabelFont: '12px Arial',
+    yLabelColor: 'black',
+    yLabelRender: y => y,
+    yInterval: 10,
+
+    showXLabel: true,
+    showXLine: true,
+    xLineWidth: 1,
+    xLineColor: 'blue',
+    xAxisAt: 'bottom',
+    xAxisHeight: 50,
+    xLabelFont: '12px Arial',
+    xLabelColor: 'black',
+    xLabelRender: x => x,
+    xInterval: 15,
   },
   graph: {
     // y label left, x label bottom
