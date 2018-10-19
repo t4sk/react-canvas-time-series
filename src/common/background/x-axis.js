@@ -118,7 +118,7 @@ export function drawXLines (ctx: any, props: Props) {
       // draw text
       if (props.background.showXLabel) {
         ctx.fillText(
-          props.background.xLabelRender(x),
+          props.background.renderXLabel(x),
           round(canvasX),
           round(labelCanvasY)
         )

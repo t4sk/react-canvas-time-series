@@ -75,7 +75,7 @@ TestRender.defaultProps = {
     yAxisWidth: 50,
     yLabelFont: '12px Arial',
     yLabelColor: 'black',
-    yLabelRender: y => y,
+    renderYLabel: y => y,
     yInterval: 10,
 
     showXLabel: true,
@@ -86,7 +86,7 @@ TestRender.defaultProps = {
     xAxisHeight: 50,
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
-    xLabelRender: x => x,
+    renderXLabel: x => x,
     xInterval: 15,
   },
   graph: {

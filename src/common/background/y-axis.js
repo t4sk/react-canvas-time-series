@@ -130,7 +130,7 @@ export function drawYLines (ctx: any, props: Props) {
       // draw text
       if (props.background.showYLabel) {
         ctx.fillText(
-          props.background.yLabelRender(y),
+          props.background.renderYLabel(y),
           round(labelCanvasX),
           round(canvasY)
         )

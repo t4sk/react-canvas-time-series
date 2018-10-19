@@ -22,7 +22,7 @@ export type Props = {
     yAxisWidth: number,
     yLabelFont: string,
     yLabelColor: string,
-    yLabelRender: number => string | number,
+    renderYLabel: number => string | number,
     yInterval: number,
 
     showXLabel: boolean,
@@ -33,7 +33,7 @@ export type Props = {
     xAxisHeight: number,
     xLabelFont: string,
     xLabelColor: string,
-    xLabelRender: number => string | number,
+    renderXLabel: number => string | number,
     xInterval: number,
   },
   xMin: number,
