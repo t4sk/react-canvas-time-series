@@ -134,65 +134,96 @@ export function drawYLabelAt (ctx: any, props: Props) {
   )
 }
 
-function drawXLine (ctx: any, props: Props) {
-  // line
-  ctx.strokeStyle = props.ui.xLineColor
+// TODO drawXLineAt props
+export function drawXLineAt(ctx: any, props) {
+  ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
   ctx.beginPath()
-  ctx.moveTo(props.mouse.x, props.graph.y)
-  ctx.lineTo(props.mouse.x, props.graph.y + props.graph.height)
+  ctx.moveTo(props.canvasX, props.graph.y)
+  ctx.lineTo(props.canvasX, props.graph.y + props.graph.height)
   ctx.stroke()
   ctx.closePath()
-
-  drawXLabel(ctx, props)
 }
 
+// TODO drawXLabelAt props
 function getXLabelCanvasY (props: Props): number {
-  switch (props.ui.xLabelAt) {
+  switch (props.labelAt) {
     case 'top':
-      return props.graph.y - props.ui.xLabelHeight
+      return props.graph.y - props.height
     case 'bottom':
       return props.graph.y + props.graph.height
     default:
-      throw new Error(`invalid xLabelAt ${props.ui.xLabelAt}`)
+      throw new Error(`invalid labelAt ${props.labelAt}`)
   }
 }
 
 const X_LABEL_VERTICAL_PADDING = 10
 
+// TODO drawXLabelAt props
 function getXLabelTextCanvasY (props: Props): number {
-  switch (props.ui.xLabelAt) {
+  switch (props.labelAt) {
     case 'top':
       return props.graph.y - X_LABEL_VERTICAL_PADDING
     case 'bottom':
       return props.graph.y + props.graph.height + X_LABEL_VERTICAL_PADDING
     default:
-      throw new Error(`invalid xLabelAt ${props.ui.xLabelAt}`)
+      throw new Error(`invalid labelAt ${props.labelAt}`)
   }
 }
 
-function drawXLabel (ctx: any, props: Props) {
+// TODO drawXLabelAt props
+export function drawXLabelAt (ctx: any, props: Props) {
+  const {
+    x,
+    canvasX
+  } = props
+
+  // label
+  ctx.fillStyle = props.backgroundColor
+
+  // label rect
+  ctx.fillRect(
+    round(canvasX - props.width / 2),
+    round(getXLabelCanvasY(props)),
+    props.width,
+    props.height
+  )
+
+  // label text
+  ctx.font = props.font
+  ctx.fillStyle = props.color
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+
+  ctx.fillText(
+    props.renderXLabel(x),
+    round(canvasX),
+    round(getXLabelTextCanvasY(props))
+  )
+}
+
+export function draw (ctx: any, props: Props) {
   const {
     mouse
   } = props
 
-  // label
-  ctx.fillStyle = props.ui.xLabelBackgroundColor
-
-  // label rect
-  ctx.fillRect(
-    round(mouse.x - props.ui.xLabelWidth / 2),
-    round(getXLabelCanvasY(props)),
-    props.ui.xLabelWidth,
-    props.ui.xLabelHeight
+  ctx.clearRect(
+    0, 0,
+    props.canvas.width,
+    props.canvas.height,
   )
 
-  // label text
-  ctx.font = props.ui.xLabelFont
-  ctx.fillStyle = props.ui.xLabelColor
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
+  if (!isInsideGraph(mouse, props.graph)) {
+    return
+  }
+
+  // draw x libe and label
+  drawXLineAt(ctx, {
+    ...props,
+    lineColor: props.ui.xLineColor,
+    canvasX: mouse.x,
+  })
 
   const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
   const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
@@ -204,35 +235,29 @@ function drawXLabel (ctx: any, props: Props) {
     y0: xMin
   })(canvasX - props.graph.x)
 
-  ctx.fillText(
-    props.ui.renderXLabel(x),
-    round(mouse.x),
-    round(getXLabelTextCanvasY(props))
-  )
-}
+  drawXLabelAt(ctx, {
+    ...props,
+    canvasX: mouse.x,
+    x,
+    height: props.ui.xLabelHeight,
+    width: props.ui.xLabelWidth,
+    labelAt: props.ui.xLabelAt,
+    backgroundColor: props.ui.xLabelBackgroundColor,
+    font: props.ui.xLabelFont,
+    color: props.ui.xLabelColor,
+    renderXLabel: props.ui.renderXLabel,
+  })
 
-export function draw (ctx: any, props: Props) {
-  ctx.clearRect(
-    0, 0,
-    props.canvas.width,
-    props.canvas.height
-  )
-
-  if (!isInsideGraph(props.mouse, props.graph)) {
-    return
-  }
-
-  drawXLine(ctx, props)
-
+  // draw y line and label
   drawYLineAt(ctx, {
     ...props,
     lineColor: props.ui.yLineColor,
-    canvasY: props.mouse.y
+    canvasY: mouse.y
   })
 
   drawYLabelAt(ctx, {
     ...props,
-    canvasY: props.mouse.y,
+    canvasY: mouse.y,
     height: props.ui.yLabelHeight,
     width: props.ui.yLabelWidth,
     labelAt: props.ui.yLabelAt,
