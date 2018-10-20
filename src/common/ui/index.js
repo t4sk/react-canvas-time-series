@@ -101,8 +101,7 @@ function getYLabelTextCanvasX (props: Props): number {
 export function drawYLabelAt (ctx: any, props: Props) {
   const {
     canvasY,
-    yMax,
-    yMin
+    text,
   } = props
 
   // label
@@ -121,14 +120,8 @@ export function drawYLabelAt (ctx: any, props: Props) {
   ctx.textAlign = getYLabelTextAlign(props)
   ctx.textBaseline = 'middle'
 
-  const y = linear({
-    dy: yMax - yMin,
-    dx: props.graph.height,
-    y0: yMin
-  })(props.graph.height - canvasY + props.graph.y)
-
   ctx.fillText(
-    props.renderYLabel(y),
+    text,
     getYLabelTextCanvasX(props),
     canvasY
   )
@@ -249,21 +242,29 @@ export function draw (ctx: any, props: Props) {
   })
 
   // draw y line and label
+  const canvasY = mouse.y
+
   drawYLineAt(ctx, {
     ...props,
     lineColor: props.ui.yLineColor,
-    canvasY: mouse.y
+    canvasY,
   })
+
+  const y = linear({
+    dy: props.yMax - props.yMin,
+    dx: props.graph.height,
+    y0: props.yMin
+  })(props.graph.height - canvasY + props.graph.y)
 
   drawYLabelAt(ctx, {
     ...props,
-    canvasY: mouse.y,
+    canvasY,
+    text: props.ui.renderYLabel(y),
     height: props.ui.yLabelHeight,
     width: props.ui.yLabelWidth,
     labelAt: props.ui.yLabelAt,
     backgroundColor: props.ui.yLabelBackgroundColor,
     font: props.ui.yLabelFont,
-    color: props.ui.yLabelColor,
-    renderYLabel: props.ui.renderYLabel,
+    color: props.ui.yLabelColor
   })
 }

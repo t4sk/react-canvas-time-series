@@ -163,10 +163,10 @@ class TestRender extends Component {
               height: props.ui.yLabelHeight,
               width: props.ui.yLabelWidth,
               labelAt: props.ui.yLabelAt,
+              text: 'Here',
               backgroundColor: 'orange',
               font: props.ui.yLabelFont,
               color: 'white',
-              renderYLabel: props.ui.renderYLabel,
             })
           }}
           drawBackground={background.draw}
