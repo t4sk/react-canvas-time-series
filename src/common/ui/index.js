@@ -99,17 +99,12 @@ function getYLabelTextCanvasX (props: Props): number {
 
 // TODO use drawYLabelAt props
 export function drawYLabelAt (ctx: any, props: Props) {
-  const {
-    canvasY,
-    text,
-  } = props
-
   // label
   ctx.fillStyle = props.backgroundColor
 
   ctx.fillRect(
     getYLabelCanvasX(props),
-    canvasY - round(props.height / 2),
+    props.canvasY - round(props.height / 2),
     props.width,
     props.height
   )
@@ -121,9 +116,9 @@ export function drawYLabelAt (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
 
   ctx.fillText(
-    text,
+    props.text,
     getYLabelTextCanvasX(props),
-    canvasY
+    props.canvasY
   )
 }
 
@@ -167,17 +162,12 @@ function getXLabelTextCanvasY (props: Props): number {
 
 // TODO drawXLabelAt props
 export function drawXLabelAt (ctx: any, props: Props) {
-  const {
-    canvasX,
-    text
-  } = props
-
   // label
   ctx.fillStyle = props.backgroundColor
 
   // label rect
   ctx.fillRect(
-    round(canvasX - props.width / 2),
+    round(props.canvasX - props.width / 2),
     round(getXLabelCanvasY(props)),
     props.width,
     props.height
@@ -190,8 +180,8 @@ export function drawXLabelAt (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
 
   ctx.fillText(
-    text,
-    round(canvasX),
+    props.text,
+    round(props.canvasX),
     round(getXLabelTextCanvasY(props))
   )
 }
@@ -265,17 +255,13 @@ function drawYLine(ctx: any, props: Props) {
 }
 
 export function draw (ctx: any, props: Props) {
-  const {
-    mouse
-  } = props
-
   ctx.clearRect(
     0, 0,
     props.canvas.width,
     props.canvas.height,
   )
 
-  if (!isInsideGraph(mouse, props.graph)) {
+  if (!isInsideGraph(props.mouse, props.graph)) {
     return
   }
 
