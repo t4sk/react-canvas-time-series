@@ -196,6 +196,74 @@ export function drawXLabelAt (ctx: any, props: Props) {
   )
 }
 
+function drawXLine(ctx: any, props: Props) {
+  const {
+    graph,
+    mouse,
+    ui,
+  } = props
+
+  drawXLineAt(ctx, {
+    ...props,
+    lineColor: ui.xLineColor,
+    canvasX: mouse.x,
+  })
+
+  const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
+  const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
+  const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
+
+  const x = linear({
+    dy: xMax - xMin,
+    dx: graph.width,
+    y0: xMin
+  })(canvasX - graph.x)
+
+  drawXLabelAt(ctx, {
+    ...props,
+    canvasX: mouse.x,
+    text: ui.renderXLabel(x),
+    height: ui.xLabelHeight,
+    width: ui.xLabelWidth,
+    labelAt: ui.xLabelAt,
+    backgroundColor: ui.xLabelBackgroundColor,
+    font: ui.xLabelFont,
+    color: ui.xLabelColor,
+  })
+}
+
+function drawYLine(ctx: any, props: Props) {
+  const {
+    graph,
+    mouse,
+    ui
+  } = props
+
+  drawYLineAt(ctx, {
+    ...props,
+    lineColor: ui.yLineColor,
+    canvasY: mouse.y,
+  })
+
+  const y = linear({
+    dy: props.yMax - props.yMin,
+    dx: graph.height,
+    y0: props.yMin
+  })(graph.height - mouse.y + graph.y)
+
+  drawYLabelAt(ctx, {
+    ...props,
+    canvasY: mouse.y,
+    text: ui.renderYLabel(y),
+    height: ui.yLabelHeight,
+    width: ui.yLabelWidth,
+    labelAt: ui.yLabelAt,
+    backgroundColor: ui.yLabelBackgroundColor,
+    font: ui.yLabelFont,
+    color: ui.yLabelColor
+  })
+}
+
 export function draw (ctx: any, props: Props) {
   const {
     mouse
@@ -211,59 +279,6 @@ export function draw (ctx: any, props: Props) {
     return
   }
 
-  // draw x libe and label
-  drawXLineAt(ctx, {
-    ...props,
-    lineColor: props.ui.xLineColor,
-    canvasX: mouse.x,
-  })
-
-  const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
-  const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
-  const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
-
-  const x = linear({
-    dy: xMax - xMin,
-    dx: props.graph.width,
-    y0: xMin
-  })(canvasX - props.graph.x)
-
-  drawXLabelAt(ctx, {
-    ...props,
-    canvasX: mouse.x,
-    text: props.ui.renderXLabel(x),
-    height: props.ui.xLabelHeight,
-    width: props.ui.xLabelWidth,
-    labelAt: props.ui.xLabelAt,
-    backgroundColor: props.ui.xLabelBackgroundColor,
-    font: props.ui.xLabelFont,
-    color: props.ui.xLabelColor,
-  })
-
-  // draw y line and label
-  const canvasY = mouse.y
-
-  drawYLineAt(ctx, {
-    ...props,
-    lineColor: props.ui.yLineColor,
-    canvasY,
-  })
-
-  const y = linear({
-    dy: props.yMax - props.yMin,
-    dx: props.graph.height,
-    y0: props.yMin
-  })(props.graph.height - canvasY + props.graph.y)
-
-  drawYLabelAt(ctx, {
-    ...props,
-    canvasY,
-    text: props.ui.renderYLabel(y),
-    height: props.ui.yLabelHeight,
-    width: props.ui.yLabelWidth,
-    labelAt: props.ui.yLabelAt,
-    backgroundColor: props.ui.yLabelBackgroundColor,
-    font: props.ui.yLabelFont,
-    color: props.ui.yLabelColor
-  })
+  drawXLine(ctx, props)
+  drawYLine(ctx, props)
 }
