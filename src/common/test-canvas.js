@@ -22,46 +22,55 @@ class TestCanvas extends Component {
       background: this.refs.background.getContext('2d', { alpha: false })
     }
 
-    this.ctx.ui.canvas.addEventListener('mousemove', e => {
-      const rect = this.ctx.ui.canvas.getBoundingClientRect()
+    if (this.props.drawUI) {
+      this.ctx.ui.canvas.addEventListener('mousemove', e => {
+        const rect = this.ctx.ui.canvas.getBoundingClientRect()
 
-      this.mouse.x = e.clientX - rect.left
-      this.mouse.y = e.clientY - rect.top
+        this.mouse.x = e.clientX - rect.left
+        this.mouse.y = e.clientY - rect.top
 
-      this.props.onMouseMove(this.mouse)
-    })
+        this.props.onMouseMove(this.mouse)
+      })
 
-    this.ctx.ui.canvas.addEventListener('mousedown', e => {
-      if (ui.isInsideGraph(this.mouse, this.props.graph)) {
-        this.mouse.isDragging = true
-        this.mouse.dragStartCanvasX = this.mouse.x
-        this.mouse.dragStartXMin = this.props.xMin
-        this.mouse.dragStartXMax = this.props.xMax
-      }
-    })
+      this.ctx.ui.canvas.addEventListener('mousedown', e => {
+        if (ui.isInsideGraph(this.mouse, this.props.graph)) {
+          this.mouse.isDragging = true
+          this.mouse.dragStartCanvasX = this.mouse.x
+          this.mouse.dragStartXMin = this.props.xMin
+          this.mouse.dragStartXMax = this.props.xMax
+        }
+      })
 
-    this.ctx.ui.canvas.addEventListener('mouseup', e => {
-      this.mouse.isDragging = false
-      this.mouse.dragStartCanvasX = undefined
-      this.mouse.dragStartXMin = undefined
-      this.mouse.dragStartXMax = undefined
-    })
+      this.ctx.ui.canvas.addEventListener('mouseup', e => {
+        this.mouse.isDragging = false
+        this.mouse.dragStartCanvasX = undefined
+        this.mouse.dragStartXMin = undefined
+        this.mouse.dragStartXMax = undefined
+      })
 
-    this.ctx.ui.canvas.addEventListener('mouseout', e => {
-      this.mouse.x = undefined
-      this.mouse.y = undefined
+      this.ctx.ui.canvas.addEventListener('mouseout', e => {
+        this.mouse.x = undefined
+        this.mouse.y = undefined
 
-      this.mouse.isDragging = false
-      this.mouse.dragStartCanvasX = undefined
-      this.mouse.dragStartXMin = undefined
-      this.mouse.dragStartXMax = undefined
-    })
+        this.mouse.isDragging = false
+        this.mouse.dragStartCanvasX = undefined
+        this.mouse.dragStartXMin = undefined
+        this.mouse.dragStartXMax = undefined
+      })
 
-    this.animate()
+      this.animate()
+    } else {
+      this.draw()
+    }
   }
 
   shouldComponentUpdate () {
     return false
+  }
+
+  draw = () => {
+    this.props.drawBackground(this.ctx.background, this.props)
+    this.props.draw(this.ctx.testCanvas, this.props)
   }
 
   animate = () => {
@@ -136,7 +145,7 @@ TestCanvas.defaultProps = {
   onMouseMove: () => {},
   draw: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
-  drawUI: (ctx, props) => {},
+  // drawUI optional
   canvas: {
     width: 500,
     height: 300

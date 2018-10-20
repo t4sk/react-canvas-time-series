@@ -41,9 +41,45 @@ export type Props = {
   yLabelFont: string,
   yLabelColor: string,
   renderYLabel: number => string | number,
-  
+
   yMin: number,
   yMax: number,
   xMin: number,
   xMax: number,
+}
+
+export type DrawYLineAtProps = {
+  graph: Graph,
+  canvasY: number,
+  lineColor: string,
+}
+
+export type DrawYLabelAtProps = {
+  canvasY: number,
+  text: string,
+  height: number,
+  width: number,
+  graph: Graph,
+  labelAt: 'left' | 'right',
+  backgroundColor: string,
+  color: string,
+  font: string,
+}
+
+export type DrawXLineAtProps = {
+  graph: Graph,
+  canvasX: number,
+  lineColor: string,
+}
+
+export type DrawXLabelAtProps = {
+  canvasX: number,
+  text: string,
+  height: number,
+  width: number,
+  graph: Graph,
+  labelAt: 'top' | 'bottom',
+  backgroundColor: string,
+  color: string,
+  font: string,
 }

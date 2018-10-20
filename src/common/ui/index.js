@@ -1,6 +1,14 @@
 // @flow
 import { round, linear } from '../math'
-import type { Props, Mouse, Graph } from './types'
+import type {
+  Props,
+  Mouse,
+  Graph,
+  DrawYLineAtProps,
+  DrawYLabelAtProps,
+  DrawXLineAtProps,
+  DrawXLabelAtProps,
+} from './types'
 
 export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   if (
@@ -46,8 +54,7 @@ export function getNearestDataAtX (
   return data[low]
 }
 
-// TODO drawYLineAt props
-export function drawYLineAt (ctx: any, props) {
+export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
   // line
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
@@ -59,8 +66,7 @@ export function drawYLineAt (ctx: any, props) {
   ctx.closePath()
 }
 
-// TODO use drawYLabelAt props
-function getYLabelTextAlign (props: Props): 'left' | 'right' {
+function getYLabelTextAlign (props: DrawYLabelAtProps): 'left' | 'right' {
   switch (props.labelAt) {
     case 'left':
       return 'right'
@@ -71,8 +77,7 @@ function getYLabelTextAlign (props: Props): 'left' | 'right' {
   }
 }
 
-// TODO use drawYLabelAt props
-function getYLabelCanvasX (props: Props): number {
+function getYLabelCanvasX (props: DrawYLabelAtProps): number {
   switch (props.labelAt) {
     case 'left':
       return props.graph.x - props.width
@@ -85,8 +90,7 @@ function getYLabelCanvasX (props: Props): number {
 
 const Y_LABEL_HORIZONTAL_PADDING = 5
 
-// TODO use drawYLabelAt props
-function getYLabelTextCanvasX (props: Props): number {
+function getYLabelTextCanvasX (props: DrawYLabelAtProps): number {
   switch (props.labelAt) {
     case 'left':
       return props.graph.x - Y_LABEL_HORIZONTAL_PADDING
@@ -97,8 +101,7 @@ function getYLabelTextCanvasX (props: Props): number {
   }
 }
 
-// TODO use drawYLabelAt props
-export function drawYLabelAt (ctx: any, props: Props) {
+export function drawYLabelAt (ctx: any, props: DrawYLabelAtProps) {
   // label
   ctx.fillStyle = props.backgroundColor
 
@@ -122,8 +125,7 @@ export function drawYLabelAt (ctx: any, props: Props) {
   )
 }
 
-// TODO drawXLineAt props
-export function drawXLineAt (ctx: any, props) {
+export function drawXLineAt (ctx: any, props: DrawXLineAtProps) {
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
@@ -134,8 +136,7 @@ export function drawXLineAt (ctx: any, props) {
   ctx.closePath()
 }
 
-// TODO drawXLabelAt props
-function getXLabelCanvasY (props: Props): number {
+function getXLabelCanvasY (props: DrawXLabelAtProps): number {
   switch (props.labelAt) {
     case 'top':
       return props.graph.y - props.height
@@ -148,8 +149,7 @@ function getXLabelCanvasY (props: Props): number {
 
 const X_LABEL_VERTICAL_PADDING = 10
 
-// TODO drawXLabelAt props
-function getXLabelTextCanvasY (props: Props): number {
+function getXLabelTextCanvasY (props: DrawXLabelAtProps): number {
   switch (props.labelAt) {
     case 'top':
       return props.graph.y - X_LABEL_VERTICAL_PADDING
@@ -160,8 +160,7 @@ function getXLabelTextCanvasY (props: Props): number {
   }
 }
 
-// TODO drawXLabelAt props
-export function drawXLabelAt (ctx: any, props: Props) {
+export function drawXLabelAt (ctx: any, props: DrawXLabelAtProps) {
   // label
   ctx.fillStyle = props.backgroundColor
 
