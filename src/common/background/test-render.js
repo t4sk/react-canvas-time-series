@@ -11,7 +11,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              showXLabel: false,
+              showXLabel: false
             }
           })}
           draw={background.draw}
@@ -21,7 +21,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              showXLine: false,
+              showXLine: false
             }
           })}
           draw={background.draw}
@@ -31,7 +31,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              showYLabel: false,
+              showYLabel: false
             }
           })}
           draw={background.draw}
@@ -41,7 +41,7 @@ class TestRender extends Component {
         <TestCanvas
           {...merge(this.props, {
             background: {
-              showYLine: false,
+              showYLine: false
             }
           })}
           draw={background.draw}
@@ -125,7 +125,7 @@ TestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xInterval: 15
   },
   yMin: 10,
   yMax: 110,

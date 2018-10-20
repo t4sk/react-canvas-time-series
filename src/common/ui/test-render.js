@@ -7,7 +7,7 @@ import { getGraphX, getGraphWidth } from '../background/common'
 import * as ui from './index'
 
 class TestRender extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       xMin: 1900,
@@ -27,12 +27,12 @@ class TestRender extends Component {
     const graphStartCanvasX = getGraphX(this.props)
     const width = getGraphWidth(this.props)
 
-    const {dragStartXMin, dragStartXMax} = mouse
+    const { dragStartXMin, dragStartXMax } = mouse
 
     const toX = linear({
       dy: dragStartXMax - dragStartXMin,
       dx: width,
-      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphStartCanvasX,
+      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphStartCanvasX
     })
 
     const diffCanvasX = mouse.x - mouse.dragStartCanvasX
@@ -97,7 +97,7 @@ class TestRender extends Component {
             ui.drawXLineAt(ctx, {
               ...props,
               lineColor: 'orange',
-              canvasX: 275,
+              canvasX: 275
             })
 
             ui.drawXLabelAt(ctx, {
@@ -109,7 +109,7 @@ class TestRender extends Component {
               labelAt: props.ui.xLabelAt,
               backgroundColor: 'orange',
               font: props.ui.xLabelFont,
-              color: 'white',
+              color: 'white'
             })
           }}
           drawBackground={background.draw}
@@ -154,7 +154,7 @@ class TestRender extends Component {
             ui.drawYLineAt(ctx, {
               ...props,
               lineColor: 'orange',
-              canvasY: 150,
+              canvasY: 150
             })
             ui.drawYLabelAt(ctx, {
               ...props,
@@ -165,7 +165,7 @@ class TestRender extends Component {
               text: 'Here',
               backgroundColor: 'orange',
               font: props.ui.yLabelFont,
-              color: 'white',
+              color: 'white'
             })
           }}
           drawBackground={background.draw}
@@ -210,7 +210,7 @@ TestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xInterval: 15
   },
   graph: {
     // y label left, x label bottom

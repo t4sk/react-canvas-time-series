@@ -47,7 +47,7 @@ export function getNearestDataAtX (
 }
 
 // TODO drawYLineAt props
-export function drawYLineAt(ctx: any, props) {
+export function drawYLineAt (ctx: any, props) {
   // line
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
@@ -123,7 +123,7 @@ export function drawYLabelAt (ctx: any, props: Props) {
 }
 
 // TODO drawXLineAt props
-export function drawXLineAt(ctx: any, props) {
+export function drawXLineAt (ctx: any, props) {
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
@@ -186,17 +186,17 @@ export function drawXLabelAt (ctx: any, props: Props) {
   )
 }
 
-function drawXLine(ctx: any, props: Props) {
+function drawXLine (ctx: any, props: Props) {
   const {
     graph,
     mouse,
-    ui,
+    ui
   } = props
 
   drawXLineAt(ctx, {
     ...props,
     lineColor: ui.xLineColor,
-    canvasX: mouse.x,
+    canvasX: mouse.x
   })
 
   const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
@@ -218,11 +218,11 @@ function drawXLine(ctx: any, props: Props) {
     labelAt: ui.xLabelAt,
     backgroundColor: ui.xLabelBackgroundColor,
     font: ui.xLabelFont,
-    color: ui.xLabelColor,
+    color: ui.xLabelColor
   })
 }
 
-function drawYLine(ctx: any, props: Props) {
+function drawYLine (ctx: any, props: Props) {
   const {
     graph,
     mouse,
@@ -232,7 +232,7 @@ function drawYLine(ctx: any, props: Props) {
   drawYLineAt(ctx, {
     ...props,
     lineColor: ui.yLineColor,
-    canvasY: mouse.y,
+    canvasY: mouse.y
   })
 
   const y = linear({
@@ -258,7 +258,7 @@ export function draw (ctx: any, props: Props) {
   ctx.clearRect(
     0, 0,
     props.canvas.width,
-    props.canvas.height,
+    props.canvas.height
   )
 
   if (!isInsideGraph(props.mouse, props.graph)) {

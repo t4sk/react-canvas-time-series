@@ -11,7 +11,7 @@ class TestCanvas extends Component {
       isDragging: false,
       dragStartCanvasX: undefined,
       dragStartXMin: undefined,
-      dragStartXMax: undefined,
+      dragStartXMax: undefined
     }
   }
 

@@ -125,7 +125,7 @@ TestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xInterval: 15
   },
   graph: {
     // y label left, x label bottom
@@ -136,7 +136,7 @@ TestRender.defaultProps = {
   },
   bar: {
     getBackgroundColor: d => 'green',
-    getLineColor: d =>  'yellow',
+    getLineColor: d => 'yellow',
     lineWidth: 1
   },
   data: [],

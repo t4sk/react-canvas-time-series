@@ -128,7 +128,7 @@ TestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xInterval: 15
   },
   graph: {
     // y label left, x label bottom
