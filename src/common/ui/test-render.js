@@ -103,14 +103,13 @@ class TestRender extends Component {
             ui.drawXLabelAt(ctx, {
               ...props,
               canvasX: 275,
-              x: 100,
+              text: 'Here',
               height: props.ui.xLabelHeight,
               width: props.ui.xLabelWidth,
               labelAt: props.ui.xLabelAt,
               backgroundColor: 'orange',
               font: props.ui.xLabelFont,
               color: 'white',
-              renderXLabel: props.ui.renderXLabel,
             })
           }}
           drawBackground={background.draw}

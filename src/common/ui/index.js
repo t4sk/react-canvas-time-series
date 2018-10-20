@@ -168,8 +168,8 @@ function getXLabelTextCanvasY (props: Props): number {
 // TODO drawXLabelAt props
 export function drawXLabelAt (ctx: any, props: Props) {
   const {
-    x,
-    canvasX
+    canvasX,
+    text
   } = props
 
   // label
@@ -190,7 +190,7 @@ export function drawXLabelAt (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
 
   ctx.fillText(
-    props.renderXLabel(x),
+    text,
     round(canvasX),
     round(getXLabelTextCanvasY(props))
   )
@@ -231,14 +231,13 @@ export function draw (ctx: any, props: Props) {
   drawXLabelAt(ctx, {
     ...props,
     canvasX: mouse.x,
-    x,
+    text: props.ui.renderXLabel(x),
     height: props.ui.xLabelHeight,
     width: props.ui.xLabelWidth,
     labelAt: props.ui.xLabelAt,
     backgroundColor: props.ui.xLabelBackgroundColor,
     font: props.ui.xLabelFont,
     color: props.ui.xLabelColor,
-    renderXLabel: props.ui.renderXLabel,
   })
 
   // draw y line and label
