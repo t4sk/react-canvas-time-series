@@ -6,6 +6,7 @@ import LineTestRender from './common/line/test-render'
 import BarTestRender from './common/bar/test-render'
 import CandlestickTestRender from './common/candlestick/test-render'
 
+// TODO fix memory leak
 class App extends Component {
   render () {
     return (

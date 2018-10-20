@@ -22,90 +22,102 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   return true
 }
 
-export function draw (ctx: any, props: Props) {
-  ctx.clearRect(
-    0, 0,
-    props.canvas.width,
-    props.canvas.height
-  )
+export function getNearestDataAtX (
+  x: number,
+  delta: number,
+  data: Array<{x: number}>
+): {x: number} {
+  let low = 0; let high = data.length - 1
 
-  if (!isInsideGraph(props.mouse, props.graph)) {
-    return
+  // binary search
+  while (low < high) {
+    let mid = (low + high) / 2 >> 0
+
+    if (data[mid].x > x + delta) {
+      high = mid
+    } else if (data[mid].x < x - delta) {
+      low = mid + 1
+    } else {
+      // Math.abs(data[mid].timestamp - x) <= delta
+      return data[mid]
+    }
   }
 
-  drawXLine(ctx, props)
-  drawYLine(ctx, props)
+  return data[low]
 }
 
-function drawYLine (ctx: any, props: Props) {
+// TODO drawYLineAt props
+export function drawYLineAt(ctx: any, props) {
   // line
-  ctx.strokeStyle = props.ui.yLineColor
+  ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
   ctx.beginPath()
-  ctx.moveTo(props.graph.x, props.mouse.y)
-  ctx.lineTo(props.graph.x + props.graph.width, props.mouse.y)
+  ctx.moveTo(props.graph.x, props.canvasY)
+  ctx.lineTo(props.graph.x + props.graph.width, props.canvasY)
   ctx.stroke()
   ctx.closePath()
-
-  drawYLabel(ctx, props)
 }
 
+// TODO use drawYLabelAt props
 function getYLabelTextAlign (props: Props): 'left' | 'right' {
-  switch (props.ui.yLabelAt) {
+  switch (props.labelAt) {
     case 'left':
       return 'right'
     case 'right':
       return 'left'
     default:
-      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
+      throw new Error(`invalid labelAt ${props.labelAt}`)
   }
 }
 
+// TODO use drawYLabelAt props
 function getYLabelCanvasX (props: Props): number {
-  switch (props.ui.yLabelAt) {
+  switch (props.labelAt) {
     case 'left':
-      return props.graph.x - props.ui.yLabelWidth
+      return props.graph.x - props.width
     case 'right':
       return props.graph.x + props.graph.width
     default:
-      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
+      throw new Error(`invalid labelAt ${props.labelAt}`)
   }
 }
 
 const Y_LABEL_HORIZONTAL_PADDING = 5
 
+// TODO use drawYLabelAt props
 function getYLabelTextCanvasX (props: Props): number {
-  switch (props.ui.yLabelAt) {
+  switch (props.labelAt) {
     case 'left':
       return props.graph.x - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
       return props.graph.x + props.graph.width + Y_LABEL_HORIZONTAL_PADDING
     default:
-      throw new Error(`invalid yLabelAt ${props.ui.yLabelAt}`)
+      throw new Error(`invalid labelAt ${props.labelAt}`)
   }
 }
 
-function drawYLabel (ctx: any, props: Props) {
+// TODO use drawYLabelAt props
+export function drawYLabelAt (ctx: any, props: Props) {
   const {
-    mouse,
+    canvasY,
     yMax,
     yMin
   } = props
 
   // label
-  ctx.fillStyle = props.ui.yLabelBackgroundColor
+  ctx.fillStyle = props.backgroundColor
 
   ctx.fillRect(
     getYLabelCanvasX(props),
-    mouse.y - round(props.ui.yLabelHeight / 2),
-    props.ui.yLabelWidth,
-    props.ui.yLabelHeight
+    canvasY - round(props.height / 2),
+    props.width,
+    props.height
   )
 
   // label text
-  ctx.font = props.ui.yLabelFont
-  ctx.fillStyle = props.ui.yLabelColor
+  ctx.font = props.font
+  ctx.fillStyle = props.color
   ctx.textAlign = getYLabelTextAlign(props)
   ctx.textBaseline = 'middle'
 
@@ -113,12 +125,12 @@ function drawYLabel (ctx: any, props: Props) {
     dy: yMax - yMin,
     dx: props.graph.height,
     y0: yMin
-  })(props.graph.height - mouse.y + props.graph.y)
+  })(props.graph.height - canvasY + props.graph.y)
 
   ctx.fillText(
-    props.ui.renderYLabel(y),
+    props.renderYLabel(y),
     getYLabelTextCanvasX(props),
-    mouse.y
+    canvasY
   )
 }
 
@@ -199,26 +211,34 @@ function drawXLabel (ctx: any, props: Props) {
   )
 }
 
-export function getNearestDataAtX (
-  x: number,
-  delta: number,
-  data: Array<{x: number}>
-): {x: number} {
-  let low = 0; let high = data.length - 1
+export function draw (ctx: any, props: Props) {
+  ctx.clearRect(
+    0, 0,
+    props.canvas.width,
+    props.canvas.height
+  )
 
-  // binary search
-  while (low < high) {
-    let mid = (low + high) / 2 >> 0
-
-    if (data[mid].x > x + delta) {
-      high = mid
-    } else if (data[mid].x < x - delta) {
-      low = mid + 1
-    } else {
-      // Math.abs(data[mid].timestamp - x) <= delta
-      return data[mid]
-    }
+  if (!isInsideGraph(props.mouse, props.graph)) {
+    return
   }
 
-  return data[low]
+  drawXLine(ctx, props)
+
+  drawYLineAt(ctx, {
+    ...props,
+    lineColor: props.ui.yLineColor,
+    canvasY: props.mouse.y
+  })
+
+  drawYLabelAt(ctx, {
+    ...props,
+    canvasY: props.mouse.y,
+    height: props.ui.yLabelHeight,
+    width: props.ui.yLabelWidth,
+    labelAt: props.ui.yLabelAt,
+    backgroundColor: props.ui.yLabelBackgroundColor,
+    font: props.ui.yLabelFont,
+    color: props.ui.yLabelColor,
+    renderYLabel: props.ui.renderYLabel,
+  })
 }

@@ -90,6 +90,13 @@ class TestRender extends Component {
           drawUI={ui.draw}
         />
 
+        <h3>X Label Fixed</h3>
+        <TestCanvas
+          {...this.props}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
         <h3>Y Label Left</h3>
         <TestCanvas
           {...merge(this.props, {
@@ -117,6 +124,31 @@ class TestRender extends Component {
               yLabelAt: 'right'
             }
           })}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
+        <h3>Y Label Fixed</h3>
+        <TestCanvas
+          {...this.props}
+          draw={(ctx, props) => {
+            ui.drawYLineAt(ctx, {
+              ...props,
+              lineColor: 'orange',
+              canvasY: 150,
+            })
+            ui.drawYLabelAt(ctx, {
+              ...props,
+              canvasY: 150,
+              height: props.ui.yLabelHeight,
+              width: props.ui.yLabelWidth,
+              labelAt: props.ui.yLabelAt,
+              backgroundColor: 'orange',
+              font: props.ui.yLabelFont,
+              color: 'white',
+              renderYLabel: props.ui.renderYLabel,
+            })
+          }}
           drawBackground={background.draw}
           drawUI={ui.draw}
         />
