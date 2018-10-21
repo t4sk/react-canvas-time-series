@@ -5,6 +5,8 @@ class TestCanvas extends Component {
   constructor (props) {
     super(props)
 
+    // TODO React.createRef
+
     this.mouse = {
       x: undefined,
       y: undefined,
@@ -64,6 +66,11 @@ class TestCanvas extends Component {
     } else {
       this.draw()
     }
+  }
+
+  componentWillUnmount() {
+    // TODO unmount event listener
+    // TODO cancel animation frame
   }
 
   shouldComponentUpdate () {
@@ -145,7 +152,7 @@ const style = {
 }
 
 TestCanvas.defaultProps = {
-  onMouseMove: () => {},
+  onMouseMove: (mouse) => {},
   draw: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
   // drawUI optional
