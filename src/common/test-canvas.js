@@ -29,7 +29,9 @@ class TestCanvas extends Component {
         this.mouse.x = e.clientX - rect.left
         this.mouse.y = e.clientY - rect.top
 
-        this.props.onMouseMove(this.mouse)
+        if (ui.isInsideGraph(this.mouse, this.props.graph)) {
+          this.props.onMouseMove(this.mouse)
+        }
       })
 
       this.ctx.ui.canvas.addEventListener('mousedown', e => {
