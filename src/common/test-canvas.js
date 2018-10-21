@@ -119,7 +119,8 @@ class TestCanvas extends Component {
 
 const style = {
   container: {
-    position: 'relative'
+    position: 'relative',
+    cursor: 'crosshair'
   },
   background: {
     position: 'absolute',
