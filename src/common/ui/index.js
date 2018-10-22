@@ -46,7 +46,7 @@ export function getNearestDataAtX (
     } else if (data[mid].x < x - delta) {
       low = mid + 1
     } else {
-      // Math.abs(data[mid].timestamp - x) <= delta
+      // | data[mid].x - x | <= delta
       return data[mid]
     }
   }
