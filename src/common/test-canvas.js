@@ -31,9 +31,7 @@ class TestCanvas extends Component {
         this.mouse.x = e.clientX - rect.left
         this.mouse.y = e.clientY - rect.top
 
-        if (ui.isInsideGraph(this.mouse, this.props.graph)) {
-          this.props.onMouseMove(this.mouse)
-        }
+        this.props.onMouseMove(this.mouse)
       })
 
       this.ctx.ui.canvas.addEventListener('mousedown', e => {
@@ -60,6 +58,8 @@ class TestCanvas extends Component {
         this.mouse.dragStartCanvasX = undefined
         this.mouse.dragStartXMin = undefined
         this.mouse.dragStartXMax = undefined
+
+        this.props.onMouseOut()
       })
 
       this.animate()
@@ -153,6 +153,7 @@ const style = {
 
 TestCanvas.defaultProps = {
   onMouseMove: (mouse) => {},
+  onMouseOut: () => {},
   draw: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
   // drawUI optional

@@ -1,21 +1,88 @@
 import React, { Component } from 'react'
-import { merge } from '../test-util'
+import ReactDOM from 'react-dom'
+import { merge, rand } from '../test-util'
 import TestCanvas from '../test-canvas'
-import { linear } from '../math'
+import { linear, round } from '../math'
 import * as background from '../background'
 import { getGraphX, getGraphWidth } from '../background/common'
+import * as line from '../line'
 import * as ui from './index'
+
+const X_MIN = 1900
+const X_MAX = 2010
+const Y_MIN = 10
+const Y_MAX = 110
+
+let LINE_DATA = []
+
+for (let i = 0; i < 10; i++) {
+  LINE_DATA.push({
+    x: round(rand(X_MIN, X_MAX)),
+    y: round(rand(Y_MIN, Y_MAX))
+  })
+}
+
+LINE_DATA.sort((a, b) => a.x - b.x)
 
 class TestRender extends Component {
   constructor (props) {
     super(props)
     this.state = {
       xMin: 1900,
-      xMax: 2010
+      xMax: 2010,
+      nearest: {
+        canvasX: undefined,
+        canvasY: undefined,
+        data: undefined,
+      }
     }
   }
 
-  onMouseMove = mouse => {
+  onMouseMoveTestGetNearestData = mouse => {
+    const {
+      xMax,
+      xMin,
+      graph,
+    } = this.props
+
+    if (ui.isInsideGraph(mouse, graph)) {
+      const x = linear({
+        dy: xMax - xMin,
+        dx: graph.width,
+        y0: xMin,
+      })(mouse.x - graph.x)
+
+      const data = ui.getNearestDataAtX(x, 0, LINE_DATA)
+
+      this.setState({
+        nearest: {
+          canvasX: mouse.x,
+          canvasY: mouse.y,
+          data,
+        }
+      })
+    } else {
+      this.setState({
+        nearest: {
+          canvasX: undefined,
+          canvasY: undefined,
+          data: undefined,
+        }
+      })
+    }
+  }
+
+  onMouseOutTestGetNearestData = () => {
+    this.setState({
+      nearest: {
+        canvasX: undefined,
+        canvasY: undefined,
+        data: undefined,
+      }
+    })
+  }
+
+  onMouseMoveTestDrag = mouse => {
     if (!mouse.isDragging) {
       return
     }
@@ -49,6 +116,45 @@ class TestRender extends Component {
   render () {
     return (
       <div>
+        <h3>Get Nearest Data at X</h3>
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%'
+        }}>
+          <TestCanvas
+            {...this.props}
+            drawBackground={background.draw}
+            draw={(ctx, props) => {
+              line.draw(ctx, {
+                ...props,
+                data: LINE_DATA,
+                line: {
+                  color: 'green',
+                  width: 1
+                }
+              })
+            }}
+            drawUI={(ctx, props) => ui.draw(ctx, props)}
+            onMouseMove={this.onMouseMoveTestGetNearestData}
+            onMouseOut={this.onMouseOutTestGetNearestData}
+          />
+          {this.state.nearest.data && (
+            <div
+              style={{
+                position: 'absolute',
+                top: this.state.nearest.canvasY + 10,
+                left: this.state.nearest.canvasX + 10,
+                zIndex: 4,
+                border: '1px solid black'
+              }}
+            >
+              {this.state.nearest.data.x}
+            </div>
+          )}
+        </div>
+
+        {/*}
         <h3>X Drag</h3>
         <TestCanvas
           {...this.props}
@@ -56,7 +162,7 @@ class TestRender extends Component {
           xMax={this.state.xMax}
           drawBackground={background.draw}
           drawUI={ui.draw}
-          onMouseMove={this.onMouseMove}
+          onMouseMove={this.onMouseMoveTestDrag}
         />
 
         <h3>X Label Bottom</h3>
@@ -171,6 +277,7 @@ class TestRender extends Component {
           drawBackground={background.draw}
           drawUI={ui.draw}
         />
+        */}
       </div>
     )
   }
@@ -186,6 +293,13 @@ TestRender.defaultProps = {
     bottom: 20,
     left: 20,
     right: 30
+  },
+  graph: {
+    // y label left, x label bottom
+    x: 70, // margin.left + x.axis.width
+    y: 10, // margin.top
+    width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
+    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
   background: {
     backgroundColor: 'lightgrey',
@@ -212,13 +326,6 @@ TestRender.defaultProps = {
     renderXLabel: x => x,
     xInterval: 15
   },
-  graph: {
-    // y label left, x label bottom
-    x: 70, // margin.left + x.axis.width
-    y: 10, // margin.top
-    width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
-    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
-  },
   ui: {
     xLineColor: 'blue',
     xLabelAt: 'bottom',
@@ -238,10 +345,10 @@ TestRender.defaultProps = {
     yLabelColor: 'white',
     renderYLabel: y => y.toFixed(2)
   },
-  yMin: 10,
-  yMax: 110,
-  xMin: 1900,
-  xMax: 2010
+  yMin: Y_MIN,
+  yMax: Y_MAX,
+  xMin: X_MIN,
+  xMax: X_MAX
 }
 
 export default TestRender
