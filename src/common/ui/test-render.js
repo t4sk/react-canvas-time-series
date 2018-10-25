@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { merge, rand } from '../test-util'
 import TestCanvas from '../test-canvas'
-import { linear, round } from '../math'
+import { linear, round, getNearestDataAtX } from '../math'
 import * as background from '../background'
 import { getGraphX, getGraphWidth } from '../background/common'
 import * as line from '../line'
@@ -52,7 +52,7 @@ class TestRender extends Component {
         y0: xMin,
       })(mouse.x - graph.x)
 
-      const data = ui.getNearestDataAtX(x, LINE_DATA)
+      const data = getNearestDataAtX(x, LINE_DATA)
 
       this.setState({
         nearest: {

@@ -30,39 +30,6 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   return true
 }
 
-// TODO move to math.js
-// TODO test
-export function getNearestDataAtX (
-  x: number,
-  data: Array<{x: number}>
-): {x: number} {
-  let low = 0;
-  let high = data.length - 1
-
-  // binary search
-  while (low < high) {
-    let mid = (low + high) / 2 >> 0
-
-    if (data[mid].x > x) {
-      high = mid
-    } else {
-      low = mid + 1
-    }
-  }
-
-  if (data[low - 1]) {
-    const midX = (data[low].x + data[low - 1].x) / 2
-
-    if (x < midX) {
-      return data[low - 1]
-    } else {
-      return data[low]
-    }
-  }
-
-  return data[low]
-}
-
 export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
   // line
   ctx.strokeStyle = props.lineColor
