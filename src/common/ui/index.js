@@ -30,24 +30,35 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   return true
 }
 
+// TODO move to math.js
+// TODO remove delta
+// TODO test
 export function getNearestDataAtX (
   x: number,
   delta: number,
   data: Array<{x: number}>
 ): {x: number} {
-  let low = 0; let high = data.length - 1
+  let low = 0;
+  let high = data.length - 1
 
   // binary search
   while (low < high) {
     let mid = (low + high) / 2 >> 0
 
-    if (data[mid].x > x + delta) {
+    if (data[mid].x > x) {
       high = mid
-    } else if (data[mid].x < x - delta) {
-      low = mid + 1
     } else {
-      // | data[mid].x - x | <= delta
-      return data[mid]
+      low = mid + 1
+    }
+  }
+
+  if (data[low - 1]) {
+    const midX = (data[low].x + data[low - 1].x) / 2
+
+    if (x < midX) {
+      return data[low - 1]
+    } else {
+      return data[low]
     }
   }
 
@@ -266,4 +277,6 @@ export function draw (ctx: any, props: Props) {
 
   drawXLine(ctx, props)
   drawYLine(ctx, props)
+
+  // TODO renderNearestData()
 }
