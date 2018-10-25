@@ -24,6 +24,24 @@ for (let i = 0; i < 10; i++) {
 
 LINE_DATA.sort((a, b) => a.x - b.x)
 
+function getTop(top, margin, height, graph) {
+  if (top + margin + height > graph.y + graph.height) {
+     return top - margin - height
+  }
+  return top + margin
+}
+
+function getLeft(left, margin, width, graph) {
+  if (left + margin + width > graph.x + graph.width) {
+     return left - margin - width
+  }
+  return left + margin
+}
+
+function getTransition() {
+  return 'top 0.2s, left 0.2s'
+}
+
 class TestRender extends Component {
   constructor (props) {
     super(props)
@@ -139,17 +157,18 @@ class TestRender extends Component {
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
           />
-          {/* TODO render nearest data inside graph */}
+          {/* TODO rwidth, height from ref */}
           {this.state.nearest.data && (
             <div
               style={{
                 position: 'absolute',
-                top: this.state.nearest.canvasY + 10,
-                left: this.state.nearest.canvasX + 10,
-                transition: 'top 0.5s',
-                transition: 'left 0.5s',
+                top: getTop(this.state.nearest.canvasY, 10, 20, this.props.graph),
+                left:getLeft(this.state.nearest.canvasX, 10, 40, this.props.graph),
+                transition: getTransition(),
                 zIndex: 4,
-                border: '1px solid black'
+                border: '1px solid black',
+                width: 40,
+                height: 20
               }}
             >
               {this.state.nearest.data.x}
