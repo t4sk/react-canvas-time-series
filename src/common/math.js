@@ -12,7 +12,6 @@ export function nearestStepBelow (x: number, step: number): number {
   return Math.floor(x / step) * step
 }
 
-// TODO test
 export function getNearestDataAtX (
   x: number,
   data: Array<{x: number}>

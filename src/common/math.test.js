@@ -3,7 +3,8 @@ import {
   floor,
   round,
   linear,
-  nearestStepBelow
+  nearestStepBelow,
+  getNearestDataAtX,
 } from './math'
 
 test("floor", () => {
@@ -36,4 +37,27 @@ test("nearest step", () => {
   expect(nearestStepBelow(1901, 5)).toEqual(1900)
   expect(nearestStepBelow(1904, 5)).toEqual(1900)
   expect(nearestStepBelow(1905, 5)).toEqual(1905)
+})
+
+const DATA = [{
+  x: 0
+}, {
+  x: 5
+}, {
+  x: 10
+}]
+
+describe("get nearest data at x", () => {
+  test("should return min", () => {
+    expect(getNearestDataAtX(2, DATA)).toEqual({x: 0})
+  })
+
+  test("should return mid", () => {
+    expect(getNearestDataAtX(3, DATA)).toEqual({x: 5})
+    expect(getNearestDataAtX(7, DATA)).toEqual({x: 5})
+  })
+
+  test("should return max", () => {
+    expect(getNearestDataAtX(8, DATA)).toEqual({x: 10})
+  })
 })
