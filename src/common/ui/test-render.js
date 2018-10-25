@@ -146,6 +146,8 @@ class TestRender extends Component {
                 position: 'absolute',
                 top: this.state.nearest.canvasY + 10,
                 left: this.state.nearest.canvasX + 10,
+                transition: 'top 0.5s',
+                transition: 'left 0.5s',
                 zIndex: 4,
                 border: '1px solid black'
               }}
