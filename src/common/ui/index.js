@@ -31,11 +31,9 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
 }
 
 // TODO move to math.js
-// TODO remove delta
 // TODO test
 export function getNearestDataAtX (
   x: number,
-  delta: number,
   data: Array<{x: number}>
 ): {x: number} {
   let low = 0;

@@ -52,7 +52,7 @@ class TestRender extends Component {
         y0: xMin,
       })(mouse.x - graph.x)
 
-      const data = ui.getNearestDataAtX(x, 0, LINE_DATA)
+      const data = ui.getNearestDataAtX(x, LINE_DATA)
 
       this.setState({
         nearest: {
@@ -139,6 +139,7 @@ class TestRender extends Component {
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
           />
+          {/* TODO render nearest data inside graph */}
           {this.state.nearest.data && (
             <div
               style={{
@@ -154,7 +155,6 @@ class TestRender extends Component {
           )}
         </div>
 
-        {/*}
         <h3>X Drag</h3>
         <TestCanvas
           {...this.props}
@@ -277,7 +277,6 @@ class TestRender extends Component {
           drawBackground={background.draw}
           drawUI={ui.draw}
         />
-        */}
       </div>
     )
   }
