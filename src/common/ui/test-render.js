@@ -24,22 +24,27 @@ for (let i = 0; i < 10; i++) {
 
 LINE_DATA.sort((a, b) => a.x - b.x)
 
+// TODO hover can go out of bound for vertical
+// TODO default align left
 function getTop(top, margin, height, graph) {
-  if (top + margin + height > graph.y + graph.height) {
-     return top - margin - height
-  }
   return top + margin
 }
 
 function getLeft(left, margin, width, graph) {
-  if (left + margin + width > graph.x + graph.width) {
-     return left - margin - width
+  if (left -margin - width <= graph.x) {
+     return left + margin
   }
-  return left + margin
+  return left - margin - width
 }
 
-function getTransition() {
-  return 'top 0.2s, left 0.2s'
+function getTransition(left, margin, width, graph) {
+  let transition = ''
+
+  if (left <= graph.x + 2 * (width + margin)) {
+    transition = 'left 0.1s'
+  }
+
+  return transition
 }
 
 class TestRender extends Component {
@@ -164,7 +169,7 @@ class TestRender extends Component {
                 position: 'absolute',
                 top: getTop(this.state.nearest.canvasY, 10, 20, this.props.graph),
                 left:getLeft(this.state.nearest.canvasX, 10, 40, this.props.graph),
-                transition: getTransition(),
+                transition: getTransition(this.state.nearest.canvasX, 10, 40, this.props.graph),
                 zIndex: 4,
                 border: '1px solid black',
                 width: 40,
