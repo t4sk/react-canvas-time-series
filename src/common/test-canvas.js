@@ -20,7 +20,7 @@ class TestCanvas extends Component {
   componentDidMount () {
     this.ctx = {
       ui: this.refs.ui.getContext('2d'),
-      testCanvas: this.refs.testCanvas.getContext('2d'),
+      data: this.refs.data.getContext('2d'),
       background: this.refs.background.getContext('2d', { alpha: false })
     }
 
@@ -79,14 +79,14 @@ class TestCanvas extends Component {
 
   draw = () => {
     this.props.drawBackground(this.ctx.background, this.props)
-    this.props.draw(this.ctx.testCanvas, this.props)
+    this.props.draw(this.ctx.data, this.props)
   }
 
   animate = () => {
     window.requestAnimationFrame(this.animate)
 
     this.props.drawBackground(this.ctx.background, this.props)
-    this.props.draw(this.ctx.testCanvas, this.props)
+    this.props.draw(this.ctx.data, this.props)
 
     this.props.drawUI(
       this.ctx.ui, {
@@ -110,8 +110,8 @@ class TestCanvas extends Component {
           height={this.props.canvas.height}
         />
         <canvas
-          style={style.testCanvas}
-          ref="testCanvas"
+          style={style.data}
+          ref="data"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
@@ -137,7 +137,7 @@ const style = {
     top: 0,
     zIndex: 1
   },
-  testCanvas: {
+  data: {
     position: 'absolute',
     left: 0,
     top: 0,
