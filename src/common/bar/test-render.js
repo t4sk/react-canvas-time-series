@@ -144,8 +144,8 @@ TestRender.defaultProps = {
   },
   graph: {
     // y label left, x label bottom
-    x: 70, // margin.left + x.axis.width
-    y: 10, // margin.top
+    left: 70, // margin.left + x.axis.width
+    top: 10, // margin.top
     width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },

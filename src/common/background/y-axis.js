@@ -17,7 +17,7 @@ function getYAxisTextAlign (props: Props): 'left' | 'right' {
   }
 }
 
-function getYLineCanvasXStart (props: Props): number {
+function getLeft (props: Props): number {
   switch (props.background.yAxisAt) {
     case 'left':
       return props.background.yAxisWidth + props.margin.left
@@ -28,7 +28,7 @@ function getYLineCanvasXStart (props: Props): number {
   }
 }
 
-function getYLineCanvasYStart (props: Props): number {
+function getTop (props: Props): number {
   switch (props.background.xAxisAt) {
     case 'top':
       return props.background.xAxisHeight + props.margin.top
@@ -41,7 +41,7 @@ function getYLineCanvasYStart (props: Props): number {
 
 const Y_LABEL_HORIZONTAL_PADDING = 10
 
-function getYLabelCanvasX (props: Props): number {
+function getLabelLeft (props: Props): number {
   const width = getGraphWidth(props)
 
   switch (props.background.yAxisAt) {
@@ -73,56 +73,56 @@ export function drawYLines (ctx: any, props: Props) {
   const width = getGraphWidth(props)
   const height = getGraphHeight(props)
 
-  const toCanvasY = linear({
+  const toTop = linear({
     dy: -height,
     dx: yMax - yMin,
     y0: height * yMax / (yMax - yMin)
   })
 
-  const yLineCanvasXStart = getYLineCanvasXStart(props)
-  const yLineCanvasYStart = getYLineCanvasYStart(props)
-  const labelCanvasX = getYLabelCanvasX(props)
+  const left = getLeft(props)
+  const top = getTop(props)
+  const labelLeft = getLabelLeft(props)
 
   if (props.background.showYLine) {
     // draw y line top
     ctx.beginPath()
     ctx.moveTo(
-      round(yLineCanvasXStart),
-      round(yLineCanvasYStart)
+      round(left),
+      round(top)
     )
     ctx.lineTo(
-      round(yLineCanvasXStart + width),
-      round(yLineCanvasYStart)
+      round(left + width),
+      round(top)
     )
     ctx.stroke()
 
     // draw y line bottom
     ctx.beginPath()
     ctx.moveTo(
-      round(yLineCanvasXStart),
-      round(yLineCanvasYStart + height)
+      round(left),
+      round(top + height)
     )
     ctx.lineTo(
-      round(yLineCanvasXStart + width),
-      round(yLineCanvasYStart + height)
+      round(left + width),
+      round(top + height)
     )
     ctx.stroke()
   }
 
-  const yStart = nearestStepBelow(yMin, props.background.yInterval)
+  const y0 = nearestStepBelow(yMin, props.background.yInterval)
 
-  for (let y = yStart; y <= yMax; y += props.background.yInterval) {
-    const canvasY = toCanvasY(y) + yLineCanvasYStart
+  for (let y = y0; y <= yMax; y += props.background.yInterval) {
+    const t = toTop(y) + top
 
-    if (canvasY >= yLineCanvasYStart && canvasY <= yLineCanvasYStart + height) {
+    if (t >= top && t <= top + height) {
       // draw line
       if (props.background.showYLine) {
         ctx.beginPath()
         ctx.moveTo(
-          round(yLineCanvasXStart), round(canvasY)
+          round(left), round(t)
         )
         ctx.lineTo(
-          round(yLineCanvasXStart + width), round(canvasY)
+          round(left + width), round(t)
         )
         ctx.stroke()
       }
@@ -131,8 +131,8 @@ export function drawYLines (ctx: any, props: Props) {
       if (props.background.showYLabel) {
         ctx.fillText(
           props.background.renderYLabel(y),
-          round(labelCanvasX),
-          round(canvasY)
+          round(labelLeft),
+          round(t)
         )
       }
     }

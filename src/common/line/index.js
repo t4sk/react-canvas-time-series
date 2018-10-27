@@ -12,31 +12,31 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toCanvasX = linear({
+  const toLeft = linear({
     dy: graph.width,
     dx: xMax - xMin,
-    y0: graph.x - graph.width * xMin / (xMax - xMin)
+    y0: graph.left - graph.width * xMin / (xMax - xMin)
   })
 
-  const toCanvasY = linear({
+  const toTop = linear({
     dy: -graph.height,
     dx: yMax - yMin,
-    y0: graph.y + graph.height * yMax / (yMax - yMin)
+    y0: graph.top + graph.height * yMax / (yMax - yMin)
   })
 
   ctx.strokeStyle = props.line.color
   ctx.lineWidth = props.line.width
 
   for (let i = 1; i < data.length; i++) {
-    const x0 = round(toCanvasX(data[i - 1].x))
-    const y0 = round(toCanvasY(data[i - 1].y))
+    const l0 = round(toLeft(data[i - 1].x))
+    const t0 = round(toTop(data[i - 1].y))
 
-    const x = round(toCanvasX(data[i].x))
-    const y = round(toCanvasY(data[i].y))
+    const l = round(toLeft(data[i].x))
+    const t = round(toTop(data[i].y))
 
     ctx.beginPath()
-    ctx.moveTo(x0, y0)
-    ctx.lineTo(x, y)
+    ctx.moveTo(l0, t0)
+    ctx.lineTo(l, t)
     ctx.stroke()
   }
 }

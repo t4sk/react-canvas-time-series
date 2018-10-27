@@ -10,14 +10,14 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toCanvasY = linear({
+  const toTop = linear({
     dy: -graph.height,
     dx: yMax - yMin,
-    y0: graph.y + graph.height * yMax / (yMax - yMin)
+    y0: graph.top + graph.height * yMax / (yMax - yMin)
   })
 
-  const xInterval = graph.width / data.length
-  const barWidth = Math.max(xInterval, 1)
+  const leftInterval = graph.width / data.length
+  const barWidth = Math.max(leftInterval, 1)
 
   for (let i = 0; i < data.length; i++) {
     const {
@@ -27,18 +27,18 @@ export function draw (ctx: any, props: Props) {
       close
     } = data[i]
 
-    const x = graph.x + i * xInterval
-    const yTop = toCanvasY(Math.max(open, close))
-    const yBottom = toCanvasY(Math.min(open, close))
+    const l = graph.left + i * leftInterval
+    const top = toTop(Math.max(open, close))
+    const bottom = toTop(Math.min(open, close))
 
-    const barHeight = Math.max(yBottom - yTop, 1)
+    const barHeight = Math.max(bottom - top, 1)
 
     // body
     ctx.fillStyle = props.candlestick.getBackgroundColor(data[i])
 
     ctx.fillRect(
-      round(x),
-      round(yTop),
+      round(l),
+      round(top),
       round(barWidth),
       round(barHeight)
     )
@@ -48,8 +48,8 @@ export function draw (ctx: any, props: Props) {
 
     ctx.beginPath()
     ctx.rect(
-      round(x),
-      round(yTop),
+      round(l),
+      round(top),
       round(barWidth),
       round(barHeight)
     )
@@ -62,22 +62,22 @@ export function draw (ctx: any, props: Props) {
     // top wick
     ctx.beginPath()
     ctx.moveTo(
-      round(x + barWidth / 2),
-      round(yTop)
+      round(l + barWidth / 2),
+      round(top)
     )
     ctx.lineTo(
-      round(x + barWidth / 2),
-      round(toCanvasY(high))
+      round(l + barWidth / 2),
+      round(toTop(high))
     )
 
     // bottom wick
     ctx.moveTo(
-      round(x + barWidth / 2),
-      round(yTop + barHeight)
+      round(l + barWidth / 2),
+      round(top + barHeight)
     )
     ctx.lineTo(
-      round(x + barWidth / 2),
-      round(toCanvasY(low))
+      round(l + barWidth / 2),
+      round(toTop(low))
     )
     ctx.stroke()
   }

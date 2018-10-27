@@ -10,27 +10,27 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toCanvasY = linear({
+  const toTop = linear({
     dy: -graph.height,
     dx: yMax - yMin,
-    y0: graph.y + graph.height * yMax / (yMax - yMin)
+    y0: graph.top + graph.height * yMax / (yMax - yMin)
   })
 
-  const xInterval = graph.width / data.length
-  const barWidth = Math.max(round(xInterval), 1)
+  const leftInterval = graph.width / data.length
+  const barWidth = Math.max(round(leftInterval), 1)
 
   for (let i = 0; i < data.length; i++) {
-    const x = round(graph.x + i * xInterval)
-    const y = round(toCanvasY(data[i].y))
-    const barHeight = graph.y + graph.height - y
+    const l = round(graph.left + i * leftInterval)
+    const t = round(toTop(data[i].y))
+    const barHeight = graph.top + graph.height - t
 
     ctx.fillStyle = props.bar.getBackgroundColor(data[i])
-    ctx.fillRect(x, y, barWidth, barHeight)
+    ctx.fillRect(l, t, barWidth, barHeight)
 
     ctx.beginPath()
     ctx.lineWidth = props.bar.lineWidth
     ctx.strokeStyle = props.bar.getLineColor(data[i])
-    ctx.rect(x, y, barWidth, barHeight)
+    ctx.rect(l, t, barWidth, barHeight)
     ctx.stroke()
   }
 }

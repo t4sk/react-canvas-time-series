@@ -31,7 +31,7 @@ function getTop(top, margin, height, graph) {
 }
 
 function getLeft(left, margin, width, graph) {
-  if (left -margin - width <= graph.x) {
+  if (left -margin - width <= graph.left) {
      return left + margin
   }
   return left - margin - width
@@ -40,7 +40,7 @@ function getLeft(left, margin, width, graph) {
 function getTransition(left, margin, width, graph) {
   let transition = ''
 
-  if (left <= graph.x + 2 * (width + margin)) {
+  if (left <= graph.left + 2 * (width + margin)) {
     transition = 'left 0.1s'
   }
 
@@ -73,7 +73,7 @@ class TestRender extends Component {
         dy: xMax - xMin,
         dx: graph.width,
         y0: xMin,
-      })(mouse.x - graph.x)
+      })(mouse.x - graph.left)
 
       const data = getNearestDataAtX(x, LINE_DATA)
 
@@ -166,13 +166,13 @@ class TestRender extends Component {
                 const centerX = linear({
                   dy: props.graph.width,
                   dx: props.xMax - props.xMin,
-                  y0: props.graph.x - props.graph.width / (props.xMax - props.xMin) * props.xMin
+                  y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
                 })(this.state.nearest.data.x)
 
                 const centerY = linear({
                   dy: -props.graph.height,
                   dx: props.yMax - props.yMin,
-                  y0: props.graph.y + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
+                  y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
                 })(this.state.nearest.data.y)
 
                 const radius = 10
@@ -249,7 +249,7 @@ class TestRender extends Component {
               xAxisAt: 'top'
             },
             graph: {
-              y: 60
+              top: 60
             },
             ui: {
               xLabelAt: 'top'
@@ -267,12 +267,12 @@ class TestRender extends Component {
             ui.drawXLineAt(ctx, {
               ...props,
               lineColor: 'orange',
-              canvasX: 275
+              left: 275
             })
 
             ui.drawXLabelAt(ctx, {
               ...props,
-              canvasX: 275,
+              left: 275,
               text: 'Here',
               height: props.ui.xLabelHeight,
               width: props.ui.xLabelWidth,
@@ -309,7 +309,7 @@ class TestRender extends Component {
               yAxisAt: 'right'
             },
             graph: {
-              x: 20
+              left: 20
             },
             ui: {
               yLabelAt: 'right'
@@ -327,11 +327,11 @@ class TestRender extends Component {
             ui.drawYLineAt(ctx, {
               ...props,
               lineColor: 'orange',
-              canvasY: 150
+              top: 150
             })
             ui.drawYLabelAt(ctx, {
               ...props,
-              canvasY: 150,
+              top: 150,
               height: props.ui.yLabelHeight,
               width: props.ui.yLabelWidth,
               labelAt: props.ui.yLabelAt,
@@ -363,8 +363,8 @@ TestRender.defaultProps = {
   },
   graph: {
     // y label left, x label bottom
-    x: 70, // margin.left + x.axis.width
-    y: 10, // margin.top
+    left: 70, // margin.left + x.axis.width
+    top: 10, // margin.top
     width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
     height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
   },
