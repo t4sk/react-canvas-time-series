@@ -158,7 +158,40 @@ class TestRender extends Component {
                 }
               })
             }}
-            drawUI={(ctx, props) => ui.draw(ctx, props)}
+            drawUI={(ctx, props) => {
+              ui.draw(ctx, props)
+
+              if (this.state.nearest.data) {
+                const centerX = linear({
+                  dy: props.graph.width,
+                  dx: props.xMax - props.xMin,
+                  y0: props.graph.x - props.graph.width / (props.xMax - props.xMin) * props.xMin
+                })(this.state.nearest.data.x)
+
+                const centerY = linear({
+                  dy: -props.graph.height,
+                  dx: props.yMax - props.yMin,
+                  y0: props.graph.y + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
+                })(this.state.nearest.data.y)
+
+                const radius = 10
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = "orange"
+                ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
+
+                ctx.beginPath();
+                ctx.lineWidth = 2
+                ctx.strokeStyle = "white"
+                ctx.rect(centerX - 5, centerY - 5, 10, 10)
+                ctx.stroke()
+              }
+            }}
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
           />

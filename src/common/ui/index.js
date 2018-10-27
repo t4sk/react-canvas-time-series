@@ -32,13 +32,16 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
 
 export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
   // line
+  ctx.beginPath()
+
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
-  ctx.beginPath()
   ctx.moveTo(props.graph.x, props.canvasY)
   ctx.lineTo(props.graph.x + props.graph.width, props.canvasY)
   ctx.stroke()
+
+  ctx.setLineDash([])
   ctx.closePath()
 }
 
@@ -102,13 +105,16 @@ export function drawYLabelAt (ctx: any, props: DrawYLabelAtProps) {
 }
 
 export function drawXLineAt (ctx: any, props: DrawXLineAtProps) {
+  ctx.beginPath()
+
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
-  ctx.beginPath()
   ctx.moveTo(props.canvasX, props.graph.y)
   ctx.lineTo(props.canvasX, props.graph.y + props.graph.height)
   ctx.stroke()
+
+  ctx.setLineDash([])
   ctx.closePath()
 }
 
