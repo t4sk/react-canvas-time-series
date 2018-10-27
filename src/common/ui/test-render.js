@@ -27,7 +27,7 @@ LINE_DATA.sort((a, b) => a.x - b.x)
 // TODO hover can go out of bound for vertical
 // TODO default align left
 function getTop(top, margin, height, graph) {
-  return top + margin
+  return top  + margin
 }
 
 function getLeft(left, margin, width, graph) {
@@ -162,18 +162,19 @@ class TestRender extends Component {
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
           />
-          {/* TODO rwidth, height from ref */}
+          {/* TODO width, height from ref */}
           {this.state.nearest.data && (
             <div
               style={{
                 position: 'absolute',
+                width: 40,
+                height: 20,
                 top: getTop(this.state.nearest.canvasY, 10, 20, this.props.graph),
                 left:getLeft(this.state.nearest.canvasX, 10, 40, this.props.graph),
                 transition: getTransition(this.state.nearest.canvasX, 10, 40, this.props.graph),
                 zIndex: 4,
                 border: '1px solid black',
-                width: 40,
-                height: 20
+                backgroundColor: 'rgba(255, 255, 255, 0.4)',
               }}
             >
               {this.state.nearest.data.x}
