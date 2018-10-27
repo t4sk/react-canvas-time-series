@@ -24,7 +24,7 @@ class TestCanvas extends Component {
       background: this.refs.background.getContext('2d', { alpha: false })
     }
 
-    if (this.props.drawUI) {
+    if (this.props.showUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', e => {
         const rect = this.ctx.ui.canvas.getBoundingClientRect()
 
@@ -156,7 +156,8 @@ TestCanvas.defaultProps = {
   onMouseOut: () => {},
   drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
-  // drawUI optional
+  showUI: false,
+  drawUI: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300

@@ -157,6 +157,7 @@ class TestRender extends Component {
                 }
               })
             }}
+            showUI={true}
             drawUI={(ctx, props) => {
               ui.draw(ctx, props)
 
@@ -220,6 +221,7 @@ class TestRender extends Component {
           xMin={this.state.xMin}
           xMax={this.state.xMax}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
           onMouseMove={this.onMouseMoveTestDrag}
         />
@@ -235,6 +237,7 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -252,6 +255,7 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -278,6 +282,7 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -292,6 +297,7 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -309,6 +315,7 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -334,6 +341,7 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
+          showUI={true}
           drawUI={ui.draw}
         />
       </div>
