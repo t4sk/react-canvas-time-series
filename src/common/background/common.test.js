@@ -4,8 +4,8 @@ import { merge } from '../test-util'
 import {
   getGraphWidth,
   getGraphHeight,
-  getGraphX,
-  getGraphY,
+  getGraphLeft,
+  getGraphTop,
 } from './common'
 
 const props = {
@@ -47,7 +47,7 @@ test("get height", () => {
 
 describe("get graph y", () => {
   test("x axis at top", () => {
-    expect(getGraphY(merge(props, {
+    expect(getGraphTop(merge(props, {
       background: {
         xAxisAt: 'top'
       }
@@ -55,7 +55,7 @@ describe("get graph y", () => {
   })
 
   test("x axis at bottom", () => {
-    expect(getGraphY(merge(props, {
+    expect(getGraphTop(merge(props, {
       background: {
         xAxisAt: 'bottom'
       }
@@ -63,7 +63,7 @@ describe("get graph y", () => {
   })
 
   test("invalid x axis", () => {
-    expect(() => getGraphY(merge(props, {
+    expect(() => getGraphTop(merge(props, {
       background: {
         xAxisAt: 'invalid'
       }
@@ -73,7 +73,7 @@ describe("get graph y", () => {
 
 describe("get graph x", () => {
   test("y axis at left", () => {
-    expect(getGraphX(merge(props, {
+    expect(getGraphLeft(merge(props, {
       background: {
         yAxisAt: 'left'
       }
@@ -81,7 +81,7 @@ describe("get graph x", () => {
   })
 
   test("y axis at right", () => {
-    expect(getGraphX(merge(props, {
+    expect(getGraphLeft(merge(props, {
       background: {
         yAxisAt: 'right'
       }
@@ -89,7 +89,7 @@ describe("get graph x", () => {
   })
 
   test("invalid y axis", () => {
-    expect(() => getGraphX(merge(props, {
+    expect(() => getGraphLeft(merge(props, {
       background: {
         yAxisAt: 'invalid'
       }

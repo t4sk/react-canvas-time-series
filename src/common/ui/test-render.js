@@ -4,7 +4,7 @@ import { merge, rand } from '../test-util'
 import TestCanvas from '../test-canvas'
 import { linear, round, getNearestDataAtX } from '../math'
 import * as background from '../background'
-import { getGraphX, getGraphWidth } from '../background/common'
+import { getGraphLeft, getGraphWidth } from '../background/common'
 import * as line from '../line'
 import * as ui from './index'
 
@@ -114,7 +114,7 @@ class TestRender extends Component {
       return
     }
 
-    const graphStartCanvasX = getGraphX(this.props)
+    const graphStartCanvasX = getGraphLeft(this.props)
     const width = getGraphWidth(this.props)
 
     const { dragStartXMin, dragStartXMax } = mouse

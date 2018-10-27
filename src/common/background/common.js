@@ -17,7 +17,7 @@ export function getGraphHeight (props: Props): number {
   )
 }
 
-export function getGraphX (props: Props): number {
+export function getGraphLeft (props: Props): number {
   switch (props.background.yAxisAt) {
     case 'left':
       return props.margin.left + props.background.yAxisWidth
@@ -28,7 +28,7 @@ export function getGraphX (props: Props): number {
   }
 }
 
-export function getGraphY (props: Props): number {
+export function getGraphTop (props: Props): number {
   switch (props.background.xAxisAt) {
     case 'top':
       return props.margin.top + props.background.xAxisHeight
