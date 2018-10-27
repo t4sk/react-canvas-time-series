@@ -79,14 +79,14 @@ class TestCanvas extends Component {
 
   draw = () => {
     this.props.drawBackground(this.ctx.background, this.props)
-    this.props.draw(this.ctx.data, this.props)
+    this.props.drawData(this.ctx.data, this.props)
   }
 
   animate = () => {
     window.requestAnimationFrame(this.animate)
 
     this.props.drawBackground(this.ctx.background, this.props)
-    this.props.draw(this.ctx.data, this.props)
+    this.props.drawData(this.ctx.data, this.props)
 
     this.props.drawUI(
       this.ctx.ui, {
@@ -154,7 +154,7 @@ const style = {
 TestCanvas.defaultProps = {
   onMouseMove: (mouse) => {},
   onMouseOut: () => {},
-  draw: (ctx, props) => {},
+  drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
   // drawUI optional
   canvas: {

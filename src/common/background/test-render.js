@@ -14,7 +14,7 @@ class TestRender extends Component {
               showXLabel: false
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>Hide X Lines</h3>
@@ -24,7 +24,7 @@ class TestRender extends Component {
               showXLine: false
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>Hide Y Labels</h3>
@@ -34,7 +34,7 @@ class TestRender extends Component {
               showYLabel: false
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>Hide Y Lines</h3>
@@ -44,7 +44,7 @@ class TestRender extends Component {
               showYLine: false
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>X Axis Bottom</h3>
@@ -54,7 +54,7 @@ class TestRender extends Component {
               xAxisAt: 'bottom'
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>X Axis Top</h3>
@@ -64,7 +64,7 @@ class TestRender extends Component {
               xAxisAt: 'top'
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>Y Axis Left</h3>
@@ -74,7 +74,7 @@ class TestRender extends Component {
               yAxisAt: 'left'
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
 
         <h3>Y Axis Right</h3>
@@ -84,7 +84,7 @@ class TestRender extends Component {
               yAxisAt: 'right'
             }
           })}
-          draw={background.draw}
+          drawBackground={background.draw}
         />
       </div>
     )

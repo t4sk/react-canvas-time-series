@@ -51,8 +51,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={FIXED_DATA.length}
-          draw={bar.draw}
-          data={FIXED_DATA}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props,
+              data: FIXED_DATA
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -61,8 +65,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_SMALL.length}
-          draw={bar.draw}
-          data={RANDOM_DATA_SMALL}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_SMALL
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -71,8 +79,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_MEDIUM.length}
-          draw={bar.draw}
-          data={RANDOM_DATA_MEDIUM}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_MEDIUM
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -81,8 +93,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_LARGE.length}
-          draw={bar.draw}
-          data={RANDOM_DATA_LARGE}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_LARGE
+            })
+          }}
           drawBackground={background.draw}
         />
       </div>
@@ -91,7 +107,6 @@ class TestRender extends Component {
 }
 
 TestRender.defaultProps = {
-  draw: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300

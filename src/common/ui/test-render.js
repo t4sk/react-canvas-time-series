@@ -147,7 +147,7 @@ class TestRender extends Component {
           <TestCanvas
             {...this.props}
             drawBackground={background.draw}
-            draw={(ctx, props) => {
+            drawData={(ctx, props) => {
               line.draw(ctx, {
                 ...props,
                 data: LINE_DATA,
@@ -258,7 +258,7 @@ class TestRender extends Component {
         <h3>X Label Fixed</h3>
         <TestCanvas
           {...this.props}
-          draw={(ctx, props) => {
+          drawData={(ctx, props) => {
             ui.drawXLineAt(ctx, {
               ...props,
               lineColor: 'orange',
@@ -315,7 +315,7 @@ class TestRender extends Component {
         <h3>Y Label Fixed</h3>
         <TestCanvas
           {...this.props}
-          draw={(ctx, props) => {
+          drawData={(ctx, props) => {
             ui.drawYLineAt(ctx, {
               ...props,
               lineColor: 'orange',

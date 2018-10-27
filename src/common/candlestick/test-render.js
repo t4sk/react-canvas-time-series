@@ -54,8 +54,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={FIXED_DATA.length}
-          draw={candlestick.draw}
-          data={FIXED_DATA}
+          drawData={(ctx) => {
+            candlestick.draw(ctx, {
+              ...this.props,
+              data: FIXED_DATA,
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -64,8 +68,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_SMALL.length}
-          draw={candlestick.draw}
-          data={RANDOM_DATA_SMALL}
+          drawData={(ctx) => {
+            candlestick.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_SMALL,
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -74,8 +82,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_MEDIUM.length}
-          draw={candlestick.draw}
-          data={RANDOM_DATA_MEDIUM}
+          drawData={(ctx) => {
+            candlestick.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_SMALL,
+            })
+          }}
           drawBackground={background.draw}
         />
 
@@ -84,8 +96,12 @@ class TestRender extends Component {
           {...this.props}
           xMin={0}
           xMax={RANDOM_DATA_LARGE.length}
-          draw={candlestick.draw}
-          data={RANDOM_DATA_LARGE}
+          drawData={(ctx) => {
+            candlestick.draw(ctx, {
+              ...this.props,
+              data: RANDOM_DATA_SMALL,
+            })
+          }}
           drawBackground={background.draw}
         />
       </div>

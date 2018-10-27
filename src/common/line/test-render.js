@@ -33,7 +33,7 @@ class TestRender extends Component {
         <h3>Line Graph</h3>
         <TestCanvas
           {...this.props}
-          draw={(ctx, props) => {
+          drawData={(ctx, props) => {
             line.draw(ctx, {
               ...props,
               data: DATA
@@ -45,7 +45,7 @@ class TestRender extends Component {
         <h3>Line Graph (Random)</h3>
         <TestCanvas
           {...this.props}
-          draw={(ctx, props) => {
+          drawData={(ctx, props) => {
             line.draw(ctx, {
               ...props,
               data: RANDOM_DATA
@@ -59,7 +59,6 @@ class TestRender extends Component {
 }
 
 TestRender.defaultProps = {
-  draw: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300
