@@ -242,6 +242,4 @@ export function draw (ctx: any, props: Props) {
 
   drawXLine(ctx, props)
   drawYLine(ctx, props)
-
-  // TODO renderNearestData()
 }
