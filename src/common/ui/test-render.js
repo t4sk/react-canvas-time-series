@@ -24,8 +24,6 @@ for (let i = 0; i < 10; i++) {
 
 LINE_DATA.sort((a, b) => a.x - b.x)
 
-// TODO hover can go out of bound for vertical
-// TODO default align left
 function getTop(top, margin, height, graph) {
   return top  + margin
 }
