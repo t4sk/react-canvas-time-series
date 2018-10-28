@@ -50,12 +50,12 @@ export type Props = {
 
 export type DrawYLineAtProps = {
   graph: Graph,
-  canvasY: number,
+  top: number,
   lineColor: string,
 }
 
 export type DrawYLabelAtProps = {
-  canvasY: number,
+  top: number,
   text: string,
   height: number,
   width: number,
@@ -68,12 +68,12 @@ export type DrawYLabelAtProps = {
 
 export type DrawXLineAtProps = {
   graph: Graph,
-  canvasX: number,
+  left: number,
   lineColor: string,
 }
 
 export type DrawXLabelAtProps = {
-  canvasX: number,
+  left: number,
   text: string,
   height: number,
   width: number,

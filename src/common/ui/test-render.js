@@ -54,8 +54,8 @@ class TestRender extends Component {
       xMin: 1900,
       xMax: 2010,
       nearest: {
-        canvasX: undefined,
-        canvasY: undefined,
+        mouseX: undefined,
+        mouseY: undefined,
         data: undefined,
       }
     }
@@ -79,16 +79,16 @@ class TestRender extends Component {
 
       this.setState({
         nearest: {
-          canvasX: mouse.x,
-          canvasY: mouse.y,
+          mouseX: mouse.x,
+          mouseY: mouse.y,
           data,
         }
       })
     } else {
       this.setState({
         nearest: {
-          canvasX: undefined,
-          canvasY: undefined,
+          mouseX: undefined,
+          mouseY: undefined,
           data: undefined,
         }
       })
@@ -98,8 +98,8 @@ class TestRender extends Component {
   onMouseOutTestGetNearestData = () => {
     this.setState({
       nearest: {
-        canvasX: undefined,
-        canvasY: undefined,
+        mouseX: undefined,
+        mouseY: undefined,
         data: undefined,
       }
     })
@@ -114,7 +114,7 @@ class TestRender extends Component {
       return
     }
 
-    const graphStartCanvasX = getGraphLeft(this.props)
+    const graphLeft = getGraphLeft(this.props)
     const width = getGraphWidth(this.props)
 
     const { dragStartXMin, dragStartXMax } = mouse
@@ -122,13 +122,13 @@ class TestRender extends Component {
     const toX = linear({
       dy: dragStartXMax - dragStartXMin,
       dx: width,
-      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphStartCanvasX
+      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphLeft
     })
 
-    const diffCanvasX = mouse.x - mouse.dragStartLeft
+    const diff = mouse.x - mouse.dragStartLeft
 
-    const xMin = toX(graphStartCanvasX - diffCanvasX)
-    const xMax = toX(graphStartCanvasX + width - diffCanvasX)
+    const xMin = toX(graphLeft - diff)
+    const xMax = toX(graphLeft + width - diff)
 
     this.setState({
       xMin,
@@ -203,9 +203,9 @@ class TestRender extends Component {
                 position: 'absolute',
                 width: 40,
                 height: 20,
-                top: getTop(this.state.nearest.canvasY, 10, 20, this.props.graph),
-                left:getLeft(this.state.nearest.canvasX, 10, 40, this.props.graph),
-                transition: getTransition(this.state.nearest.canvasX, 10, 40, this.props.graph),
+                top: getTop(this.state.nearest.mouseY, 10, 20, this.props.graph),
+                left:getLeft(this.state.nearest.mouseX, 10, 40, this.props.graph),
+                transition: getTransition(this.state.nearest.mouseX, 10, 40, this.props.graph),
                 zIndex: 4,
                 border: '1px solid black',
                 backgroundColor: 'rgba(255, 255, 255, 0.4)',
