@@ -15,6 +15,9 @@ class TestCanvas extends Component {
       dragStartXMin: undefined,
       dragStartXMax: undefined
     }
+
+    // ref to animation frame
+    this.animation = undefined
   }
 
   onMouseMove = (e) => {
@@ -81,7 +84,7 @@ class TestCanvas extends Component {
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
 
-    // TODO cancel animation frame
+    window.cancelAnimationFrame(this.animation)
   }
 
   shouldComponentUpdate () {
@@ -94,7 +97,7 @@ class TestCanvas extends Component {
   }
 
   animate = () => {
-    window.requestAnimationFrame(this.animate)
+    this.animation = window.requestAnimationFrame(this.animate)
 
     this.props.drawBackground(this.ctx.background, this.props)
     this.props.drawData(this.ctx.data, this.props)
