@@ -7,6 +7,7 @@ import BarTestRender from './common/bar/test-render'
 import CandlestickTestRender from './common/candlestick/test-render'
 
 // TODO fix memory leak
+// TODO test canvas render after props update
 class App extends Component {
   render () {
     return (
