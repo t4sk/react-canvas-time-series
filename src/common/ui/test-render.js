@@ -50,6 +50,14 @@ class TestRender extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      zoom: {
+        xMin: 1900,
+        xMax: 2010,
+        yMin: 10,
+        yMax: 110,
+        xInterval: 15,
+        yInterval: 10,
+      },
       drag: {
         xMin: 1900,
         xMax: 2010,
@@ -59,6 +67,38 @@ class TestRender extends Component {
         mouseY: undefined,
         data: undefined,
       }
+    }
+  }
+
+  onWheelTestZoom = (e) => {
+    e.preventDefault()
+
+    if (e.deltaY > 0) {
+      // zoom out
+      this.setState({
+        zoom: {
+          ...this.state.zoom,
+          xMin: this.state.zoom.xMin - 15,
+          xMax: this.state.zoom.xMax + 15,
+          xInterval: this.state.zoom.xInterval + 5,
+          yMin: this.state.zoom. yMin - 10,
+          yMax: this.state.zoom.yMax + 10,
+          yInterval: this.state.zoom.yInterval + 5,
+        }
+      })
+    } else {
+      // zoom in
+      this.setState({
+        zoom: {
+          ...this.state.zoom,
+          xMin: this.state.zoom.xMin + 15,
+          xMax: this.state.zoom.xMax +-15,
+          xInterval: this.state.zoom.xInterval - 5,
+          yMin: this.state.zoom. yMin + 10,
+          yMax: this.state.zoom.yMax - 10,
+          yInterval: this.state.zoom.yInterval - 5,
+        }
+      })
     }
   }
 
@@ -142,6 +182,26 @@ class TestRender extends Component {
   render () {
     return (
       <div>
+        <h3>Scroll to Zoom</h3>
+        <TestCanvas
+          {...this.props}
+          xMin={this.state.zoom.xMin}
+          xMax={this.state.zoom.xMax}
+          yMin={this.state.zoom.yMin}
+          yMax={this.state.zoom.yMax}
+          drawBackground={(ctx, props) => {
+            background.draw(ctx, merge(props, {
+              background: {
+                xInterval: this.state.zoom.xInterval,
+                yInterval: this.state.zoom.yInterval,
+              }
+            }))
+          }}
+          showUI={true}
+          drawUI={ui.draw}
+          onWheel={this.onWheelTestZoom}
+        />
+
         <h3>Get Nearest Data at X</h3>
         <div style={{
           position: 'relative',
