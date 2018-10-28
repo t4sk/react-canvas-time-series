@@ -42,7 +42,6 @@ export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
   ctx.stroke()
 
   ctx.setLineDash([])
-  ctx.closePath()
 }
 
 function getYLabelTextAlign (props: DrawYLabelAtProps): 'left' | 'right' {
@@ -115,7 +114,6 @@ export function drawXLineAt (ctx: any, props: DrawXLineAtProps) {
   ctx.stroke()
 
   ctx.setLineDash([])
-  ctx.closePath()
 }
 
 function getXLabelTop (props: DrawXLabelAtProps): number {
