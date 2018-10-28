@@ -97,31 +97,33 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  const x0 = nearestStepBelow(xMin, props.background.xInterval)
+  if (props.background.xInterval > 0) {
+    const x0 = nearestStepBelow(xMin, props.background.xInterval)
 
-  for (let x = x0; x <= xMax; x += props.background.xInterval) {
-    const l = toLeft(x) + left
+    for (let x = x0; x <= xMax; x += props.background.xInterval) {
+      const l = toLeft(x) + left
 
-    if (l >= left && l <= left + width) {
-      // draw line
-      if (props.background.showXLine) {
-        ctx.beginPath()
-        ctx.moveTo(
-          round(l), round(top)
-        )
-        ctx.lineTo(
-          round(l), round(top + height)
-        )
-        ctx.stroke()
-      }
+      if (l >= left && l <= left + width) {
+        // draw line
+        if (props.background.showXLine) {
+          ctx.beginPath()
+          ctx.moveTo(
+            round(l), round(top)
+          )
+          ctx.lineTo(
+            round(l), round(top + height)
+          )
+          ctx.stroke()
+        }
 
-      // draw text
-      if (props.background.showXLabel) {
-        ctx.fillText(
-          props.background.renderXLabel(x),
-          round(l),
-          round(labelTop)
-        )
+        // draw text
+        if (props.background.showXLabel) {
+          ctx.fillText(
+            props.background.renderXLabel(x),
+            round(l),
+            round(labelTop)
+          )
+        }
       }
     }
   }
