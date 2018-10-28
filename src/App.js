@@ -8,6 +8,7 @@ import CandlestickTestRender from './common/candlestick/test-render'
 
 // TODO fix memory leak
 // TODO test canvas render after props update
+// TODO flow
 class App extends Component {
   render () {
     return (
