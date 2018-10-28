@@ -180,7 +180,7 @@ function drawXLine (ctx: any, props: Props) {
     left: mouse.x
   })
 
-  const left = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
+  const left = mouse.isDragging ? mouse.dragStartLeft : mouse.x
   const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
   const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
 

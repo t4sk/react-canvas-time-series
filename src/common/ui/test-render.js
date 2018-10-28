@@ -125,7 +125,7 @@ class TestRender extends Component {
       y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphStartCanvasX
     })
 
-    const diffCanvasX = mouse.x - mouse.dragStartCanvasX
+    const diffCanvasX = mouse.x - mouse.dragStartLeft
 
     const xMin = toX(graphStartCanvasX - diffCanvasX)
     const xMax = toX(graphStartCanvasX + width - diffCanvasX)

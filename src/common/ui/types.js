@@ -4,7 +4,7 @@ export type Mouse = {
   x: number,
   y: number,
   isDragging: boolean
-  dragStartCanvasX: number,
+  dragStartLeft: number,
   dragStartXMin: number,
   dragStartXMax: number,
 }
