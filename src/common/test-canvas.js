@@ -5,7 +5,9 @@ class TestCanvas extends Component {
   constructor (props) {
     super(props)
 
-    // TODO React.createRef
+    this.background = React.createRef()
+    this.data = React.createRef()
+    this.ui = React.createRef()
 
     this.mouse = {
       x: undefined,
@@ -63,9 +65,9 @@ class TestCanvas extends Component {
 
   componentDidMount () {
     this.ctx = {
-      ui: this.refs.ui.getContext('2d'),
-      data: this.refs.data.getContext('2d'),
-      background: this.refs.background.getContext('2d', { alpha: false })
+      ui: this.ui.current.getContext('2d'),
+      data: this.data.current.getContext('2d'),
+      background: this.background.current.getContext('2d', { alpha: false })
     }
 
     if (this.props.showUI) {
@@ -124,20 +126,20 @@ class TestCanvas extends Component {
         height: this.props.canvas.height
       }}>
         <canvas
+          ref={this.background}
           style={style.background}
-          ref="background"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
         <canvas
+          ref={this.data}
           style={style.data}
-          ref="data"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
         <canvas
+          ref={this.ui}
           style={style.ui}
-          ref="ui"
           width={this.props.canvas.width}
           height={this.props.canvas.height}
         />
