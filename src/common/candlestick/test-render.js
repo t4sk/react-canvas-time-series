@@ -4,8 +4,6 @@ import TestCanvas from '../test-canvas'
 import * as background from '../background'
 import * as candlestick from './index'
 
-const X_MIN = 1900
-const X_MAX = 2018
 const Y_MIN = 0
 const Y_MAX = 100
 

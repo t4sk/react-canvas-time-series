@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { merge, rand } from '../test-util'
 import TestCanvas from '../test-canvas'
 import { linear, round, getNearestDataAtX } from '../math'
@@ -81,7 +80,7 @@ class TestRender extends Component {
           xMin: this.state.zoom.xMin - 15,
           xMax: this.state.zoom.xMax + 15,
           xInterval: this.state.zoom.xInterval + 5,
-          yMin: this.state.zoom. yMin - 10,
+          yMin: this.state.zoom.yMin - 10,
           yMax: this.state.zoom.yMax + 10,
           yInterval: this.state.zoom.yInterval + 5,
         }
@@ -94,7 +93,7 @@ class TestRender extends Component {
           xMin: this.state.zoom.xMin + 15,
           xMax: this.state.zoom.xMax +-15,
           xInterval: this.state.zoom.xInterval - 5,
-          yMin: this.state.zoom. yMin + 10,
+          yMin: this.state.zoom.yMin + 10,
           yMax: this.state.zoom.yMax - 10,
           yInterval: this.state.zoom.yInterval - 5,
         }
