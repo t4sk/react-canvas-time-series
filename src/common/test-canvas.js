@@ -17,6 +17,43 @@ class TestCanvas extends Component {
     }
   }
 
+  onMouseMove = (e) => {
+    const rect = this.ctx.ui.canvas.getBoundingClientRect()
+
+    this.mouse.x = e.clientX - rect.left
+    this.mouse.y = e.clientY - rect.top
+
+    this.props.onMouseMove(this.mouse)
+  }
+
+  onMouseDown = (e) => {
+    if (ui.isInsideGraph(this.mouse, this.props.graph)) {
+      this.mouse.isDragging = true
+      this.mouse.dragStartLeft = this.mouse.x
+      this.mouse.dragStartXMin = this.props.xMin
+      this.mouse.dragStartXMax = this.props.xMax
+    }
+  }
+
+  onMouseUp = (e) => {
+    this.mouse.isDragging = false
+    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartXMin = undefined
+    this.mouse.dragStartXMax = undefined
+  }
+
+  onMouseOut = (e) => {
+    this.mouse.x = undefined
+    this.mouse.y = undefined
+
+    this.mouse.isDragging = false
+    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartXMin = undefined
+    this.mouse.dragStartXMax = undefined
+
+    this.props.onMouseOut()
+  }
+
   componentDidMount () {
     this.ctx = {
       ui: this.refs.ui.getContext('2d'),
@@ -25,42 +62,10 @@ class TestCanvas extends Component {
     }
 
     if (this.props.showUI) {
-      this.ctx.ui.canvas.addEventListener('mousemove', e => {
-        const rect = this.ctx.ui.canvas.getBoundingClientRect()
-
-        this.mouse.x = e.clientX - rect.left
-        this.mouse.y = e.clientY - rect.top
-
-        this.props.onMouseMove(this.mouse)
-      })
-
-      this.ctx.ui.canvas.addEventListener('mousedown', e => {
-        if (ui.isInsideGraph(this.mouse, this.props.graph)) {
-          this.mouse.isDragging = true
-          this.mouse.dragStartLeft = this.mouse.x
-          this.mouse.dragStartXMin = this.props.xMin
-          this.mouse.dragStartXMax = this.props.xMax
-        }
-      })
-
-      this.ctx.ui.canvas.addEventListener('mouseup', e => {
-        this.mouse.isDragging = false
-        this.mouse.dragStartLeft = undefined
-        this.mouse.dragStartXMin = undefined
-        this.mouse.dragStartXMax = undefined
-      })
-
-      this.ctx.ui.canvas.addEventListener('mouseout', e => {
-        this.mouse.x = undefined
-        this.mouse.y = undefined
-
-        this.mouse.isDragging = false
-        this.mouse.dragStartLeft = undefined
-        this.mouse.dragStartXMin = undefined
-        this.mouse.dragStartXMax = undefined
-
-        this.props.onMouseOut()
-      })
+      this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
+      this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
+      this.ctx.ui.canvas.addEventListener('mouseup', this.onMouseUp)
+      this.ctx.ui.canvas.addEventListener('mouseout', this.onMouseOut)
 
       this.animate()
     } else {
@@ -69,7 +74,13 @@ class TestCanvas extends Component {
   }
 
   componentWillUnmount() {
-    // TODO unmount event listener
+    // TODO test unmount event listeners
+    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+
     // TODO cancel animation frame
   }
 
