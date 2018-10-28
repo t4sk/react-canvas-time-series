@@ -50,8 +50,10 @@ class TestRender extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      xMin: 1900,
-      xMax: 2010,
+      drag: {
+        xMin: 1900,
+        xMax: 2010,
+      },
       nearest: {
         mouseX: undefined,
         mouseY: undefined,
@@ -130,8 +132,10 @@ class TestRender extends Component {
     const xMax = toX(graphLeft + width - diff)
 
     this.setState({
-      xMin,
-      xMax
+      drag: {
+        xMin,
+        xMax
+      }
     })
   }
 
@@ -218,8 +222,8 @@ class TestRender extends Component {
         <h3>X Drag</h3>
         <TestCanvas
           {...this.props}
-          xMin={this.state.xMin}
-          xMax={this.state.xMax}
+          xMin={this.state.drag.xMin}
+          xMax={this.state.drag.xMax}
           drawBackground={background.draw}
           showUI={true}
           drawUI={ui.draw}
