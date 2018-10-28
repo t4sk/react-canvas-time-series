@@ -57,6 +57,10 @@ class TestCanvas extends Component {
     this.props.onMouseOut()
   }
 
+  onWheel = (e) => {
+    this.props.onWheel(e)
+  }
+
   componentDidMount () {
     this.ctx = {
       ui: this.refs.ui.getContext('2d'),
@@ -69,6 +73,7 @@ class TestCanvas extends Component {
       this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
       this.ctx.ui.canvas.addEventListener('mouseup', this.onMouseUp)
       this.ctx.ui.canvas.addEventListener('mouseout', this.onMouseOut)
+      this.ctx.ui.canvas.addEventListener('wheel', this.onWheel)
 
       this.animate()
     } else {
@@ -83,6 +88,7 @@ class TestCanvas extends Component {
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('wheel', this.onWheel)
 
     window.cancelAnimationFrame(this.animation)
   }
@@ -168,6 +174,7 @@ const style = {
 TestCanvas.defaultProps = {
   onMouseMove: (mouse) => {},
   onMouseOut: () => {},
+  onWheel: (e) => {},
   drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
   showUI: false,

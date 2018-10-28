@@ -25,7 +25,6 @@ for (let i = 0; i < 10; i++) {
 LINE_DATA.sort((a, b) => a.x - b.x)
 
 // TODO one canvas to test all (zoom, drag, nearest data)
-// TODO scoll to zoom
 function getTop(top, margin, height, graph) {
   return top  + margin
 }
