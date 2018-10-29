@@ -3,7 +3,11 @@ import { merge, rand } from '../test-util'
 import TestCanvas from '../test-canvas'
 import { linear, round, getNearestDataAtX } from '../math'
 import * as background from '../background'
-import { getGraphLeft, getGraphWidth } from '../background/common'
+import {
+  getGraphLeft,
+  getGraphWidth,
+  getGraphHeight
+} from '../background/common'
 import * as line from '../line'
 import * as ui from './index'
 
@@ -65,11 +69,18 @@ class TestRender extends Component {
         mouseX: undefined,
         mouseY: undefined,
         data: undefined,
+      },
+      updateCanvasProps: {
+        canvas: {
+          width: 500,
+          height: 300,
+        }
       }
     }
   }
 
   onWheelTestZoom = (e) => {
+    // TODO if mouse inside graph
     e.preventDefault()
 
     if (e.deltaY > 0) {
@@ -98,6 +109,29 @@ class TestRender extends Component {
           yInterval: this.state.zoom.yInterval - 5,
         }
       })
+    }
+  }
+
+  onWheelTestUpdateCanvasProps = (e) => {
+    e.preventDefault()
+    if (e.deltaY > 0) {
+      this.setState((state) => ({
+        updateCanvasProps: {
+          canvas: {
+            width: state.updateCanvasProps.canvas.width + 10,
+            height: state.updateCanvasProps.canvas.height + 10,
+          }
+        }
+      }))
+    } else {
+      this.setState((state) => ({
+        updateCanvasProps: {
+          canvas: {
+            width: state.updateCanvasProps.canvas.width - 10,
+            height: state.updateCanvasProps.canvas.height - 10,
+          }
+        }
+      }))
     }
   }
 
@@ -258,7 +292,6 @@ class TestRender extends Component {
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
           />
-          {/* TODO width, height from ref */}
           {this.state.nearest.data && (
             <div
               style={{
@@ -287,6 +320,25 @@ class TestRender extends Component {
           showUI={true}
           drawUI={ui.draw}
           onMouseMove={this.onMouseMoveTestDrag}
+        />
+
+        <h3>Update Canvas Props</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            canvas: this.state.updateCanvasProps.canvas,
+            graph: {
+              width: getGraphWidth(merge(this.props, {
+                canvas: this.state.updateCanvasProps.canvas
+              })),
+              height: getGraphHeight(merge(this.props, {
+                canvas: this.state.updateCanvasProps.canvas,
+              }))
+            }
+          })}
+          drawBackground={background.draw}
+          showUI={true}
+          drawUI={ui.draw}
+          onWheel={this.onWheelTestUpdateCanvasProps}
         />
 
         <h3>X Label Bottom</h3>

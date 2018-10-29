@@ -95,8 +95,11 @@ class TestCanvas extends Component {
     window.cancelAnimationFrame(this.animation)
   }
 
-  shouldComponentUpdate () {
-    return false
+  shouldComponentUpdate (nextProps) {
+    return (
+      nextProps.canvas.width !== this.props.canvas.width ||
+      nextProps.canvas.height !== this.props.canvas.height
+    )
   }
 
   draw = () => {
