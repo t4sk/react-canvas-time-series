@@ -7,10 +7,10 @@ import BarTestRender from './common/bar/test-render'
 import CandlestickTestRender from './common/candlestick/test-render'
 
 // TODO fix memory leak
-// TODO test canvas render after props update
 // TODO flow
 // TODO components for ui and graph
-// TODO measure preformance and refactor
+// TODO? compute graph props from canvas
+// TODO optimizations
 class App extends Component {
   render () {
     return (
