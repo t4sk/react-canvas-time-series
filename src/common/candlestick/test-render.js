@@ -83,7 +83,7 @@ class TestRender extends Component {
           drawData={(ctx) => {
             candlestick.draw(ctx, {
               ...this.props,
-              data: RANDOM_DATA_SMALL,
+              data: RANDOM_DATA_MEDIUM,
             })
           }}
           drawBackground={background.draw}
@@ -97,7 +97,7 @@ class TestRender extends Component {
           drawData={(ctx) => {
             candlestick.draw(ctx, {
               ...this.props,
-              data: RANDOM_DATA_SMALL,
+              data: RANDOM_DATA_LARGE,
             })
           }}
           drawBackground={background.draw}
