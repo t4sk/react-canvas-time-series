@@ -8,11 +8,7 @@ import CandlestickTestRender from './common/candlestick/test-render'
 
 // TODO fix memory leak
 // TODO flow
-// TODO components for ui and graph
-// TODO? compute graph props from canvas
 // TODO optimizations
-// TODO render candlestick and volume chart (integration test)
-// TODO render cursor at nearest data?
 class App extends Component {
   render () {
     return (
