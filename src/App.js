@@ -11,7 +11,6 @@ import CandlestickTestRender from './common/candlestick/test-render'
 // TODO components for ui and graph
 // TODO? compute graph props from canvas
 // TODO optimizations
-// TODO updater form of setState
 // TODO render candlestick and volume chart (integration test)
 // TODO render cursor at nearest data?
 class App extends Component {

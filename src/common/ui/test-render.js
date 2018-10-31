@@ -85,30 +85,30 @@ class TestRender extends Component {
 
       if (e.deltaY > 0) {
         // zoom out
-        this.setState({
+        this.setState((state) => ({
           zoom: {
-            ...this.state.zoom,
-            xMin: this.state.zoom.xMin - 15,
-            xMax: this.state.zoom.xMax + 15,
-            xInterval: this.state.zoom.xInterval + 5,
-            yMin: this.state.zoom.yMin - 10,
-            yMax: this.state.zoom.yMax + 10,
-            yInterval: this.state.zoom.yInterval + 5,
+            ...state.zoom,
+            xMin: state.zoom.xMin - 15,
+            xMax: state.zoom.xMax + 15,
+            xInterval: state.zoom.xInterval + 5,
+            yMin: state.zoom.yMin - 10,
+            yMax: state.zoom.yMax + 10,
+            yInterval: state.zoom.yInterval + 5,
           }
-        })
+        }))
       } else {
         // zoom in
-        this.setState({
+        this.setState((state) => ({
           zoom: {
-            ...this.state.zoom,
-            xMin: this.state.zoom.xMin + 15,
-            xMax: this.state.zoom.xMax +-15,
-            xInterval: this.state.zoom.xInterval - 5,
-            yMin: this.state.zoom.yMin + 10,
-            yMax: this.state.zoom.yMax - 10,
-            yInterval: this.state.zoom.yInterval - 5,
+            ...state.zoom,
+            xMin: state.zoom.xMin + 15,
+            xMax: state.zoom.xMax +-15,
+            xInterval: state.zoom.xInterval - 5,
+            yMin: state.zoom.yMin + 10,
+            yMax: state.zoom.yMax - 10,
+            yInterval: state.zoom.yInterval - 5,
           }
-        })
+        }))
       }
     }
   }
@@ -152,32 +152,32 @@ class TestRender extends Component {
 
       const data = getNearestDataAtX(x, LINE_DATA)
 
-      this.setState({
+      this.setState((state) => ({
         nearest: {
           mouseX: mouse.x,
           mouseY: mouse.y,
           data,
         }
-      })
+      }))
     } else {
-      this.setState({
+      this.setState((state) => ({
         nearest: {
           mouseX: undefined,
           mouseY: undefined,
           data: undefined,
         }
-      })
+      }))
     }
   }
 
   onMouseOutTestGetNearestData = () => {
-    this.setState({
+    this.setState((state) => ({
       nearest: {
         mouseX: undefined,
         mouseY: undefined,
         data: undefined,
       }
-    })
+    }))
   }
 
   onMouseMoveTestDrag = mouse => {
@@ -205,12 +205,12 @@ class TestRender extends Component {
     const xMin = toX(graphLeft - diff)
     const xMax = toX(graphLeft + width - diff)
 
-    this.setState({
+    this.setState((state) => ({
       drag: {
         xMin,
         xMax
       }
-    })
+    }))
   }
 
   render () {
