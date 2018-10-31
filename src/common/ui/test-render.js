@@ -79,36 +79,37 @@ class TestRender extends Component {
     }
   }
 
-  onWheelTestZoom = (e) => {
-    // TODO if mouse inside graph
-    e.preventDefault()
+  onWheelTestZoom = (e, mouse) => {
+    if (ui.isInsideGraph(mouse, this.props.graph)) {
+      e.preventDefault()
 
-    if (e.deltaY > 0) {
-      // zoom out
-      this.setState({
-        zoom: {
-          ...this.state.zoom,
-          xMin: this.state.zoom.xMin - 15,
-          xMax: this.state.zoom.xMax + 15,
-          xInterval: this.state.zoom.xInterval + 5,
-          yMin: this.state.zoom.yMin - 10,
-          yMax: this.state.zoom.yMax + 10,
-          yInterval: this.state.zoom.yInterval + 5,
-        }
-      })
-    } else {
-      // zoom in
-      this.setState({
-        zoom: {
-          ...this.state.zoom,
-          xMin: this.state.zoom.xMin + 15,
-          xMax: this.state.zoom.xMax +-15,
-          xInterval: this.state.zoom.xInterval - 5,
-          yMin: this.state.zoom.yMin + 10,
-          yMax: this.state.zoom.yMax - 10,
-          yInterval: this.state.zoom.yInterval - 5,
-        }
-      })
+      if (e.deltaY > 0) {
+        // zoom out
+        this.setState({
+          zoom: {
+            ...this.state.zoom,
+            xMin: this.state.zoom.xMin - 15,
+            xMax: this.state.zoom.xMax + 15,
+            xInterval: this.state.zoom.xInterval + 5,
+            yMin: this.state.zoom.yMin - 10,
+            yMax: this.state.zoom.yMax + 10,
+            yInterval: this.state.zoom.yInterval + 5,
+          }
+        })
+      } else {
+        // zoom in
+        this.setState({
+          zoom: {
+            ...this.state.zoom,
+            xMin: this.state.zoom.xMin + 15,
+            xMax: this.state.zoom.xMax +-15,
+            xInterval: this.state.zoom.xInterval - 5,
+            yMin: this.state.zoom.yMin + 10,
+            yMax: this.state.zoom.yMax - 10,
+            yInterval: this.state.zoom.yInterval - 5,
+          }
+        })
+      }
     }
   }
 

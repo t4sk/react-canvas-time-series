@@ -60,7 +60,7 @@ class TestCanvas extends Component {
   }
 
   onWheel = (e) => {
-    this.props.onWheel(e)
+    this.props.onWheel(e, this.mouse)
   }
 
   componentDidMount () {
@@ -179,7 +179,7 @@ const style = {
 TestCanvas.defaultProps = {
   onMouseMove: (mouse) => {},
   onMouseOut: () => {},
-  onWheel: (e) => {},
+  onWheel: (e, mouse) => {},
   drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
   showUI: false,
