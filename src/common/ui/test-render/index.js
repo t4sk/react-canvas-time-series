@@ -1,94 +1,22 @@
 import React, { Component } from 'react'
-import { merge, rand } from '../../test-util'
+import { merge } from '../../test-util'
 import TestCanvas from '../../test-canvas'
-import { linear, round, getNearestDataAtX } from '../../math'
 import * as background from '../../background'
-import {
-  getGraphLeft,
-  getGraphWidth,
-  getGraphHeight
-} from '../../background/common'
-import * as line from '../../line'
 import * as ui from '../index'
 
 import TestZoom from './test-zoom'
 import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
+import TestUpdateProps from './test-update-props'
 
 const X_MIN = 1900
 const X_MAX = 2010
 const Y_MIN = 10
 const Y_MAX = 110
 
-let LINE_DATA = []
-
-for (let i = 0; i < 10; i++) {
-  LINE_DATA.push({
-    x: round(rand(X_MIN, X_MAX)),
-    y: round(rand(Y_MIN, Y_MAX))
-  })
-}
-
-LINE_DATA.sort((a, b) => a.x - b.x)
-
 // TODO one canvas to test all (candlestick, barchart, line chart, zoom, drag, nearest data)
-function getTop(top, margin, height, graph) {
-  return top  + margin
-}
-
-function getLeft(left, margin, width, graph) {
-  if (left -margin - width <= graph.left) {
-     return left + margin
-  }
-  return left - margin - width
-}
-
-function getTransition(left, margin, width, graph) {
-  let transition = ''
-
-  if (left <= graph.left + 2 * (width + margin)) {
-    transition = 'left 0.1s'
-  }
-
-  return transition
-}
 
 class TestRender extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      updateCanvasProps: {
-        canvas: {
-          width: 500,
-          height: 300,
-        }
-      }
-    }
-  }
-
-  onWheelTestUpdateCanvasProps = (e) => {
-    e.preventDefault()
-    if (e.deltaY > 0) {
-      this.setState((state) => ({
-        updateCanvasProps: {
-          canvas: {
-            width: state.updateCanvasProps.canvas.width + 10,
-            height: state.updateCanvasProps.canvas.height + 10,
-          }
-        }
-      }))
-    } else {
-      this.setState((state) => ({
-        updateCanvasProps: {
-          canvas: {
-            width: state.updateCanvasProps.canvas.width - 10,
-            height: state.updateCanvasProps.canvas.height - 10,
-          }
-        }
-      }))
-    }
-  }
-
   render () {
     return (
       <div>
@@ -102,23 +30,7 @@ class TestRender extends Component {
         <TestDrag />
 
         <h3>Update Canvas Props</h3>
-        <TestCanvas
-          {...merge(this.props, {
-            canvas: this.state.updateCanvasProps.canvas,
-            graph: {
-              width: getGraphWidth(merge(this.props, {
-                canvas: this.state.updateCanvasProps.canvas
-              })),
-              height: getGraphHeight(merge(this.props, {
-                canvas: this.state.updateCanvasProps.canvas,
-              }))
-            }
-          })}
-          drawBackground={background.draw}
-          showUI={true}
-          drawUI={ui.draw}
-          onWheel={this.onWheelTestUpdateCanvasProps}
-        />
+        <TestUpdateProps />
 
         <h3>X Label Bottom</h3>
         <TestCanvas
