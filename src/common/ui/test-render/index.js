@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
-import { merge, rand } from '../test-util'
-import TestCanvas from '../test-canvas'
-import { linear, round, getNearestDataAtX } from '../math'
-import * as background from '../background'
+import { merge, rand } from '../../test-util'
+import TestCanvas from '../../test-canvas'
+import { linear, round, getNearestDataAtX } from '../../math'
+import * as background from '../../background'
 import {
   getGraphLeft,
   getGraphWidth,
   getGraphHeight
-} from '../background/common'
-import * as line from '../line'
-import * as ui from './index'
+} from '../../background/common'
+import * as line from '../../line'
+import * as ui from '../index'
+
+import TestZoom from './test-zoom'
+import TestNearest from './test-nearest'
 
 const X_MIN = 1900
 const X_MAX = 2010
@@ -53,62 +56,15 @@ class TestRender extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      zoom: {
-        xMin: 1900,
-        xMax: 2010,
-        yMin: 10,
-        yMax: 110,
-        xInterval: 15,
-        yInterval: 10,
-      },
       drag: {
         xMin: 1900,
         xMax: 2010,
-      },
-      nearest: {
-        mouseX: undefined,
-        mouseY: undefined,
-        data: undefined,
       },
       updateCanvasProps: {
         canvas: {
           width: 500,
           height: 300,
         }
-      }
-    }
-  }
-
-  onWheelTestZoom = (e, mouse) => {
-    if (ui.isInsideGraph(mouse, this.props.graph)) {
-      e.preventDefault()
-
-      if (e.deltaY > 0) {
-        // zoom out
-        this.setState((state) => ({
-          zoom: {
-            ...state.zoom,
-            xMin: state.zoom.xMin - 15,
-            xMax: state.zoom.xMax + 15,
-            xInterval: state.zoom.xInterval + 5,
-            yMin: state.zoom.yMin - 10,
-            yMax: state.zoom.yMax + 10,
-            yInterval: state.zoom.yInterval + 5,
-          }
-        }))
-      } else {
-        // zoom in
-        this.setState((state) => ({
-          zoom: {
-            ...state.zoom,
-            xMin: state.zoom.xMin + 15,
-            xMax: state.zoom.xMax +-15,
-            xInterval: state.zoom.xInterval - 5,
-            yMin: state.zoom.yMin + 10,
-            yMax: state.zoom.yMax - 10,
-            yInterval: state.zoom.yInterval - 5,
-          }
-        }))
       }
     }
   }
@@ -134,50 +90,6 @@ class TestRender extends Component {
         }
       }))
     }
-  }
-
-  onMouseMoveTestGetNearestData = mouse => {
-    const {
-      xMax,
-      xMin,
-      graph,
-    } = this.props
-
-    if (ui.isInsideGraph(mouse, graph)) {
-      const x = linear({
-        dy: xMax - xMin,
-        dx: graph.width,
-        y0: xMin,
-      })(mouse.x - graph.left)
-
-      const data = getNearestDataAtX(x, LINE_DATA)
-
-      this.setState((state) => ({
-        nearest: {
-          mouseX: mouse.x,
-          mouseY: mouse.y,
-          data,
-        }
-      }))
-    } else {
-      this.setState((state) => ({
-        nearest: {
-          mouseX: undefined,
-          mouseY: undefined,
-          data: undefined,
-        }
-      }))
-    }
-  }
-
-  onMouseOutTestGetNearestData = () => {
-    this.setState((state) => ({
-      nearest: {
-        mouseX: undefined,
-        mouseY: undefined,
-        data: undefined,
-      }
-    }))
   }
 
   onMouseMoveTestDrag = mouse => {
@@ -217,100 +129,10 @@ class TestRender extends Component {
     return (
       <div>
         <h3>Scroll to Zoom</h3>
-        <TestCanvas
-          {...this.props}
-          xMin={this.state.zoom.xMin}
-          xMax={this.state.zoom.xMax}
-          yMin={this.state.zoom.yMin}
-          yMax={this.state.zoom.yMax}
-          drawBackground={(ctx, props) => {
-            background.draw(ctx, merge(props, {
-              background: {
-                xInterval: this.state.zoom.xInterval,
-                yInterval: this.state.zoom.yInterval,
-              }
-            }))
-          }}
-          showUI={true}
-          drawUI={ui.draw}
-          onWheel={this.onWheelTestZoom}
-        />
+        <TestZoom />
 
         <h3>Get Nearest Data at X</h3>
-        <div style={{
-          position: 'relative',
-          width: '100%',
-          height: '100%'
-        }}>
-          <TestCanvas
-            {...this.props}
-            drawBackground={background.draw}
-            drawData={(ctx, props) => {
-              line.draw(ctx, {
-                ...props,
-                data: LINE_DATA,
-                line: {
-                  color: 'green',
-                  width: 1
-                }
-              })
-            }}
-            showUI={true}
-            drawUI={(ctx, props) => {
-              ui.draw(ctx, props)
-
-              if (this.state.nearest.data) {
-                const centerX = linear({
-                  dy: props.graph.width,
-                  dx: props.xMax - props.xMin,
-                  y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
-                })(this.state.nearest.data.x)
-
-                const centerY = linear({
-                  dy: -props.graph.height,
-                  dx: props.yMax - props.yMin,
-                  y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
-                })(this.state.nearest.data.y)
-
-                const radius = 10
-
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.fillStyle = "orange"
-                ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
-
-                ctx.beginPath();
-                ctx.lineWidth = 2
-                ctx.strokeStyle = "white"
-                ctx.rect(centerX - 5, centerY - 5, 10, 10)
-                ctx.stroke()
-              }
-            }}
-            onMouseMove={this.onMouseMoveTestGetNearestData}
-            onMouseOut={this.onMouseOutTestGetNearestData}
-          />
-          {this.state.nearest.data && (
-            <div
-              style={{
-                position: 'absolute',
-                width: 40,
-                height: 20,
-                top: getTop(this.state.nearest.mouseY, 10, 20, this.props.graph),
-                left:getLeft(this.state.nearest.mouseX, 10, 40, this.props.graph),
-                transition: getTransition(this.state.nearest.mouseX, 10, 40, this.props.graph),
-                zIndex: 4,
-                border: '1px solid black',
-                backgroundColor: 'rgba(255, 255, 255, 0.4)',
-              }}
-            >
-              {this.state.nearest.data.x}
-            </div>
-          )}
-        </div>
+        <TestNearest />
 
         <h3>X Drag</h3>
         <TestCanvas
