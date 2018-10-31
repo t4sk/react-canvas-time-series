@@ -13,6 +13,7 @@ import * as ui from '../index'
 
 import TestZoom from './test-zoom'
 import TestNearest from './test-nearest'
+import TestDrag from './test-drag'
 
 const X_MIN = 1900
 const X_MAX = 2010
@@ -56,10 +57,6 @@ class TestRender extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      drag: {
-        xMin: 1900,
-        xMax: 2010,
-      },
       updateCanvasProps: {
         canvas: {
           width: 500,
@@ -92,39 +89,6 @@ class TestRender extends Component {
     }
   }
 
-  onMouseMoveTestDrag = mouse => {
-    if (!mouse.isDragging) {
-      return
-    }
-
-    if (!ui.isInsideGraph(mouse, this.props.graph)) {
-      return
-    }
-
-    const graphLeft = getGraphLeft(this.props)
-    const width = getGraphWidth(this.props)
-
-    const { dragStartXMin, dragStartXMax } = mouse
-
-    const toX = linear({
-      dy: dragStartXMax - dragStartXMin,
-      dx: width,
-      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphLeft
-    })
-
-    const diff = mouse.x - mouse.dragStartLeft
-
-    const xMin = toX(graphLeft - diff)
-    const xMax = toX(graphLeft + width - diff)
-
-    this.setState((state) => ({
-      drag: {
-        xMin,
-        xMax
-      }
-    }))
-  }
-
   render () {
     return (
       <div>
@@ -135,15 +99,7 @@ class TestRender extends Component {
         <TestNearest />
 
         <h3>X Drag</h3>
-        <TestCanvas
-          {...this.props}
-          xMin={this.state.drag.xMin}
-          xMax={this.state.drag.xMax}
-          drawBackground={background.draw}
-          showUI={true}
-          drawUI={ui.draw}
-          onMouseMove={this.onMouseMoveTestDrag}
-        />
+        <TestDrag />
 
         <h3>Update Canvas Props</h3>
         <TestCanvas
