@@ -4,7 +4,6 @@ import TestCanvas from '../../test-canvas'
 import * as background from '../../background'
 import * as ui from '../index'
 
-import TestIntegration from './test-integration'
 import TestZoom from './test-zoom'
 import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
@@ -20,9 +19,6 @@ class TestRender extends Component {
   render () {
     return (
       <div>
-        <h3>Integration</h3>
-        <TestIntegration {...this.props} />
-
         <h3>Scroll to Zoom</h3>
         <TestZoom {...this.props} />
 
