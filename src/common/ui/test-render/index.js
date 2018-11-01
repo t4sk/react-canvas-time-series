@@ -21,16 +21,16 @@ class TestRender extends Component {
     return (
       <div>
         <h3>Scroll to Zoom</h3>
-        <TestZoom />
+        <TestZoom {...this.props} />
 
         <h3>Get Nearest Data at X</h3>
-        <TestNearest />
+        <TestNearest {...this.props} />
 
         <h3>X Drag</h3>
-        <TestDrag />
+        <TestDrag {...this.props} />
 
         <h3>Update Canvas Props</h3>
-        <TestUpdateProps />
+        <TestUpdateProps {...this.props} />
 
         <h3>X Label Bottom</h3>
         <TestCanvas
