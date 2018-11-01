@@ -8,7 +8,9 @@ import CandlestickTestRender from './common/candlestick/test-render'
 
 // TODO fix memory leak
 // TODO flow
-// TODO optimizations
+// TODO optimizations (render diff)
+// TODO draggable, zoomable component
+// TODO display loading
 class App extends Component {
   render () {
     return (

@@ -4,6 +4,7 @@ import TestCanvas from '../../test-canvas'
 import * as background from '../../background'
 import * as ui from '../index'
 
+import TestIntegration from './test-integration'
 import TestZoom from './test-zoom'
 import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
@@ -14,12 +15,14 @@ const X_MAX = 2010
 const Y_MIN = 10
 const Y_MAX = 110
 
-// TODO one canvas to test all (candlestick, barchart, line chart, zoom, drag, nearest data)
-
+// TODO component to zoome
 class TestRender extends Component {
   render () {
     return (
       <div>
+        <h3>Integration</h3>
+        <TestIntegration {...this.props} />
+
         <h3>Scroll to Zoom</h3>
         <TestZoom {...this.props} />
 
