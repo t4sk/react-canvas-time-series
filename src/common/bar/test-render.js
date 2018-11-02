@@ -11,17 +11,10 @@ function generateRandomData (length) {
   let data = []
 
   for (let i = 0; i < length; i++) {
-    const backgroundColor = Math.random() > 0.5 ? 'red' : 'green'
-    const lineColor = Math.random() > 0.5 ? 'yellow' : 'blue'
-
     data.push({
       y: rand(Y_MIN, Y_MAX),
-      backgroundColor,
-      lineColor
     })
   }
-
-  data.sort((a, b) => a.x - b.x)
 
   return data
 }
@@ -30,12 +23,8 @@ const FIXED_DATA = [{
   y: Y_MIN
 }, {
   y: Math.round((Y_MAX - Y_MIN) / 2),
-  lineColor: 'red',
-  backgroundColor: 'yellow'
 }, {
   y: Y_MAX,
-  lineColor: 'blue',
-  backgroundColor: 'green'
 }]
 
 const RANDOM_DATA_SMALL = generateRandomData(10)
