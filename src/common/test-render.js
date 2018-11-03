@@ -47,21 +47,21 @@ function generateRandomData (length) {
 
 const DATA = generateRandomData(20)
 
-function getTop(top, margin, height, graph) {
-  return top  + margin
+function getTop(top, padding, height, graph) {
+  return top  + padding
 }
 
-function getLeft(left, margin, width, graph) {
-  if (left -margin - width <= graph.left) {
-     return left + margin
+function getLeft(left, padding, width, graph) {
+  if (left -padding - width <= graph.left) {
+     return left + padding
   }
-  return left - margin - width
+  return left - padding - width
 }
 
-function getTransition(left, margin, width, graph) {
+function getTransition(left, padding, width, graph) {
   let transition = ''
 
-  if (left <= graph.left + 2 * (width + margin)) {
+  if (left <= graph.left + 2 * (width + padding)) {
     transition = 'left 0.1s'
   }
 
@@ -132,7 +132,7 @@ class TestRender extends Component {
                 width: 700,
                 height: 300
               },
-              margin: {
+              padding: {
                 top: 10,
                 bottom: 10,
                 left: 10,
@@ -237,7 +237,7 @@ class TestRender extends Component {
               width: 700,
               height: 150,
             },
-            margin: {
+            padding: {
               top: 10,
               bottom: 10,
               left: 10,
@@ -281,7 +281,7 @@ TestRender.defaultProps = {
     width: 700,
     height: 400
   },
-  margin: {
+  padding: {
     top: 10,
     bottom: 0,
     left: 10,

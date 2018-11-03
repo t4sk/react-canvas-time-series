@@ -159,7 +159,7 @@ TestRender.defaultProps = {
     width: 500,
     height: 300
   },
-  margin: {
+  padding: {
     top: 10,
     bottom: 20,
     left: 20,
@@ -167,10 +167,10 @@ TestRender.defaultProps = {
   },
   graph: {
     // y label left, x label bottom
-    left: 70, // margin.left + x.axis.width
-    top: 10, // margin.top
-    width: 400, // canvas.width - (margin.left + margin.right + x.axis.width)
-    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
+    left: 70, // padding.left + x.axis.width
+    top: 10, // padding.top
+    width: 400, // canvas.width - (padding.left + padding.right + x.axis.width)
+    height: 220 // canvas.height - (padding.top + padding.bottom + y.axis.height)
   },
   background: {
     backgroundColor: 'lightgrey',

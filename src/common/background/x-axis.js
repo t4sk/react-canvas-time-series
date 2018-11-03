@@ -9,9 +9,9 @@ import {
 function getLeft (props: Props): number {
   switch (props.background.yAxisAt) {
     case 'left':
-      return props.margin.left + props.background.yAxisWidth
+      return props.padding.left + props.background.yAxisWidth
     case 'right':
-      return props.margin.left
+      return props.padding.left
     default:
       throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
@@ -20,9 +20,9 @@ function getLeft (props: Props): number {
 function getTop (props: Props): number {
   switch (props.background.xAxisAt) {
     case 'top':
-      return props.margin.top + props.background.xAxisHeight
+      return props.padding.top + props.background.xAxisHeight
     case 'bottom':
-      return props.margin.top
+      return props.padding.top
     default:
       throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
@@ -35,9 +35,9 @@ function getLabelTop (props: Props): number {
 
   switch (props.background.xAxisAt) {
     case 'top':
-      return props.margin.top + props.background.xAxisHeight - X_LABEL_VERTICAL_PADDING
+      return props.padding.top + props.background.xAxisHeight - X_LABEL_VERTICAL_PADDING
     case 'bottom':
-      return height + props.margin.top + X_LABEL_VERTICAL_PADDING
+      return height + props.padding.top + X_LABEL_VERTICAL_PADDING
     default:
       throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }

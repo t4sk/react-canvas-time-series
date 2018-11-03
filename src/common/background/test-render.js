@@ -96,7 +96,7 @@ TestRender.defaultProps = {
     width: 500,
     height: 300
   },
-  margin: {
+  padding: {
     top: 10,
     bottom: 20,
     left: 20,

@@ -20,9 +20,9 @@ function getYAxisTextAlign (props: Props): 'left' | 'right' {
 function getLeft (props: Props): number {
   switch (props.background.yAxisAt) {
     case 'left':
-      return props.background.yAxisWidth + props.margin.left
+      return props.background.yAxisWidth + props.padding.left
     case 'right':
-      return props.margin.left
+      return props.padding.left
     default:
       throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
@@ -31,9 +31,9 @@ function getLeft (props: Props): number {
 function getTop (props: Props): number {
   switch (props.background.xAxisAt) {
     case 'top':
-      return props.background.xAxisHeight + props.margin.top
+      return props.background.xAxisHeight + props.padding.top
     case 'bottom':
-      return props.margin.top
+      return props.padding.top
     default:
       throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }
@@ -46,9 +46,9 @@ function getLabelLeft (props: Props): number {
 
   switch (props.background.yAxisAt) {
     case 'left':
-      return props.margin.left + props.background.yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
+      return props.padding.left + props.background.yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
-      return width + props.margin.left + Y_LABEL_HORIZONTAL_PADDING
+      return width + props.padding.left + Y_LABEL_HORIZONTAL_PADDING
     default:
       throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }

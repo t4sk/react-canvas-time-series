@@ -22,21 +22,21 @@ for (let i = 0; i < 10; i++) {
 
 LINE_DATA.sort((a, b) => a.x - b.x)
 
-function getTop(top, margin, height, graph) {
-  return top  + margin
+function getTop(top, padding, height, graph) {
+  return top  + padding
 }
 
-function getLeft(left, margin, width, graph) {
-  if (left -margin - width <= graph.left) {
-     return left + margin
+function getLeft(left, padding, width, graph) {
+  if (left -padding - width <= graph.left) {
+     return left + padding
   }
-  return left - margin - width
+  return left - padding - width
 }
 
-function getTransition(left, margin, width, graph) {
+function getTransition(left, padding, width, graph) {
   let transition = ''
 
-  if (left <= graph.left + 2 * (width + margin)) {
+  if (left <= graph.left + 2 * (width + padding)) {
     transition = 'left 0.1s'
   }
 

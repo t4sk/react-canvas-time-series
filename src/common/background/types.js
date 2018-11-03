@@ -5,7 +5,7 @@ export type Props = {
     width: number,
     height: number,
   },
-  margin: {
+  padding: {
     top: number,
     bottom: number,
     left: number,

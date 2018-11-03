@@ -189,10 +189,10 @@ TestCanvas.defaultProps = {
     height: 300
   },
   graph: {
-    left: 60, // margin.left + x.axis.width
-    top: 20, // margin.
-    width: 420, // canvas.width - (margin.left + margin.right + x.axis.width)
-    height: 220 // canvas.height - (margin.top + margin.bottom + y.axis.height)
+    left: 60, // padding.left + x.axis.width
+    top: 20, // padding.
+    width: 420, // canvas.width - (padding.left + padding.right + x.axis.width)
+    height: 220 // canvas.height - (padding.top + padding.bottom + y.axis.height)
   }
 }
 

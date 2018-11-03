@@ -13,7 +13,7 @@ const props = {
     width: 500,
     height: 300,
   },
-  margin: {
+  padding: {
     top: 10,
     bottom: 20,
     left: 10,
@@ -31,8 +31,8 @@ test("get width", () => {
   expect(getGraphWidth(props)).toEqual(
     props.canvas.width
     - props.background.yAxisWidth
-    - props.margin.left
-    - props.margin.right
+    - props.padding.left
+    - props.padding.right
   )
 })
 
@@ -40,8 +40,8 @@ test("get height", () => {
   expect(getGraphHeight(props)).toEqual(
     props.canvas.height
     - props.background.xAxisHeight
-    - props.margin.top
-    - props.margin.bottom
+    - props.padding.top
+    - props.padding.bottom
   )
 })
 
@@ -51,7 +51,7 @@ describe("get graph y", () => {
       background: {
         xAxisAt: 'top'
       }
-    }))).toEqual(props.margin.top + props.background.xAxisHeight)
+    }))).toEqual(props.padding.top + props.background.xAxisHeight)
   })
 
   test("x axis at bottom", () => {
@@ -59,7 +59,7 @@ describe("get graph y", () => {
       background: {
         xAxisAt: 'bottom'
       }
-    }))).toEqual(props.margin.top)
+    }))).toEqual(props.padding.top)
   })
 
   test("invalid x axis", () => {
@@ -77,7 +77,7 @@ describe("get graph x", () => {
       background: {
         yAxisAt: 'left'
       }
-    }))).toEqual(props.margin.left + props.background.yAxisWidth)
+    }))).toEqual(props.padding.left + props.background.yAxisWidth)
   })
 
   test("y axis at right", () => {
@@ -85,7 +85,7 @@ describe("get graph x", () => {
       background: {
         yAxisAt: 'right'
       }
-    }))).toEqual(props.margin.left)
+    }))).toEqual(props.padding.left)
   })
 
   test("invalid y axis", () => {
