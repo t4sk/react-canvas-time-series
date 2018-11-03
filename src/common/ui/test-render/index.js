@@ -30,6 +30,50 @@ class TestRender extends Component {
         <h3>Update Canvas Props</h3>
         <TestUpdateProps {...this.props} />
 
+        <h3>Hide X Label</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            ui: {
+              showXLabel: false
+            }
+          })}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
+        <h3>Hide X Line</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            ui: {
+              showXLine: false
+            }
+          })}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
+        <h3>Hide Y Label</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            ui: {
+              showYLabel: false
+            }
+          })}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
+        <h3>Hide Y Line</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            ui: {
+              showYLine: false
+            }
+          })}
+          drawBackground={background.draw}
+          drawUI={ui.draw}
+        />
+
         <h3>X Label Bottom</h3>
         <TestCanvas
           {...merge(this.props, {
@@ -191,6 +235,8 @@ TestRender.defaultProps = {
     xInterval: 15
   },
   ui: {
+    showXLabel: true,
+    showXLine: true,
     xLineColor: 'blue',
     xLabelAt: 'bottom',
     xLabelWidth: 70,
@@ -200,6 +246,8 @@ TestRender.defaultProps = {
     xLabelColor: 'black',
     renderXLabel: x => Math.round(x),
 
+    showYLabel: true,
+    showYLine: true,
     yLineColor: 'green',
     yLabelAt: 'left',
     yLabelWidth: 50,

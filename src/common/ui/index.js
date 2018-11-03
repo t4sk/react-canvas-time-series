@@ -167,7 +167,6 @@ export function drawXLabelAt (ctx: any, props: DrawXLabelAtProps) {
 
 function drawXLine (ctx: any, props: Props) {
   const {
-    graph,
     mouse,
     ui
   } = props
@@ -177,6 +176,14 @@ function drawXLine (ctx: any, props: Props) {
     lineColor: ui.xLineColor,
     left: mouse.x
   })
+}
+
+function drawXLabel (ctx: any, props: Props) {
+  const {
+    graph,
+    mouse,
+    ui
+  } = props
 
   const left = mouse.isDragging ? mouse.dragStartLeft : mouse.x
   const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
@@ -203,7 +210,6 @@ function drawXLine (ctx: any, props: Props) {
 
 function drawYLine (ctx: any, props: Props) {
   const {
-    graph,
     mouse,
     ui
   } = props
@@ -213,6 +219,14 @@ function drawYLine (ctx: any, props: Props) {
     lineColor: ui.yLineColor,
     top: mouse.y
   })
+}
+
+function drawYLabel (ctx: any, props: Props) {
+  const {
+    graph,
+    mouse,
+    ui
+  } = props
 
   const y = linear({
     dy: props.yMax - props.yMin,
@@ -244,6 +258,16 @@ export function draw (ctx: any, props: Props) {
     return
   }
 
-  drawXLine(ctx, props)
-  drawYLine(ctx, props)
+  if (props.ui.showXLine) {
+    drawXLine(ctx, props)
+  }
+  if (props.ui.showXLabel) {
+    drawXLabel(ctx, props)
+  }
+  if (props.ui.showYLine) {
+    drawYLine(ctx, props)
+  }
+  if (props.ui.showYLabel) {
+    drawYLabel(ctx, props)
+  }
 }
