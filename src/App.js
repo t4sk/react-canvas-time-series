@@ -12,6 +12,7 @@ import IntegrationTestRender from './common/test-render'
 // TODO optimizations (render diff)
 // TODO draggable, zoomable component
 // TODO display loading
+// TODO highlight bar and candlestick at mouse
 class App extends Component {
   render () {
     return (
