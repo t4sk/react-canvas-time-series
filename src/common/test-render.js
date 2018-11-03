@@ -152,6 +152,15 @@ class TestRender extends Component {
             }}
             drawBackground={background.draw}
             drawData={(ctx, props) => {
+              line.draw(ctx, {
+                ...props,
+                data: LINE_DATA,
+                line: {
+                  color: 'orange',
+                  width: 1
+                }
+              })
+
               candlestick.draw(ctx, {
                 ...props,
                 candlestick: {
@@ -162,15 +171,6 @@ class TestRender extends Component {
                   getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
                 },
                 data: DATA
-              })
-
-              line.draw(ctx, {
-                ...props,
-                data: LINE_DATA,
-                line: {
-                  color: 'orange',
-                  width: 1
-                }
               })
             }}
             showUI={true}
@@ -270,6 +270,7 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
+          showUI={true}
         />
       </div>
     )
