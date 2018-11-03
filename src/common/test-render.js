@@ -148,6 +148,11 @@ class TestRender extends Component {
                 ...this.props.background,
                 yAxisAt: 'right',
                 showXLabel: false,
+              },
+              ui: {
+                ...this.props.ui,
+                showXLabel: false,
+                showXLine: false
               }
             }}
             drawBackground={background.draw}
@@ -177,6 +182,7 @@ class TestRender extends Component {
               ui.draw(ctx, props)
 
               if (this.state.data) {
+                // TODO line.drawPointAt
                 const centerX = linear({
                   dy: props.graph.width,
                   dx: props.xMax - props.xMin,
@@ -260,15 +266,21 @@ class TestRender extends Component {
               getLineColor: d => d.open <= d.close ? 'green' : 'red',
               lineWidth: 1
             },
+            ui: {
+              ...this.props.ui,
+              showXLabel: false,
+              showXLine: false
+            }
           }}
+          getRefs={console.log}
           drawData={(ctx, props) => {
-            // TODO align background x
             bar.draw(ctx, {
               ...props,
               data: DATA
             })
           }}
           drawBackground={background.draw}
+          drawUI={ui.draw}
         />
       </div>
     )
@@ -318,6 +330,8 @@ TestRender.defaultProps = {
     xInterval: 15
   },
   ui: {
+    showXLine: true,
+    showXLabel: true,
     xLineColor: 'blue',
     xLabelAt: 'bottom',
     xLabelWidth: 70,
@@ -327,6 +341,8 @@ TestRender.defaultProps = {
     xLabelColor: 'black',
     renderXLabel: x => Math.round(x),
 
+    showYLine: true,
+    showYLabel: true,
     yLineColor: 'green',
     yLabelAt: 'right',
     yLabelWidth: 50,
