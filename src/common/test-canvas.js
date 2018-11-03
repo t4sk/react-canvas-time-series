@@ -96,7 +96,6 @@ class TestCanvas extends Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    // TODO shouldComponentUpdate
     return (
       nextProps.canvas.width !== this.props.canvas.width ||
       nextProps.canvas.height !== this.props.canvas.height

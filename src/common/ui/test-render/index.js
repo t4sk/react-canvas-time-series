@@ -14,7 +14,6 @@ const X_MAX = 2010
 const Y_MIN = 10
 const Y_MAX = 110
 
-// TODO component to zoome
 class TestRender extends Component {
   render () {
     return (
