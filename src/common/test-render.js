@@ -294,12 +294,12 @@ TestRender.defaultProps = {
     height: 340
   },
   background: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'white',
 
     showYLabel: true,
     showYLine: true,
     yLineWidth: 1,
-    yLineColor: 'red',
+    yLineColor: 'lightgrey',
     yAxisAt: 'right',
     yAxisWidth: 50,
     yLabelFont: '12px Arial',
@@ -310,7 +310,7 @@ TestRender.defaultProps = {
     showXLabel: false,
     showXLine: true,
     xLineWidth: 1,
-    xLineColor: 'blue',
+    xLineColor: 'lightgrey',
     xAxisAt: 'bottom',
     xAxisHeight: 0,
     xLabelFont: '12px Arial',
