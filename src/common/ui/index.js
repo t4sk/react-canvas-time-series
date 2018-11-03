@@ -165,7 +165,7 @@ export function drawXLabelAt (ctx: any, props: DrawXLabelAtProps) {
   )
 }
 
-function drawXLine (ctx: any, props: Props) {
+export function drawXLine (ctx: any, props: Props) {
   const {
     mouse,
     ui
@@ -178,7 +178,7 @@ function drawXLine (ctx: any, props: Props) {
   })
 }
 
-function drawXLabel (ctx: any, props: Props) {
+export function drawXLabel (ctx: any, props: Props) {
   const {
     graph,
     mouse,
@@ -208,7 +208,7 @@ function drawXLabel (ctx: any, props: Props) {
   })
 }
 
-function drawYLine (ctx: any, props: Props) {
+export function drawYLine (ctx: any, props: Props) {
   const {
     mouse,
     ui
@@ -221,7 +221,7 @@ function drawYLine (ctx: any, props: Props) {
   })
 }
 
-function drawYLabel (ctx: any, props: Props) {
+export function drawYLabel (ctx: any, props: Props) {
   const {
     graph,
     mouse,
