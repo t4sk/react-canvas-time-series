@@ -19,6 +19,7 @@ export function draw (ctx: any, props: Props) {
   const leftInterval = graph.width / data.length
   const barWidth = Math.max(round(leftInterval), 1)
 
+  // TODO dont draw line over boder
   for (let i = 0; i < data.length; i++) {
     const l = round(graph.left + i * leftInterval)
     const t = round(toTop(data[i].y))

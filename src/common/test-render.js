@@ -265,6 +265,7 @@ class TestRender extends Component {
           xMin={0}
           xMax={DATA.length}
           drawData={(ctx, props) => {
+            // TODO align background x
             bar.draw(ctx, {
               ...props,
               data: DATA
