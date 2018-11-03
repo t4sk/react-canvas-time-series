@@ -111,7 +111,6 @@ class TestNearest extends Component {
               }
             })
           }}
-          showUI={true}
           drawUI={(ctx, props) => {
             ui.draw(ctx, props)
 

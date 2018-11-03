@@ -63,7 +63,6 @@ class TestZoom extends Component {
             }
           }))
         }}
-        showUI={true}
         drawUI={ui.draw}
         onWheel={this.onWheel}
       />

@@ -70,7 +70,7 @@ class TestCanvas extends Component {
       background: this.background.current.getContext('2d', { alpha: false })
     }
 
-    if (this.props.showUI) {
+    if (this.props.drawUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
       this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
       this.ctx.ui.canvas.addEventListener('mouseup', this.onMouseUp)
@@ -183,9 +183,6 @@ TestCanvas.defaultProps = {
   onWheel: (e, mouse) => {},
   drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},
-  showUI: false,
-  // TODO remove showUI
-  drawUI: (ctx, props) => {},
   canvas: {
     width: 500,
     height: 300

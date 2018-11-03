@@ -54,7 +54,6 @@ class TestUpdateProps extends Component {
           }
         })}
         drawBackground={background.draw}
-        showUI={true}
         drawUI={ui.draw}
         onWheel={this.onWheel}
       />

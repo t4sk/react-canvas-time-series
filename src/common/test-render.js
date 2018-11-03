@@ -173,7 +173,6 @@ class TestRender extends Component {
                 data: DATA
               })
             }}
-            showUI={true}
             drawUI={(ctx, props) => {
               ui.draw(ctx, props)
 
@@ -270,7 +269,6 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
-          showUI={true}
         />
       </div>
     )

@@ -55,7 +55,6 @@ class TestDrag extends Component {
         xMin={this.state.xMin}
         xMax={this.state.xMax}
         drawBackground={background.draw}
-        showUI={true}
         drawUI={ui.draw}
         onMouseMove={this.onMouseMove}
       />

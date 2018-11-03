@@ -42,7 +42,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -60,7 +59,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -87,7 +85,6 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -102,7 +99,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -120,7 +116,6 @@ class TestRender extends Component {
             }
           })}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
 
@@ -146,7 +141,6 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
-          showUI={true}
           drawUI={ui.draw}
         />
       </div>
