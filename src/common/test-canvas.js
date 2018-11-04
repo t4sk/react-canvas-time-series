@@ -70,6 +70,7 @@ class TestCanvas extends Component {
       background: this.background.current.getContext('2d', { alpha: false })
     }
 
+    // TODO remove
     this.props.getRefs(this.ctx)
 
     if (this.props.drawUI) {
