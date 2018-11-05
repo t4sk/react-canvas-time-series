@@ -37,7 +37,10 @@ class TestRender extends Component {
               showXLabel: false
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -48,7 +51,10 @@ class TestRender extends Component {
               showXLine: false
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -59,7 +65,10 @@ class TestRender extends Component {
               showYLabel: false
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -70,7 +79,10 @@ class TestRender extends Component {
               showYLine: false
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -84,7 +96,10 @@ class TestRender extends Component {
               xLabelAt: 'bottom'
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -101,7 +116,10 @@ class TestRender extends Component {
               xLabelAt: 'top'
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -127,7 +145,10 @@ class TestRender extends Component {
               color: 'white'
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -141,7 +162,10 @@ class TestRender extends Component {
               yLabelAt: 'left'
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -158,7 +182,10 @@ class TestRender extends Component {
               yLabelAt: 'right'
             }
           })}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
 
@@ -183,7 +210,10 @@ class TestRender extends Component {
               color: 'white'
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawUI={ui.draw}
         />
       </div>
@@ -194,7 +224,8 @@ class TestRender extends Component {
 TestRender.defaultProps = {
   canvas: {
     width: 500,
-    height: 300
+    height: 300,
+    backgroundColor: 'beige',
   },
   padding: {
     top: 10,
@@ -210,6 +241,10 @@ TestRender.defaultProps = {
     height: 220 // canvas.height - (padding.top + padding.bottom + y.axis.height)
   },
   background: {
+    top: 10,
+    left: 20,
+    width: 450,
+    height: 270,
     backgroundColor: 'lightgrey',
 
     showYLabel: true,

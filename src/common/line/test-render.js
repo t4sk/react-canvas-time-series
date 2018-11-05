@@ -39,7 +39,10 @@ class TestRender extends Component {
               data: DATA
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
 
         <h3>Line Graph (Random)</h3>
@@ -51,7 +54,10 @@ class TestRender extends Component {
               data: RANDOM_DATA
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
       </div>
     )
@@ -61,7 +67,8 @@ class TestRender extends Component {
 TestRender.defaultProps = {
   canvas: {
     width: 500,
-    height: 300
+    height: 300,
+    backgroundColor: 'beige',
   },
   padding: {
     top: 10,
@@ -70,6 +77,10 @@ TestRender.defaultProps = {
     right: 30
   },
   background: {
+    top: 10,
+    left: 20,
+    width: 450,
+    height: 270,
     backgroundColor: 'lightgrey',
 
     showYLabel: true,

@@ -100,7 +100,10 @@ class TestNearest extends Component {
       }}>
         <TestCanvas
           {...this.props}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
           drawData={(ctx, props) => {
             line.draw(ctx, {
               ...props,

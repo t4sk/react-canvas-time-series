@@ -10,7 +10,8 @@ import type {
   DrawXLabelAtProps,
 } from './types'
 
-export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
+// TODO rename isInsideRect
+export function isInsideGraphHorizontal (mouse: Mouse, graph: Graph): boolean {
   if (
     !mouse.x ||
     mouse.x < graph.left ||
@@ -19,6 +20,10 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
     return false
   }
 
+  return true
+}
+
+export function isInsideGraphVertical (mouse: Mouse, graph: Graph): boolean {
   if (
     !mouse.y ||
     mouse.y < graph.top ||
@@ -28,6 +33,13 @@ export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
   }
 
   return true
+}
+
+export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
+  return (
+    isInsideGraphHorizontal(mouse, graph) &&
+    isInsideGraphVertical(mouse, graph)
+  )
 }
 
 export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
@@ -247,12 +259,16 @@ export function drawYLabel (ctx: any, props: Props) {
   })
 }
 
-export function draw (ctx: any, props: Props) {
+export function clear(ctx: any, props: Props) {
   ctx.clearRect(
     0, 0,
     props.canvas.width,
     props.canvas.height
   )
+}
+
+export function draw (ctx: any, props: Props) {
+  clear(ctx, props)
 
   if (!isInsideGraph(props.mouse, props.graph)) {
     return

@@ -58,7 +58,10 @@ class TestRender extends Component {
               data: FIXED_DATA,
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
 
         <h3>{`Candlestick (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
@@ -72,7 +75,10 @@ class TestRender extends Component {
               data: RANDOM_DATA_SMALL,
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
 
         <h3>{`Candlestick (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
@@ -86,7 +92,10 @@ class TestRender extends Component {
               data: RANDOM_DATA_MEDIUM,
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
 
         <h3>{`Candlestick (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
@@ -100,7 +109,10 @@ class TestRender extends Component {
               data: RANDOM_DATA_LARGE,
             })
           }}
-          drawBackground={background.draw}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
         />
       </div>
     )
@@ -111,7 +123,8 @@ TestRender.defaultProps = {
   draw: (ctx, props) => {},
   canvas: {
     width: 500,
-    height: 300
+    height: 300,
+    backgroundColor: 'beige',
   },
   padding: {
     top: 10,
@@ -120,6 +133,10 @@ TestRender.defaultProps = {
     right: 30
   },
   background: {
+    top: 10,
+    left: 20,
+    width: 450,
+    height: 270,
     backgroundColor: 'lightgrey',
 
     showYLabel: true,

@@ -56,6 +56,7 @@ class TestZoom extends Component {
         yMin={this.state.yMin}
         yMax={this.state.yMax}
         drawBackground={(ctx, props) => {
+          background.fillCanvas(ctx, props)
           background.draw(ctx, merge(props, {
             background: {
               xInterval: this.state.xInterval,

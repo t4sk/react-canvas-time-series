@@ -54,7 +54,10 @@ class TestDrag extends Component {
         {...this.props}
         xMin={this.state.xMin}
         xMax={this.state.xMax}
-        drawBackground={background.draw}
+        drawBackground={(ctx, props) => {
+          background.fillCanvas(ctx, props)
+          background.draw(ctx, props)
+        }}
         drawUI={ui.draw}
         onMouseMove={this.onMouseMove}
       />

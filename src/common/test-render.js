@@ -76,6 +76,23 @@ class TestRender extends Component {
       mouseY: undefined,
       data: undefined,
     }
+
+    this.mouse = {
+      x: undefined,
+    }
+  }
+
+  onMouseMoveBarChart = (mouse) => {
+    this.mouse = {
+      x: mouse.x,
+    }
+
+    const graph = {
+      left: 10,
+      top: 10,
+      width: 630,
+      height: 80
+    }
   }
 
   onMouseMoveTestGetNearestData = mouse => {
@@ -84,6 +101,10 @@ class TestRender extends Component {
       xMin,
       graph,
     } = this.props
+
+    this.mouse = {
+      x: mouse.x,
+    }
 
     if (ui.isInsideGraph(mouse, graph)) {
       const x = linear({
@@ -179,39 +200,51 @@ class TestRender extends Component {
               })
             }}
             drawUI={(ctx, props) => {
-              ui.draw(ctx, props)
+              ui.clear(ctx, props)
 
-              if (this.state.data) {
-                // TODO line.drawPointAt
-                const centerX = linear({
-                  dy: props.graph.width,
-                  dx: props.xMax - props.xMin,
-                  y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
-                })(this.state.data.x)
-
-                const centerY = linear({
-                  dy: -props.graph.height,
-                  dx: props.yMax - props.yMin,
-                  y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
-                })(this.state.data.y)
-
-                const radius = 10
-
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.fillStyle = "orange"
-                ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
-
-                ctx.beginPath();
-                ctx.lineWidth = 2
-                ctx.strokeStyle = "white"
-                ctx.rect(centerX - 5, centerY - 5, 10, 10)
-                ctx.stroke()
+              if (!props.mouse.y || props.mouse.y < props.graph.top) {
+                return
               }
+
+              if (
+                ui.isInsideGraph(props.mouse, props.graph)
+              ) {
+                ui.drawYLine(ctx, props)
+                ui.drawYLabel(ctx, props)
+              }
+
+              // TODO fix uncommenting this changes ui line width
+              // if (this.state.data) {
+              //   // TODO line.drawPointAt
+              //   const centerX = linear({
+              //     dy: props.graph.width,
+              //     dx: props.xMax - props.xMin,
+              //     y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
+              //   })(this.state.data.x)
+              //
+              //   const centerY = linear({
+              //     dy: -props.graph.height,
+              //     dx: props.yMax - props.yMin,
+              //     y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
+              //   })(this.state.data.y)
+              //
+              //   const radius = 10
+              //
+              //   ctx.beginPath();
+              //   ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+              //   ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+              //   ctx.fill();
+              //
+              //   ctx.beginPath();
+              //   ctx.fillStyle = "orange"
+              //   ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
+              //
+              //   ctx.beginPath();
+              //   ctx.lineWidth = 2
+              //   ctx.strokeStyle = "white"
+              //   ctx.rect(centerX - 5, centerY - 5, 10, 10)
+              //   ctx.stroke()
+              // }
             }}
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
@@ -235,6 +268,7 @@ class TestRender extends Component {
           )}
         </div>
 
+        {/* TODo yLine width different between candlestick and bar */}
         <TestCanvas
           {...{
             ...this.props,
@@ -272,7 +306,6 @@ class TestRender extends Component {
               showXLine: false
             }
           }}
-          getRefs={console.log}
           drawData={(ctx, props) => {
             bar.draw(ctx, {
               ...props,
@@ -280,7 +313,15 @@ class TestRender extends Component {
             })
           }}
           drawBackground={background.draw}
-          drawUI={ui.draw}
+          drawUI={(ctx, props) => {
+            ui.clear(ctx, props)
+
+            if (ui.isInsideGraph(props.mouse, props.graph)) {
+              ui.drawYLine(ctx, props)
+              ui.drawYLabel(ctx, props)
+            }
+          }}
+          onMouseMove={this.onMouseMoveBarChart}
         />
       </div>
     )

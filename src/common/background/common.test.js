@@ -20,6 +20,8 @@ const props = {
     right: 30
   },
   background: {
+    width: 460,
+    height: 270,
     xAxisAt: 'bottom',
     xAxisHeight: 50,
     yAxisAt: 'left',
@@ -29,19 +31,13 @@ const props = {
 
 test("get width", () => {
   expect(getGraphWidth(props)).toEqual(
-    props.canvas.width
-    - props.background.yAxisWidth
-    - props.padding.left
-    - props.padding.right
+    props.background.width - props.background.yAxisWidth
   )
 })
 
 test("get height", () => {
   expect(getGraphHeight(props)).toEqual(
-    props.canvas.height
-    - props.background.xAxisHeight
-    - props.padding.top
-    - props.padding.bottom
+    props.background.height - props.background.xAxisHeight
   )
 })
 

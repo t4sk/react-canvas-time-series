@@ -2,19 +2,11 @@
 import type { Props } from './types'
 
 export function getGraphWidth (props: Props): number {
-  return (
-    props.canvas.width -
-    props.background.yAxisWidth -
-    (props.padding.left + props.padding.right)
-  )
+  return props.background.width - props.background.yAxisWidth
 }
 
 export function getGraphHeight (props: Props): number {
-  return (
-    props.canvas.height -
-    props.background.xAxisHeight -
-    (props.padding.top + props.padding.bottom)
-  )
+  return props.background.height - props.background.xAxisHeight
 }
 
 export function getGraphLeft (props: Props): number {
