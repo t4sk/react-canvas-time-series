@@ -3,43 +3,28 @@ import type { Props } from './types'
 import { round, linear, nearestStepBelow } from '../math'
 import {
   getGraphHeight,
-  getGraphWidth
+  getGraphWidth,
+  getGraphLeft,
+  getGraphTop,
 } from './common'
-
-function getLeft (props: Props): number {
-  switch (props.background.yAxisAt) {
-    case 'left':
-      return props.padding.left + props.background.yAxisWidth
-    case 'right':
-      return props.padding.left
-    default:
-      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
-  }
-}
-
-function getTop (props: Props): number {
-  switch (props.background.xAxisAt) {
-    case 'top':
-      return props.padding.top + props.background.xAxisHeight
-    case 'bottom':
-      return props.padding.top
-    default:
-      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
-  }
-}
 
 const X_LABEL_VERTICAL_PADDING = 12
 
 function getLabelTop (props: Props): number {
-  const height = getGraphHeight(props)
+  const {
+    xAxisAt,
+    xAxisHeight,
+    top,
+    height,
+  } = props.background
 
-  switch (props.background.xAxisAt) {
+  switch (xAxisAt) {
     case 'top':
-      return props.padding.top + props.background.xAxisHeight - X_LABEL_VERTICAL_PADDING
+      return top + xAxisHeight - X_LABEL_VERTICAL_PADDING
     case 'bottom':
-      return height + props.padding.top + X_LABEL_VERTICAL_PADDING
+      return top + height - xAxisHeight + X_LABEL_VERTICAL_PADDING
     default:
-      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
+      throw new Error(`invalid xAxisAt ${xAxisAt}`)
   }
 }
 
@@ -67,8 +52,8 @@ export function drawXLines (ctx: any, props: Props) {
     y0: -width * xMin / (xMax - xMin)
   })
 
-  const top = getTop(props)
-  const left = getLeft(props)
+  const left = getGraphLeft(props)
+  const top = getGraphTop(props)
   const labelTop = getLabelTop(props)
 
   if (props.background.showXLine) {

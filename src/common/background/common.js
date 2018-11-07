@@ -12,9 +12,9 @@ export function getGraphHeight (props: Props): number {
 export function getGraphLeft (props: Props): number {
   switch (props.background.yAxisAt) {
     case 'left':
-      return props.padding.left + props.background.yAxisWidth
+      return props.background.left + props.background.yAxisWidth
     case 'right':
-      return props.padding.left
+      return props.background.left
     default:
       throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
@@ -23,9 +23,9 @@ export function getGraphLeft (props: Props): number {
 export function getGraphTop (props: Props): number {
   switch (props.background.xAxisAt) {
     case 'top':
-      return props.padding.top + props.background.xAxisHeight
+      return props.background.top + props.background.xAxisHeight
     case 'bottom':
-      return props.padding.top
+      return props.background.top
     default:
       throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
   }

@@ -7,6 +7,22 @@ class TestRender extends Component {
   render () {
     return (
       <div>
+        <h3>Background Position</h3>
+        <TestCanvas
+          {...merge(this.props, {
+            background: {
+              top: 150,
+              left: 250,
+              height: 140,
+              width: 240,
+            }
+          })}
+          drawBackground={(ctx, props) => {
+            background.fillCanvas(ctx, props)
+            background.draw(ctx, props)
+          }}
+        />
+
         <h3>Hide X Labels</h3>
         <TestCanvas
           {...merge(this.props, {
@@ -121,6 +137,7 @@ TestRender.defaultProps = {
     height: 300,
     backgroundColor: "beige",
   },
+  // TODO remove padding?
   padding: {
     top: 10,
     bottom: 20,

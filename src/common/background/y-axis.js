@@ -3,7 +3,9 @@ import type { Props } from './types'
 import { round, linear, nearestStepBelow } from '../math'
 import {
   getGraphHeight,
-  getGraphWidth
+  getGraphWidth,
+  getGraphLeft,
+  getGraphTop,
 } from './common'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
@@ -17,40 +19,23 @@ function getYAxisTextAlign (props: Props): 'left' | 'right' {
   }
 }
 
-function getLeft (props: Props): number {
-  switch (props.background.yAxisAt) {
-    case 'left':
-      return props.background.yAxisWidth + props.padding.left
-    case 'right':
-      return props.padding.left
-    default:
-      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
-  }
-}
-
-function getTop (props: Props): number {
-  switch (props.background.xAxisAt) {
-    case 'top':
-      return props.background.xAxisHeight + props.padding.top
-    case 'bottom':
-      return props.padding.top
-    default:
-      throw new Error(`invalid xAxisAt ${props.background.xAxisAt}`)
-  }
-}
-
 const Y_LABEL_HORIZONTAL_PADDING = 10
 
 function getLabelLeft (props: Props): number {
-  const width = getGraphWidth(props)
+  const {
+    yAxisAt,
+    yAxisWidth,
+    left,
+    width,
+  } = props.background
 
-  switch (props.background.yAxisAt) {
+  switch (yAxisAt) {
     case 'left':
-      return props.padding.left + props.background.yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
+      return left + yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
-      return width + props.padding.left + Y_LABEL_HORIZONTAL_PADDING
+      return left + width -yAxisWidth + Y_LABEL_HORIZONTAL_PADDING
     default:
-      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
+      throw new Error(`invalid yAxisAt ${yAxisAt}`)
   }
 }
 
@@ -79,8 +64,8 @@ export function drawYLines (ctx: any, props: Props) {
     y0: height * yMax / (yMax - yMin)
   })
 
-  const left = getLeft(props)
-  const top = getTop(props)
+  const left = getGraphLeft(props)
+  const top = getGraphTop(props)
   const labelLeft = getLabelLeft(props)
 
   if (props.background.showYLine) {
