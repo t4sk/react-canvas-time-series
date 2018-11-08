@@ -155,26 +155,27 @@ class TestRender extends Component {
             drawBackground={(ctx, props) => {
               background.fillCanvas(ctx, props)
 
-              // background.draw(ctx, {
-              //   ...props,
-              //   background: {
-              //     ...props.background,
-              //     left: 10,
-              //     top: 10,
-              //     width: 680,
-              //     height: 280,
-              //     yAxisAt: 'right',
-              //     showXLabel: false,
-              //   },
-              //   graph: {
-              //     left: 10,
-              //     top: 10,
-              //     width: 630,
-              //     height: 280
-              //   },
-              //   yMin: Y_MIN,
-              //   yMax: Y_MAX,
-              // })
+              background.draw(ctx, {
+                ...props,
+                background: {
+                  ...props.background,
+                  left: 10,
+                  top: 10,
+                  width: 680,
+                  height: 280,
+                  yAxisAt: 'right',
+                  showXLabel: false,
+                  xAxisHeight: 0,
+                },
+                graph: {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                },
+                yMin: Y_MIN,
+                yMax: Y_MAX,
+              })
 
               background.draw(ctx, {
                 ...props,
@@ -198,9 +199,26 @@ class TestRender extends Component {
               })
             }}
             drawData={(ctx, props) => {
-              /*
               line.draw(ctx, {
                 ...props,
+                background: {
+                  ...props.background,
+                  left: 10,
+                  top: 10,
+                  width: 680,
+                  height: 280,
+                  yAxisAt: 'right',
+                  showXLabel: false,
+                  xAxisHeight: 0,
+                },
+                graph: {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                },
+                yMin: Y_MIN,
+                yMax: Y_MAX,
                 data: LINE_DATA,
                 line: {
                   color: 'orange',
@@ -210,6 +228,24 @@ class TestRender extends Component {
 
               candlestick.draw(ctx, {
                 ...props,
+                background: {
+                  ...props.background,
+                  left: 10,
+                  top: 10,
+                  width: 680,
+                  height: 280,
+                  yAxisAt: 'right',
+                  showXLabel: false,
+                  xAxisHeight: 0,
+                },
+                graph: {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                },
+                yMin: Y_MIN,
+                yMax: Y_MAX,
                 candlestick: {
                   wickWidth: 2,
                   getWickColor: (d) => d.open <= d.close ? 'green' : 'red',
@@ -219,7 +255,34 @@ class TestRender extends Component {
                 },
                 data: DATA
               })
-              */
+
+              // volume
+              bar.draw(ctx, {
+                ...props,
+                background: {
+                  ...props.background,
+                  left: 10,
+                  top: 310,
+                  width: 680,
+                  height: 130,
+                  yAxisAt: 'right',
+                  yInterval: 300,
+                },
+                graph: {
+                  left: 10,
+                  top: 310,
+                  width: 630,
+                  height: 80
+                },
+                bar: {
+                  getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
+                  getLineColor: d => d.open <= d.close ? 'green' : 'red',
+                  lineWidth: 1
+                },
+                yMin: VOLUME_MIN,
+                yMax: VOLUME_MAX,
+                data: DATA.map(d => ({...d, y: d.volume}))
+              })
             }}
             drawUI={(ctx, props) => {
               /*
@@ -360,12 +423,6 @@ TestRender.defaultProps = {
     height: 450,
     backgroundColor: "beige",
   },
-  padding: {
-    top: 10,
-    bottom: 0,
-    left: 10,
-    right: 10
-  },
   graph: {
     left: 10,
     top: 10,
@@ -395,7 +452,7 @@ TestRender.defaultProps = {
     xLineWidth: 1,
     xLineColor: 'lightgrey',
     xAxisAt: 'bottom',
-    xAxisHeight: 0,
+    xAxisHeight: 50,
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
