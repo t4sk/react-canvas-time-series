@@ -86,7 +86,7 @@ export function drawXLines (ctx: any, props: Props) {
     const x0 = nearestStepBelow(xMin, props.background.xInterval)
 
     for (let x = x0; x <= xMax; x += props.background.xInterval) {
-      const l = toLeft(x) + left
+      const l = round(toLeft(x) + left)
 
       if (l >= left && l <= left + width) {
         // draw line

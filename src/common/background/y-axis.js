@@ -98,7 +98,7 @@ export function drawYLines (ctx: any, props: Props) {
     const y0 = nearestStepBelow(yMin, props.background.yInterval)
 
     for (let y = y0; y <= yMax; y += props.background.yInterval) {
-      const t = toTop(y) + top
+      const t = round(toTop(y) + top)
 
       if (t >= top && t <= top + height) {
         // draw line
