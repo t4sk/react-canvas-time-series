@@ -5,12 +5,6 @@ export type Props = {
     width: number,
     height: number,
   },
-  padding: {
-    top: number,
-    bottom: number,
-    left: number,
-    right: number,
-  },
   background: {
     backgroundColor: string,
 

@@ -192,10 +192,10 @@ TestCanvas.defaultProps = {
   },
   // TODO remove
   graph: {
-    left: 60, // padding.left + x.axis.width
-    top: 20, // padding.
-    width: 420, // canvas.width - (padding.left + padding.right + x.axis.width)
-    height: 220 // canvas.height - (padding.top + padding.bottom + y.axis.height)
+    left: 60,
+    top: 20,
+    width: 420,
+    height: 220
   }
 }
 

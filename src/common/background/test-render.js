@@ -137,13 +137,6 @@ TestRender.defaultProps = {
     height: 300,
     backgroundColor: "beige",
   },
-  // TODO remove padding?
-  padding: {
-    top: 10,
-    bottom: 20,
-    left: 20,
-    right: 30
-  },
   background: {
     top: 10,
     left: 20,

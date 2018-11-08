@@ -227,18 +227,11 @@ TestRender.defaultProps = {
     height: 300,
     backgroundColor: 'beige',
   },
-  padding: {
-    top: 10,
-    bottom: 20,
-    left: 20,
-    right: 30
-  },
   graph: {
-    // y label left, x label bottom
-    left: 70, // padding.left + x.axis.width
-    top: 10, // padding.top
-    width: 400, // canvas.width - (padding.left + padding.right + x.axis.width)
-    height: 220 // canvas.height - (padding.top + padding.bottom + y.axis.height)
+    left: 70,
+    top: 10,
+    width: 400,
+    height: 220
   },
   background: {
     top: 10,

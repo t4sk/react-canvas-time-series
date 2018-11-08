@@ -13,6 +13,9 @@ const X_MAX = 2010
 const Y_MIN = 15
 const Y_MAX = 45
 
+const VOLUME_MIN = 100
+const VOLUME_MAX = 1000
+
 let LINE_DATA = []
 
 for (let i = 0; i < 20; i++) {
@@ -38,6 +41,7 @@ function generateRandomData (length) {
       low,
       open,
       close,
+      volume: rand(VOLUME_MIN, VOLUME_MAX),
       y: rand(Y_MIN, Y_MAX),
     })
   }
@@ -147,37 +151,54 @@ class TestRender extends Component {
           height: '100%'
         }}>
           <TestCanvas
-            {...{
-              ...this.props,
-              canvas: {
-                width: 700,
-                height: 300
-              },
-              padding: {
-                top: 10,
-                bottom: 10,
-                left: 10,
-                right: 10
-              },
-              graph: {
-                left: 10,
-                top: 10,
-                width: 630,
-                height: 280
-              },
-              background: {
-                ...this.props.background,
-                yAxisAt: 'right',
-                showXLabel: false,
-              },
-              ui: {
-                ...this.props.ui,
-                showXLabel: false,
-                showXLine: false
-              }
+            {...this.props}
+            drawBackground={(ctx, props) => {
+              background.fillCanvas(ctx, props)
+
+              // background.draw(ctx, {
+              //   ...props,
+              //   background: {
+              //     ...props.background,
+              //     left: 10,
+              //     top: 10,
+              //     width: 680,
+              //     height: 280,
+              //     yAxisAt: 'right',
+              //     showXLabel: false,
+              //   },
+              //   graph: {
+              //     left: 10,
+              //     top: 10,
+              //     width: 630,
+              //     height: 280
+              //   },
+              //   yMin: Y_MIN,
+              //   yMax: Y_MAX,
+              // })
+
+              background.draw(ctx, {
+                ...props,
+                background: {
+                  ...props.background,
+                  left: 10,
+                  top: 310,
+                  width: 680,
+                  height: 130,
+                  yAxisAt: 'right',
+                  yInterval: 300,
+                },
+                graph: {
+                  left: 10,
+                  top: 310,
+                  width: 630,
+                  height: 80
+                },
+                yMin: VOLUME_MIN,
+                yMax: VOLUME_MAX,
+              })
             }}
-            drawBackground={background.draw}
             drawData={(ctx, props) => {
+              /*
               line.draw(ctx, {
                 ...props,
                 data: LINE_DATA,
@@ -198,8 +219,10 @@ class TestRender extends Component {
                 },
                 data: DATA
               })
+              */
             }}
             drawUI={(ctx, props) => {
+              /*
               ui.clear(ctx, props)
 
               if (!props.mouse.y || props.mouse.y < props.graph.top) {
@@ -245,6 +268,7 @@ class TestRender extends Component {
               //   ctx.rect(centerX - 5, centerY - 5, 10, 10)
               //   ctx.stroke()
               // }
+              */
             }}
             onMouseMove={this.onMouseMoveTestGetNearestData}
             onMouseOut={this.onMouseOutTestGetNearestData}
@@ -269,6 +293,7 @@ class TestRender extends Component {
         </div>
 
         {/* TODo yLine width different between candlestick and bar */}
+        {/*}
         <TestCanvas
           {...{
             ...this.props,
@@ -323,6 +348,7 @@ class TestRender extends Component {
           }}
           onMouseMove={this.onMouseMoveBarChart}
         />
+        */}
       </div>
     )
   }
@@ -331,7 +357,8 @@ class TestRender extends Component {
 TestRender.defaultProps = {
   canvas: {
     width: 700,
-    height: 400
+    height: 450,
+    backgroundColor: "beige",
   },
   padding: {
     top: 10,
@@ -346,6 +373,10 @@ TestRender.defaultProps = {
     height: 340
   },
   background: {
+    top: 10,
+    left: 20,
+    width: 450,
+    height: 270,
     backgroundColor: 'white',
 
     showYLabel: true,
@@ -359,7 +390,7 @@ TestRender.defaultProps = {
     renderYLabel: y => y,
     yInterval: 5,
 
-    showXLabel: false,
+    showXLabel: true,
     showXLine: true,
     xLineWidth: 1,
     xLineColor: 'lightgrey',

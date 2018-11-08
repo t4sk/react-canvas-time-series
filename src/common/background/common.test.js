@@ -13,12 +13,6 @@ const props = {
     width: 500,
     height: 300,
   },
-  padding: {
-    top: 10,
-    bottom: 20,
-    left: 10,
-    right: 30
-  },
   background: {
     width: 460,
     height: 270,
@@ -29,6 +23,7 @@ const props = {
   }
 }
 
+// TODO fix test
 test("get width", () => {
   expect(getGraphWidth(props)).toEqual(
     props.background.width - props.background.yAxisWidth
