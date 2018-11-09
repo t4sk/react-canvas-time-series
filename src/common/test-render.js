@@ -86,20 +86,7 @@ class TestRender extends Component {
     }
   }
 
-  onMouseMoveBarChart = (mouse) => {
-    this.mouse = {
-      x: mouse.x,
-    }
-
-    const graph = {
-      left: 10,
-      top: 10,
-      width: 630,
-      height: 80
-    }
-  }
-
-  onMouseMoveTestGetNearestData = mouse => {
+  onMouseMove = mouse => {
     const {
       xMax,
       xMin,
@@ -133,7 +120,7 @@ class TestRender extends Component {
     }
   }
 
-  onMouseOutTestGetNearestData = () => {
+  onMouseOut = () => {
     this.setState((state) => ({
       mouseX: undefined,
       mouseY: undefined,
@@ -285,56 +272,172 @@ class TestRender extends Component {
               })
             }}
             drawUI={(ctx, props) => {
-              /*
               ui.clear(ctx, props)
 
-              if (!props.mouse.y || props.mouse.y < props.graph.top) {
+              if (!props.mouse.x || props.mouse.x < 10 || props.mouse.x > 690) {
                 return
               }
 
-              if (
-                ui.isInsideGraph(props.mouse, props.graph)
-              ) {
-                ui.drawYLine(ctx, props)
-                ui.drawYLabel(ctx, props)
+              if (!props.mouse.y || props.mouse.y < 10 || props.mouse.y > 440) {
+                return
               }
 
-              // TODO fix uncommenting this changes ui line width
-              // if (this.state.data) {
-              //   // TODO line.drawPointAt
-              //   const centerX = linear({
-              //     dy: props.graph.width,
-              //     dx: props.xMax - props.xMin,
-              //     y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
-              //   })(this.state.data.x)
-              //
-              //   const centerY = linear({
-              //     dy: -props.graph.height,
-              //     dx: props.yMax - props.yMin,
-              //     y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
-              //   })(this.state.data.y)
-              //
-              //   const radius = 10
-              //
-              //   ctx.beginPath();
-              //   ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-              //   ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
-              //   ctx.fill();
-              //
-              //   ctx.beginPath();
-              //   ctx.fillStyle = "orange"
-              //   ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
-              //
-              //   ctx.beginPath();
-              //   ctx.lineWidth = 2
-              //   ctx.strokeStyle = "white"
-              //   ctx.rect(centerX - 5, centerY - 5, 10, 10)
-              //   ctx.stroke()
-              // }
-              */
+              // candlestick
+              if (
+                ui.isInsideGraph(props.mouse, {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                })
+              ) {
+                ui.drawYLine(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 10,
+                    width: 630,
+                    height: 280
+                  },
+                })
+
+                ui.drawYLabel(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 10,
+                    width: 630,
+                    height: 280
+                  },
+                })
+              }
+
+              // volume
+              if (
+                ui.isInsideGraph(props.mouse, {
+                  left: 10,
+                  top: 310,
+                  width: 630,
+                  height: 80
+                })
+              ) {
+                ui.drawYLine(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 310,
+                    width: 630,
+                    height: 80
+                  },
+                })
+
+                ui.drawYLabel(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 310,
+                    width: 630,
+                    height: 80
+                  },
+                  yMin: VOLUME_MIN,
+                  yMax: VOLUME_MAX,
+                })
+              }
+
+              // x line and x label
+              if (
+                ui.isInsideGraph(props.mouse, {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                }) ||
+                ui.isInsideGraph(props.mouse, {
+                  left: 10,
+                  top: 310,
+                  width: 630,
+                  height: 80
+                })
+              ) {
+                ui.drawXLine(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 10,
+                    width: 630,
+                    height: 280
+                  },
+                })
+
+                ui.drawXLine(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 310,
+                    width: 630,
+                    height: 80
+                  },
+                })
+
+                ui.drawXLabel(ctx, {
+                  ...props,
+                  graph: {
+                    left: 10,
+                    top: 310,
+                    width: 630,
+                    height: 80
+                  },
+                  yMin: VOLUME_MIN,
+                  yMax: VOLUME_MAX,
+                })
+              }
+
+              if (this.state.data) {
+                // TODO line.drawPointAt
+                const graph = {
+                  left: 10,
+                  top: 10,
+                  width: 630,
+                  height: 280
+                }
+
+                const xMax = X_MAX
+                const xMin = X_MIN
+                const yMax = Y_MAX
+                const yMin = Y_MIN
+
+                const centerX = linear({
+                  dy: graph.width,
+                  dx: xMax - xMin,
+                  y0: graph.left - graph.width / (xMax - xMin) * xMin
+                })(this.state.data.x)
+
+                const centerY = linear({
+                  dy: -graph.height,
+                  dx: yMax - yMin,
+                  y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
+                })(this.state.data.y)
+
+                const radius = 10
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = "orange"
+                ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
+
+                ctx.beginPath();
+                ctx.lineWidth = 2
+                ctx.strokeStyle = "white"
+                ctx.rect(centerX - 5, centerY - 5, 10, 10)
+                ctx.stroke()
+              }
             }}
-            onMouseMove={this.onMouseMoveTestGetNearestData}
-            onMouseOut={this.onMouseOutTestGetNearestData}
+            onMouseMove={this.onMouseMove}
+            onMouseOut={this.onMouseOut}
           />
           {this.state.data && (
             <div
@@ -354,64 +457,6 @@ class TestRender extends Component {
             </div>
           )}
         </div>
-
-        {/* TODo yLine width different between candlestick and bar */}
-        {/*}
-        <TestCanvas
-          {...{
-            ...this.props,
-            canvas: {
-              width: 700,
-              height: 150,
-            },
-            padding: {
-              top: 10,
-              bottom: 10,
-              left: 10,
-              right: 10,
-            },
-            graph: {
-              left: 10,
-              top: 10,
-              width: 630,
-              height: 80
-            },
-            background: {
-              ...this.props.background,
-              yAxisAt: 'right',
-              yInterval: 15,
-              showXLabel: true,
-              xAxisHeight: 50
-            },
-            bar: {
-              getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
-              getLineColor: d => d.open <= d.close ? 'green' : 'red',
-              lineWidth: 1
-            },
-            ui: {
-              ...this.props.ui,
-              showXLabel: false,
-              showXLine: false
-            }
-          }}
-          drawData={(ctx, props) => {
-            bar.draw(ctx, {
-              ...props,
-              data: DATA
-            })
-          }}
-          drawBackground={background.draw}
-          drawUI={(ctx, props) => {
-            ui.clear(ctx, props)
-
-            if (ui.isInsideGraph(props.mouse, props.graph)) {
-              ui.drawYLine(ctx, props)
-              ui.drawYLabel(ctx, props)
-            }
-          }}
-          onMouseMove={this.onMouseMoveBarChart}
-        />
-        */}
       </div>
     )
   }
@@ -427,7 +472,7 @@ TestRender.defaultProps = {
     left: 10,
     top: 10,
     width: 630,
-    height: 340
+    height: 280
   },
   background: {
     top: 10,
