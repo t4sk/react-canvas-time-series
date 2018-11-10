@@ -274,11 +274,17 @@ class TestRender extends Component {
             drawUI={(ctx, props) => {
               ui.clear(ctx, props)
 
-              if (!props.mouse.x || props.mouse.x < 10 || props.mouse.x > 690) {
+              if (!ui.isInsideRectHorizontal(props.mouse, {
+                left: 10,
+                width: 680,
+              })) {
                 return
               }
 
-              if (!props.mouse.y || props.mouse.y < 10 || props.mouse.y > 440) {
+              if (!ui.isInsideRectVertical(props.mouse, {
+                top: 10,
+                height: 430,
+              })) {
                 return
               }
 
