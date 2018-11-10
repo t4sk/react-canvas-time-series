@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as ui from './ui'
 
 class TestCanvas extends Component {
   constructor (props) {
@@ -171,13 +170,6 @@ TestCanvas.defaultProps = {
     width: 500,
     height: 300
   },
-  // TODO remove
-  graph: {
-    left: 60,
-    top: 20,
-    width: 420,
-    height: 220
-  }
 }
 
 export default TestCanvas
