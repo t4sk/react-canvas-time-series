@@ -24,7 +24,7 @@ class TestDrag extends Component {
     }
   }
 
-  onMouseMove = mouse => {
+  onMouseMove = (e, mouse) => {
     if (!this.mouse.isDragging) {
       return
     }
@@ -55,7 +55,7 @@ class TestDrag extends Component {
     }))
   }
 
-  onMouseDown = (mouse) => {
+  onMouseDown = (e, mouse) => {
     if (ui.isInsideRect(mouse, this.props.graph)) {
       this.mouse.isDragging = true
       this.mouse.dragStartLeft = mouse.x
@@ -64,14 +64,14 @@ class TestDrag extends Component {
     }
   }
 
-  onMouseUp = (mouse) => {
+  onMouseUp = (e, mouse) => {
     this.mouse.isDragging = false
     this.mouse.dragStartLeft = undefined
     this.mouse.dragStartXMin = undefined
     this.mouse.dragStartXMax = undefined
   }
 
-  onMouseOut = () => {
+  onMouseOut = (e, mouse) => {
     this.mouse.isDragging = false
     this.mouse.dragStartLeft = undefined
     this.mouse.dragStartXMin = undefined

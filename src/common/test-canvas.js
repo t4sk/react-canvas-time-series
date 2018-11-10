@@ -24,22 +24,22 @@ class TestCanvas extends Component {
     this.mouse.x = e.clientX - rect.left
     this.mouse.y = e.clientY - rect.top
 
-    this.props.onMouseMove(this.mouse)
+    this.props.onMouseMove(e, this.mouse)
   }
 
   onMouseDown = (e) => {
-    this.props.onMouseDown(this.mouse)
+    this.props.onMouseDown(e, this.mouse)
   }
 
   onMouseUp = (e) => {
-    this.props.onMouseUp(this.mouse)
+    this.props.onMouseUp(e, this.mouse)
   }
 
   onMouseOut = (e) => {
     this.mouse.x = undefined
     this.mouse.y = undefined
 
-    this.props.onMouseOut()
+    this.props.onMouseOut(e, this.mouse)
   }
 
   onWheel = (e) => {
@@ -160,10 +160,10 @@ const style = {
 }
 
 TestCanvas.defaultProps = {
-  onMouseMove: (mouse) => {},
-  onMouseDown: (mouse) => {},
-  onMouseUp: (mouse) => {},
-  onMouseOut: () => {},
+  onMouseMove: (e, mouse) => {},
+  onMouseDown: (e, mouse) => {},
+  onMouseUp: (e, mouse) => {},
+  onMouseOut: (e, mouse) => {},
   onWheel: (e, mouse) => {},
   drawData: (ctx, props) => {},
   drawBackground: (ctx, props) => {},

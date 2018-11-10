@@ -53,7 +53,7 @@ class TestNearest extends Component {
     }
   }
 
-  onMouseMoveTestGetNearestData = mouse => {
+  onMouseMove = (e, mouse) => {
     const {
       xMax,
       xMin,
@@ -83,7 +83,7 @@ class TestNearest extends Component {
     }
   }
 
-  onMouseOutTestGetNearestData = () => {
+  onMouseOut = (e, mouse) => {
     this.setState((state) => ({
       mouseX: undefined,
       mouseY: undefined,
@@ -129,8 +129,8 @@ class TestNearest extends Component {
               })
             }
           }}
-          onMouseMove={this.onMouseMoveTestGetNearestData}
-          onMouseOut={this.onMouseOutTestGetNearestData}
+          onMouseMove={this.onMouseMove}
+          onMouseOut={this.onMouseOut}
         />
         {this.state.data && (
           <div

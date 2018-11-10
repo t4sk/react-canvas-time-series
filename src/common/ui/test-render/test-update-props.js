@@ -20,7 +20,7 @@ class TestUpdateProps extends Component {
     }
   }
 
-  onWheel = (e) => {
+  onWheel = (e, mouse) => {
     e.preventDefault()
     if (e.deltaY > 0) {
       this.setState((state) => ({
