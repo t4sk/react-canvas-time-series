@@ -2,7 +2,7 @@
 import { round, linear } from '../math'
 import type { Props } from './types'
 
-//TODO props
+//TODO flow props
 export function drawPointAt(ctx: any, props) {
   const {
     graph,
