@@ -91,13 +91,16 @@ class TestRender extends Component {
       xMax,
       xMin,
       graph,
-    } = this.props
+    } = this.props.candlestick
 
     this.mouse = {
       x: mouse.x,
     }
 
-    if (ui.isInsideRect(mouse, graph)) {
+    if (
+      ui.isInsideRect(mouse, graph) ||
+      ui.isInsideRect(mouse, this.props.volume.graph)
+    ) {
       const x = linear({
         dy: xMax - xMin,
         dx: graph.width,
@@ -144,130 +147,31 @@ class TestRender extends Component {
 
               background.draw(ctx, {
                 ...props,
-                background: {
-                  ...props.background,
-                  left: 10,
-                  top: 10,
-                  width: 680,
-                  height: 280,
-                  yAxisAt: 'right',
-                  showXLabel: false,
-                  xAxisHeight: 0,
-                },
-                graph: {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                },
-                yMin: Y_MIN,
-                yMax: Y_MAX,
+                ...props.candlestick,
               })
 
               background.draw(ctx, {
                 ...props,
-                background: {
-                  ...props.background,
-                  left: 10,
-                  top: 310,
-                  width: 680,
-                  height: 130,
-                  yAxisAt: 'right',
-                  yInterval: 300,
-                },
-                graph: {
-                  left: 10,
-                  top: 310,
-                  width: 630,
-                  height: 80
-                },
-                yMin: VOLUME_MIN,
-                yMax: VOLUME_MAX,
+                ...props.volume,
               })
             }}
             drawData={(ctx, props) => {
               line.draw(ctx, {
                 ...props,
-                background: {
-                  ...props.background,
-                  left: 10,
-                  top: 10,
-                  width: 680,
-                  height: 280,
-                  yAxisAt: 'right',
-                  showXLabel: false,
-                  xAxisHeight: 0,
-                },
-                graph: {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                },
-                yMin: Y_MIN,
-                yMax: Y_MAX,
+                ...props.candlestick,
                 data: LINE_DATA,
-                line: {
-                  color: 'orange',
-                  width: 1
-                }
               })
 
               candlestick.draw(ctx, {
                 ...props,
-                background: {
-                  ...props.background,
-                  left: 10,
-                  top: 10,
-                  width: 680,
-                  height: 280,
-                  yAxisAt: 'right',
-                  showXLabel: false,
-                  xAxisHeight: 0,
-                },
-                graph: {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                },
-                yMin: Y_MIN,
-                yMax: Y_MAX,
-                candlestick: {
-                  wickWidth: 2,
-                  getWickColor: (d) => d.open <= d.close ? 'green' : 'red',
-                  lineWidth: 1,
-                  getLineColor: (d) => d.open <= d.close ? 'green' : 'red',
-                  getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
-                },
+                ...props.candlestick,
                 data: DATA
               })
 
               // volume
               bar.draw(ctx, {
                 ...props,
-                background: {
-                  ...props.background,
-                  left: 10,
-                  top: 310,
-                  width: 680,
-                  height: 130,
-                  yAxisAt: 'right',
-                  yInterval: 300,
-                },
-                graph: {
-                  left: 10,
-                  top: 310,
-                  width: 630,
-                  height: 80
-                },
-                bar: {
-                  getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
-                  getLineColor: d => d.open <= d.close ? 'green' : 'red',
-                  lineWidth: 1
-                },
-                yMin: VOLUME_MIN,
-                yMax: VOLUME_MAX,
+                ...props.volume,
                 data: DATA.map(d => ({...d, y: d.volume}))
               })
             }}
@@ -289,128 +193,70 @@ class TestRender extends Component {
               }
 
               // candlestick
-              if (
-                ui.isInsideRect(props.mouse, {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                })
-              ) {
+              if (ui.isInsideRect(props.mouse, props.candlestick.graph)) {
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawYLine(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 10,
-                    width: 630,
-                    height: 280
-                  },
+                  mouse: props.mouse,
+                  ...props.candlestick
                 })
 
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawYLabel(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 10,
-                    width: 630,
-                    height: 280
-                  },
+                  mouse: props.mouse,
+                  ...props.candlestick
                 })
               }
 
-              // volume
-              if (
-                ui.isInsideRect(props.mouse, {
-                  left: 10,
-                  top: 310,
-                  width: 630,
-                  height: 80
-                })
-              ) {
+              // // volume
+              if (ui.isInsideRect(props.mouse, props.volume.graph)) {
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawYLine(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 310,
-                    width: 630,
-                    height: 80
-                  },
+                  mouse: props.mouse,
+                  ...props.volume
                 })
 
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawYLabel(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 310,
-                    width: 630,
-                    height: 80
-                  },
-                  yMin: VOLUME_MIN,
-                  yMax: VOLUME_MAX,
+                  mouse: props.mouse,
+                  ...props.volume
                 })
               }
 
               // x line and x label
               if (
-                ui.isInsideRect(props.mouse, {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                }) ||
-                ui.isInsideRect(props.mouse, {
-                  left: 10,
-                  top: 310,
-                  width: 630,
-                  height: 80
-                })
+                ui.isInsideRect(props.mouse, props.candlestick.graph) ||
+                ui.isInsideRect(props.mouse, props.volume.graph)
               ) {
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawXLine(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 10,
-                    width: 630,
-                    height: 280
-                  },
+                  mouse: props.mouse,
+                  ...props.candlestick
                 })
 
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawXLine(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 310,
-                    width: 630,
-                    height: 80
-                  },
+                  mouse: props.mouse,
+                  ...props.volume
                 })
 
+                // TODO require more explicit props instead of props.candlestick
                 ui.drawXLabel(ctx, {
-                  ...props,
-                  graph: {
-                    left: 10,
-                    top: 310,
-                    width: 630,
-                    height: 80
-                  },
-                  yMin: VOLUME_MIN,
-                  yMax: VOLUME_MAX,
+                  mouse: props.mouse,
+                  ...props.volume
                 })
               }
 
               if (this.state.data) {
-                const graph = {
-                  left: 10,
-                  top: 10,
-                  width: 630,
-                  height: 280
-                }
+                const {
+                  graph,
+                  xMax,
+                  xMin,
+                  yMax,
+                  yMin
+                } = props.candlestick
 
-                const xMax = X_MAX
-                const xMin = X_MIN
-                const yMax = Y_MAX
-                const yMin = Y_MIN
 
+                // TODO require more explicit props instead of props.candlestick
                 line.drawPointAt(ctx, {
                   ...props,
                   graph,
@@ -436,9 +282,9 @@ class TestRender extends Component {
                 position: 'absolute',
                 width: 40,
                 height: 20,
-                top: getTop(this.state.mouseY, 10, 20, this.props.graph),
-                left:getLeft(this.state.mouseX, 10, 40, this.props.graph),
-                transition: getTransition(this.state.mouseX, 10, 40, this.props.graph),
+                top: getTop(this.state.mouseY, 10, 20, this.props.candlestick.graph),
+                left:getLeft(this.state.mouseX, 10, 40, this.props.candlestick.graph),
+                transition: getTransition(this.state.mouseX, 10, 40, this.props.candlestick.graph),
                 zIndex: 4,
                 border: '1px solid black',
                 backgroundColor: 'rgba(255, 255, 255, 0.4)',
@@ -453,74 +299,126 @@ class TestRender extends Component {
   }
 }
 
+const BACKGROUND_DEFAULT_PROPS = {
+  top: 0,
+  left: 0,
+  width: 0,
+  height: 0,
+  backgroundColor: 'white',
+
+  showYLabel: true,
+  showYLine: true,
+  yLineWidth: 1,
+  yLineColor: 'lightgrey',
+  yAxisAt: 'right',
+  yAxisWidth: 50,
+  yLabelFont: '12px Arial',
+  yLabelColor: 'black',
+  renderYLabel: y => y,
+  yInterval: 10,
+
+  showXLabel: true,
+  showXLine: true,
+  xLineWidth: 1,
+  xLineColor: 'lightgrey',
+  xAxisAt: 'bottom',
+  xAxisHeight: 50,
+  xLabelFont: '12px Arial',
+  xLabelColor: 'black',
+  renderXLabel: x => x,
+  xInterval: 10
+}
+
+const UI_DEFAULT_PROPS = {
+  showXLine: true,
+  showXLabel: true,
+  xLineColor: 'blue',
+  xLabelAt: 'bottom',
+  xLabelWidth: 70,
+  xLabelHeight: 20,
+  xLabelBackgroundColor: 'green',
+  xLabelFont: '12px Arial',
+  xLabelColor: 'black',
+  renderXLabel: x => Math.round(x),
+
+  showYLine: true,
+  showYLabel: true,
+  yLineColor: 'green',
+  yLabelAt: 'right',
+  yLabelWidth: 50,
+  yLabelHeight: 20,
+  yLabelBackgroundColor: 'black',
+  yLabelFont: '12px Arial',
+  yLabelColor: 'white',
+  renderYLabel: y => y.toFixed(2)
+}
+
 TestRender.defaultProps = {
   canvas: {
     width: 700,
     height: 450,
     backgroundColor: "beige",
   },
-  graph: {
-    left: 10,
-    top: 10,
-    width: 630,
-    height: 280
+  candlestick: {
+    background: {
+      ...BACKGROUND_DEFAULT_PROPS,
+      left: 10,
+      top: 10,
+      width: 680,
+      height: 280,
+      yInterval: 5,
+      showXLabel: false,
+      xAxisHeight: 0,
+    },
+    graph: {
+      left: 10,
+      top: 10,
+      width: 630,
+      height: 280
+    },
+    line: {
+      color: 'orange',
+      width: 1
+    },
+    candlestick: {
+      wickWidth: 2,
+      getWickColor: (d) => d.open <= d.close ? 'green' : 'red',
+      lineWidth: 1,
+      getLineColor: (d) => d.open <= d.close ? 'green' : 'red',
+      getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
+    },
+    ui: UI_DEFAULT_PROPS,
+    yMin: Y_MIN,
+    yMax: Y_MAX,
+    xMax: X_MAX,
+    xMin: X_MIN,
   },
-  background: {
-    top: 10,
-    left: 20,
-    width: 450,
-    height: 270,
-    backgroundColor: 'white',
-
-    showYLabel: true,
-    showYLine: true,
-    yLineWidth: 1,
-    yLineColor: 'lightgrey',
-    yAxisAt: 'right',
-    yAxisWidth: 50,
-    yLabelFont: '12px Arial',
-    yLabelColor: 'black',
-    renderYLabel: y => y,
-    yInterval: 5,
-
-    showXLabel: true,
-    showXLine: true,
-    xLineWidth: 1,
-    xLineColor: 'lightgrey',
-    xAxisAt: 'bottom',
-    xAxisHeight: 50,
-    xLabelFont: '12px Arial',
-    xLabelColor: 'black',
-    renderXLabel: x => x,
-    xInterval: 15
+  volume: {
+    background: {
+      ...BACKGROUND_DEFAULT_PROPS,
+      left: 10,
+      top: 310,
+      width: 680,
+      height: 130,
+      yInterval: 300,
+    },
+    graph: {
+      left: 10,
+      top: 310,
+      width: 630,
+      height: 80
+    },
+    bar: {
+      getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
+      getLineColor: d => d.open <= d.close ? 'green' : 'red',
+      lineWidth: 1
+    },
+    ui: UI_DEFAULT_PROPS,
+    yMin: VOLUME_MIN,
+    yMax: VOLUME_MAX,
+    xMax: X_MAX,
+    xMin: X_MIN,
   },
-  ui: {
-    showXLine: true,
-    showXLabel: true,
-    xLineColor: 'blue',
-    xLabelAt: 'bottom',
-    xLabelWidth: 70,
-    xLabelHeight: 20,
-    xLabelBackgroundColor: 'green',
-    xLabelFont: '12px Arial',
-    xLabelColor: 'black',
-    renderXLabel: x => Math.round(x),
-
-    showYLine: true,
-    showYLabel: true,
-    yLineColor: 'green',
-    yLabelAt: 'right',
-    yLabelWidth: 50,
-    yLabelHeight: 20,
-    yLabelBackgroundColor: 'black',
-    yLabelFont: '12px Arial',
-    yLabelColor: 'white',
-    renderYLabel: y => y.toFixed(2)
-  },
-  yMin: Y_MIN,
-  yMax: Y_MAX,
-  xMin: X_MIN,
-  xMax: X_MAX
 }
 
 export default TestRender
