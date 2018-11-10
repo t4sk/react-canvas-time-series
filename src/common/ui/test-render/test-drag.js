@@ -15,10 +15,17 @@ class TestDrag extends Component {
       xMin: 1900,
       xMax: 2010,
     }
+
+    this.mouse = {
+      isDragging: false,
+      dragStartLeft: undefined,
+      dragStartXMin: undefined,
+      dragStartXMax: undefined
+    }
   }
 
   onMouseMove = mouse => {
-    if (!mouse.isDragging) {
+    if (!this.mouse.isDragging) {
       return
     }
 
@@ -29,7 +36,7 @@ class TestDrag extends Component {
     const graphLeft = getGraphLeft(this.props)
     const width = getGraphWidth(this.props)
 
-    const { dragStartXMin, dragStartXMax } = mouse
+    const { dragStartXMin, dragStartXMax } = this.mouse
 
     const toX = linear({
       dy: dragStartXMax - dragStartXMin,
@@ -37,7 +44,7 @@ class TestDrag extends Component {
       y0: dragStartXMin - (dragStartXMax - dragStartXMin) / width * graphLeft
     })
 
-    const diff = mouse.x - mouse.dragStartLeft
+    const diff = mouse.x - this.mouse.dragStartLeft
 
     const xMin = toX(graphLeft - diff)
     const xMax = toX(graphLeft + width - diff)
@@ -46,6 +53,29 @@ class TestDrag extends Component {
       xMin,
       xMax
     }))
+  }
+
+  onMouseDown = (mouse) => {
+    if (ui.isInsideRect(mouse, this.props.graph)) {
+      this.mouse.isDragging = true
+      this.mouse.dragStartLeft = mouse.x
+      this.mouse.dragStartXMin = this.props.xMin
+      this.mouse.dragStartXMax = this.props.xMax
+    }
+  }
+
+  onMouseUp = (mouse) => {
+    this.mouse.isDragging = false
+    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartXMin = undefined
+    this.mouse.dragStartXMax = undefined
+  }
+
+  onMouseOut = () => {
+    this.mouse.isDragging = false
+    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartXMin = undefined
+    this.mouse.dragStartXMax = undefined
   }
 
   render () {
@@ -60,6 +90,9 @@ class TestDrag extends Component {
         }}
         drawUI={ui.draw}
         onMouseMove={this.onMouseMove}
+        onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp}
+        onMouseOut={this.onMouseOut}
       />
     )
   }

@@ -18,12 +18,14 @@ class TestRender extends Component {
   render () {
     return (
       <div>
+        {/*}
         <h3>Scroll to Zoom</h3>
         <TestZoom {...this.props} />
 
         <h3>Get Nearest Data at X</h3>
         <TestNearest {...this.props} />
 
+        */}
         <h3>X Drag</h3>
         <TestDrag {...this.props} />
 

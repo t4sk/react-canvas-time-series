@@ -12,10 +12,6 @@ class TestCanvas extends Component {
     this.mouse = {
       x: undefined,
       y: undefined,
-      isDragging: false,
-      dragStartLeft: undefined,
-      dragStartXMin: undefined,
-      dragStartXMax: undefined
     }
 
     // ref to animation frame
@@ -32,30 +28,16 @@ class TestCanvas extends Component {
   }
 
   onMouseDown = (e) => {
-    // TODO remove isInsideRect?
-    if (ui.isInsideRect(this.mouse, this.props.graph)) {
-      this.mouse.isDragging = true
-      this.mouse.dragStartLeft = this.mouse.x
-      this.mouse.dragStartXMin = this.props.xMin
-      this.mouse.dragStartXMax = this.props.xMax
-    }
+    this.props.onMouseDown(this.mouse)
   }
 
   onMouseUp = (e) => {
-    this.mouse.isDragging = false
-    this.mouse.dragStartLeft = undefined
-    this.mouse.dragStartXMin = undefined
-    this.mouse.dragStartXMax = undefined
+    this.props.onMouseUp(this.mouse)
   }
 
   onMouseOut = (e) => {
     this.mouse.x = undefined
     this.mouse.y = undefined
-
-    this.mouse.isDragging = false
-    this.mouse.dragStartLeft = undefined
-    this.mouse.dragStartXMin = undefined
-    this.mouse.dragStartXMax = undefined
 
     this.props.onMouseOut()
   }
@@ -179,6 +161,8 @@ const style = {
 
 TestCanvas.defaultProps = {
   onMouseMove: (mouse) => {},
+  onMouseDown: (mouse) => {},
+  onMouseUp: (mouse) => {},
   onMouseOut: () => {},
   onWheel: (e, mouse) => {},
   drawData: (ctx, props) => {},
