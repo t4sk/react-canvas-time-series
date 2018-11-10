@@ -86,7 +86,7 @@ class TestRender extends Component {
     }
   }
 
-  onMouseMove = mouse => {
+  onMouseMove = (e, mouse) => {
     const {
       xMax,
       xMin,
@@ -120,7 +120,7 @@ class TestRender extends Component {
     }
   }
 
-  onMouseOut = () => {
+  onMouseOut = (e, mouse) => {
     this.setState((state) => ({
       mouseX: undefined,
       mouseY: undefined,

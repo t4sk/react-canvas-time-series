@@ -17,16 +17,12 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        {/*}
         <IntegrationTestRender />
-        */}
         <UITestRender />
-        {/*}
         <CandlestickTestRender />
         <BarTestRender />
         <LineTestRender />
         <BackgroundTestRender />
-        */}
       </div>
     )
   }
