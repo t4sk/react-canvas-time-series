@@ -97,7 +97,7 @@ class TestRender extends Component {
       x: mouse.x,
     }
 
-    if (ui.isInsideGraph(mouse, graph)) {
+    if (ui.isInsideRect(mouse, graph)) {
       const x = linear({
         dy: xMax - xMin,
         dx: graph.width,
@@ -284,7 +284,7 @@ class TestRender extends Component {
 
               // candlestick
               if (
-                ui.isInsideGraph(props.mouse, {
+                ui.isInsideRect(props.mouse, {
                   left: 10,
                   top: 10,
                   width: 630,
@@ -314,7 +314,7 @@ class TestRender extends Component {
 
               // volume
               if (
-                ui.isInsideGraph(props.mouse, {
+                ui.isInsideRect(props.mouse, {
                   left: 10,
                   top: 310,
                   width: 630,
@@ -346,13 +346,13 @@ class TestRender extends Component {
 
               // x line and x label
               if (
-                ui.isInsideGraph(props.mouse, {
+                ui.isInsideRect(props.mouse, {
                   left: 10,
                   top: 10,
                   width: 630,
                   height: 280
                 }) ||
-                ui.isInsideGraph(props.mouse, {
+                ui.isInsideRect(props.mouse, {
                   left: 10,
                   top: 310,
                   width: 630,

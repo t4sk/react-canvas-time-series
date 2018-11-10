@@ -22,7 +22,7 @@ class TestDrag extends Component {
       return
     }
 
-    if (!ui.isInsideGraph(mouse, this.props.graph)) {
+    if (!ui.isInsideRect(mouse, this.props.graph)) {
       return
     }
 

@@ -18,7 +18,7 @@ class TestZoom extends Component {
   }
 
   onWheel = (e, mouse) => {
-    if (ui.isInsideGraph(mouse, this.props.graph)) {
+    if (ui.isInsideRect(mouse, this.props.graph)) {
       e.preventDefault()
 
       if (e.deltaY > 0) {

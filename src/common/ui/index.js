@@ -10,12 +10,12 @@ import type {
   DrawXLabelAtProps,
 } from './types'
 
-// TODO rename isInsideRect
-export function isInsideGraphHorizontal (mouse: Mouse, graph: Graph): boolean {
+// TODO flow Graph -> Rect
+export function isInsideRectHorizontal (mouse: Mouse, rect: Graph): boolean {
   if (
     !mouse.x ||
-    mouse.x < graph.left ||
-    mouse.x > graph.left + graph.width
+    mouse.x < rect.left ||
+    mouse.x > rect.left + rect.width
   ) {
     return false
   }
@@ -23,11 +23,12 @@ export function isInsideGraphHorizontal (mouse: Mouse, graph: Graph): boolean {
   return true
 }
 
-export function isInsideGraphVertical (mouse: Mouse, graph: Graph): boolean {
+// TODO flow Graph -> Rect
+export function isInsideRectVertical (mouse: Mouse, rect: Graph): boolean {
   if (
     !mouse.y ||
-    mouse.y < graph.top ||
-    mouse.y > graph.top + graph.height
+    mouse.y < rect.top ||
+    mouse.y > rect.top + rect.height
   ) {
     return false
   }
@@ -35,10 +36,11 @@ export function isInsideGraphVertical (mouse: Mouse, graph: Graph): boolean {
   return true
 }
 
-export function isInsideGraph (mouse: Mouse, graph: Graph): boolean {
+// TODO flow Graph -> Rect
+export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
   return (
-    isInsideGraphHorizontal(mouse, graph) &&
-    isInsideGraphVertical(mouse, graph)
+    isInsideRectHorizontal(mouse, rect) &&
+    isInsideRectVertical(mouse, rect)
   )
 }
 
@@ -270,7 +272,7 @@ export function clear(ctx: any, props: Props) {
 export function draw (ctx: any, props: Props) {
   clear(ctx, props)
 
-  if (!isInsideGraph(props.mouse, props.graph)) {
+  if (!isInsideRect(props.mouse, props.graph)) {
     return
   }
 

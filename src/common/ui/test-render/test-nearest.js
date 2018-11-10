@@ -60,7 +60,7 @@ class TestNearest extends Component {
       graph,
     } = this.props
 
-    if (ui.isInsideGraph(mouse, graph)) {
+    if (ui.isInsideRect(mouse, graph)) {
       const x = linear({
         dy: xMax - xMin,
         dx: graph.width,

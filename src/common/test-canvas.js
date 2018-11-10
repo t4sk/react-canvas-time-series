@@ -32,8 +32,8 @@ class TestCanvas extends Component {
   }
 
   onMouseDown = (e) => {
-    // TODO remove isInsideGraph?
-    if (ui.isInsideGraph(this.mouse, this.props.graph)) {
+    // TODO remove isInsideRect?
+    if (ui.isInsideRect(this.mouse, this.props.graph)) {
       this.mouse.isDragging = true
       this.mouse.dragStartLeft = this.mouse.x
       this.mouse.dragStartXMin = this.props.xMin
