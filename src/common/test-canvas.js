@@ -71,9 +71,6 @@ class TestCanvas extends Component {
       background: this.background.current.getContext('2d', { alpha: false })
     }
 
-    // TODO remove
-    this.props.getRefs(this.ctx)
-
     if (this.props.drawUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
       this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
@@ -181,7 +178,6 @@ const style = {
 }
 
 TestCanvas.defaultProps = {
-  getRefs: (refs) => {},
   onMouseMove: (mouse) => {},
   onMouseOut: () => {},
   onWheel: (e, mouse) => {},
