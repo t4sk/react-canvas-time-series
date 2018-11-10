@@ -118,34 +118,15 @@ class TestNearest extends Component {
             ui.draw(ctx, props)
 
             if (this.state.data) {
-              const centerX = linear({
-                dy: props.graph.width,
-                dx: props.xMax - props.xMin,
-                y0: props.graph.left - props.graph.width / (props.xMax - props.xMin) * props.xMin
-              })(this.state.data.x)
-
-              const centerY = linear({
-                dy: -props.graph.height,
-                dx: props.yMax - props.yMin,
-                y0: props.graph.top + props.graph.height + props.graph.height / (props.yMax - props.yMin) * props.yMin
-              })(this.state.data.y)
-
-              const radius = 10
-
-              ctx.beginPath();
-              ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-              ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
-              ctx.fill();
-
-              ctx.beginPath();
-              ctx.fillStyle = "orange"
-              ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
-
-              ctx.beginPath();
-              ctx.lineWidth = 2
-              ctx.strokeStyle = "white"
-              ctx.rect(centerX - 5, centerY - 5, 10, 10)
-              ctx.stroke()
+              line.drawPointAt(ctx, {
+                ...props,
+                x: this.state.data.x,
+                y: this.state.data.y,
+                radius: 10,
+                ambientColor: 'rgba(255, 255, 0, 0.5)',
+                color: 'orange',
+                borderColor: 'white',
+              })
             }
           }}
           onMouseMove={this.onMouseMoveTestGetNearestData}

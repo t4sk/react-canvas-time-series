@@ -2,6 +2,50 @@
 import { round, linear } from '../math'
 import type { Props } from './types'
 
+//TODO props
+export function drawPointAt(ctx: any, props) {
+  const {
+    graph,
+    xMax,
+    xMin,
+    yMax,
+    yMin,
+    x,
+    y,
+    color,
+    borderColor,
+    ambientColor,
+    radius,
+  } = props
+
+  const centerX = linear({
+    dy: graph.width,
+    dx: xMax - xMin,
+    y0: graph.left - graph.width / (xMax - xMin) * xMin
+  })(x)
+
+  const centerY = linear({
+    dy: -graph.height,
+    dx: yMax - yMin,
+    y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
+  })(y)
+
+  ctx.beginPath()
+  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false)
+  ctx.fillStyle = ambientColor
+  ctx.fill()
+
+  ctx.beginPath()
+  ctx.fillStyle = color
+  ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
+
+  ctx.beginPath()
+  ctx.lineWidth = 2
+  ctx.strokeStyle = borderColor
+  ctx.rect(centerX - 5, centerY - 5, 10, 10)
+  ctx.stroke()
+}
+
 export function draw (ctx: any, props: Props) {
   const {
     xMin,

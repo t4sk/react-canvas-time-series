@@ -393,7 +393,6 @@ class TestRender extends Component {
               }
 
               if (this.state.data) {
-                // TODO line.drawPointAt
                 const graph = {
                   left: 10,
                   top: 10,
@@ -406,34 +405,20 @@ class TestRender extends Component {
                 const yMax = Y_MAX
                 const yMin = Y_MIN
 
-                const centerX = linear({
-                  dy: graph.width,
-                  dx: xMax - xMin,
-                  y0: graph.left - graph.width / (xMax - xMin) * xMin
-                })(this.state.data.x)
-
-                const centerY = linear({
-                  dy: -graph.height,
-                  dx: yMax - yMin,
-                  y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
-                })(this.state.data.y)
-
-                const radius = 10
-
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.fillStyle = "orange"
-                ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
-
-                ctx.beginPath();
-                ctx.lineWidth = 2
-                ctx.strokeStyle = "white"
-                ctx.rect(centerX - 5, centerY - 5, 10, 10)
-                ctx.stroke()
+                line.drawPointAt(ctx, {
+                  ...props,
+                  graph,
+                  xMax,
+                  xMin,
+                  yMax,
+                  yMin,
+                  x: this.state.data.x,
+                  y: this.state.data.y,
+                  radius: 10,
+                  ambientColor: 'rgba(255, 255, 0, 0.5)',
+                  color: 'orange',
+                  borderColor: 'white',
+                })
               }
             }}
             onMouseMove={this.onMouseMove}
