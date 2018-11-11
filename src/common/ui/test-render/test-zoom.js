@@ -64,7 +64,12 @@ class TestZoom extends Component {
             }
           }))
         }}
-        drawUI={ui.draw}
+        drawUI={(ctx, mouse) => {
+          ui.draw(ctx, {
+            ...this.props,
+            mouse,
+          })
+        }}
         onWheel={this.onWheel}
       />
     )

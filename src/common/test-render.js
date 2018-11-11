@@ -155,37 +155,40 @@ class TestRender extends Component {
                 ...this.props.volume,
               })
             }}
-            drawData={(ctx, props) => {
+            drawData={(ctx) => {
               line.draw(ctx, {
-                ...props,
-                ...props.candlestick,
+                ...this.props,
+                ...this.props.candlestick,
                 data: LINE_DATA,
               })
 
               candlestick.draw(ctx, {
-                ...props,
-                ...props.candlestick,
+                ...this.props,
+                ...this.props.candlestick,
                 data: DATA
               })
 
               // volume
               bar.draw(ctx, {
-                ...props,
-                ...props.volume,
+                ...this.props,
+                ...this.props.volume,
                 data: DATA.map(d => ({...d, y: d.volume}))
               })
             }}
-            drawUI={(ctx, props) => {
-              ui.clear(ctx, props)
+            drawUI={(ctx, mouse) => {
+              ui.clear(ctx, {
+                ...this.props,
+                mouse,
+              })
 
-              if (!ui.isInsideRectHorizontal(props.mouse, {
+              if (!ui.isInsideRectHorizontal(mouse, {
                 left: 10,
                 width: 680,
               })) {
                 return
               }
 
-              if (!ui.isInsideRectVertical(props.mouse, {
+              if (!ui.isInsideRectVertical(mouse, {
                 top: 10,
                 height: 430,
               })) {
@@ -193,56 +196,56 @@ class TestRender extends Component {
               }
 
               // candlestick
-              if (ui.isInsideRect(props.mouse, props.candlestick.graph)) {
+              if (ui.isInsideRect(mouse, this.props.candlestick.graph)) {
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawYLine(ctx, {
-                  mouse: props.mouse,
-                  ...props.candlestick
+                  mouse,
+                  ...this.props.candlestick
                 })
 
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawYLabel(ctx, {
-                  mouse: props.mouse,
-                  ...props.candlestick
+                  mouse,
+                  ...this.props.candlestick
                 })
               }
 
               // // volume
-              if (ui.isInsideRect(props.mouse, props.volume.graph)) {
+              if (ui.isInsideRect(mouse, this.props.volume.graph)) {
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawYLine(ctx, {
-                  mouse: props.mouse,
-                  ...props.volume
+                  mouse,
+                  ...this.props.volume
                 })
 
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawYLabel(ctx, {
-                  mouse: props.mouse,
-                  ...props.volume
+                  mouse,
+                  ...this.props.volume
                 })
               }
 
               // x line and x label
               if (
-                ui.isInsideRect(props.mouse, props.candlestick.graph) ||
-                ui.isInsideRect(props.mouse, props.volume.graph)
+                ui.isInsideRect(mouse, this.props.candlestick.graph) ||
+                ui.isInsideRect(mouse, this.props.volume.graph)
               ) {
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawXLine(ctx, {
-                  mouse: props.mouse,
-                  ...props.candlestick
+                  mouse,
+                  ...this.props.candlestick
                 })
 
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawXLine(ctx, {
-                  mouse: props.mouse,
-                  ...props.volume
+                  mouse,
+                  ...this.props.volume
                 })
 
                 // TODO require more explicit props instead of props.candlestick
                 ui.drawXLabel(ctx, {
-                  mouse: props.mouse,
-                  ...props.volume
+                  mouse,
+                  ...this.props.volume
                 })
               }
 
@@ -253,12 +256,12 @@ class TestRender extends Component {
                   xMin,
                   yMax,
                   yMin
-                } = props.candlestick
+                } = this.props.candlestick
 
 
                 // TODO require more explicit props instead of props.candlestick
                 line.drawPointAt(ctx, {
-                  ...props,
+                  ...this.props,
                   graph,
                   xMax,
                   xMin,

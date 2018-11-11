@@ -41,7 +41,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Hide X Line</h3>
@@ -55,7 +60,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Hide Y Label</h3>
@@ -69,7 +79,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Hide Y Line</h3>
@@ -83,7 +98,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>X Label Bottom</h3>
@@ -100,7 +120,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>X Label Top</h3>
@@ -120,28 +145,33 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>X Label Fixed</h3>
         <TestCanvas
           {...this.props}
-          drawData={(ctx, props) => {
+          drawData={(ctx) => {
             ui.drawXLineAt(ctx, {
-              ...props,
+              ...this.props,
               lineColor: 'orange',
               left: 275
             })
 
             ui.drawXLabelAt(ctx, {
-              ...props,
+              ...this.props,
               left: 275,
               text: 'Here',
-              height: props.ui.xLabelHeight,
-              width: props.ui.xLabelWidth,
-              labelAt: props.ui.xLabelAt,
+              height: this.props.ui.xLabelHeight,
+              width: this.props.ui.xLabelWidth,
+              labelAt: this.props.ui.xLabelAt,
               backgroundColor: 'orange',
-              font: props.ui.xLabelFont,
+              font: this.props.ui.xLabelFont,
               color: 'white'
             })
           }}
@@ -149,7 +179,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Y Label Left</h3>
@@ -166,7 +201,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Y Label Right</h3>
@@ -186,27 +226,32 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
 
         <h3>Y Label Fixed</h3>
         <TestCanvas
           {...this.props}
-          drawData={(ctx, props) => {
+          drawData={(ctx) => {
             ui.drawYLineAt(ctx, {
-              ...props,
+              ...this.props,
               lineColor: 'orange',
               top: 150
             })
             ui.drawYLabelAt(ctx, {
-              ...props,
+              ...this.props,
               top: 150,
-              height: props.ui.yLabelHeight,
-              width: props.ui.yLabelWidth,
-              labelAt: props.ui.yLabelAt,
+              height: this.props.ui.yLabelHeight,
+              width: this.props.ui.yLabelWidth,
+              labelAt: this.props.ui.yLabelAt,
               text: 'Here',
               backgroundColor: 'orange',
-              font: props.ui.yLabelFont,
+              font: this.props.ui.yLabelFont,
               color: 'white'
             })
           }}
@@ -214,7 +259,12 @@ class TestRender extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawUI={ui.draw}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
+          }}
         />
       </div>
     )

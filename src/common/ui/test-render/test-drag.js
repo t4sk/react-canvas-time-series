@@ -8,6 +8,7 @@ import {
 } from '../../background/common'
 import * as ui from '../index'
 
+// TODO fix
 class TestDrag extends Component {
   constructor (props) {
     super(props)
@@ -88,7 +89,12 @@ class TestDrag extends Component {
           background.fillCanvas(ctx, this.props)
           background.draw(ctx, this.props)
         }}
-        drawUI={ui.draw}
+        drawUI={(ctx, mouse) => {
+          ui.draw(ctx, {
+            ...this.props,
+            mouse,
+          })
+        }}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}

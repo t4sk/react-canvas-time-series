@@ -104,9 +104,9 @@ class TestNearest extends Component {
             background.fillCanvas(ctx, this.props)
             background.draw(ctx, this.props)
           }}
-          drawData={(ctx, props) => {
+          drawData={(ctx) => {
             line.draw(ctx, {
-              ...props,
+              ...this.props,
               data: LINE_DATA,
               line: {
                 color: 'green',
@@ -114,12 +114,16 @@ class TestNearest extends Component {
               }
             })
           }}
-          drawUI={(ctx, props) => {
-            ui.draw(ctx, props)
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props,
+              mouse,
+            })
 
             if (this.state.data) {
               line.drawPointAt(ctx, {
-                ...props,
+                ...this.props,
+                mouse: mouse,
                 x: this.state.data.x,
                 y: this.state.data.y,
                 radius: 10,
