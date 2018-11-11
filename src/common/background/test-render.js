@@ -17,9 +17,9 @@ class TestRender extends Component {
               width: 240,
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -30,9 +30,9 @@ class TestRender extends Component {
               showXLabel: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -43,9 +43,9 @@ class TestRender extends Component {
               showXLine: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -56,9 +56,9 @@ class TestRender extends Component {
               showYLabel: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -69,9 +69,9 @@ class TestRender extends Component {
               showYLine: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -82,9 +82,9 @@ class TestRender extends Component {
               xAxisAt: 'bottom'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -95,9 +95,9 @@ class TestRender extends Component {
               xAxisAt: 'top'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -108,9 +108,9 @@ class TestRender extends Component {
               yAxisAt: 'left'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -121,9 +121,9 @@ class TestRender extends Component {
               yAxisAt: 'right'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
       </div>

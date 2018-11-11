@@ -37,9 +37,9 @@ class TestRender extends Component {
               showXLabel: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -51,9 +51,9 @@ class TestRender extends Component {
               showXLine: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -65,9 +65,9 @@ class TestRender extends Component {
               showYLabel: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -79,9 +79,9 @@ class TestRender extends Component {
               showYLine: false
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -96,9 +96,9 @@ class TestRender extends Component {
               xLabelAt: 'bottom'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -116,9 +116,9 @@ class TestRender extends Component {
               xLabelAt: 'top'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -145,9 +145,9 @@ class TestRender extends Component {
               color: 'white'
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -162,9 +162,9 @@ class TestRender extends Component {
               yLabelAt: 'left'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -182,9 +182,9 @@ class TestRender extends Component {
               yLabelAt: 'right'
             }
           })}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />
@@ -210,9 +210,9 @@ class TestRender extends Component {
               color: 'white'
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
           drawUI={ui.draw}
         />

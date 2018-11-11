@@ -142,17 +142,17 @@ class TestRender extends Component {
         }}>
           <TestCanvas
             {...this.props}
-            drawBackground={(ctx, props) => {
-              background.fillCanvas(ctx, props)
+            drawBackground={(ctx) => {
+              background.fillCanvas(ctx, this.props)
 
               background.draw(ctx, {
-                ...props,
-                ...props.candlestick,
+                ...this.props,
+                ...this.props.candlestick,
               })
 
               background.draw(ctx, {
-                ...props,
-                ...props.volume,
+                ...this.props,
+                ...this.props.volume,
               })
             }}
             drawData={(ctx, props) => {

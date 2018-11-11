@@ -46,9 +46,9 @@ class TestRender extends Component {
               data: FIXED_DATA
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -63,9 +63,9 @@ class TestRender extends Component {
               data: RANDOM_DATA_SMALL
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -80,9 +80,9 @@ class TestRender extends Component {
               data: RANDOM_DATA_MEDIUM
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
 
@@ -97,9 +97,9 @@ class TestRender extends Component {
               data: RANDOM_DATA_LARGE
             })
           }}
-          drawBackground={(ctx, props) => {
-            background.fillCanvas(ctx, props)
-            background.draw(ctx, props)
+          drawBackground={(ctx) => {
+            background.fillCanvas(ctx, this.props)
+            background.draw(ctx, this.props)
           }}
         />
       </div>

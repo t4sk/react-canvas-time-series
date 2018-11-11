@@ -53,9 +53,9 @@ class TestUpdateProps extends Component {
             }))
           }
         })}
-        drawBackground={(ctx, props) => {
-          background.fillCanvas(ctx, props)
-          background.draw(ctx, props)
+        drawBackground={(ctx) => {
+          background.fillCanvas(ctx, this.props)
+          background.draw(ctx, this.props)
         }}
         drawUI={ui.draw}
         onWheel={this.onWheel}
