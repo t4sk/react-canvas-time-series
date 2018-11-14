@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import GraphCanvas from './graph-canvas'
 
-describe('ExampleComponent', () => {
+describe('GraphCanvas', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(GraphCanvas).toBeTruthy()
   })
 })
