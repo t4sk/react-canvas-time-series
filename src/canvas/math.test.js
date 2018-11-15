@@ -4,7 +4,7 @@ import {
   round,
   linear,
   nearestStepBelow,
-  getNearestDataAtX,
+  findIndexOfNearestData,
 } from './math'
 
 test("floor", () => {
@@ -39,25 +39,33 @@ test("nearest step", () => {
   expect(nearestStepBelow(1905, 5)).toEqual(1905)
 })
 
-const DATA = [{
-  x: 0
-}, {
-  x: 5
-}, {
-  x: 10
-}]
+const DATA = [0, 5, 10]
 
-describe("get nearest data at x", () => {
-  test("should return min", () => {
-    expect(getNearestDataAtX(2, DATA)).toEqual({x: 0})
+describe("find index of nearest data to x", () => {
+  test("should return -1 if data empty", () => {
+    expect(findIndexOfNearestData(2, [])).toEqual(-1)
   })
 
-  test("should return mid", () => {
-    expect(getNearestDataAtX(3, DATA)).toEqual({x: 5})
-    expect(getNearestDataAtX(7, DATA)).toEqual({x: 5})
+  test("should return 0 if data length == 1", () => {
+    expect(findIndexOfNearestData(2, [1])).toEqual(0)
   })
 
-  test("should return max", () => {
-    expect(getNearestDataAtX(8, DATA)).toEqual({x: 10})
+  test("should throw if data not sorted by ascending order", () => {
+    expect(() => {
+      findIndexOfNearestData(2, [2, 1])
+    }).toThrow()
+  })
+
+  test("should return index of min", () => {
+    expect(findIndexOfNearestData(2, DATA)).toEqual(0)
+  })
+
+  test("should return index of mid", () => {
+    expect(findIndexOfNearestData(3, DATA)).toEqual(1)
+    expect(findIndexOfNearestData(7, DATA)).toEqual(1)
+  })
+
+  test("should return index of max", () => {
+    expect(findIndexOfNearestData(8, DATA)).toEqual(2)
   })
 })

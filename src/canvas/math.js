@@ -15,9 +15,9 @@ export function nearestStepBelow (x: number, step: number): number {
 // TODO test
 export function findIndexOfNearestData (
   x: number,
-  data: Array<{number}>
+  data: Array<number>
 ): {x: number} {
-  let low = 0;
+  let low = 0
   let high = data.length - 1
 
   if (data.length <= 1) {
@@ -39,7 +39,7 @@ export function findIndexOfNearestData (
     }
   }
 
-  if (data[low - 1]) {
+  if (data[low - 1] !== undefined) {
     const midX = (data[low] + data[low - 1]) / 2
 
     if (x < midX) {
