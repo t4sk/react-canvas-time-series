@@ -27,32 +27,66 @@ RANDOM_DATA.sort((a, b) => a.x - b.x)
 
 class LineTestRender extends Component {
   drawBackground = (ctx) => {
-    background.fillCanvas(ctx, this.props)
-    background.draw(ctx, this.props)
-  }
-
-  drawData = (ctx, data) => {
-    line.draw(ctx, {
-      ...this.props,
-      data,
-    })
+    canvas.fill(ctx, this.props.canvas)
+    background.draw(ctx, this.props.background)
   }
 
   render () {
     return (
       <div>
-        <h3>Line Graph</h3>
+        <h3>Line</h3>
         <GraphCanvas
-          {...this.props}
-          drawData={(ctx) => this.drawData(ctx, FIXED_DATA)}
+          canvas={this.props.canvas}
           drawBackground={this.drawBackground}
+          drawData={(ctx) => {
+            line.draw(ctx, {
+              ...this.props.line,
+              data: FIXED_DATA,
+              xMin: X_MIN,
+              xMax: X_MAX,
+              yMin: Y_MIN,
+              yMax: Y_MAX,
+            })
+          }}
         />
 
-        <h3>Line Graph (Random)</h3>
+        <h3>Line (Random)</h3>
         <GraphCanvas
-          {...this.props}
-          drawData={(ctx) => this.drawData(ctx, RANDOM_DATA)}
+          canvas={this.props.canvas}
           drawBackground={this.drawBackground}
+          drawData={(ctx) => {
+            line.draw(ctx, {
+              ...this.props.line,
+              data: RANDOM_DATA,
+              xMin: X_MIN,
+              xMax: X_MAX,
+              yMin: Y_MIN,
+              yMax: Y_MAX,
+            })
+          }}
+        />
+
+        <h3>Point</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={this.drawBackground}
+          drawData={(ctx) => {
+            line.drawPoint(ctx, {
+              graph: this.props.line.graph,
+              xMin: X_MIN,
+              xMax: X_MAX,
+              yMin: Y_MIN,
+              yMax: Y_MAX,
+              x: (X_MAX + X_MIN) / 2,
+              y: (Y_MAX + Y_MIN) / 2,
+              size: 6,
+              color: 'orange',
+              borderWidth: 2,
+              borderColor: 'white',
+              ambientColor: 'rgba(255, 255, 0, 0.5)',
+              ambientRadius: 10,
+            })
+          }}
         />
       </div>
     )
@@ -92,23 +126,28 @@ LineTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15
-  },
-  graph: {
-    left: 70,
-    top: 10,
-    width: 400,
-    height: 220
+    xInterval: 15,
+
+    xMin: X_MIN,
+    xMax: X_MAX,
+    yMin: Y_MIN,
+    yMax: Y_MAX
   },
   line: {
+    graph: {
+      left: 70,
+      top: 10,
+      width: 400,
+      height: 220
+    },
     color: 'green',
-    width: 2
+    width: 1,
+    data: [],
+    xMin: X_MIN,
+    xMax: X_MAX,
+    yMin: Y_MIN,
+    yMax: Y_MAX
   },
-  data: [],
-  xMin: X_MIN,
-  xMax: X_MAX,
-  yMin: Y_MIN,
-  yMax: Y_MAX
 }
 
 export default LineTestRender

@@ -1,9 +1,9 @@
 // @flow
-import { round, linear } from '../math'
+import { round, floor, linear } from '../math'
 import type { Props } from './types'
 
 //TODO flow props
-export function drawPointAt(ctx: any, props) {
+export function drawPoint(ctx: any, props) {
   const {
     graph,
     xMax,
@@ -13,9 +13,11 @@ export function drawPointAt(ctx: any, props) {
     x,
     y,
     color,
+    size,
     borderColor,
+    borderWidth,
     ambientColor,
-    radius,
+    ambientRadius,
   } = props
 
   const centerX = linear({
@@ -30,20 +32,27 @@ export function drawPointAt(ctx: any, props) {
     y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
   })(y)
 
+  const halfSize = floor(size / 2)
+
   ctx.beginPath()
-  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false)
-  ctx.fillStyle = ambientColor
-  ctx.fill()
+
+  if (ambientRadius > 0) {
+    ctx.arc(centerX, centerY, ambientRadius, 0, 2 * Math.PI, false)
+    ctx.fillStyle = ambientColor
+    ctx.fill()
+  }
 
   ctx.beginPath()
   ctx.fillStyle = color
-  ctx.fillRect(centerX - 5, centerY - 5, 10, 10)
+  ctx.fillRect(centerX - halfSize, centerY - halfSize, size, size)
 
-  ctx.beginPath()
-  ctx.lineWidth = 2
-  ctx.strokeStyle = borderColor
-  ctx.rect(centerX - 5, centerY - 5, 10, 10)
-  ctx.stroke()
+  if (borderWidth > 0) {
+    ctx.beginPath()
+    ctx.lineWidth = borderWidth
+    ctx.strokeStyle = borderColor
+    ctx.rect(centerX - halfSize, centerY - halfSize, size, size)
+    ctx.stroke()
+  }
 }
 
 export function draw (ctx: any, props: Props) {
@@ -68,8 +77,8 @@ export function draw (ctx: any, props: Props) {
     y0: graph.top + graph.height * yMax / (yMax - yMin)
   })
 
-  ctx.strokeStyle = props.line.color
-  ctx.lineWidth = props.line.width
+  ctx.strokeStyle = props.color
+  ctx.lineWidth = props.width
 
   for (let i = 1; i < data.length; i++) {
     const l0 = round(toLeft(data[i - 1].x))
