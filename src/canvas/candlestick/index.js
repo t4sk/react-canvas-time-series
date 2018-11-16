@@ -2,6 +2,7 @@
 import { round, linear } from '../math'
 import type { Props } from './types'
 
+// TODO render candle at timestamp
 export function draw (ctx: any, props: Props) {
   const {
     yMin,
