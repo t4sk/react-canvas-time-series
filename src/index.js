@@ -15,8 +15,8 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO pass (ctx, props) to this.props.drawData ?
 // TODO pass (ctx, mouse, props) to this.props.drawUI ?
 
-// TODO draw point width optional ambient color
 // TODO clear canvas context before drawing multiple ambient color
-// TODO rename radius to amibientRadius
 
 // TODO flow
+
+// TODO how to pass common props (canvas, graph, min, max,...) to each draw func.

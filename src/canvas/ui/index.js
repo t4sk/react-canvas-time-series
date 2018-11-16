@@ -44,8 +44,20 @@ export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
   )
 }
 
-export function drawYLineAt (ctx: any, props: DrawYLineAtProps) {
-  // line
+export function drawXLine (ctx: any, props: DrawXLineAtProps) {
+  ctx.beginPath()
+
+  ctx.strokeStyle = props.lineColor
+  ctx.setLineDash([5, 5])
+
+  ctx.moveTo(props.left, props.graph.top)
+  ctx.lineTo(props.left, props.graph.top + props.graph.height)
+  ctx.stroke()
+
+  ctx.setLineDash([])
+}
+
+export function drawYLine (ctx: any, props: DrawYLineAtProps) {
   ctx.beginPath()
 
   ctx.strokeStyle = props.lineColor
@@ -93,7 +105,7 @@ function getYLabelTextLeft (props: DrawYLabelAtProps): number {
   }
 }
 
-export function drawYLabelAt (ctx: any, props: DrawYLabelAtProps) {
+export function drawYLabel (ctx: any, props: DrawYLabelAtProps) {
   // label
   ctx.fillStyle = props.backgroundColor
 
@@ -115,19 +127,6 @@ export function drawYLabelAt (ctx: any, props: DrawYLabelAtProps) {
     getYLabelTextLeft(props),
     props.top
   )
-}
-
-export function drawXLineAt (ctx: any, props: DrawXLineAtProps) {
-  ctx.beginPath()
-
-  ctx.strokeStyle = props.lineColor
-  ctx.setLineDash([5, 5])
-
-  ctx.moveTo(props.left, props.graph.top)
-  ctx.lineTo(props.left, props.graph.top + props.graph.height)
-  ctx.stroke()
-
-  ctx.setLineDash([])
 }
 
 function getXLabelTop (props: DrawXLabelAtProps): number {
@@ -154,7 +153,7 @@ function getXLabelTextTop (props: DrawXLabelAtProps): number {
   }
 }
 
-export function drawXLabelAt (ctx: any, props: DrawXLabelAtProps) {
+export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
   // label
   ctx.fillStyle = props.backgroundColor
 
@@ -179,88 +178,6 @@ export function drawXLabelAt (ctx: any, props: DrawXLabelAtProps) {
   )
 }
 
-export function drawXLine (ctx: any, props: Props) {
-  const {
-    mouse,
-    ui
-  } = props
-
-  drawXLineAt(ctx, {
-    ...props,
-    lineColor: ui.xLineColor,
-    left: mouse.x
-  })
-}
-
-export function drawXLabel (ctx: any, props: Props) {
-  const {
-    graph,
-    mouse,
-    ui
-  } = props
-
-  const left = mouse.isDragging ? mouse.dragStartLeft : mouse.x
-  const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
-  const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
-
-  const x = linear({
-    dy: xMax - xMin,
-    dx: graph.width,
-    y0: xMin
-  })(left - graph.left)
-
-  drawXLabelAt(ctx, {
-    ...props,
-    left: mouse.x,
-    text: ui.renderXLabel(x),
-    height: ui.xLabelHeight,
-    width: ui.xLabelWidth,
-    labelAt: ui.xLabelAt,
-    backgroundColor: ui.xLabelBackgroundColor,
-    font: ui.xLabelFont,
-    color: ui.xLabelColor
-  })
-}
-
-export function drawYLine (ctx: any, props: Props) {
-  const {
-    mouse,
-    ui
-  } = props
-
-  drawYLineAt(ctx, {
-    ...props,
-    lineColor: ui.yLineColor,
-    top: mouse.y
-  })
-}
-
-export function drawYLabel (ctx: any, props: Props) {
-  const {
-    graph,
-    mouse,
-    ui
-  } = props
-
-  const y = linear({
-    dy: props.yMax - props.yMin,
-    dx: graph.height,
-    y0: props.yMin
-  })(graph.height - mouse.y + graph.top)
-
-  drawYLabelAt(ctx, {
-    ...props,
-    top: mouse.y,
-    text: ui.renderYLabel(y),
-    height: ui.yLabelHeight,
-    width: ui.yLabelWidth,
-    labelAt: ui.yLabelAt,
-    backgroundColor: ui.yLabelBackgroundColor,
-    font: ui.yLabelFont,
-    color: ui.yLabelColor
-  })
-}
-
 export function clear(ctx: any, props: Props) {
   ctx.clearRect(
     0, 0,
@@ -276,16 +193,60 @@ export function draw (ctx: any, props: Props) {
     return
   }
 
-  if (props.ui.showXLine) {
-    drawXLine(ctx, props)
+  if (props.showXLine) {
+    drawXLine(ctx, {
+      lineColor: props.xLineColor,
+      graph: props.graph,
+      left: props.mouse.x
+    })
   }
-  if (props.ui.showXLabel) {
-    drawXLabel(ctx, props)
+  if (props.showXLabel) {
+    const left = props.mouse.isDragging ? props.mouse.dragStartLeft : props.mouse.x
+    const xMax = props.mouse.isDragging ? props.mouse.dragStartXMax : props.xMax
+    const xMin = props.mouse.isDragging ? props.mouse.dragStartXMin : props.xMin
+
+    const x = linear({
+      dy: xMax - xMin,
+      dx: props.graph.width,
+      y0: xMin
+    })(left - props.graph.left)
+
+    drawXLabel(ctx, {
+      graph: props.graph,
+      left: props.mouse.x,
+      height: props.xLabelHeight,
+      width: props.xLabelWidth,
+      text: props.renderXLabel(x),
+      labelAt: props.xLabelAt,
+      backgroundColor: props.xLabelBackgroundColor,
+      font: props.xLabelFont,
+      color: props.xLabelColor
+    })
   }
-  if (props.ui.showYLine) {
-    drawYLine(ctx, props)
+  if (props.showYLine) {
+    drawYLine(ctx, {
+      lineColor: props.yLineColor,
+      graph: props.graph,
+      top: props.mouse.y
+    })
   }
-  if (props.ui.showYLabel) {
-    drawYLabel(ctx, props)
+  if (props.showYLabel) {
+    const y = linear({
+      dy: props.yMax - props.yMin,
+      dx: props.graph.height,
+      y0: props.yMin
+    })(props.graph.height - props.mouse.y + props.graph.top)
+
+    drawYLabel(ctx, {
+      graph: props.graph,
+      top: props.mouse.y,
+      width: props.yLabelWidth,
+      height: props.yLabelHeight,
+      labelAt: props.yLabelAt,
+      text: props.renderYLabel(y),
+      backgroundColor: props.yLabelBackgroundColor,
+      font: props.yLabelFont,
+      color: props.yLabelColor
+    })
   }
 }
