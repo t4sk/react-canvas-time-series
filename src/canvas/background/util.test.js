@@ -6,7 +6,7 @@ import {
   getGraphHeight,
   getGraphLeft,
   getGraphTop,
-} from './common'
+} from './util'
 
 const props = {
   canvas: {

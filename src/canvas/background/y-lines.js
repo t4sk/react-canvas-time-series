@@ -6,16 +6,16 @@ import {
   getGraphWidth,
   getGraphLeft,
   getGraphTop,
-} from './common'
+} from './util'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
-  switch (props.background.yAxisAt) {
+  switch (props.yAxisAt) {
     case 'left':
       return 'right'
     case 'right':
       return 'left'
     default:
-      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
+      throw new Error(`invalid yAxisAt ${props.yAxisAt}`)
   }
 }
 
@@ -27,7 +27,7 @@ function getLabelLeft (props: Props): number {
     yAxisWidth,
     left,
     width,
-  } = props.background
+  } = props
 
   switch (yAxisAt) {
     case 'left':
@@ -46,12 +46,12 @@ export function drawYLines (ctx: any, props: Props) {
   } = props
 
   // style line
-  ctx.lineWidth = props.background.yLineWidth
-  ctx.strokeStyle = props.background.yLineColor
+  ctx.lineWidth = props.yLineWidth
+  ctx.strokeStyle = props.yLineColor
 
   // style labels
-  ctx.font = props.background.yLabelFont
-  ctx.fillStyle = props.background.yLabelColor
+  ctx.font = props.yLabelFont
+  ctx.fillStyle = props.yLabelColor
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
@@ -68,7 +68,7 @@ export function drawYLines (ctx: any, props: Props) {
   const top = getGraphTop(props)
   const labelLeft = getLabelLeft(props)
 
-  if (props.background.showYLine) {
+  if (props.showYLine) {
     // draw y line top
     ctx.beginPath()
     ctx.moveTo(
@@ -94,15 +94,15 @@ export function drawYLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  if (props.background.yInterval > 0) {
-    const y0 = nearestStepBelow(yMin, props.background.yInterval)
+  if (props.yInterval > 0) {
+    const y0 = nearestStepBelow(yMin, props.yInterval)
 
-    for (let y = y0; y <= yMax; y += props.background.yInterval) {
+    for (let y = y0; y <= yMax; y += props.yInterval) {
       const t = round(toTop(y) + top)
 
       if (t >= top && t <= top + height) {
         // draw line
-        if (props.background.showYLine) {
+        if (props.showYLine) {
           ctx.beginPath()
           ctx.moveTo(
             round(left), round(t)
@@ -114,9 +114,9 @@ export function drawYLines (ctx: any, props: Props) {
         }
 
         // draw text
-        if (props.background.showYLabel) {
+        if (props.showYLabel) {
           ctx.fillText(
-            props.background.renderYLabel(y),
+            props.renderYLabel(y),
             round(labelLeft),
             round(t)
           )

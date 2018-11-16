@@ -6,7 +6,7 @@ import {
   getGraphWidth,
   getGraphLeft,
   getGraphTop,
-} from './common'
+} from './util'
 
 const X_LABEL_VERTICAL_PADDING = 12
 
@@ -16,7 +16,7 @@ function getLabelTop (props: Props): number {
     xAxisHeight,
     top,
     height,
-  } = props.background
+  } = props
 
   switch (xAxisAt) {
     case 'top':
@@ -35,11 +35,11 @@ export function drawXLines (ctx: any, props: Props) {
   } = props
 
   // style line
-  ctx.lineWidth = props.background.xLineWidth
-  ctx.strokeStyle = props.background.xLineColor
+  ctx.lineWidth = props.xLineWidth
+  ctx.strokeStyle = props.xLineColor
   // style labels
-  ctx.font = props.background.xLabelFont
-  ctx.fillStyle = props.background.xLabelColor
+  ctx.font = props.xLabelFont
+  ctx.fillStyle = props.xLabelColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
@@ -56,7 +56,7 @@ export function drawXLines (ctx: any, props: Props) {
   const top = getGraphTop(props)
   const labelTop = getLabelTop(props)
 
-  if (props.background.showXLine) {
+  if (props.showXLine) {
     // draw x line at start
     ctx.beginPath()
     ctx.moveTo(
@@ -82,15 +82,15 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  if (props.background.xInterval > 0) {
-    const x0 = nearestStepBelow(xMin, props.background.xInterval)
+  if (props.xInterval > 0) {
+    const x0 = nearestStepBelow(xMin, props.xInterval)
 
-    for (let x = x0; x <= xMax; x += props.background.xInterval) {
+    for (let x = x0; x <= xMax; x += props.xInterval) {
       const l = round(toLeft(x) + left)
 
       if (l >= left && l <= left + width) {
         // draw line
-        if (props.background.showXLine) {
+        if (props.showXLine) {
           ctx.beginPath()
           ctx.moveTo(
             round(l), round(top)
@@ -102,9 +102,9 @@ export function drawXLines (ctx: any, props: Props) {
         }
 
         // draw text
-        if (props.background.showXLabel) {
+        if (props.showXLabel) {
           ctx.fillText(
-            props.background.renderXLabel(x),
+            props.renderXLabel(x),
             round(l),
             round(labelTop)
           )
