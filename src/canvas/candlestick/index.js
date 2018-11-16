@@ -34,7 +34,7 @@ export function draw (ctx: any, props: Props) {
     const barHeight = Math.max(bottom - top, 1)
 
     // body
-    ctx.fillStyle = props.candlestick.getBackgroundColor(data[i])
+    ctx.fillStyle = props.getBackgroundColor(data[i])
 
     ctx.fillRect(
       round(l),
@@ -43,8 +43,8 @@ export function draw (ctx: any, props: Props) {
       round(barHeight)
     )
 
-    ctx.strokeStyle = props.candlestick.getLineColor(data[i])
-    ctx.lineWidth = props.candlestick.lineWidth
+    ctx.strokeStyle = props.getLineColor(data[i])
+    ctx.lineWidth = props.lineWidth
 
     ctx.beginPath()
     ctx.rect(
@@ -56,8 +56,8 @@ export function draw (ctx: any, props: Props) {
     ctx.stroke()
 
     // wick
-    ctx.strokeStyle = props.candlestick.getWickColor(data[i])
-    ctx.lineWidth = props.candlestick.wickWidth
+    ctx.strokeStyle = props.getWickColor(data[i])
+    ctx.lineWidth = props.wickWidth
 
     // top wick
     ctx.beginPath()
