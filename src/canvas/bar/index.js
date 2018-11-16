@@ -25,12 +25,12 @@ export function draw (ctx: any, props: Props) {
     const t = round(toTop(data[i].y))
     const barHeight = graph.top + graph.height - t
 
-    ctx.fillStyle = props.bar.getBackgroundColor(data[i])
+    ctx.fillStyle = props.getBackgroundColor(data[i])
     ctx.fillRect(l, t, barWidth, barHeight)
 
     ctx.beginPath()
-    ctx.lineWidth = props.bar.lineWidth
-    ctx.strokeStyle = props.bar.getLineColor(data[i])
+    ctx.lineWidth = props.lineWidth
+    ctx.strokeStyle = props.getLineColor(data[i])
     ctx.rect(l, t, barWidth, barHeight)
     ctx.stroke()
   }

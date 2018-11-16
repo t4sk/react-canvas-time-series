@@ -14,6 +14,7 @@ class BackgroundTestRender extends Component {
       <div>
         <h3>Background Position</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -28,6 +29,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Hide X Labels</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -39,6 +41,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Hide X Lines</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -50,6 +53,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Hide Y Labels</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -61,6 +65,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Hide Y Lines</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -72,6 +77,7 @@ class BackgroundTestRender extends Component {
 
         <h3>X Axis Bottom</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -83,6 +89,7 @@ class BackgroundTestRender extends Component {
 
         <h3>X Axis Top</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -94,6 +101,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Y Axis Left</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {
@@ -105,6 +113,7 @@ class BackgroundTestRender extends Component {
 
         <h3>Y Axis Right</h3>
         <GraphCanvas
+          canvas={this.props.canvas}
           drawBackground={(ctx) => {
             this.drawBackground(ctx, {...merge(this.props, {
               background: {

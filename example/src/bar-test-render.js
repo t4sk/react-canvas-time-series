@@ -31,16 +31,9 @@ const RANDOM_DATA_SMALL = RANDOM_DATA_LARGE.slice(0, 10)
 const RANDOM_DATA_MEDIUM = RANDOM_DATA_LARGE.slice(0, 100)
 
 class BarTestRender extends Component {
-  drawBackground = (ctx) => {
-    background.fillCanvas(ctx, this.props)
-    background.draw(ctx, this.props)
-  }
-
-  drawData = (ctx, data) => {
-    bar.draw(ctx, {
-      ...this.props,
-      data,
-    })
+  drawBackground = (ctx, props) => {
+    canvas.fill(ctx, props.canvas)
+    background.draw(ctx, props.background)
   }
 
   render () {
@@ -48,38 +41,94 @@ class BarTestRender extends Component {
       <div>
         <h3>Bar (Fixed data)</h3>
         <GraphCanvas
-          {...this.props}
-          xMin={0}
-          xMax={FIXED_DATA.length}
-          drawData={(ctx) => this.drawData(ctx, FIXED_DATA)}
-          drawBackground={this.drawBackground}
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, {
+              ...this.props,
+              background: {
+                ...this.props.background,
+                xMin: 0,
+                xMax: FIXED_DATA.length,
+              },
+            })
+          }}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props.bar,
+              data: FIXED_DATA,
+              xMin: 0,
+              xMax: FIXED_DATA.length,
+            })
+          }}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <GraphCanvas
-          {...this.props}
-          xMin={0}
-          xMax={RANDOM_DATA_SMALL.length}
-          drawData={(ctx) => this.drawData(ctx, RANDOM_DATA_SMALL)}
-          drawBackground={this.drawBackground}
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, {
+              ...this.props,
+              background: {
+                ...this.props.background,
+                xMin: 0,
+                xMax: RANDOM_DATA_SMALL.length,
+              },
+            })
+          }}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props.bar,
+              data: RANDOM_DATA_SMALL,
+              xMin: 0,
+              xMax: RANDOM_DATA_SMALL.length,
+            })
+          }}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
         <GraphCanvas
-          {...this.props}
-          xMin={0}
-          xMax={RANDOM_DATA_MEDIUM.length}
-          drawData={(ctx) => this.drawData(ctx, RANDOM_DATA_MEDIUM)}
-          drawBackground={this.drawBackground}
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, {
+              ...this.props,
+              background: {
+                ...this.props.background,
+                xMin: 0,
+                xMax: RANDOM_DATA_MEDIUM.length,
+              },
+            })
+          }}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props.bar,
+              data: RANDOM_DATA_MEDIUM,
+              xMin: 0,
+              xMax: RANDOM_DATA_MEDIUM.length,
+            })
+          }}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
         <GraphCanvas
-          {...this.props}
-          xMin={0}
-          xMax={RANDOM_DATA_LARGE.length}
-          drawData={(ctx) => this.drawData(ctx, RANDOM_DATA_LARGE)}
-          drawBackground={this.drawBackground}
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, {
+              ...this.props,
+              background: {
+                ...this.props.background,
+                xMin: 0,
+                xMax: RANDOM_DATA_LARGE.length,
+              },
+            })
+          }}
+          drawData={(ctx) => {
+            bar.draw(ctx, {
+              ...this.props.bar,
+              data: RANDOM_DATA_LARGE,
+              xMin: 0,
+              xMax: RANDOM_DATA_LARGE.length,
+            })
+          }}
         />
       </div>
     )
@@ -119,24 +168,29 @@ BarTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15
-  },
-  graph: {
-    left: 70,
-    top: 10,
-    width: 400,
-    height: 220
+    xInterval: 15,
+
+    yMin: Y_MIN,
+    yMax: Y_MAX,
+    xMin: 0,
+    xMax: 0
   },
   bar: {
+    graph: {
+      left: 70,
+      top: 10,
+      width: 400,
+      height: 220
+    },
     getBackgroundColor: d => 'green',
     getLineColor: d => 'yellow',
-    lineWidth: 1
+    lineWidth: 1,
+    data: [],
+    yMin: Y_MIN,
+    yMax: Y_MAX,
+    xMin: 0,
+    xMax: 0
   },
-  data: [],
-  yMin: Y_MIN,
-  yMax: Y_MAX,
-  xMin: 0,
-  xMax: 0
 }
 
 export default BarTestRender
