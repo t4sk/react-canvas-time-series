@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
+import TestZoom from './test-zoom'
 const { background, ui } = canvas
 
 {/*}
-import TestZoom from './test-zoom'
 import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
 import TestUpdateProps from './test-update-props'
@@ -23,10 +23,10 @@ class UITestRender extends Component {
   render () {
     return (
       <div>
-        {/*}
         <h3>Scroll to Zoom</h3>
         <TestZoom {...this.props} />
 
+        {/*}
         <h3>Get Nearest Data at X</h3>
         <TestNearest {...this.props} />
 
