@@ -52,6 +52,7 @@ export function findIndexOfNearestData (
   return low
 }
 
+// TODO remove
 export function getNearestDataAtX (
   x: number,
   data: Array<{x: number}>
