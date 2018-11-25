@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
 import TestZoom from './test-zoom'
-const { background, ui } = canvas
-
-{/*}
 import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
 import TestUpdateProps from './test-update-props'
-*/}
+
+const { background, ui } = canvas
+
 
 const X_MIN = 1900
 const X_MAX = 2010
@@ -23,19 +22,17 @@ class UITestRender extends Component {
   render () {
     return (
       <div>
-        <h3>Scroll to Zoom</h3>
-        <TestZoom {...this.props} />
-
-        {/*}
-        <h3>Get Nearest Data at X</h3>
-        <TestNearest {...this.props} />
+        <h3>Update Canvas Props</h3>
+        <TestUpdateProps {...this.props} />
 
         <h3>X Drag</h3>
         <TestDrag {...this.props} />
 
-        <h3>Update Canvas Props</h3>
-        <TestUpdateProps {...this.props} />
-        */}
+        <h3>Scroll to Zoom</h3>
+        <TestZoom {...this.props} />
+
+        <h3>Get Nearest Data at X</h3>
+        <TestNearest {...this.props} />
 
         <h3>Hide X Label</h3>
         <GraphCanvas
@@ -309,7 +306,6 @@ UITestRender.defaultProps = {
     canvas: {
       width: 500,
       height: 300,
-      backgroundColor: 'beige',
     },
     graph: {
       left: 70,
