@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
 import { rand } from './util'
-const { background, line } = canvas
+const { background, line, math } = canvas
 
 const X_MIN = 1900
 const X_MAX = 2018
@@ -71,18 +71,31 @@ class LineTestRender extends Component {
           canvas={this.props.canvas}
           drawBackground={this.drawBackground}
           drawData={(ctx) => {
+            const {
+              graph,
+              xMax,
+              xMin,
+              yMax,
+              yMin,
+            } = this.props.line
+
+            const canvasX = math.linear({
+              dy: graph.width,
+              dx: xMax - xMin,
+              y0: graph.left - graph.width / (xMax - xMin) * xMin
+            })((xMax + xMin) / 2)
+
+            const canvasY = math.linear({
+              dy: -graph.height,
+              dx: yMax - yMin,
+              y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
+            })((yMax + yMin) / 2)
+
             line.drawPoint(ctx, {
-              graph: this.props.line.graph,
-              xMin: X_MIN,
-              xMax: X_MAX,
-              yMin: Y_MIN,
-              yMax: Y_MAX,
-              x: (X_MAX + X_MIN) / 2,
-              y: (Y_MAX + Y_MIN) / 2,
-              size: 6,
+              canvasX,
+              canvasY,
               color: 'orange',
-              borderWidth: 2,
-              borderColor: 'white',
+              radius: 3,
               ambientColor: 'rgba(255, 255, 0, 0.5)',
               ambientRadius: 10,
             })
