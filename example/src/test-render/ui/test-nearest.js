@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
 import { rand } from '../../util'
 const { background, ui, line, math } = canvas
-const { linear, round, findIndexOfNearestData } = math
+const { linear, round, nearestIndexOf } = math
 
 const X_MIN = 1900
 const X_MAX = 2010
@@ -68,7 +68,7 @@ class TestNearest extends Component {
         y0: xMin,
       })(mouse.x - graph.left)
 
-      const i = findIndexOfNearestData(x, DATA.map(d => d.x))
+      const i = nearestIndexOf(x, DATA.map(d => d.x))
 
       this.setState((state) => ({
         mouseX: mouse.x,

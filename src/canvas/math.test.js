@@ -4,7 +4,7 @@ import {
   round,
   linear,
   nearestStepBelow,
-  findIndexOfNearestData,
+  nearestIndexOf,
 } from './math'
 
 test("floor", () => {
@@ -43,16 +43,16 @@ const DATA = [0, 5, 10]
 
 describe("find index of nearest data to x", () => {
   test("should return -1 if data empty", () => {
-    expect(findIndexOfNearestData(2, [])).toEqual(-1)
+    expect(nearestIndexOf(2, [])).toEqual(-1)
   })
 
   test("should return 0 if data length == 1", () => {
-    expect(findIndexOfNearestData(2, [1])).toEqual(0)
+    expect(nearestIndexOf(2, [1])).toEqual(0)
   })
 
   test("should throw if data not sorted by ascending order", () => {
     expect(() => {
-      findIndexOfNearestData(2, [2, 1])
+      nearestIndexOf(2, [2, 1])
     }).toThrow()
   })
 

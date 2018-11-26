@@ -12,19 +12,18 @@ export function nearestStepBelow (x: number, step: number): number {
   return Math.floor(x / step) * step
 }
 
-// TODO test
-export function findIndexOfNearestData (
+export function nearestIndexOf (
   x: number,
-  data: Array<number>
+  arr: Array<number>
 ): {x: number} {
   let low = 0
-  let high = data.length - 1
+  let high = arr.length - 1
 
-  if (data.length <= 1) {
+  if (arr.length <= 1) {
     return high
   }
 
-  if (data[low] > data[high]) {
+  if (arr[low] > arr[high]) {
     throw "Data must be sorted in ascending order"
   }
 
@@ -32,15 +31,15 @@ export function findIndexOfNearestData (
   while (low < high) {
     let mid = (low + high) / 2 >> 0
 
-    if (data[mid] > x) {
+    if (arr[mid] > x) {
       high = mid
     } else {
       low = mid + 1
     }
   }
 
-  if (data[low - 1] !== undefined) {
-    const midX = (data[low] + data[low - 1]) / 2
+  if (arr[low - 1] !== undefined) {
+    const midX = (arr[low] + arr[low - 1]) / 2
 
     if (x < midX) {
       return low - 1
