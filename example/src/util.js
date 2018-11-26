@@ -1,5 +1,4 @@
-// @flow
-export function merge (obj1: {} = {}, obj2: {} = {}): {} {
+export function merge (obj1 = {}, obj2 = {}) {
   const keys1 = new Set(Object.keys(obj1))
   const keys2 = new Set(Object.keys(obj2))
 
@@ -16,10 +15,10 @@ export function merge (obj1: {} = {}, obj2: {} = {}): {} {
   }
 }
 
-export function rand (min: number, max: number): number {
+export function rand (min, max) {
   return Math.random() * (max - min) + min
 }
 
-export function randInt (min: number, max: number): number {
+export function randInt (min, max) {
   return Math.floor(rand(min, max))
 }
