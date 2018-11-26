@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
-import { merge } from './util'
+import { merge } from '../util'
 const { background } = canvas
 
 class BackgroundTestRender extends Component {

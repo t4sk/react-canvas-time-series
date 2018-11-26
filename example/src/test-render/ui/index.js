@@ -7,7 +7,6 @@ import TestUpdateProps from './test-update-props'
 
 const { background, ui } = canvas
 
-
 const X_MIN = 1900
 const X_MAX = 2010
 const Y_MIN = 10

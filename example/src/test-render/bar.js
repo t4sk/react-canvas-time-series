@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
-import { rand } from './util'
+import { rand } from '../util'
 const { background, bar } = canvas
 
 const Y_MIN = 0
