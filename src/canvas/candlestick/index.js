@@ -3,6 +3,7 @@ import { round, linear } from '../math'
 import type { Props } from './types'
 
 // TODO render candle at timestamp
+// TODO add space to avoid candle body overlap
 export function draw (ctx: any, props: Props) {
   const {
     yMin,

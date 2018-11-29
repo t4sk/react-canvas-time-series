@@ -2,6 +2,7 @@
 import { round, linear } from '../math'
 import type { Props } from './types'
 
+// TODO add space to avoid overlapping bar charts
 export function draw (ctx: any, props: Props) {
   const {
     yMin,
