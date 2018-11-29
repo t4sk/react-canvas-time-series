@@ -148,24 +148,11 @@ class TestRender extends Component {
               background.draw(ctx, this.props.bar.background)
             }}
             drawData={(ctx) => {
-              // line.draw(ctx, {
-              //   ...this.props,
-              //   ...this.props.candlestick,
-              //   data: LINE_DATA,
-              // })
-              //
-              // candlestick.draw(ctx, {
-              //   ...this.props,
-              //   ...this.props.candlestick,
-              //   data: DATA
-              // })
-              //
-              // // volume
-              // bar.draw(ctx, {
-              //   ...this.props,
-              //   ...this.props.volume,
-              //   data: DATA.map(d => ({...d, y: d.volume}))
-              // })
+              line.draw(ctx, this.props.candlestick.line)
+
+              candlestick.draw(ctx, this.props.candlestick.candlestick)
+
+              bar.draw(ctx, this.props.bar.bar)
             }}
             drawUI={(ctx, mouse) => {
               // ui.clear(ctx, {
@@ -370,28 +357,38 @@ TestRender.defaultProps = {
       xMin: X_MIN,
       xMax: X_MAX
     },
-    graph: {
-      left: 10,
-      top: 10,
-      width: 630,
-      height: 280
-    },
     line: {
+      graph: {
+        left: 60,
+        top: 10,
+        width: 630,
+        height: 280
+      },
       color: 'orange',
-      width: 1
+      width: 1,
+      data: LINE_DATA,
+      xMin: X_MIN,
+      xMax: X_MAX,
+      yMin: Y_MIN,
+      yMax: Y_MAX
     },
     candlestick: {
+      graph: {
+        left: 60,
+        top: 10,
+        width: 630,
+        height: 280
+      },
       wickWidth: 2,
       getWickColor: (d) => d.open <= d.close ? 'green' : 'red',
       lineWidth: 1,
       getLineColor: (d) => d.open <= d.close ? 'green' : 'red',
-      getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink'
+      getBackgroundColor: (d) => d.open <= d.close ? 'lightgreen' : 'pink',
+      data: DATA,
+      yMin: Y_MIN,
+      yMax: Y_MAX,
     },
     ui: UI_DEFAULT_PROPS,
-    yMin: Y_MIN,
-    yMax: Y_MAX,
-    xMax: X_MAX,
-    xMin: X_MIN,
   },
   bar: {
     background: {
@@ -407,22 +404,26 @@ TestRender.defaultProps = {
       xMin: X_MIN,
       xMax: X_MAX
     },
-    graph: {
-      left: 10,
-      top: 310,
-      width: 630,
-      height: 80
-    },
     bar: {
       getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
       getLineColor: d => d.open <= d.close ? 'green' : 'red',
       lineWidth: 1
     },
+    bar: {
+      graph: {
+        left: 60,
+        top: 310,
+        width: 630,
+        height: 80
+      },
+      getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
+      getLineColor: d => d.open <= d.close ? 'green' : 'red',
+      lineWidth: 1,
+      data: DATA.map(d => ({...d, y: d.volume})),
+      yMin: VOLUME_MIN,
+      yMax: VOLUME_MAX,
+    },
     ui: UI_DEFAULT_PROPS,
-    yMin: VOLUME_MIN,
-    yMax: VOLUME_MAX,
-    xMax: X_MAX,
-    xMin: X_MIN,
   },
 }
 
