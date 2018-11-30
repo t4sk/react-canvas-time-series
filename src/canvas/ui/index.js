@@ -181,13 +181,13 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 export function clear(ctx: any, props: Props) {
   ctx.clearRect(
     0, 0,
-    props.canvas.width,
-    props.canvas.height
+    props.width,
+    props.height
   )
 }
 
 export function draw (ctx: any, props: Props) {
-  clear(ctx, props)
+  clear(ctx, props.canvas)
 
   if (!isInsideRect(props.mouse, props.graph)) {
     return

@@ -51,27 +51,6 @@ function generateRandomData (length) {
 
 const DATA = generateRandomData(20)
 
-function getTop(top, padding, height, graph) {
-  return top  + padding
-}
-
-function getLeft(left, padding, width, graph) {
-  if (left -padding - width <= graph.left) {
-     return left + padding
-  }
-  return left - padding - width
-}
-
-function getTransition(left, padding, width, graph) {
-  let transition = ''
-
-  if (left <= graph.left + 2 * (width + padding)) {
-    transition = 'left 0.1s'
-  }
-
-  return transition
-}
-
 class TestRender extends Component {
   constructor (props) {
     super(props)
@@ -86,197 +65,180 @@ class TestRender extends Component {
     }
   }
 
-  // onMouseMove = (e, mouse) => {
-  //   const {
-  //     xMax,
-  //     xMin,
-  //     graph,
-  //   } = this.props.candlestick
-  //
-  //   this.mouse = {
-  //     x: mouse.x,
-  //   }
-  //
-  //   if (
-  //     ui.isInsideRect(mouse, graph) ||
-  //     ui.isInsideRect(mouse, this.props.volume.graph)
-  //   ) {
-  //     const x = linear({
-  //       dy: xMax - xMin,
-  //       dx: graph.width,
-  //       y0: xMin,
-  //     })(mouse.x - graph.left)
-  //
-  //     const data = getNearestDataAtX(x, LINE_DATA)
-  //
-  //     this.setState((state) => ({
-  //       mouseX: mouse.x,
-  //       mouseY: mouse.y,
-  //       data,
-  //     }))
-  //   } else {
-  //     this.setState((state) => ({
-  //       mouseX: undefined,
-  //       mouseY: undefined,
-  //       data: undefined,
-  //     }))
-  //   }
-  // }
-  //
-  // onMouseOut = (e, mouse) => {
-  //   this.setState((state) => ({
-  //     mouseX: undefined,
-  //     mouseY: undefined,
-  //     data: undefined,
-  //   }))
-  // }
+  onMouseMove = (e, mouse) => {
+    const {
+      xMax,
+      xMin,
+      graph,
+    } = this.props.candlestick.candlestick
+
+    this.mouse = {
+      x: mouse.x,
+    }
+
+    if (
+      ui.isInsideRect(mouse, graph) ||
+      ui.isInsideRect(mouse, this.props.bar.bar.graph)
+    ) {
+      const x = linear({
+        dy: xMax - xMin,
+        dx: graph.width,
+        y0: xMin,
+      })(mouse.x - graph.left)
+
+      const i = math.nearestIndexOf(
+        x,
+        LINE_DATA.map(d => d.x)
+      )
+
+      this.setState((state) => ({
+        mouseX: mouse.x,
+        mouseY: mouse.y,
+        data: LINE_DATA[i],
+      }))
+    } else {
+      this.setState((state) => ({
+        mouseX: undefined,
+        mouseY: undefined,
+        data: undefined,
+      }))
+    }
+  }
+
+  onMouseOut = (e, mouse) => {
+    this.setState((state) => ({
+      mouseX: undefined,
+      mouseY: undefined,
+      data: undefined,
+    }))
+  }
 
   render () {
     return (
-      <div>
-        <div style={{
-          position: 'relative',
-          width: '100%',
-          height: '100%'
-        }}>
-          <GraphCanvas
-            canvas={this.props.canvas}
-            drawBackground={(ctx) => {
-              canvas.fill(ctx, this.props.canvas)
+      <GraphCanvas
+        canvas={this.props.canvas}
+        drawBackground={(ctx) => {
+          canvas.fill(ctx, this.props.canvas)
 
-              background.draw(ctx, this.props.candlestick.background)
-              background.draw(ctx, this.props.bar.background)
-            }}
-            drawData={(ctx) => {
-              line.draw(ctx, this.props.candlestick.line)
+          background.draw(ctx, this.props.candlestick.background)
+          background.draw(ctx, this.props.bar.background)
+        }}
+        drawData={(ctx) => {
+          line.draw(ctx, this.props.candlestick.line)
 
-              candlestick.draw(ctx, this.props.candlestick.candlestick)
+          candlestick.draw(ctx, this.props.candlestick.candlestick)
 
-              bar.draw(ctx, this.props.bar.bar)
-            }}
-            drawUI={(ctx, mouse) => {
-              // ui.clear(ctx, {
-              //   ...this.props,
-              //   mouse,
-              // })
-              //
-              // if (!ui.isInsideRectHorizontal(mouse, {
-              //   left: 10,
-              //   width: 680,
-              // })) {
-              //   return
-              // }
-              //
-              // if (!ui.isInsideRectVertical(mouse, {
-              //   top: 10,
-              //   height: 430,
-              // })) {
-              //   return
-              // }
-              //
-              // // candlestick
-              // if (ui.isInsideRect(mouse, this.props.candlestick.graph)) {
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawYLine(ctx, {
-              //     mouse,
-              //     ...this.props.candlestick
-              //   })
-              //
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawYLabel(ctx, {
-              //     mouse,
-              //     ...this.props.candlestick
-              //   })
-              // }
-              //
-              // // // volume
-              // if (ui.isInsideRect(mouse, this.props.volume.graph)) {
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawYLine(ctx, {
-              //     mouse,
-              //     ...this.props.volume
-              //   })
-              //
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawYLabel(ctx, {
-              //     mouse,
-              //     ...this.props.volume
-              //   })
-              // }
-              //
-              // // x line and x label
-              // if (
-              //   ui.isInsideRect(mouse, this.props.candlestick.graph) ||
-              //   ui.isInsideRect(mouse, this.props.volume.graph)
-              // ) {
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawXLine(ctx, {
-              //     mouse,
-              //     ...this.props.candlestick
-              //   })
-              //
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawXLine(ctx, {
-              //     mouse,
-              //     ...this.props.volume
-              //   })
-              //
-              //   // TODO require more explicit props instead of props.candlestick
-              //   ui.drawXLabel(ctx, {
-              //     mouse,
-              //     ...this.props.volume
-              //   })
-              // }
-              //
-              // if (this.state.data) {
-              //   const {
-              //     graph,
-              //     xMax,
-              //     xMin,
-              //     yMax,
-              //     yMin
-              //   } = this.props.candlestick
-              //
-              //
-              //   // TODO require more explicit props instead of props.candlestick
-              //   line.drawPointAt(ctx, {
-              //     ...this.props,
-              //     graph,
-              //     xMax,
-              //     xMin,
-              //     yMax,
-              //     yMin,
-              //     x: this.state.data.x,
-              //     y: this.state.data.y,
-              //     radius: 10,
-              //     ambientColor: 'rgba(255, 255, 0, 0.5)',
-              //     color: 'orange',
-              //     borderColor: 'white',
-              //   })
-              // }
-            }}
-            onMouseMove={this.onMouseMove}
-            onMouseOut={this.onMouseOut}
-          />
-          {this.state.data && (
-            <div
-              style={{
-                position: 'absolute',
-                width: 40,
-                height: 20,
-                top: getTop(this.state.mouseY, 10, 20, this.props.candlestick.graph),
-                left:getLeft(this.state.mouseX, 10, 40, this.props.candlestick.graph),
-                transition: getTransition(this.state.mouseX, 10, 40, this.props.candlestick.graph),
-                zIndex: 4,
-                border: '1px solid black',
-                backgroundColor: 'rgba(255, 255, 255, 0.4)',
-              }}
-            >
-              {this.state.data.x}
-            </div>
-          )}
-        </div>
-      </div>
+          bar.draw(ctx, this.props.bar.bar)
+        }}
+        drawUI={(ctx, mouse) => {
+          ui.clear(ctx, this.props.canvas)
+
+          if (!ui.isInsideRectHorizontal(mouse, {
+            left: 10,
+            width: 680,
+          })) {
+            return
+          }
+
+          if (!ui.isInsideRectVertical(mouse, {
+            top: 10,
+            height: 430,
+          })) {
+            return
+          }
+
+          // candlestick
+          if (ui.isInsideRect(mouse, this.props.candlestick.candlestick.graph)) {
+            console.log("here")
+
+            ui.drawYLine(ctx, {
+              graph: this.props.candlestick.candlestick.graph,
+              lineColor: 'black',
+              top: mouse.y
+            })
+
+            ui.drawYLabel(ctx, {
+              graph: this.props.candlestick.candlestick.graph,
+              top: mouse.y,
+              height: this.props.candlestick.ui.yLabelHeight,
+              width: this.props.candlestick.ui.yLabelWidth,
+              labelAt: this.props.candlestick.ui.yLabelAt,
+              text: 'Here',
+              backgroundColor: 'orange',
+              font: this.props.candlestick.ui.yLabelFont,
+              color: 'white'
+            })
+          }
+          //
+          // // // volume
+          // if (ui.isInsideRect(mouse, this.props.volume.graph)) {
+          //   // TODO require more explicit props instead of props.candlestick
+          //   ui.drawYLine(ctx, {
+          //     mouse,
+          //     ...this.props.volume
+          //   })
+          //
+          //   // TODO require more explicit props instead of props.candlestick
+          //   ui.drawYLabel(ctx, {
+          //     mouse,
+          //     ...this.props.volume
+          //   })
+          // }
+          //
+          // // x line and x label
+          // if (
+          //   ui.isInsideRect(mouse, this.props.candlestick.graph) ||
+          //   ui.isInsideRect(mouse, this.props.volume.graph)
+          // ) {
+          //   // TODO require more explicit props instead of props.candlestick
+          //   ui.drawXLine(ctx, {
+          //     mouse,
+          //     ...this.props.candlestick
+          //   })
+          //
+          //   // TODO require more explicit props instead of props.candlestick
+          //   ui.drawXLine(ctx, {
+          //     mouse,
+          //     ...this.props.volume
+          //   })
+          //
+          //   // TODO require more explicit props instead of props.candlestick
+          //   ui.drawXLabel(ctx, {
+          //     mouse,
+          //     ...this.props.volume
+          //   })
+          // }
+          //
+          // if (this.state.data) {
+          //   const {
+          //     graph,
+          //     xMax,
+          //     xMin,
+          //     yMax,
+          //     yMin
+          //   } = this.props.candlestick
+          //
+          //
+          //   // TODO require more explicit props instead of props.candlestick
+          //   line.drawPointAt(ctx, {
+          //     ...this.props,
+          //     graph,
+          //     xMax,
+          //     xMin,
+          //     yMax,
+          //     yMin,
+          //     x: this.state.data.x,
+          //     y: this.state.data.y,
+          //     radius: 10,
+          //     ambientColor: 'rgba(255, 255, 0, 0.5)',
+          //     color: 'orange',
+          //     borderColor: 'white',
+          //   })
+          // }
+        }}
+        onMouseMove={this.onMouseMove}
+        onMouseOut={this.onMouseOut}
+      />
     )
   }
 }
@@ -326,7 +288,7 @@ const UI_DEFAULT_PROPS = {
   showYLine: true,
   showYLabel: true,
   yLineColor: 'green',
-  yLabelAt: 'right',
+  yLabelAt: 'left',
   yLabelWidth: 50,
   yLabelHeight: 20,
   yLabelBackgroundColor: 'black',
@@ -403,11 +365,6 @@ TestRender.defaultProps = {
       yMax: VOLUME_MAX,
       xMin: X_MIN,
       xMax: X_MAX
-    },
-    bar: {
-      getBackgroundColor: d => d.open <= d.close ? 'lightgreen' : 'pink',
-      getLineColor: d => d.open <= d.close ? 'green' : 'red',
-      lineWidth: 1
     },
     bar: {
       graph: {
