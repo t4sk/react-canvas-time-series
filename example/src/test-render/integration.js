@@ -18,7 +18,7 @@ const VOLUME_MAX = 1000
 
 let LINE_DATA = []
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) {
   LINE_DATA.push({
     x: round(rand(X_MIN, X_MAX)),
     y: round(rand(Y_MIN, Y_MAX))
@@ -49,7 +49,7 @@ function generateRandomData (length) {
   return data
 }
 
-const DATA = generateRandomData(20)
+const DATA = generateRandomData(10)
 
 class TestRender extends Component {
   constructor (props) {
@@ -149,66 +149,111 @@ class TestRender extends Component {
 
           // candlestick
           if (ui.isInsideRect(mouse, this.props.candlestick.candlestick.graph)) {
-            console.log("here")
+            const {
+              yMax,
+              yMin,
+              graph,
+            } = this.props.candlestick.candlestick
 
             ui.drawYLine(ctx, {
-              graph: this.props.candlestick.candlestick.graph,
+              graph,
               lineColor: 'black',
               top: mouse.y
             })
 
+            const y = linear({
+              dy: yMax - yMin,
+              dx: graph.height,
+              y0: yMin
+            })(graph.height - mouse.y + graph.top)
+
             ui.drawYLabel(ctx, {
-              graph: this.props.candlestick.candlestick.graph,
+              graph,
               top: mouse.y,
               height: this.props.candlestick.ui.yLabelHeight,
               width: this.props.candlestick.ui.yLabelWidth,
               labelAt: this.props.candlestick.ui.yLabelAt,
-              text: 'Here',
+              text: y.toFixed(2),
               backgroundColor: 'orange',
               font: this.props.candlestick.ui.yLabelFont,
               color: 'white'
             })
           }
-          //
-          // // // volume
-          // if (ui.isInsideRect(mouse, this.props.volume.graph)) {
-          //   // TODO require more explicit props instead of props.candlestick
-          //   ui.drawYLine(ctx, {
-          //     mouse,
-          //     ...this.props.volume
-          //   })
-          //
-          //   // TODO require more explicit props instead of props.candlestick
-          //   ui.drawYLabel(ctx, {
-          //     mouse,
-          //     ...this.props.volume
-          //   })
-          // }
-          //
-          // // x line and x label
-          // if (
-          //   ui.isInsideRect(mouse, this.props.candlestick.graph) ||
-          //   ui.isInsideRect(mouse, this.props.volume.graph)
-          // ) {
-          //   // TODO require more explicit props instead of props.candlestick
-          //   ui.drawXLine(ctx, {
-          //     mouse,
-          //     ...this.props.candlestick
-          //   })
-          //
-          //   // TODO require more explicit props instead of props.candlestick
-          //   ui.drawXLine(ctx, {
-          //     mouse,
-          //     ...this.props.volume
-          //   })
-          //
-          //   // TODO require more explicit props instead of props.candlestick
-          //   ui.drawXLabel(ctx, {
-          //     mouse,
-          //     ...this.props.volume
-          //   })
-          // }
-          //
+
+          // volume
+          if (ui.isInsideRect(mouse, this.props.bar.bar.graph)) {
+            const {
+              yMax,
+              yMin,
+              graph,
+            } = this.props.bar.bar
+
+            ui.drawYLine(ctx, {
+              graph,
+              lineColor: 'black',
+              top: mouse.y
+            })
+
+            const y = linear({
+              dy: yMax - yMin,
+              dx: graph.height,
+              y0: yMin
+            })(graph.height - mouse.y + graph.top)
+
+            ui.drawYLabel(ctx, {
+              graph,
+              top: mouse.y,
+              height: this.props.bar.ui.yLabelHeight,
+              width: this.props.bar.ui.yLabelWidth,
+              labelAt: this.props.bar.ui.yLabelAt,
+              text: y.toFixed(2),
+              backgroundColor: 'orange',
+              font: this.props.bar.ui.yLabelFont,
+              color: 'white'
+            })
+          }
+
+          // x line and x label
+          if (
+            ui.isInsideRect(mouse, this.props.candlestick.candlestick.graph) ||
+            ui.isInsideRect(mouse, this.props.bar.bar.graph)
+          ) {
+            ui.drawXLine(ctx, {
+              graph: this.props.candlestick.candlestick.graph,
+              lineColor: 'black',
+              left: mouse.x
+            })
+
+            ui.drawXLine(ctx, {
+              graph: this.props.bar.bar.graph,
+              lineColor: 'black',
+              left: mouse.x
+            })
+
+            const {
+              xMax,
+              xMin
+            } = this.props.bar.background
+
+            const x = linear({
+              dy: xMax - xMin,
+              dx: this.props.bar.bar.graph.width,
+              y0: xMin
+            })(mouse.x - this.props.bar.bar.graph.left)
+
+            ui.drawXLabel(ctx, {
+              graph: this.props.bar.bar.graph,
+              left: mouse.x,
+              height: this.props.bar.ui.xLabelHeight,
+              width: this.props.bar.ui.xLabelWidth,
+              text: x.toFixed(0),
+              labelAt: this.props.bar.ui.xLabelAt,
+              backgroundColor: this.props.bar.ui.xLabelBackgroundColor,
+              font: this.props.bar.ui.xLabelFont,
+              color: this.props.bar.ui.xLabelColor
+            })
+          }
+
           // if (this.state.data) {
           //   const {
           //     graph,
