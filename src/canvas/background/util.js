@@ -1,5 +1,6 @@
 // @flow
 // TODO rename file util
+// TODO util func compute graph from background props
 
 export function getGraphWidth (props: Props): number {
   return props.width - props.yAxisWidth
