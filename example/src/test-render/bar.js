@@ -168,7 +168,8 @@ BarTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    // TODO center bar at x
+    xInterval: 1,
 
     yMin: Y_MIN,
     yMax: Y_MAX,
@@ -182,7 +183,7 @@ BarTestRender.defaultProps = {
       width: 400,
       height: 220
     },
-    getBackgroundColor: d => 'green',
+    getBackgroundColor: d => 'rgba(0, 175, 0, 0.6)',
     getLineColor: d => 'yellow',
     lineWidth: 1,
     data: [],

@@ -35,3 +35,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO performance of spread operators when drawing
 // TODO zoomable composable component
 // TODO realistic zoom example with data
+// TODO components for drawing
