@@ -18,7 +18,6 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO pass (ctx, mouse, props) to this.props.drawUI ?
 
 // TODO canvas border color
-// TODO canvas clear method
 
 // TODO margin between background label and graph
 // TODO margin between UI label and graph`

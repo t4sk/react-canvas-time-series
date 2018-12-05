@@ -131,7 +131,7 @@ class TestRender extends Component {
           bar.draw(ctx, this.props.bar.bar)
         }}
         drawUI={(ctx, mouse) => {
-          ui.clear(ctx, this.props.canvas)
+          ctx.clearRect(0, 0, this.props.canvas.width, this.props.canvas.height)
 
           if (!ui.isInsideRectHorizontal(mouse, {
             left: 10,
