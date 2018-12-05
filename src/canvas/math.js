@@ -51,6 +51,8 @@ export function nearestIndexOf (
   return low
 }
 
+// TODO helpers to convert between canvas x, y -> data x y
+
 // TODO remove
 export function getNearestDataAtX (
   x: number,

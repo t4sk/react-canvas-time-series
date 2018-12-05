@@ -20,3 +20,18 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO flow
 
 // TODO how to pass common props (canvas, graph, min, max,...) to each draw func.
+// TODO default props for background, bar, line, candlestick, ui
+// TODO canvas border color
+
+// TODO margin between background label and graph
+// TODO margin between UI label and graph`
+
+// TODO rename x, y interval to x, y step
+// TODO reusable component for drag
+// TODO render data in test drag and clear data
+// TODO? clear canvas before drawing data?
+// TODO canvas clear method
+// TODO? dont draw data outside graph
+// TODO performance of spread operators when drawing
+// TODO zoomable composable component
+// TODO realistic zoom example with data

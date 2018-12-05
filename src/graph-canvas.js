@@ -109,6 +109,7 @@ export default class GraphCanvas extends Component {
 
   shouldComponentUpdate (nextProps) {
     // TODO props.shouldComponentUpdate()
+    // TODO when props.drawUI is absent, draw is not re-triggered after prop updates
     return (
       nextProps.canvas.width !== this.props.canvas.width ||
       nextProps.canvas.height !== this.props.canvas.height
