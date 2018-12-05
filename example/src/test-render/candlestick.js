@@ -44,7 +44,6 @@ const RANDOM_DATA_SMALL = generateRandomData(10)
 const RANDOM_DATA_MEDIUM = generateRandomData(100)
 const RANDOM_DATA_LARGE = generateRandomData(1000)
 
-// TODO render time at candlestick
 class CandlestickTestRender extends Component {
   drawBackground = (ctx) => {
     canvas.fill(ctx, this.props.canvas)

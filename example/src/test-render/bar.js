@@ -168,7 +168,6 @@ BarTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    // TODO center bar at x
     xInterval: 1,
 
     yMin: Y_MIN,

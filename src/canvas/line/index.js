@@ -2,7 +2,6 @@
 import { round, floor, linear } from '../math'
 import type { Props } from './types'
 
-//TODO flow props
 export function drawPoint(ctx: any, props) {
   const {
     canvasX,

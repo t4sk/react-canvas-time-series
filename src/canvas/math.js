@@ -53,39 +53,6 @@ export function nearestIndexOf (
 
 // TODO helpers to convert between canvas x, y -> data x y
 
-// TODO remove
-export function getNearestDataAtX (
-  x: number,
-  data: Array<{x: number}>
-): {x: number} {
-  console.log("deprecated: getNearestDataAtX, use findIndexOfNearestData")
-  let low = 0;
-  let high = data.length - 1
-
-  // binary search
-  while (low < high) {
-    let mid = (low + high) / 2 >> 0
-
-    if (data[mid].x > x) {
-      high = mid
-    } else {
-      low = mid + 1
-    }
-  }
-
-  if (data[low - 1]) {
-    const midX = (data[low].x + data[low - 1].x) / 2
-
-    if (x < midX) {
-      return data[low - 1]
-    } else {
-      return data[low]
-    }
-  }
-
-  return data[low]
-}
-
 type LinearArgs = {
   dx: number,
   dy: number,

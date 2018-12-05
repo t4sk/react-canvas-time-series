@@ -22,6 +22,7 @@ export function draw (ctx: any, props: Props) {
 
   // TODO dont draw line over boder
   // TODO bar label sliding to right due to round off errors
+  // TODO center bar at x
   for (let i = 0; i < data.length; i++) {
     const l = round(graph.left + i * leftInterval)
     const t = round(toTop(data[i].y))

@@ -263,8 +263,6 @@ class TestRender extends Component {
           //     yMin
           //   } = this.props.candlestick
           //
-          //
-          //   // TODO require more explicit props instead of props.candlestick
           //   line.drawPointAt(ctx, {
           //     ...this.props,
           //     graph,

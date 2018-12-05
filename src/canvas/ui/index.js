@@ -10,7 +10,6 @@ import type {
   DrawXLabelAtProps,
 } from './types'
 
-// TODO flow Graph -> Rect
 export function isInsideRectHorizontal (mouse: Mouse, rect: Graph): boolean {
   if (
     !mouse.x ||
@@ -23,7 +22,6 @@ export function isInsideRectHorizontal (mouse: Mouse, rect: Graph): boolean {
   return true
 }
 
-// TODO flow Graph -> Rect
 export function isInsideRectVertical (mouse: Mouse, rect: Graph): boolean {
   if (
     !mouse.y ||
@@ -36,7 +34,6 @@ export function isInsideRectVertical (mouse: Mouse, rect: Graph): boolean {
   return true
 }
 
-// TODO flow Graph -> Rect
 export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
   return (
     isInsideRectHorizontal(mouse, rect) &&
