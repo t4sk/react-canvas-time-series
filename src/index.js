@@ -16,6 +16,7 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO pass (ctx, props) to this.props.drawBackground ?
 // TODO pass (ctx, props) to this.props.drawData ?
 // TODO pass (ctx, mouse, props) to this.props.drawUI ?
+// TODO? components for drawing
 
 // TODO? canvas border color
 // TODO fix flickering canvas border
@@ -30,5 +31,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO zoom example with data
 
 // TODO zoomable composable component
-// TODO components for drawing
 // TODO reusable component for drag
