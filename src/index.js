@@ -37,3 +37,5 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO rename toTop, toLeft -> toCanvasY, toCanvasX
 // TODO remove rounding and flooring
 // TODO batch drawing, draw polyline instead of separate lines
+
+// TODO? background.numYLines background.numXLines options
