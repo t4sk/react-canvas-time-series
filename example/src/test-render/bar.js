@@ -11,6 +11,7 @@ function generateRandomData (length) {
 
   for (let i = 0; i < length; i++) {
     data.push({
+      x: i,
       y: rand(Y_MIN, Y_MAX),
     })
   }
@@ -19,10 +20,13 @@ function generateRandomData (length) {
 }
 
 const FIXED_DATA = [{
+  x: 0,
   y: Y_MIN
 }, {
+  x: 1,
   y: Math.round((Y_MAX - Y_MIN) / 2),
 }, {
+  x: 2,
   y: Y_MAX,
 }]
 
@@ -31,9 +35,44 @@ const RANDOM_DATA_SMALL = RANDOM_DATA_LARGE.slice(0, 10)
 const RANDOM_DATA_MEDIUM = RANDOM_DATA_LARGE.slice(0, 100)
 
 class BarTestRender extends Component {
-  drawBackground = (ctx, props) => {
+  drawBackground = (ctx, props, data) => {
+    const xMin = data[0].x
+    const xMax = data.slice(-1)[0].x
+    const graph = this.props.bar.graph
+
+    // TODO require data.length > 1
+    const toX = canvas.math.linear({
+      dy: xMax - xMin,
+      dx: graph.width - (graph.width / data.length),
+      y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
+    })
+
     canvas.fill(ctx, props.canvas)
-    background.draw(ctx, props.background)
+    background.draw(ctx, {
+      ...props.background,
+      xMin: toX(0),
+      xMax: toX(graph.width),
+    })
+  }
+
+  drawData = (ctx, props, data) => {
+    const xMin = data[0].x
+    const xMax = data.slice(-1)[0].x
+    const graph = this.props.bar.graph
+
+    // TODO require data.length > 1
+    const toX = canvas.math.linear({
+      dy: xMax - xMin,
+      dx: graph.width - (graph.width / data.length),
+      y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
+    })
+
+    bar.draw(ctx, {
+      ...this.props.bar,
+      data,
+      xMin: toX(0),
+      xMax: toX(graph.width),
+    })
   }
 
   render () {
@@ -42,93 +81,33 @@ class BarTestRender extends Component {
         <h3>Bar (Fixed data)</h3>
         <GraphCanvas
           canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xMin: 0,
-                xMax: FIXED_DATA.length,
-              },
-            })
-          }}
-          drawData={(ctx) => {
-            bar.draw(ctx, {
-              ...this.props.bar,
-              data: FIXED_DATA,
-              xMin: 0,
-              xMax: FIXED_DATA.length,
-            })
-          }}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, FIXED_DATA)}
+          drawData={(ctx) => this.drawData(ctx, this.props, FIXED_DATA)}
         />
+
+        {/* TODO test render no data */}
+        {/* TODO test render 1 data */}
+        {/* TODO test render bar width */}
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <GraphCanvas
           canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xMin: 0,
-                xMax: RANDOM_DATA_SMALL.length,
-              },
-            })
-          }}
-          drawData={(ctx) => {
-            bar.draw(ctx, {
-              ...this.props.bar,
-              data: RANDOM_DATA_SMALL,
-              xMin: 0,
-              xMax: RANDOM_DATA_SMALL.length,
-            })
-          }}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, RANDOM_DATA_SMALL)}
+          drawData={(ctx) => this.drawData(ctx, this.props, RANDOM_DATA_SMALL)}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
         <GraphCanvas
           canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xMin: 0,
-                xMax: RANDOM_DATA_MEDIUM.length,
-              },
-            })
-          }}
-          drawData={(ctx) => {
-            bar.draw(ctx, {
-              ...this.props.bar,
-              data: RANDOM_DATA_MEDIUM,
-              xMin: 0,
-              xMax: RANDOM_DATA_MEDIUM.length,
-            })
-          }}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, RANDOM_DATA_MEDIUM)}
+          drawData={(ctx) => this.drawData(ctx, this.props, RANDOM_DATA_MEDIUM)}
         />
 
         <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
         <GraphCanvas
           canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xMin: 0,
-                xMax: RANDOM_DATA_LARGE.length,
-              },
-            })
-          }}
-          drawData={(ctx) => {
-            bar.draw(ctx, {
-              ...this.props.bar,
-              data: RANDOM_DATA_LARGE,
-              xMin: 0,
-              xMax: RANDOM_DATA_LARGE.length,
-            })
-          }}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, RANDOM_DATA_LARGE)}
+          drawData={(ctx) => this.drawData(ctx, this.props, RANDOM_DATA_LARGE)}
         />
       </div>
     )
