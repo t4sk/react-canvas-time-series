@@ -9,13 +9,16 @@ export function draw (ctx: any, props: Props) {
     yMin,
     yMax,
     data,
-    graph
+    graph,
+    barWidth,
   } = props
 
+  const intervalWidth = graph.width / data.length
+
   const toCanvasX = linear({
-    dy: graph.width,
+    dy: graph.width - intervalWidth,
     dx: xMax - xMin,
-    y0: graph.left - graph.width / (xMax - xMin) * xMin
+    y0: graph.left + intervalWidth / 2 - (graph.width - intervalWidth) / (xMax - xMin) * xMin
   })
 
   const toCanvasY = linear({
@@ -32,7 +35,6 @@ export function draw (ctx: any, props: Props) {
     const canvasY = toCanvasY(bar.y)
 
     const barHeight = graph.top + graph.height - canvasY
-    const barWidth = graph.width / data.length
 
     ctx.fillStyle = props.getBackgroundColor(bar)
     ctx.fillRect(

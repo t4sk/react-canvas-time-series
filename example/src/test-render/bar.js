@@ -91,35 +91,18 @@ class BarTestRender extends Component {
     const yMax = Math.max(...data.map(d => d.y))
 
     if (data.length == 0) {
-    } else if (data.length == 1) {
-      bar.draw(ctx, {
-        ...this.props.bar,
-        data,
-        yMin,
-        yMax,
-        xMin: data[0].x - 0.5,
-        xMax: data[0].x + 0.5
-      })
-    } else {
-      const xMin = data[0].x
-      const xMax = data.slice(-1)[0].x
-      const graph = this.props.bar.graph
-
-      const toX = canvas.math.linear({
-        dy: xMax - xMin,
-        dx: graph.width - (graph.width / data.length),
-        y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
-      })
-
-      bar.draw(ctx, {
-        ...this.props.bar,
-        data,
-        yMin,
-        yMax,
-        xMin: toX(0),
-        xMax: toX(graph.width),
-      })
+      return
     }
+
+    bar.draw(ctx, {
+      ...this.props.bar,
+      data,
+      yMin,
+      yMax,
+      xMin: data[0].x,
+      xMax: data.length > 1 ? data.slice(-1)[0].x : data[0].x + 1,
+      barWidth: Math.max(props.bar.graph.width / data.length - 10, 1),
+    })
   }
 
   render () {
@@ -221,6 +204,7 @@ BarTestRender.defaultProps = {
     getBackgroundColor: d => 'rgba(0, 175, 0, 0.6)',
     getLineColor: d => 'yellow',
     lineWidth: 1,
+    barWidth: 1,
     data: [],
     yMin: 0,
     yMax: 0,
