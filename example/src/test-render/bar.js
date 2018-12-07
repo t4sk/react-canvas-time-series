@@ -60,8 +60,8 @@ class BarTestRender extends Component {
         yMin,
         yMax,
         yInterval,
-        xMin: data[0].x - 0.5,
-        xMax: data[0].x + 0.5,
+        xMin: 0,
+        xMax: 10,
       })
     } else {
       const xMin = data[0].x
@@ -94,15 +94,37 @@ class BarTestRender extends Component {
       return
     }
 
-    bar.draw(ctx, {
-      ...this.props.bar,
-      data,
-      yMin,
-      yMax,
-      xMin: data[0].x,
-      xMax: data.length > 1 ? data.slice(-1)[0].x : data[0].x + 1,
-      barWidth: Math.max(props.bar.graph.width / data.length - 10, 1),
-    })
+    if (data.length == 1) {
+      bar.draw(ctx, {
+        ...this.props.bar,
+        data,
+        yMin,
+        yMax,
+        xMin: 0,
+        xMax: 10,
+        barWidth: 30,
+      })
+    } else {
+      const { graph } = props.bar
+      const xMin = data[0].x
+      const xMax = data.slice(-1)[0].x
+
+      const toX = canvas.math.linear({
+        dy: xMax - xMin,
+        dx: graph.width - (graph.width / data.length),
+        y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
+      })
+
+      bar.draw(ctx, {
+        ...this.props.bar,
+        data,
+        yMin,
+        yMax,
+        xMin: toX(0),
+        xMax: toX(graph.width),
+        barWidth: Math.max(props.bar.graph.width / data.length - 10, 1),
+      })
+    }
   }
 
   render () {

@@ -13,12 +13,10 @@ export function draw (ctx: any, props: Props) {
     barWidth,
   } = props
 
-  const intervalWidth = graph.width / data.length
-
   const toCanvasX = linear({
-    dy: graph.width - intervalWidth,
+    dy: graph.width,
     dx: xMax - xMin,
-    y0: graph.left + intervalWidth / 2 - (graph.width - intervalWidth) / (xMax - xMin) * xMin
+    y0: graph.left - graph.width / (xMax - xMin) * xMin
   })
 
   const toCanvasY = linear({
