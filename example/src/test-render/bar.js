@@ -87,7 +87,6 @@ class BarTestRender extends Component {
 
         {/* TODO test render no data */}
         {/* TODO test render 1 data */}
-        {/* TODO test render bar width */}
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <GraphCanvas

@@ -2,7 +2,6 @@
 import { linear } from '../math'
 import type { Props } from './types'
 
-// TODO add space to avoid overlapping bar charts
 export function draw (ctx: any, props: Props) {
   const {
     xMin,
@@ -27,7 +26,6 @@ export function draw (ctx: any, props: Props) {
 
   // TODO how to handle data.length <= 1
   // TODO dont draw line over boder
-  // TODO bar label sliding to right due to round off errors
   for (let i = 0; i < data.length; i++) {
     const bar = data[i]
 
