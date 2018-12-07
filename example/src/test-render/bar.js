@@ -34,45 +34,92 @@ const RANDOM_DATA_LARGE = generateRandomData(1000)
 const RANDOM_DATA_SMALL = RANDOM_DATA_LARGE.slice(0, 10)
 const RANDOM_DATA_MEDIUM = RANDOM_DATA_LARGE.slice(0, 100)
 
+const NUM_Y_INTERVALS = 10
+
 class BarTestRender extends Component {
   drawBackground = (ctx, props, data) => {
-    const xMin = data[0].x
-    const xMax = data.slice(-1)[0].x
-    const graph = this.props.bar.graph
+    const yMin = 0
+    const yMax = Math.max(Math.max(...data.map(d => d.y)), 10)
 
-    // TODO require data.length > 1
-    const toX = canvas.math.linear({
-      dy: xMax - xMin,
-      dx: graph.width - (graph.width / data.length),
-      y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
-    })
+    const yInterval = Math.floor((yMax - yMin) / NUM_Y_INTERVALS)
 
-    canvas.fill(ctx, props.canvas)
-    background.draw(ctx, {
-      ...props.background,
-      xMin: toX(0),
-      xMax: toX(graph.width),
-    })
+    if (data.length == 0) {
+      canvas.fill(ctx, props.canvas)
+      background.draw(ctx, {
+        ...props.background,
+        yMin,
+        yMax,
+        yInterval,
+        xMin: 0,
+        xMax: 0,
+      })
+    } else if (data.length == 1) {
+      canvas.fill(ctx, props.canvas)
+      background.draw(ctx, {
+        ...props.background,
+        yMin,
+        yMax,
+        yInterval,
+        xMin: data[0].x - 0.5,
+        xMax: data[0].x + 0.5,
+      })
+    } else {
+      const xMin = data[0].x
+      const xMax = data.slice(-1)[0].x
+      const graph = this.props.bar.graph
+
+      const toX = canvas.math.linear({
+        dy: xMax - xMin,
+        dx: graph.width - (graph.width / data.length),
+        y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
+      })
+
+      canvas.fill(ctx, props.canvas)
+      background.draw(ctx, {
+        ...props.background,
+        yMin,
+        yMax,
+        yInterval,
+        xMin: toX(0),
+        xMax: toX(graph.width),
+      })
+    }
   }
 
   drawData = (ctx, props, data) => {
-    const xMin = data[0].x
-    const xMax = data.slice(-1)[0].x
-    const graph = this.props.bar.graph
+    const yMin = 0
+    const yMax = Math.max(...data.map(d => d.y))
 
-    // TODO require data.length > 1
-    const toX = canvas.math.linear({
-      dy: xMax - xMin,
-      dx: graph.width - (graph.width / data.length),
-      y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
-    })
+    if (data.length == 0) {
+    } else if (data.length == 1) {
+      bar.draw(ctx, {
+        ...this.props.bar,
+        data,
+        yMin,
+        yMax,
+        xMin: data[0].x - 0.5,
+        xMax: data[0].x + 0.5
+      })
+    } else {
+      const xMin = data[0].x
+      const xMax = data.slice(-1)[0].x
+      const graph = this.props.bar.graph
 
-    bar.draw(ctx, {
-      ...this.props.bar,
-      data,
-      xMin: toX(0),
-      xMax: toX(graph.width),
-    })
+      const toX = canvas.math.linear({
+        dy: xMax - xMin,
+        dx: graph.width - (graph.width / data.length),
+        y0: xMin - (xMax - xMin) / (2 * (data.length - 1))
+      })
+
+      bar.draw(ctx, {
+        ...this.props.bar,
+        data,
+        yMin,
+        yMax,
+        xMin: toX(0),
+        xMax: toX(graph.width),
+      })
+    }
   }
 
   render () {
@@ -84,9 +131,6 @@ class BarTestRender extends Component {
           drawBackground={(ctx) => this.drawBackground(ctx, this.props, FIXED_DATA)}
           drawData={(ctx) => this.drawData(ctx, this.props, FIXED_DATA)}
         />
-
-        {/* TODO test render no data */}
-        {/* TODO test render 1 data */}
 
         <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
         <GraphCanvas
@@ -107,6 +151,20 @@ class BarTestRender extends Component {
           canvas={this.props.canvas}
           drawBackground={(ctx) => this.drawBackground(ctx, this.props, RANDOM_DATA_LARGE)}
           drawData={(ctx) => this.drawData(ctx, this.props, RANDOM_DATA_LARGE)}
+        />
+
+        <h3>Bar (No data)</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, [])}
+          drawData={(ctx) => this.drawData(ctx, this.props, [])}
+        />
+
+        <h3>Bar (1 data)</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => this.drawBackground(ctx, this.props, [{ x: 3, y: 10 }])}
+          drawData={(ctx) => this.drawData(ctx, this.props, [{ x: 3, y: 10 }])}
         />
       </div>
     )
@@ -135,7 +193,7 @@ BarTestRender.defaultProps = {
     yLabelFont: '12px Arial',
     yLabelColor: 'black',
     renderYLabel: y => y,
-    yInterval: 10,
+    yInterval: 1,
 
     showXLabel: true,
     showXLine: true,
@@ -148,8 +206,8 @@ BarTestRender.defaultProps = {
     renderXLabel: x => x,
     xInterval: 1,
 
-    yMin: Y_MIN,
-    yMax: Y_MAX,
+    yMin: 0,
+    yMax: 0,
     xMin: 0,
     xMax: 0
   },
@@ -164,8 +222,8 @@ BarTestRender.defaultProps = {
     getLineColor: d => 'yellow',
     lineWidth: 1,
     data: [],
-    yMin: Y_MIN,
-    yMax: Y_MAX,
+    yMin: 0,
+    yMax: 0,
     xMin: 0,
     xMax: 0
   },

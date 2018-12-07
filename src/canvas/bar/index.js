@@ -24,7 +24,6 @@ export function draw (ctx: any, props: Props) {
     y0: graph.top + graph.height / (yMax - yMin) * yMax
   })
 
-  // TODO how to handle data.length <= 1
   // TODO dont draw line over boder
   for (let i = 0; i < data.length; i++) {
     const bar = data[i]
