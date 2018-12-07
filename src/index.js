@@ -32,3 +32,8 @@ export { default as GraphCanvas } from './graph-canvas'
 
 // TODO zoomable composable component
 // TODO reusable component for drag
+
+// TODO optimizations mentioned in mozilla website
+// TODO rename toTop, toLeft -> toCanvasY, toCanvasX
+// TODO remove rounding and flooring
+// TODO batch drawing, draw polyline instead of separate lines
