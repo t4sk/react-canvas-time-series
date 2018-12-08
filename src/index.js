@@ -1,13 +1,9 @@
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
 
-// TODO xMin: Number.POSITIVE_INFINITY
-// TODO xMax: Number.NEGATIVE_INFINITY
-// TODO yMin: Number.POSITIVE_INFINITY
-// TODO yMax: Number.NEGATIVE_INFINITY
-
 // TODO specify x interval (example 2018-11-11 6:00, 2018-11-11 12:00, ...)
 // TODO specify y interval (100, 200, ...)
+// TODO? background.numYLines background.numXLines options
 
 // TODO flow
 
@@ -37,5 +33,3 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO rename toTop, toLeft -> toCanvasY, toCanvasX
 // TODO remove rounding and flooring
 // TODO batch drawing, draw polyline instead of separate lines
-
-// TODO? background.numYLines background.numXLines options
