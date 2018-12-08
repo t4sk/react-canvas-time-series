@@ -85,6 +85,7 @@ export function drawXLines (ctx: any, props: Props) {
   if (props.xInterval > 0) {
     const x0 = nearestStepBelow(xMin, props.xInterval)
 
+    let i = 0
     for (let x = x0; x <= xMax; x += props.xInterval) {
       const l = round(toLeft(x) + left)
 
@@ -104,12 +105,14 @@ export function drawXLines (ctx: any, props: Props) {
         // draw text
         if (props.showXLabel) {
           ctx.fillText(
-            props.renderXLabel(x),
+            props.renderXLabel(x, i),
             round(l),
             round(labelTop)
           )
         }
       }
+
+      i++
     }
   }
 }

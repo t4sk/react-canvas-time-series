@@ -39,4 +39,3 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO batch drawing, draw polyline instead of separate lines
 
 // TODO? background.numYLines background.numXLines options
-// TOOD renderXLabel = (label, i) => {...}
