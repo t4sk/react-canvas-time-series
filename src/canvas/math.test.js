@@ -1,6 +1,8 @@
 // @flow
 import {
   linear,
+  toCanvasX,
+  toCanvasY,
   nearestStepBelow,
   nearestIndexOf,
 } from './math'
@@ -15,6 +17,32 @@ test("linear", () => {
   expect(toY(250)).toEqual(110)
   expect(toY(0)).toEqual(10)
   expect(toY(125)).toEqual(60)
+})
+
+test("to canvas x", () => {
+  const getCanvasX = toCanvasX({
+    width: 100,
+    left: 10,
+    xMin: 0,
+    xMax: 10
+  })
+
+  expect(getCanvasX(0)).toEqual(10)
+  expect(getCanvasX(5)).toEqual(60)
+  expect(getCanvasX(10)).toEqual(110)
+})
+
+test("to canvas y", () => {
+  const getCanvasY = toCanvasY({
+    height: 100,
+    top: 10,
+    yMin: 0,
+    yMax: 10
+  })
+
+  expect(getCanvasY(0)).toEqual(110)
+  expect(getCanvasY(5)).toEqual(60)
+  expect(getCanvasY(10)).toEqual(10)
 })
 
 test("nearest step", () => {
@@ -41,15 +69,15 @@ describe("find index of nearest data to x", () => {
   })
 
   test("should return index of min", () => {
-    expect(findIndexOfNearestData(2, DATA)).toEqual(0)
+    expect(nearestIndexOf(2, DATA)).toEqual(0)
   })
 
   test("should return index of mid", () => {
-    expect(findIndexOfNearestData(3, DATA)).toEqual(1)
-    expect(findIndexOfNearestData(7, DATA)).toEqual(1)
+    expect(nearestIndexOf(3, DATA)).toEqual(1)
+    expect(nearestIndexOf(7, DATA)).toEqual(1)
   })
 
   test("should return index of max", () => {
-    expect(findIndexOfNearestData(8, DATA)).toEqual(2)
+    expect(nearestIndexOf(8, DATA)).toEqual(2)
   })
 })

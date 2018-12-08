@@ -1,5 +1,5 @@
 // @flow
-import { linear } from '../math'
+import { toCanvasX, toCanvasY } from '../math'
 import type { Props } from './types'
 
 export function draw (ctx: any, props: Props) {
@@ -13,24 +13,26 @@ export function draw (ctx: any, props: Props) {
     barWidth,
   } = props
 
-  const toCanvasX = linear({
-    dy: graph.width,
-    dx: xMax - xMin,
-    y0: graph.left - graph.width / (xMax - xMin) * xMin
+  const getCanvasX = toCanvasX({
+    width: graph.width,
+    left: graph.left,
+    xMax,
+    xMin,
   })
 
-  const toCanvasY = linear({
-    dy: -graph.height,
-    dx: yMax - yMin,
-    y0: graph.top + graph.height / (yMax - yMin) * yMax
+  const getCanvasY = toCanvasY({
+    height: graph.height,
+    top: graph.top,
+    yMax,
+    yMin,
   })
 
   // TODO dont draw line over boder
   for (let i = 0; i < data.length; i++) {
     const bar = data[i]
 
-    const canvasX = toCanvasX(bar.x)
-    const canvasY = toCanvasY(bar.y)
+    const canvasX = getCanvasX(bar.x)
+    const canvasY = getCanvasY(bar.y)
 
     const barHeight = graph.top + graph.height - canvasY
 

@@ -43,8 +43,6 @@ export function nearestIndexOf (
   return low
 }
 
-// TODO helpers to convert between canvas x, y -> data x y
-
 type LinearArgs = {
   dx: number,
   dy: number,
@@ -54,4 +52,22 @@ type LinearArgs = {
 export function linear ({ dx, dy, y0 }: LinearArgs): number => number {
   const df = dy / dx
   return x => df * x + y0
+}
+
+// TODO helpers to convert between canvas x, y -> data x y
+
+export function toCanvasX({ width = 0, left = 0, xMin = 0, xMax = 0 }) {
+  return linear({
+    dy: width,
+    dx: xMax - xMin,
+    y0: left - width * xMin / (xMax - xMin)
+  })
+}
+
+export function toCanvasY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
+  return linear({
+    dy: -height,
+    dx: yMax - yMin,
+    y0: top + height * yMax / (yMax - yMin)
+  })
 }

@@ -1,5 +1,5 @@
 // @flow
-import { linear } from '../math'
+import { toCanvasX, toCanvasY } from '../math'
 import type { Props } from './types'
 
 export function drawPoint(ctx: any, props) {
@@ -37,16 +37,18 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toCanvasX = linear({
-    dy: graph.width,
-    dx: xMax - xMin,
-    y0: graph.left - graph.width * xMin / (xMax - xMin)
+  const getCanvasX = toCanvasX({
+    width: graph.width,
+    left: graph.left,
+    xMax,
+    xMin,
   })
 
-  const toCanvasY = linear({
-    dy: -graph.height,
-    dx: yMax - yMin,
-    y0: graph.top + graph.height * yMax / (yMax - yMin)
+  const getCanvasY = toCanvasY({
+    height: graph.height,
+    top: graph.top,
+    yMax,
+    yMin,
   })
 
   ctx.strokeStyle = props.color
@@ -54,7 +56,7 @@ export function draw (ctx: any, props: Props) {
 
   ctx.beginPath()
   for (let i = 0; i < data.length; i++) {
-    ctx.lineTo(toCanvasX(data[i].x), toCanvasY(data[i].y))
+    ctx.lineTo(getCanvasX(data[i].x), getCanvasY(data[i].y))
   }
   ctx.stroke()
 }

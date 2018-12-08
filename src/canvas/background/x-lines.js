@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { linear, nearestStepBelow } from '../math'
+import { toCanvasX, nearestStepBelow } from '../math'
 import {
   getGraphHeight,
   getGraphWidth,
@@ -64,17 +64,13 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  const toCanvasX = linear({
-    dy: width,
-    dx: xMax - xMin,
-    y0: left - width * xMin / (xMax - xMin)
-  })
+  const getCanvasX = toCanvasX({ width, left, xMax, xMin, })
 
   if (props.xInterval > 0) {
     const x0 = nearestStepBelow(xMin, props.xInterval)
 
     for (let x = x0, i = 0; x <= xMax; x += props.xInterval, i++) {
-      const canvasX = toCanvasX(x)
+      const canvasX = getCanvasX(x)
 
       if (canvasX >= left && canvasX <= left + width) {
         // draw line
@@ -90,8 +86,6 @@ export function drawXLines (ctx: any, props: Props) {
           ctx.fillText(props.renderXLabel(x, i), canvasX, labelTop)
         }
       }
-
-      i++
     }
   }
 }

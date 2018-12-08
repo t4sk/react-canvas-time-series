@@ -1,5 +1,5 @@
 // @flow
-import { linear } from '../math'
+import { toCanvasY } from '../math'
 import type { Props } from './types'
 
 // TODO render candle at timestamp
@@ -12,10 +12,11 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toCanvasY = linear({
-    dy: -graph.height,
-    dx: yMax - yMin,
-    y0: graph.top + graph.height * yMax / (yMax - yMin)
+  const getCanvasY = toCanvasY({
+    height: graph.height,
+    top: graph.top,
+    yMax,
+    yMin,
   })
 
   const leftInterval = graph.width / data.length
@@ -30,8 +31,8 @@ export function draw (ctx: any, props: Props) {
     } = data[i]
 
     const l = graph.left + i * leftInterval
-    const top = toCanvasY(Math.max(open, close))
-    const bottom = toCanvasY(Math.min(open, close))
+    const top = getCanvasY(Math.max(open, close))
+    const bottom = getCanvasY(Math.min(open, close))
 
     const barHeight = Math.max(bottom - top, 1)
 
@@ -54,11 +55,11 @@ export function draw (ctx: any, props: Props) {
     // top wick
     ctx.beginPath()
     ctx.moveTo(l + barWidth / 2, top)
-    ctx.lineTo(l + barWidth / 2, toCanvasY(high))
+    ctx.lineTo(l + barWidth / 2, getCanvasY(high))
 
     // bottom wick
     ctx.moveTo(l + barWidth / 2, top + barHeight)
-    ctx.lineTo(l + barWidth / 2, toCanvasY(low))
+    ctx.lineTo(l + barWidth / 2, getCanvasY(low))
     ctx.stroke()
   }
 }
