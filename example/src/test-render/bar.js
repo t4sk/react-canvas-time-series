@@ -41,7 +41,7 @@ class BarTestRender extends Component {
     const yMin = 0
     const yMax = Math.max(Math.max(...data.map(d => d.y)), 10)
 
-    const yInterval = Math.floor((yMax - yMin) / NUM_Y_INTERVALS)
+    const yStep = Math.floor((yMax - yMin) / NUM_Y_INTERVALS)
 
     if (data.length == 0) {
       canvas.fill(ctx, props.canvas)
@@ -49,7 +49,7 @@ class BarTestRender extends Component {
         ...props.background,
         yMin,
         yMax,
-        yInterval,
+        yStep,
         xMin: 0,
         xMax: 0,
       })
@@ -59,7 +59,7 @@ class BarTestRender extends Component {
         ...props.background,
         yMin,
         yMax,
-        yInterval,
+        yStep,
         xMin: 0,
         xMax: 10,
       })
@@ -79,7 +79,7 @@ class BarTestRender extends Component {
         ...props.background,
         yMin,
         yMax,
-        yInterval,
+        yStep,
         xMin: toX(0),
         xMax: toX(graph.width),
       })
@@ -198,7 +198,7 @@ BarTestRender.defaultProps = {
     yLabelFont: '12px Arial',
     yLabelColor: 'black',
     renderYLabel: y => y,
-    yInterval: 1,
+    yStep: 1,
 
     showXLabel: true,
     showXLine: true,
@@ -209,7 +209,7 @@ BarTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 1,
+    xStep: 1,
 
     yMin: 0,
     yMax: 0,

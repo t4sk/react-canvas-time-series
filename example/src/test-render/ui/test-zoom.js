@@ -10,8 +10,8 @@ class TestZoom extends Component {
       xMax: 2010,
       yMin: 10,
       yMax: 110,
-      xInterval: 15,
-      yInterval: 10,
+      xStep: 15,
+      yStep: 10,
     }
   }
 
@@ -25,10 +25,10 @@ class TestZoom extends Component {
           ...state,
           xMin: state.xMin - 15,
           xMax: state.xMax + 15,
-          xInterval: state.xInterval + 5,
+          xStep: state.xStep + 5,
           yMin: state.yMin - 10,
           yMax: state.yMax + 10,
-          yInterval: state.yInterval + 5,
+          yStep: state.yStep + 5,
         }))
       } else {
         // zoom in
@@ -36,10 +36,10 @@ class TestZoom extends Component {
           ...state,
           xMin: state.xMin + 15,
           xMax: state.xMax +-15,
-          xInterval: state.xInterval - 5,
+          xStep: state.xStep - 5,
           yMin: state.yMin + 10,
           yMax: state.yMax - 10,
-          yInterval: state.yInterval - 5,
+          yStep: state.yStep - 5,
         }))
       }
     }
@@ -66,8 +66,8 @@ class TestZoom extends Component {
             xMax: this.state.xMax,
             yMin: this.state.yMin,
             yMax: this.state.yMax,
-            xInterval: this.state.xInterval,
-            yInterval: this.state.yInterval,
+            xStep: this.state.xStep,
+            yStep: this.state.yStep,
           })
         }}
         drawUI={(ctx, mouse) => {

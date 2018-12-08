@@ -302,7 +302,7 @@ const BACKGROUND_DEFAULT_PROPS = {
   yLabelFont: '12px Arial',
   yLabelColor: 'black',
   renderYLabel: y => y,
-  yInterval: 10,
+  yStep: 10,
 
   showXLabel: true,
   showXLine: true,
@@ -313,7 +313,7 @@ const BACKGROUND_DEFAULT_PROPS = {
   xLabelFont: '12px Arial',
   xLabelColor: 'black',
   renderXLabel: x => x,
-  xInterval: 15,
+  xStep: 15,
 }
 
 const UI_DEFAULT_PROPS = {
@@ -353,7 +353,7 @@ TestRender.defaultProps = {
       top: 10,
       width: 680,
       height: 280,
-      yInterval: 5,
+      yStep: 5,
       showXLabel: false,
       xAxisHeight: 0,
 
@@ -402,7 +402,7 @@ TestRender.defaultProps = {
       top: 310,
       width: 680,
       height: 130,
-      yInterval: 300,
+      yStep: 300,
 
       yMin: VOLUME_MIN,
       yMax: VOLUME_MAX,

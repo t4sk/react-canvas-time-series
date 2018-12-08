@@ -78,10 +78,10 @@ export function drawYLines (ctx: any, props: Props) {
 
   const getCanvasY = toCanvasY({ height, top, yMax, yMin, })
 
-  if (props.yInterval > 0) {
-    const y0 = nearestStepBelow(yMin, props.yInterval)
+  if (props.yStep > 0) {
+    const y0 = nearestStepBelow(yMin, props.yStep)
 
-    for (let y = y0, i = 0; y <= yMax; y += props.yInterval, i++) {
+    for (let y = y0, i = 0; y <= yMax; y += props.yStep, i++) {
       const canvasY = getCanvasY(y)
 
       if (canvasY >= top && canvasY <= top + height) {

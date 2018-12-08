@@ -167,7 +167,7 @@ CandlestickTestRender.defaultProps = {
     yLabelFont: '12px Arial',
     yLabelColor: 'black',
     renderYLabel: y => y,
-    yInterval: 10,
+    yStep: 10,
 
     showXLabel: true,
     showXLine: true,
@@ -178,7 +178,7 @@ CandlestickTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xStep: 15,
 
     xMin: X_MIN,
     xMax: X_MAX,

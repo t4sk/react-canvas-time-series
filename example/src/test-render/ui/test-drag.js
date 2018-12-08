@@ -21,6 +21,7 @@ class TestDrag extends Component {
   }
 
   onMouseMove = (e, mouse) => {
+    // TODO fix drag
     if (!this.mouse.isDragging) {
       return
     }

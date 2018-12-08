@@ -150,7 +150,7 @@ BackgroundTestRender.defaultProps = {
     yLabelFont: '12px Arial',
     yLabelColor: 'black',
     renderYLabel: y => y,
-    yInterval: 10,
+    yStep: 10,
 
     showXLabel: true,
     showXLine: true,
@@ -161,7 +161,7 @@ BackgroundTestRender.defaultProps = {
     xLabelFont: '12px Arial',
     xLabelColor: 'black',
     renderXLabel: x => x,
-    xInterval: 15,
+    xStep: 15,
 
     yMin: 10,
     yMax: 110,

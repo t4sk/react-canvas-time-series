@@ -66,10 +66,10 @@ export function drawXLines (ctx: any, props: Props) {
 
   const getCanvasX = toCanvasX({ width, left, xMax, xMin, })
 
-  if (props.xInterval > 0) {
-    const x0 = nearestStepBelow(xMin, props.xInterval)
+  if (props.xStep > 0) {
+    const x0 = nearestStepBelow(xMin, props.xStep)
 
-    for (let x = x0, i = 0; x <= xMax; x += props.xInterval, i++) {
+    for (let x = x0, i = 0; x <= xMax; x += props.xStep, i++) {
       const canvasX = getCanvasX(x)
 
       if (canvasX >= left && canvasX <= left + width) {
