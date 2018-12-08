@@ -32,3 +32,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO optimizations mentioned in mozilla website
 
 // TODO candlestick render at x
+// TODO helpers to convert from canvas x, y -> data x y

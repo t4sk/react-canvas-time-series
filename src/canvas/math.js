@@ -54,8 +54,6 @@ export function linear ({ dx, dy, y0 }: LinearArgs): number => number {
   return x => df * x + y0
 }
 
-// TODO helpers to convert between canvas x, y -> data x y
-
 export function toCanvasX({ width = 0, left = 0, xMin = 0, xMax = 0 }) {
   return linear({
     dy: width,
