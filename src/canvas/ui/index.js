@@ -1,5 +1,5 @@
 // @flow
-import { round, linear } from '../math'
+import { linear } from '../math'
 import type {
   Props,
   Mouse,
@@ -108,7 +108,7 @@ export function drawYLabel (ctx: any, props: DrawYLabelAtProps) {
 
   ctx.fillRect(
     getYLabelLeft(props),
-    props.top - round(props.height / 2),
+    props.top - props.height / 2,
     props.width,
     props.height
   )
@@ -156,8 +156,8 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 
   // label rect
   ctx.fillRect(
-    round(props.left - props.width / 2),
-    round(getXLabelTop(props)),
+    props.left - props.width / 2,
+    getXLabelTop(props),
     props.width,
     props.height
   )
@@ -170,8 +170,8 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 
   ctx.fillText(
     props.text,
-    round(props.left),
-    round(getXLabelTextTop(props))
+    props.left,
+    getXLabelTextTop(props)
   )
 }
 

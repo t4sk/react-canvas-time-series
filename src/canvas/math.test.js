@@ -1,25 +1,9 @@
 // @flow
 import {
-  floor,
-  round,
   linear,
   nearestStepBelow,
   nearestIndexOf,
 } from './math'
-
-test("floor", () => {
-  expect(floor(1.9)).toEqual(1)
-})
-
-describe("round", () => {
-  test("up", () => {
-    expect(round(1.5)).toEqual(2)
-  })
-
-  test("down", () => {
-    expect(round(1.4)).toEqual(1)
-  })
-})
 
 test("linear", () => {
   const toY = linear({

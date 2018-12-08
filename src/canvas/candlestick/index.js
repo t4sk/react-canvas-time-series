@@ -1,5 +1,5 @@
 // @flow
-import { round, linear } from '../math'
+import { linear } from '../math'
 import type { Props } from './types'
 
 // TODO render candle at timestamp
@@ -38,23 +38,13 @@ export function draw (ctx: any, props: Props) {
     // body
     ctx.fillStyle = props.getBackgroundColor(data[i])
 
-    ctx.fillRect(
-      round(l),
-      round(top),
-      round(barWidth),
-      round(barHeight)
-    )
+    ctx.fillRect(l, top, barWidth, barHeight)
 
     ctx.strokeStyle = props.getLineColor(data[i])
     ctx.lineWidth = props.lineWidth
 
     ctx.beginPath()
-    ctx.rect(
-      round(l),
-      round(top),
-      round(barWidth),
-      round(barHeight)
-    )
+    ctx.rect(l, top, barWidth, barHeight)
     ctx.stroke()
 
     // wick
@@ -63,24 +53,12 @@ export function draw (ctx: any, props: Props) {
 
     // top wick
     ctx.beginPath()
-    ctx.moveTo(
-      round(l + barWidth / 2),
-      round(top)
-    )
-    ctx.lineTo(
-      round(l + barWidth / 2),
-      round(toTop(high))
-    )
+    ctx.moveTo(l + barWidth / 2, top)
+    ctx.lineTo(l + barWidth / 2, toTop(high))
 
     // bottom wick
-    ctx.moveTo(
-      round(l + barWidth / 2),
-      round(top + barHeight)
-    )
-    ctx.lineTo(
-      round(l + barWidth / 2),
-      round(toTop(low))
-    )
+    ctx.moveTo(l + barWidth / 2, top + barHeight)
+    ctx.lineTo(l + barWidth / 2, toTop(low))
     ctx.stroke()
   }
 }

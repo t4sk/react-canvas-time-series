@@ -1,5 +1,5 @@
 // @flow
-import { round, floor, linear } from '../math'
+import { linear } from '../math'
 import type { Props } from './types'
 
 export function drawPoint(ctx: any, props) {
@@ -54,8 +54,8 @@ export function draw (ctx: any, props: Props) {
 
   ctx.beginPath()
   for (let i = 0; i < data.length; i++) {
-    const l = round(toLeft(data[i].x))
-    const t = round(toTop(data[i].y))
+    const l = toLeft(data[i].x)
+    const t = toTop(data[i].y)
 
     ctx.lineTo(l, t)
   }

@@ -13,8 +13,8 @@ let DATA = []
 
 for (let i = 0; i < 10; i++) {
   DATA.push({
-    x: round(rand(X_MIN, X_MAX)),
-    y: round(rand(Y_MIN, Y_MAX))
+    x: Math.round(rand(X_MIN, X_MAX)),
+    y: Math.round(rand(Y_MIN, Y_MAX))
   })
 }
 

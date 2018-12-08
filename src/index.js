@@ -31,4 +31,3 @@ export { default as GraphCanvas } from './graph-canvas'
 
 // TODO optimizations mentioned in mozilla website
 // TODO rename toTop, toLeft -> toCanvasY, toCanvasX
-// TODO remove rounding and flooring
