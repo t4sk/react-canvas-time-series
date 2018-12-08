@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { round, linear, nearestStepBelow } from '../math'
+import { linear, nearestStepBelow } from '../math'
 import {
   getGraphHeight,
   getGraphWidth,
@@ -71,26 +71,14 @@ export function drawYLines (ctx: any, props: Props) {
   if (props.showYLine) {
     // draw y line top
     ctx.beginPath()
-    ctx.moveTo(
-      round(left),
-      round(top)
-    )
-    ctx.lineTo(
-      round(left + width),
-      round(top)
-    )
+    ctx.moveTo(left, top)
+    ctx.lineTo(left + width, top)
     ctx.stroke()
 
     // draw y line bottom
     ctx.beginPath()
-    ctx.moveTo(
-      round(left),
-      round(top + height)
-    )
-    ctx.lineTo(
-      round(left + width),
-      round(top + height)
-    )
+    ctx.moveTo(left, top + height)
+    ctx.lineTo(left + width, top + height)
     ctx.stroke()
   }
 
@@ -99,28 +87,20 @@ export function drawYLines (ctx: any, props: Props) {
 
     let i = 0
     for (let y = y0; y <= yMax; y += props.yInterval) {
-      const t = round(toTop(y) + top)
+      const t = toTop(y) + top
 
       if (t >= top && t <= top + height) {
         // draw line
         if (props.showYLine) {
           ctx.beginPath()
-          ctx.moveTo(
-            round(left), round(t)
-          )
-          ctx.lineTo(
-            round(left + width), round(t)
-          )
+          ctx.moveTo(left, t)
+          ctx.lineTo(left + width, t)
           ctx.stroke()
         }
 
         // draw text
         if (props.showYLabel) {
-          ctx.fillText(
-            props.renderYLabel(y, i),
-            round(labelLeft),
-            round(t)
-          )
+          ctx.fillText(props.renderYLabel(y, i), labelLeft, t)
         }
       }
 

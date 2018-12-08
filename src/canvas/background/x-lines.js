@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { round, linear, nearestStepBelow } from '../math'
+import { linear, nearestStepBelow } from '../math'
 import {
   getGraphHeight,
   getGraphWidth,
@@ -59,26 +59,14 @@ export function drawXLines (ctx: any, props: Props) {
   if (props.showXLine) {
     // draw x line at start
     ctx.beginPath()
-    ctx.moveTo(
-      round(left),
-      round(top)
-    )
-    ctx.lineTo(
-      round(left),
-      round(top + height)
-    )
+    ctx.moveTo(left, top)
+    ctx.lineTo(left, top + height)
     ctx.stroke()
 
     // draw x line at end
     ctx.beginPath()
-    ctx.moveTo(
-      round(left + width),
-      round(top)
-    )
-    ctx.lineTo(
-      round(left + width),
-      round(top + height)
-    )
+    ctx.moveTo(left + width, top)
+    ctx.lineTo(left + width, top + height)
     ctx.stroke()
   }
 
@@ -87,28 +75,20 @@ export function drawXLines (ctx: any, props: Props) {
 
     let i = 0
     for (let x = x0; x <= xMax; x += props.xInterval) {
-      const l = round(toLeft(x) + left)
+      const l = toLeft(x) + left
 
       if (l >= left && l <= left + width) {
         // draw line
         if (props.showXLine) {
           ctx.beginPath()
-          ctx.moveTo(
-            round(l), round(top)
-          )
-          ctx.lineTo(
-            round(l), round(top + height)
-          )
+          ctx.moveTo(l, top)
+          ctx.lineTo(l, top + height)
           ctx.stroke()
         }
 
         // draw text
         if (props.showXLabel) {
-          ctx.fillText(
-            props.renderXLabel(x, i),
-            round(l),
-            round(labelTop)
-          )
+          ctx.fillText(props.renderXLabel(x, i), l, labelTop)
         }
       }
 
