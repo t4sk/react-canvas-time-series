@@ -46,12 +46,6 @@ export function drawXLines (ctx: any, props: Props) {
   const width = getGraphWidth(props)
   const height = getGraphHeight(props)
 
-  const toLeft = linear({
-    dy: width,
-    dx: xMax - xMin,
-    y0: -width * xMin / (xMax - xMin)
-  })
-
   const left = getGraphLeft(props)
   const top = getGraphTop(props)
   const labelTop = getLabelTop(props)
@@ -70,25 +64,31 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
+  const toCanvasX = linear({
+    dy: width,
+    dx: xMax - xMin,
+    y0: left - width * xMin / (xMax - xMin)
+  })
+
   if (props.xInterval > 0) {
     const x0 = nearestStepBelow(xMin, props.xInterval)
 
     let i = 0
     for (let x = x0; x <= xMax; x += props.xInterval) {
-      const l = toLeft(x) + left
+      const canvasX = toCanvasX(x)
 
-      if (l >= left && l <= left + width) {
+      if (canvasX >= left && canvasX <= left + width) {
         // draw line
         if (props.showXLine) {
           ctx.beginPath()
-          ctx.moveTo(l, top)
-          ctx.lineTo(l, top + height)
+          ctx.moveTo(canvasX, top)
+          ctx.lineTo(canvasX, top + height)
           ctx.stroke()
         }
 
         // draw text
         if (props.showXLabel) {
-          ctx.fillText(props.renderXLabel(x, i), l, labelTop)
+          ctx.fillText(props.renderXLabel(x, i), canvasX, labelTop)
         }
       }
 

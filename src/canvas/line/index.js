@@ -37,13 +37,13 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toLeft = linear({
+  const toCanvasX = linear({
     dy: graph.width,
     dx: xMax - xMin,
     y0: graph.left - graph.width * xMin / (xMax - xMin)
   })
 
-  const toTop = linear({
+  const toCanvasY = linear({
     dy: -graph.height,
     dx: yMax - yMin,
     y0: graph.top + graph.height * yMax / (yMax - yMin)
@@ -54,10 +54,7 @@ export function draw (ctx: any, props: Props) {
 
   ctx.beginPath()
   for (let i = 0; i < data.length; i++) {
-    const l = toLeft(data[i].x)
-    const t = toTop(data[i].y)
-
-    ctx.lineTo(l, t)
+    ctx.lineTo(toCanvasX(data[i].x), toCanvasY(data[i].y))
   }
   ctx.stroke()
 }

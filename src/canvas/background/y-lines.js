@@ -58,12 +58,6 @@ export function drawYLines (ctx: any, props: Props) {
   const width = getGraphWidth(props)
   const height = getGraphHeight(props)
 
-  const toTop = linear({
-    dy: -height,
-    dx: yMax - yMin,
-    y0: height * yMax / (yMax - yMin)
-  })
-
   const left = getGraphLeft(props)
   const top = getGraphTop(props)
   const labelLeft = getLabelLeft(props)
@@ -82,25 +76,31 @@ export function drawYLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
+  const toCanvasY = linear({
+    dy: -height,
+    dx: yMax - yMin,
+    y0: top + height * yMax / (yMax - yMin)
+  })
+
   if (props.yInterval > 0) {
     const y0 = nearestStepBelow(yMin, props.yInterval)
 
     let i = 0
     for (let y = y0; y <= yMax; y += props.yInterval) {
-      const t = toTop(y) + top
+      const canvasY = toCanvasY(y)
 
-      if (t >= top && t <= top + height) {
+      if (canvasY >= top && canvasY <= top + height) {
         // draw line
         if (props.showYLine) {
           ctx.beginPath()
-          ctx.moveTo(left, t)
-          ctx.lineTo(left + width, t)
+          ctx.moveTo(left, canvasY)
+          ctx.lineTo(left + width, canvasY)
           ctx.stroke()
         }
 
         // draw text
         if (props.showYLabel) {
-          ctx.fillText(props.renderYLabel(y, i), labelLeft, t)
+          ctx.fillText(props.renderYLabel(y, i), labelLeft, canvasY)
         }
       }
 

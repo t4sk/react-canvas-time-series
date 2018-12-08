@@ -31,3 +31,5 @@ export { default as GraphCanvas } from './graph-canvas'
 
 // TODO optimizations mentioned in mozilla website
 // TODO rename toTop, toLeft -> toCanvasY, toCanvasX
+
+// TODO candlestick render at x

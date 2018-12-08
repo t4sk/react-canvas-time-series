@@ -12,7 +12,7 @@ export function draw (ctx: any, props: Props) {
     graph
   } = props
 
-  const toTop = linear({
+  const toCanvasY = linear({
     dy: -graph.height,
     dx: yMax - yMin,
     y0: graph.top + graph.height * yMax / (yMax - yMin)
@@ -30,8 +30,8 @@ export function draw (ctx: any, props: Props) {
     } = data[i]
 
     const l = graph.left + i * leftInterval
-    const top = toTop(Math.max(open, close))
-    const bottom = toTop(Math.min(open, close))
+    const top = toCanvasY(Math.max(open, close))
+    const bottom = toCanvasY(Math.min(open, close))
 
     const barHeight = Math.max(bottom - top, 1)
 
@@ -54,11 +54,11 @@ export function draw (ctx: any, props: Props) {
     // top wick
     ctx.beginPath()
     ctx.moveTo(l + barWidth / 2, top)
-    ctx.lineTo(l + barWidth / 2, toTop(high))
+    ctx.lineTo(l + barWidth / 2, toCanvasY(high))
 
     // bottom wick
     ctx.moveTo(l + barWidth / 2, top + barHeight)
-    ctx.lineTo(l + barWidth / 2, toTop(low))
+    ctx.lineTo(l + barWidth / 2, toCanvasY(low))
     ctx.stroke()
   }
 }
