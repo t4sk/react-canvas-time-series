@@ -17,12 +17,6 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO? canvas border color
 // TODO fix flickering canvas border
 
-// TODO margin between background label and graph
-// TODO margin between UI label and graph`
-// TODO rename x, y interval to x, y step
-// TODO dont draw data outside graph? (data.x >= xMax or data.x <= xMin)
-// TODO performance of spread operators when drawing
-
 // TODO drag example with data
 // TODO zoom example with data
 
@@ -30,6 +24,6 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO reusable component for drag
 
 // TODO optimizations mentioned in mozilla website
-
+// TODO performance of spread operators when drawing
 // TODO candlestick render at x
 // TODO helpers to convert from canvas x, y -> data x y
