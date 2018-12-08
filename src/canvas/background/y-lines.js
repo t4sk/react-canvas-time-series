@@ -85,8 +85,7 @@ export function drawYLines (ctx: any, props: Props) {
   if (props.yInterval > 0) {
     const y0 = nearestStepBelow(yMin, props.yInterval)
 
-    let i = 0
-    for (let y = y0; y <= yMax; y += props.yInterval) {
+    for (let y = y0, i = 0; y <= yMax; y += props.yInterval, i++) {
       const canvasY = toCanvasY(y)
 
       if (canvasY >= top && canvasY <= top + height) {
@@ -103,8 +102,6 @@ export function drawYLines (ctx: any, props: Props) {
           ctx.fillText(props.renderYLabel(y, i), labelLeft, canvasY)
         }
       }
-
-      i++
     }
   }
 }
