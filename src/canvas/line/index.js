@@ -52,16 +52,12 @@ export function draw (ctx: any, props: Props) {
   ctx.strokeStyle = props.color
   ctx.lineWidth = props.width
 
-  for (let i = 1; i < data.length; i++) {
-    const l0 = round(toLeft(data[i - 1].x))
-    const t0 = round(toTop(data[i - 1].y))
-
+  ctx.beginPath()
+  for (let i = 0; i < data.length; i++) {
     const l = round(toLeft(data[i].x))
     const t = round(toTop(data[i].y))
 
-    ctx.beginPath()
-    ctx.moveTo(l0, t0)
     ctx.lineTo(l, t)
-    ctx.stroke()
   }
+  ctx.stroke()
 }
