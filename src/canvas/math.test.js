@@ -3,6 +3,8 @@ import {
   linear,
   toCanvasX,
   toCanvasY,
+  toX,
+  toY,
   nearestStepBelow,
   nearestIndexOf,
 } from './math'
@@ -43,6 +45,32 @@ test("to canvas y", () => {
   expect(getCanvasY(0)).toEqual(110)
   expect(getCanvasY(5)).toEqual(60)
   expect(getCanvasY(10)).toEqual(10)
+})
+
+test("to x", () => {
+  const getX = toX({
+    width: 100,
+    left: 10,
+    xMin: 0,
+    xMax: 10
+  })
+
+  expect(getX(10)).toEqual(0)
+  expect(getX(60)).toEqual(5)
+  expect(getX(110)).toEqual(10)
+})
+
+test("to y", () => {
+  const getY = toY({
+    height: 100,
+    top: 10,
+    yMin: 0,
+    yMax: 10
+  })
+
+  expect(getY(10)).toEqual(10)
+  expect(getY(60)).toEqual(5)
+  expect(getY(110)).toEqual(0)
 })
 
 test("nearest step", () => {

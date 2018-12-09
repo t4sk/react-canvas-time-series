@@ -1,5 +1,5 @@
 // @flow
-import { linear } from '../math'
+import { toX, toY } from '../math'
 import type {
   Props,
   Mouse,
@@ -190,15 +190,17 @@ export function draw (ctx: any, props: Props) {
     })
   }
   if (props.showXLabel) {
-    const left = props.mouse.isDragging ? props.mouse.dragStartLeft : props.mouse.x
+    // TODO left -> canvasX
+    const canvasX = props.mouse.isDragging ? props.mouse.dragStartLeft : props.mouse.x
     const xMax = props.mouse.isDragging ? props.mouse.dragStartXMax : props.xMax
     const xMin = props.mouse.isDragging ? props.mouse.dragStartXMin : props.xMin
 
-    const x = linear({
-      dy: xMax - xMin,
-      dx: props.graph.width,
-      y0: xMin
-    })(left - props.graph.left)
+    const x = toX({
+      width: props.graph.width,
+      left: props.graph.left,
+      xMax,
+      xMin,
+    })(canvasX)
 
     drawXLabel(ctx, {
       graph: props.graph,
@@ -220,11 +222,12 @@ export function draw (ctx: any, props: Props) {
     })
   }
   if (props.showYLabel) {
-    const y = linear({
-      dy: props.yMax - props.yMin,
-      dx: props.graph.height,
-      y0: props.yMin
-    })(props.graph.height - props.mouse.y + props.graph.top)
+    const y = toY({
+      height: props.graph.height,
+      top: props.graph.top,
+      yMin: props.yMin,
+      yMax: props.yMax
+    })(props.mouse.y)
 
     drawYLabel(ctx, {
       graph: props.graph,

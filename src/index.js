@@ -26,4 +26,3 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO optimizations mentioned in mozilla website
 // TODO performance of spread operators when drawing
 // TODO candlestick render at x
-// TODO helpers to convert from canvas x, y -> data x y

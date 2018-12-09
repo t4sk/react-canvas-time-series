@@ -69,3 +69,19 @@ export function toCanvasY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
     y0: top + height * yMax / (yMax - yMin)
   })
 }
+
+export function toX({ width = 0, left = 0, xMin = 0, xMax = 0}) {
+  return linear({
+    dy: xMax - xMin,
+    dx: width,
+    y0: xMin - (xMax - xMin) / width * left
+  })
+}
+
+export function toY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
+  return linear({
+    dy: yMin - yMax,
+    dx: height,
+    y0: yMax - (yMin - yMax) / height * top    
+  })
+}

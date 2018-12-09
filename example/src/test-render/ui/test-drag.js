@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
 import { rand } from '../../util'
 const { background, ui, line, math } = canvas
-const { linear, round, findIndexOfNearestData } = math
+const { toX, findIndexOfNearestData } = math
 
 class TestDrag extends Component {
   constructor (props) {
@@ -34,16 +34,17 @@ class TestDrag extends Component {
 
     const { dragStartXMin, dragStartXMax } = this.mouse
 
-    const toX = linear({
-      dy: dragStartXMax - dragStartXMin,
-      dx: graph.width,
-      y0: dragStartXMin - (dragStartXMax - dragStartXMin) / graph.width * graph.left
+    const getX = toX({
+      width: graph.width,
+      left: graph.left,
+      xMax: dragStartXMax,
+      xMin: dragStartXMin,
     })
 
     const diff = mouse.x - this.mouse.dragStartLeft
 
-    const xMin = toX(graph.left - diff)
-    const xMax = toX(graph.left + graph.width - diff)
+    const xMin = getX(graph.left - diff)
+    const xMax = getX(graph.left + graph.width - diff)
 
     this.setState((state) => ({
       xMin,

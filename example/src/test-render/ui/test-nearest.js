@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-graph'
 import { rand } from '../../util'
 const { background, ui, line, math } = canvas
-const { linear, round, nearestIndexOf } = math
+const { toX, toCanvasX, toCanvasY, nearestIndexOf } = math
 
 const X_MIN = 1900
 const X_MAX = 2010
@@ -62,11 +62,12 @@ class TestNearest extends Component {
     } = this.props.ui
 
     if (ui.isInsideRect(mouse, graph)) {
-      const x = linear({
-        dy: xMax - xMin,
-        dx: graph.width,
-        y0: xMin,
-      })(mouse.x - graph.left)
+      const x = toX({
+        width: graph.width,
+        left: graph.left,
+        xMax,
+        xMin
+      })(mouse.x)
 
       const i = nearestIndexOf(x, DATA.map(d => d.x))
 
@@ -138,18 +139,18 @@ class TestNearest extends Component {
                 yMin,
               } = this.props.ui
 
-              // TODO helper function getCanvasX?
-              const canvasX = math.linear({
-                dy: graph.width,
-                dx: xMax - xMin,
-                y0: graph.left - graph.width / (xMax - xMin) * xMin
+              const canvasX = toCanvasX({
+                width: graph.width,
+                left: graph.left,
+                xMax,
+                xMin,
               })(this.state.data.x)
 
-              // TODO helper function getCanvasY?
-              const canvasY = math.linear({
-                dy: -graph.height,
-                dx: yMax - yMin,
-                y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
+              const canvasY = toCanvasY({
+                height: graph.height,
+                top: graph.top,
+                yMax,
+                yMin,
               })(this.state.data.y)
 
               line.drawPoint(ctx, {
