@@ -47,8 +47,8 @@ export function drawXLine (ctx: any, props: DrawXLineAtProps) {
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
-  ctx.moveTo(props.left, props.graph.top)
-  ctx.lineTo(props.left, props.graph.top + props.graph.height)
+  ctx.moveTo(props.canvasX, props.graph.top)
+  ctx.lineTo(props.canvasX, props.graph.top + props.graph.height)
   ctx.stroke()
 
   ctx.setLineDash([])
@@ -60,8 +60,8 @@ export function drawYLine (ctx: any, props: DrawYLineAtProps) {
   ctx.strokeStyle = props.lineColor
   ctx.setLineDash([5, 5])
 
-  ctx.moveTo(props.graph.left, props.top)
-  ctx.lineTo(props.graph.left + props.graph.width, props.top)
+  ctx.moveTo(props.graph.left, props.canvasY)
+  ctx.lineTo(props.graph.left + props.graph.width, props.canvasY)
   ctx.stroke()
 
   ctx.setLineDash([])
@@ -186,7 +186,7 @@ export function draw (ctx: any, props: Props) {
     drawXLine(ctx, {
       lineColor: props.xLineColor,
       graph: props.graph,
-      left: props.mouse.x
+      canvasX: props.mouse.x
     })
   }
   if (props.showXLabel) {
@@ -217,7 +217,7 @@ export function draw (ctx: any, props: Props) {
     drawYLine(ctx, {
       lineColor: props.yLineColor,
       graph: props.graph,
-      top: props.mouse.y
+      canvasY: props.mouse.y
     })
   }
   if (props.showYLabel) {
