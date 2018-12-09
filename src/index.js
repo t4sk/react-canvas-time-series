@@ -1,10 +1,6 @@
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
 
-// TODO specify x interval (example 2018-11-11 6:00, 2018-11-11 12:00, ...)
-// TODO specify y interval (100, 200, ...)
-// TODO? background.numYLines background.numXLines options
-
 // TODO flow
 
 // TODO how to pass common props (canvas, graph, min, max,...) to each draw func.
