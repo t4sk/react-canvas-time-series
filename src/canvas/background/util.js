@@ -1,6 +1,4 @@
 // @flow
-// TODO util func compute graph from background props
-
 export function getGraphWidth (props: Props): number {
   return props.width - props.yAxisWidth
 }
@@ -28,5 +26,14 @@ export function getGraphTop (props: Props): number {
       return props.top
     default:
       throw new Error(`invalid xAxisAt ${props.xAxisAt}`)
+  }
+}
+
+export function getGraph(props) {
+  return {
+    width: getGraphWidth(props),
+    height: getGraphHeight(props),
+    top: getGraphTop(props),
+    left: getGraphLeft(props),
   }
 }
