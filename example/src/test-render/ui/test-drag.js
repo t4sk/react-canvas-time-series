@@ -14,7 +14,7 @@ class TestDrag extends Component {
 
     this.mouse = {
       isDragging: false,
-      dragStartLeft: undefined,
+      dragStartCanvasX: undefined,
       dragStartXMin: undefined,
       dragStartXMax: undefined
     }
@@ -41,7 +41,7 @@ class TestDrag extends Component {
       xMin: dragStartXMin,
     })
 
-    const diff = mouse.x - this.mouse.dragStartLeft
+    const diff = mouse.x - this.mouse.dragStartCanvasX
 
     const xMin = getX(graph.left - diff)
     const xMax = getX(graph.left + graph.width - diff)
@@ -55,7 +55,7 @@ class TestDrag extends Component {
   onMouseDown = (e, mouse) => {
     if (ui.isInsideRect(mouse, this.props.ui.graph)) {
       this.mouse.isDragging = true
-      this.mouse.dragStartLeft = mouse.x
+      this.mouse.dragStartCanvasX = mouse.x
       this.mouse.dragStartXMin = this.state.xMin
       this.mouse.dragStartXMax = this.state.xMax
     }
@@ -63,14 +63,14 @@ class TestDrag extends Component {
 
   onMouseUp = (e, mouse) => {
     this.mouse.isDragging = false
-    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartCanvasX = undefined
     this.mouse.dragStartXMin = undefined
     this.mouse.dragStartXMax = undefined
   }
 
   onMouseOut = (e, mouse) => {
     this.mouse.isDragging = false
-    this.mouse.dragStartLeft = undefined
+    this.mouse.dragStartCanvasX = undefined
     this.mouse.dragStartXMin = undefined
     this.mouse.dragStartXMax = undefined
   }
@@ -90,7 +90,12 @@ class TestDrag extends Component {
         drawUI={(ctx, mouse) => {
           ui.draw(ctx, {
             ...this.props.ui,
-            mouse,
+            mouse: {
+              ...mouse,
+              ...this.mouse,
+            },
+            xMin: this.state.xMin,
+            xMax: this.state.xMax,
           })
         }}
         onMouseMove={this.onMouseMove}
