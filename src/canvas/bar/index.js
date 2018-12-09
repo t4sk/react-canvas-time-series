@@ -27,7 +27,6 @@ export function draw (ctx: any, props: Props) {
     yMin,
   })
 
-  // TODO dont draw line over boder
   for (let i = 0; i < data.length; i++) {
     const bar = data[i]
 
