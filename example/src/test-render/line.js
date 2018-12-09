@@ -79,16 +79,18 @@ class LineTestRender extends Component {
               yMin,
             } = this.props.line
 
-            const canvasX = math.linear({
-              dy: graph.width,
-              dx: xMax - xMin,
-              y0: graph.left - graph.width / (xMax - xMin) * xMin
+            const canvasX = math.toCanvasX({
+              width: graph.width,
+              left: graph.left,
+              xMax,
+              xMin,
             })((xMax + xMin) / 2)
 
-            const canvasY = math.linear({
-              dy: -graph.height,
-              dx: yMax - yMin,
-              y0: graph.top + graph.height + graph.height / (yMax - yMin) * yMin
+            const canvasY = math.toCanvasY({
+              height: graph.height,
+              top: graph.top,
+              yMax,
+              yMin
             })((yMax + yMin) / 2)
 
             line.drawPoint(ctx, {
