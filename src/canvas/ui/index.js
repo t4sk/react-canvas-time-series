@@ -190,6 +190,7 @@ export function draw (ctx: any, props: Props) {
     })
   }
   if (props.showXLabel) {
+    // TODO remove isDragging
     const canvasX = props.mouse.isDragging ? props.mouse.dragStartCanvasX : props.mouse.x
     const xMax = props.mouse.isDragging ? props.mouse.dragStartXMax : props.xMax
     const xMin = props.mouse.isDragging ? props.mouse.dragStartXMin : props.xMin
