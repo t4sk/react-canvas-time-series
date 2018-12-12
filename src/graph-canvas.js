@@ -98,10 +98,9 @@ export default class GraphCanvas extends Component {
   componentWillUnmount() {
     // TODO test unmount event listeners
     this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
-    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
-    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
-    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
-    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
+    this.ctx.ui.canvas.removeEventListener('mousedown', this.onMouseDown)
+    this.ctx.ui.canvas.removeEventListener('mouseup', this.onMouseUp)
+    this.ctx.ui.canvas.removeEventListener('mouseout', this.onMouseOut)
     this.ctx.ui.canvas.removeEventListener('wheel', this.onWheel)
 
     window.cancelAnimationFrame(this.animation)
