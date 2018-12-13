@@ -2,41 +2,43 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './canvas/background'
 
-const BACKGROUND_DEFAULT_PROPS = {
-  top: 10,
-  left: 20,
-  width: 450,
-  height: 270,
+const DEFAULT_PROPS = {
+  background: {
+    top: 10,
+    left: 20,
+    width: 450,
+    height: 270,
 
-  backgroundColor: 'lightgrey',
+    backgroundColor: 'lightgrey',
 
-  showYLabel: true,
-  showYLine: true,
-  yLineWidth: 1,
-  yLineColor: 'red',
-  yAxisAt: 'left',
-  yAxisWidth: 50,
-  yLabelFont: '12px Arial',
-  yLabelColor: 'black',
-  renderYLabel: y => y,
-  yStep: 10,
+    showYLabel: true,
+    showYLine: true,
+    yLineWidth: 1,
+    yLineColor: 'red',
+    yAxisAt: 'left',
+    yAxisWidth: 50,
+    yLabelFont: '12px Arial',
+    yLabelColor: 'black',
+    renderYLabel: y => y,
+    yStep: 10,
 
-  showXLabel: true,
-  showXLine: true,
-  xLineWidth: 1,
-  xLineColor: 'blue',
-  xAxisAt: 'bottom',
-  xAxisHeight: 50,
-  xLabelFont: '12px Arial',
-  xLabelColor: 'black',
-  renderXLabel: x => x,
-  xStep: 15,
+    showXLabel: true,
+    showXLine: true,
+    xLineWidth: 1,
+    xLineColor: 'blue',
+    xAxisAt: 'bottom',
+    xAxisHeight: 50,
+    xLabelFont: '12px Arial',
+    xLabelColor: 'black',
+    renderXLabel: x => x,
+    xStep: 15,
 
-  // TODO move up
-  yMin: 10,
-  yMax: 110,
-  xMin: 1900,
-  xMax: 2010,
+    // TODO move up
+    yMin: 10,
+    yMax: 110,
+    xMin: 1900,
+    xMax: 2010,
+  }
 }
 
 export default class GraphCanvas extends Component {
@@ -53,43 +55,42 @@ export default class GraphCanvas extends Component {
       width: PropTypes.number,
       height: PropTypes.number,
     }),
-    background: {
-      // TODO background props
-      // top: 10,
-      // left: 20,
-      // width: 450,
-      // height: 270,
-      //
-      // backgroundColor: 'lightgrey',
-      //
-      // showYLabel: true,
-      // showYLine: true,
-      // yLineWidth: 1,
-      // yLineColor: 'red',
-      // yAxisAt: 'left',
-      // yAxisWidth: 50,
-      // yLabelFont: '12px Arial',
-      // yLabelColor: 'black',
-      // renderYLabel: y => y,
-      // yStep: 10,
-      //
-      // showXLabel: true,
-      // showXLine: true,
-      // xLineWidth: 1,
-      // xLineColor: 'blue',
-      // xAxisAt: 'bottom',
-      // xAxisHeight: 50,
-      // xLabelFont: '12px Arial',
-      // xLabelColor: 'black',
-      // renderXLabel: x => x,
-      // xStep: 15,
-      //
-      // // TODO move up
-      // yMin: 10,
-      // yMax: 110,
-      // xMin: 1900,
-      // xMax: 2010,
-    }
+    background: PropTypes.shape({
+      top: PropTypes.number.isRequired,
+      left: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+
+      backgroundColor: PropTypes.string,
+
+      showYLabel: PropTypes.bool,
+      showYLine: PropTypes.bool,
+      yLineWidth: PropTypes.number,
+      yLineColor: PropTypes.string,
+      yAxisAt: PropTypes.oneOf(['left', 'right']).isRequired,
+      yAxisWidth: PropTypes.number.isRequired,
+      yLabelFont: PropTypes.string,
+      yLabelColor: PropTypes.string,
+      renderYLabel: PropTypes.func.isRequired,
+      yStep: PropTypes.number.isRequired,
+
+      showXLabel: PropTypes.bool,
+      showXLine: PropTypes.bool,
+      xLineWidth: PropTypes.number,
+      xLineColor: PropTypes.string,
+      xAxisAt: PropTypes.oneOf(['top', 'bottom']).isRequired,
+      xAxisHeight: PropTypes.number.isRequired,
+      xLabelFont: PropTypes.string,
+      xLabelColor: PropTypes.string,
+      renderXLabel: PropTypes.func.isRequired,
+      xStep: PropTypes.number.isRequired,
+
+      // TODO move up
+      yMin: PropTypes.number.isRequired,
+      yMax: PropTypes.number.isRequired,
+      xMin: PropTypes.number.isRequired,
+      xMax: PropTypes.number.isRequired,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -104,42 +105,7 @@ export default class GraphCanvas extends Component {
       width: 500,
       height: 300
     },
-    background: {
-      top: 10,
-      left: 20,
-      width: 450,
-      height: 270,
-
-      backgroundColor: 'lightgrey',
-
-      showYLabel: true,
-      showYLine: true,
-      yLineWidth: 1,
-      yLineColor: 'red',
-      yAxisAt: 'left',
-      yAxisWidth: 50,
-      yLabelFont: '12px Arial',
-      yLabelColor: 'black',
-      renderYLabel: y => y,
-      yStep: 10,
-
-      showXLabel: true,
-      showXLine: true,
-      xLineWidth: 1,
-      xLineColor: 'blue',
-      xAxisAt: 'bottom',
-      xAxisHeight: 50,
-      xLabelFont: '12px Arial',
-      xLabelColor: 'black',
-      renderXLabel: x => x,
-      xStep: 15,
-
-      // TODO move up
-      yMin: 10,
-      yMax: 110,
-      xMin: 1900,
-      xMax: 2010,
-    },
+    background: DEFAULT_PROPS.background
   }
 
   constructor (props) {
@@ -227,7 +193,10 @@ export default class GraphCanvas extends Component {
   }
 
   draw = () => {
-    background.draw(this.ctx.background, this.props.background)
+    background.draw(this.ctx.background, {
+      ...DEFAULT_PROPS.background,
+      ...this.props.background
+    })
     this.props.drawData(this.ctx.data)
   }
 
