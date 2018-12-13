@@ -1,12 +1,6 @@
 // @flow
 import type { Props } from './types'
 import { toCanvasY, nearestStepBelow } from '../math'
-import {
-  getGraphHeight,
-  getGraphWidth,
-  getGraphLeft,
-  getGraphTop,
-} from './util'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
   switch (props.yAxisAt) {
@@ -38,7 +32,7 @@ function getLabelLeft (props: Props): number {
   }
 }
 
-export function drawYLines (ctx: any, props: Props) {
+export function drawYLines (ctx: any, graph: any, props: Props) {
   const {
     yMin,
     yMax
@@ -54,28 +48,28 @@ export function drawYLines (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
-  const width = getGraphWidth(props)
-  const height = getGraphHeight(props)
-
-  const left = getGraphLeft(props)
-  const top = getGraphTop(props)
   const labelLeft = getLabelLeft(props)
 
   if (props.showYLine) {
     // draw y line top
     ctx.beginPath()
-    ctx.moveTo(left, top)
-    ctx.lineTo(left + width, top)
+    ctx.moveTo(graph.left, graph.top)
+    ctx.lineTo(graph.left + graph.width, graph.top)
     ctx.stroke()
 
     // draw y line bottom
     ctx.beginPath()
-    ctx.moveTo(left, top + height)
-    ctx.lineTo(left + width, top + height)
+    ctx.moveTo(graph.left, graph.top + graph.height)
+    ctx.lineTo(graph.left + graph.width, graph.top + graph.height)
     ctx.stroke()
   }
 
-  const getCanvasY = toCanvasY({ height, top, yMax, yMin })
+  const getCanvasY = toCanvasY({
+    height: graph.height,
+    top: graph.top,
+    yMax,
+    yMin
+  })
 
   if (props.yTickInterval > 0) {
     const y0 = nearestStepBelow(yMin, props.yTickInterval)
@@ -83,12 +77,12 @@ export function drawYLines (ctx: any, props: Props) {
     for (let y = y0, i = 0; y <= yMax; y += props.yTickInterval, i++) {
       const canvasY = getCanvasY(y)
 
-      if (canvasY >= top && canvasY <= top + height) {
+      if (canvasY >= graph.top && canvasY <= graph.top + graph.height) {
         // draw line
         if (props.showYLine) {
           ctx.beginPath()
-          ctx.moveTo(left, canvasY)
-          ctx.lineTo(left + width, canvasY)
+          ctx.moveTo(graph.left, canvasY)
+          ctx.lineTo(graph.left + graph.width, canvasY)
           ctx.stroke()
         }
 

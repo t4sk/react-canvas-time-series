@@ -1,12 +1,6 @@
 // @flow
 import type { Props } from './types'
 import { toCanvasX, nearestStepBelow } from '../math'
-import {
-  getGraphHeight,
-  getGraphWidth,
-  getGraphLeft,
-  getGraphTop,
-} from './util'
 
 const X_LABEL_VERTICAL_PADDING = 12
 
@@ -27,7 +21,7 @@ function getLabelTop (props: Props): number {
   }
 }
 
-export function drawXLines (ctx: any, props: Props) {
+export function drawXLines (ctx: any, graph: any, props: Props) {
   const {
     xMin,
     xMax
@@ -42,28 +36,28 @@ export function drawXLines (ctx: any, props: Props) {
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
-  const width = getGraphWidth(props)
-  const height = getGraphHeight(props)
-
-  const left = getGraphLeft(props)
-  const top = getGraphTop(props)
   const labelTop = getLabelTop(props)
 
   if (props.showXLine) {
     // draw x line at start
     ctx.beginPath()
-    ctx.moveTo(left, top)
-    ctx.lineTo(left, top + height)
+    ctx.moveTo(graph.left, graph.top)
+    ctx.lineTo(graph.left, graph.top + graph.height)
     ctx.stroke()
 
     // draw x line at end
     ctx.beginPath()
-    ctx.moveTo(left + width, top)
-    ctx.lineTo(left + width, top + height)
+    ctx.moveTo(graph.left + graph.width, graph.top)
+    ctx.lineTo(graph.left + graph.width, graph.top + graph.height)
     ctx.stroke()
   }
 
-  const getCanvasX = toCanvasX({ width, left, xMax, xMin })
+  const getCanvasX = toCanvasX({
+    width: graph.width,
+    left: graph.left,
+    xMax,
+    xMin
+  })
 
   if (props.xTickInterval > 0) {
     const x0 = nearestStepBelow(xMin, props.xTickInterval)
@@ -71,12 +65,12 @@ export function drawXLines (ctx: any, props: Props) {
     for (let x = x0, i = 0; x <= xMax; x += props.xTickInterval, i++) {
       const canvasX = getCanvasX(x)
 
-      if (canvasX >= left && canvasX <= left + width) {
+      if (canvasX >= graph.left && canvasX <= graph.left + graph.width) {
         // draw line
         if (props.showXLine) {
           ctx.beginPath()
-          ctx.moveTo(canvasX, top)
-          ctx.lineTo(canvasX, top + height)
+          ctx.moveTo(canvasX, graph.top)
+          ctx.lineTo(canvasX, graph.top + graph.height)
           ctx.stroke()
         }
 
