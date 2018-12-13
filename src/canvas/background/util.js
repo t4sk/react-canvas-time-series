@@ -28,12 +28,3 @@ export function getGraphTop (props: Props): number {
       throw new Error(`invalid xAxisAt ${props.xAxisAt}`)
   }
 }
-
-export function getGraph(props) {
-  return {
-    width: getGraphWidth(props),
-    height: getGraphHeight(props),
-    top: getGraphTop(props),
-    left: getGraphLeft(props),
-  }
-}
