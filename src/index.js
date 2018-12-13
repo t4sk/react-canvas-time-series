@@ -22,3 +22,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO optimizations mentioned in mozilla website
 // TODO performance of spread operators when drawing
 // TODO highlight column
+// TODO draw tick
