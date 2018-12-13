@@ -17,7 +17,7 @@ const DEFAULT_PROPS = {
   yLabelFont: '12px Arial',
   yLabelColor: 'black',
   renderYLabel: y => y,
-  yStep: 1,
+  yTickInterval: 1,
 
   showXLabel: true,
   showXLine: true,
@@ -28,7 +28,7 @@ const DEFAULT_PROPS = {
   xLabelFont: '12px Arial',
   xLabelColor: 'black',
   renderXLabel: x => x,
-  xStep: 1,
+  xTickInterval: 1,
 
   yMin: 0,
   yMax: 0,
@@ -57,7 +57,7 @@ export default class GraphCanvas extends Component {
     yLabelFont: PropTypes.string,
     yLabelColor: PropTypes.string,
     renderYLabel: PropTypes.func.isRequired,
-    yStep: PropTypes.number.isRequired,
+    yTickInterval: PropTypes.number.isRequired,
 
     showXLabel: PropTypes.bool,
     showXLine: PropTypes.bool,
@@ -68,7 +68,7 @@ export default class GraphCanvas extends Component {
     xLabelFont: PropTypes.string,
     xLabelColor: PropTypes.string,
     renderXLabel: PropTypes.func.isRequired,
-    xStep: PropTypes.number.isRequired,
+    xTickInterval: PropTypes.number.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,

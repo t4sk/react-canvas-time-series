@@ -60,10 +60,10 @@ class BackgroundTestRender extends Component {
 BackgroundTestRender.defaultProps = {
   backgroundColor: "beige",
   yLineColor: 'red',
-  yStep: 10,
+  yTickInterval: 10,
 
   xLineColor: 'blue',
-  xStep: 100,
+  xTickInterval: 100,
 
   yMin: 10,
   yMax: 110,

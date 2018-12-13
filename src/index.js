@@ -18,7 +18,6 @@ export { default as GraphCanvas } from './graph-canvas'
 
 // TODO zoomable composable component
 // TODO reusable component for drag
-// TODO rename xStep, yStep to xTickInterval, yTickInterval
 
 // TODO optimizations mentioned in mozilla website
 // TODO performance of spread operators when drawing
