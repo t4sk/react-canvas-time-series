@@ -1,125 +1,71 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-graph'
-import { merge } from '../util'
-const { background } = canvas
+import {GraphCanvas} from 'react-canvas-graph'
 
 class BackgroundTestRender extends Component {
-  drawBackground = (ctx, props) => {
-    canvas.fill(ctx, props.canvas)
-    background.draw(ctx, props.background)
-  }
-
   render () {
     return (
       <div>
-        <h3>Background Position</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                top: 150,
-                left: 250,
-                height: 140,
-                width: 240,
-              }
-            })})
-          }}
-        />
-
         <h3>Hide X Labels</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                showXLabel: false
-              }
-            })})
+          {...this.props}
+          background={{
+            showXLabel: false
           }}
         />
 
         <h3>Hide X Lines</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                showXLine: false
-              }
-            })})
+          {...this.props}
+          background={{
+            showXLine: false
           }}
         />
 
         <h3>Hide Y Labels</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                showYLabel: false
-              }
-            })})
+          {...this.props}
+          background={{
+            showYLabel: false
           }}
         />
 
         <h3>Hide Y Lines</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                showYLine: false
-              }
-            })})
+          {...this.props}
+          background={{
+            showYLine: false
           }}
         />
 
         <h3>X Axis Bottom</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                xAxisAt: 'bottom'
-              }
-            })})
+          {...this.props}
+          background={{
+            xAxisAt: 'bottom'
           }}
         />
 
         <h3>X Axis Top</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                xAxisAt: 'top'
-              }
-            })})
+          {...this.props}
+          background={{
+            xAxisAt: 'top'
           }}
         />
 
         <h3>Y Axis Left</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                yAxisAt: 'left'
-              }
-            })})
+          {...this.props}
+          background={{
+            yAxisAt: 'left'
           }}
         />
 
         <h3>Y Axis Right</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {...merge(this.props, {
-              background: {
-                yAxisAt: 'right'
-              }
-            })})
+          {...this.props}
+          background={{
+            yAxisAt: 'right'
           }}
         />
       </div>
@@ -128,21 +74,20 @@ class BackgroundTestRender extends Component {
 }
 
 BackgroundTestRender.defaultProps = {
-  canvas: {
-    width: 500,
-    height: 300,
-    backgroundColor: "beige",
-  },
+  width: 500,
+  height: 300,
+  backgroundColor: "beige",
   background: {
     top: 10,
     left: 20,
+    // TODO? compute dimensions from canvas
     width: 450,
     height: 270,
 
-    backgroundColor: 'lightgrey',
+    // backgroundColor: 'white',
 
-    showYLabel: true,
-    showYLine: true,
+    // showYLabel: true,
+    // showYLine: true,
     yLineWidth: 1,
     yLineColor: 'red',
     yAxisAt: 'left',
@@ -163,6 +108,7 @@ BackgroundTestRender.defaultProps = {
     renderXLabel: x => x,
     xStep: 15,
 
+    // TODO move up
     yMin: 10,
     yMax: 110,
     xMin: 1900,
