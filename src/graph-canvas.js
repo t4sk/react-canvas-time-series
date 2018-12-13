@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './canvas/background'
+import * as line from './canvas/line'
+
+const GRAPHS = {
+  'line': line,
+}
 
 const DEFAULT_PROPS = {
   width: 500,
   height: 300,
-  // background props
+
+  // background
   backgroundColor: "white",
 
   showYLabel: true,
@@ -30,6 +36,12 @@ const DEFAULT_PROPS = {
   renderXLabel: x => x,
   xTickInterval: 1,
 
+  graphs: [],
+
+  // line
+  lineColor: "black",
+  lineWidth: 1,
+
   yMin: 0,
   yMax: 0,
   xMin: 0,
@@ -46,6 +58,8 @@ export default class GraphCanvas extends Component {
 
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+
+    // background
     backgroundColor: PropTypes.string,
 
     showYLabel: PropTypes.bool,
@@ -69,6 +83,19 @@ export default class GraphCanvas extends Component {
     xLabelColor: PropTypes.string,
     renderXLabel: PropTypes.func.isRequired,
     xTickInterval: PropTypes.number.isRequired,
+
+    // graphs
+    graphs: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.oneOf(["line"]).isRequired,
+      data: PropTypes.arrayOf(PropTypes.shape({
+        x: PropTypes.number.isRequired,
+        y: PropTypes.number.isRequired,
+      })).isRequired,
+    })).isRequired,
+
+    // line
+    lineColor: PropTypes.string.isRequired,
+    lineWidth: PropTypes.number.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
@@ -167,7 +194,10 @@ export default class GraphCanvas extends Component {
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
     background.draw(this.ctx.background, this.props)
-    //this.props.drawData(this.ctx.data)
+
+    for (let graph of this.props.graphs) {
+      GRAPHS[graph.type].draw(this.ctx.data, {...this.props, ...graph})
+    }
   }
 
   animate = () => {

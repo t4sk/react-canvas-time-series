@@ -1,5 +1,6 @@
 // @flow
 import { toCanvasX, toCanvasY } from '../math'
+import { getGraphDimensions } from '../background/util'
 import type { Props } from './types'
 
 export function drawPoint(ctx: any, props) {
@@ -34,8 +35,9 @@ export function draw (ctx: any, props: Props) {
     yMin,
     yMax,
     data,
-    graph
   } = props
+
+  const graph = getGraphDimensions(props)
 
   const getCanvasX = toCanvasX({
     width: graph.width,
@@ -51,8 +53,8 @@ export function draw (ctx: any, props: Props) {
     yMin,
   })
 
-  ctx.strokeStyle = props.color
-  ctx.lineWidth = props.width
+  ctx.strokeStyle = props.lineColor
+  ctx.lineWidth = props.lineWidth
 
   ctx.beginPath()
   for (let i = 0; i < data.length; i++) {
