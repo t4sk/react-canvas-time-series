@@ -25,15 +25,14 @@ function getLabelLeft (props: Props): number {
   const {
     yAxisAt,
     yAxisWidth,
-    left,
     width,
   } = props
 
   switch (yAxisAt) {
     case 'left':
-      return left + yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
+      return yAxisWidth - Y_LABEL_HORIZONTAL_PADDING
     case 'right':
-      return left + width -yAxisWidth + Y_LABEL_HORIZONTAL_PADDING
+      return width -yAxisWidth + Y_LABEL_HORIZONTAL_PADDING
     default:
       throw new Error(`invalid yAxisAt ${yAxisAt}`)
   }
@@ -76,7 +75,7 @@ export function drawYLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  const getCanvasY = toCanvasY({ height, top, yMax, yMin, })
+  const getCanvasY = toCanvasY({ height, top, yMax, yMin })
 
   if (props.yStep > 0) {
     const y0 = nearestStepBelow(yMin, props.yStep)
@@ -94,6 +93,7 @@ export function drawYLines (ctx: any, props: Props) {
         }
 
         // draw text
+        // TODO show labels at yMin and yMax?
         if (props.showYLabel) {
           ctx.fillText(props.renderYLabel(y, i), labelLeft, canvasY)
         }

@@ -10,9 +10,9 @@ export function getGraphHeight (props: Props): number {
 export function getGraphLeft (props: Props): number {
   switch (props.yAxisAt) {
     case 'left':
-      return props.left + props.yAxisWidth
+      return props.yAxisWidth
     case 'right':
-      return props.left
+      return 0
     default:
       throw new Error(`invalid yAxisAt ${props.yAxisAt}`)
   }
@@ -21,9 +21,9 @@ export function getGraphLeft (props: Props): number {
 export function getGraphTop (props: Props): number {
   switch (props.xAxisAt) {
     case 'top':
-      return props.top + props.xAxisHeight
+      return props.xAxisHeight
     case 'bottom':
-      return props.top
+      return 0
     default:
       throw new Error(`invalid xAxisAt ${props.xAxisAt}`)
   }

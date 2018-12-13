@@ -5,12 +5,7 @@ import { drawYLines } from './y-lines'
 
 export function draw (ctx: any, props) {
   ctx.fillStyle = props.backgroundColor
-  ctx.fillRect(
-    props.left,
-    props.top,
-    props.width,
-    props.height,
-  )
+  ctx.fillRect(0, 0, props.width, props.height)
 
   drawXLines(ctx, props)
   drawYLines(ctx, props)

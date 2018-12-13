@@ -23,6 +23,7 @@ const props = {
   }
 }
 
+// TODO fix test
 test("get width", () => {
   expect(getGraphWidth(props)).toEqual(
     props.background.width - props.background.yAxisWidth

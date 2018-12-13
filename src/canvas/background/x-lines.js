@@ -14,15 +14,14 @@ function getLabelTop (props: Props): number {
   const {
     xAxisAt,
     xAxisHeight,
-    top,
     height,
   } = props
 
   switch (xAxisAt) {
     case 'top':
-      return top + xAxisHeight - X_LABEL_VERTICAL_PADDING
+      return xAxisHeight - X_LABEL_VERTICAL_PADDING
     case 'bottom':
-      return top + height - xAxisHeight + X_LABEL_VERTICAL_PADDING
+      return height - xAxisHeight + X_LABEL_VERTICAL_PADDING
     default:
       throw new Error(`invalid xAxisAt ${xAxisAt}`)
   }
@@ -64,7 +63,7 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  const getCanvasX = toCanvasX({ width, left, xMax, xMin, })
+  const getCanvasX = toCanvasX({ width, left, xMax, xMin })
 
   if (props.xStep > 0) {
     const x0 = nearestStepBelow(xMin, props.xStep)
@@ -82,6 +81,7 @@ export function drawXLines (ctx: any, props: Props) {
         }
 
         // draw text
+        // TODO show x labels at xMin and xMax?
         if (props.showXLabel) {
           ctx.fillText(props.renderXLabel(x, i), canvasX, labelTop)
         }
