@@ -23,3 +23,5 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO performance of spread operators when drawing
 // TODO highlight column
 // TODO draw tick
+
+// TODO rename react-canvas-graph -> react-canvas-time-series
