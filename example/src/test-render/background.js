@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {GraphCanvas} from 'react-canvas-graph'
+import {GraphCanvas} from 'react-canvas-time-series'
 
 class BackgroundTestRender extends Component {
   render () {

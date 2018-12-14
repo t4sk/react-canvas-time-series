@@ -1,13 +1,13 @@
-# react-canvas-graph
+# react-canvas-time-series
 
-> react canvas graph
+> react canvas graph time series
 
-[![NPM](https://img.shields.io/npm/v/react-canvas-graph.svg)](https://www.npmjs.com/package/react-canvas-graph) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-canvas-time-series.svg)](https://www.npmjs.com/package/react-canvas-time-series) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save react-canvas-graph
+npm install --save react-canvas-time-series
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install --save react-canvas-graph
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-canvas-graph'
+import MyComponent from 'react-canvas-time-series'
 
 class Example extends Component {
   render () {

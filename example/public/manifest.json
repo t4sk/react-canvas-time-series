@@ -1,6 +1,6 @@
 {
-  "short_name": "react-canvas-graph",
-  "name": "react-canvas-graph",
+  "short_name": "react-canvas-time-series",
+  "name": "react-canvas-time-series",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",

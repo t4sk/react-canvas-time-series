@@ -1,6 +1,6 @@
 {
-  "name": "react-canvas-graph-example",
-  "homepage": "https://t4sk.github.io/react-canvas-graph",
+  "name": "react-canvas-time-series-example",
+  "homepage": "https://t4sk.github.io/react-canvas-time-series",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -9,7 +9,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
-    "react-canvas-graph": "file:.."
+    "react-canvas-time-series": "file:.."
   },
   "scripts": {
     "start": "react-scripts start",

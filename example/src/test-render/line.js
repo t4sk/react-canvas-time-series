@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-graph'
+import {canvas, GraphCanvas} from 'react-canvas-time-series'
 import { rand } from '../util'
 const { line, math } = canvas
 
