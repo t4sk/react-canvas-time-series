@@ -190,6 +190,7 @@ export default class GraphCanvas extends Component {
   }
 
   draw = () => {
+    // TODO shouldDrawBackground, shouldDrawGraph, shouldDrawUI
     this.ctx.background.fillStyle = this.props.backgroundColor
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
