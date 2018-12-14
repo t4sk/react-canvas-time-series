@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-time-series'
+import {GraphCanvas} from 'react-canvas-time-series'
 import { rand } from '../util'
-const { line, math } = canvas
 
 const X_MIN = 0
 const X_MAX = 1000
@@ -61,43 +60,6 @@ class LineTestRender extends Component {
             lineWidth: 1,
             data: RANDOM_DATA,
           }]}
-        />
-
-        <h3>TODO Point</h3>
-        <GraphCanvas
-          {...this.props}
-          drawData={(ctx) => {
-            const {
-              graph,
-              xMax,
-              xMin,
-              yMax,
-              yMin,
-            } = this.props.line
-
-            const canvasX = math.toCanvasX({
-              width: graph.width,
-              left: graph.left,
-              xMax,
-              xMin,
-            })((xMax + xMin) / 2)
-
-            const canvasY = math.toCanvasY({
-              height: graph.height,
-              top: graph.top,
-              yMax,
-              yMin
-            })((yMax + yMin) / 2)
-
-            line.drawPoint(ctx, {
-              canvasX,
-              canvasY,
-              color: 'orange',
-              radius: 3,
-              ambientColor: 'rgba(255, 255, 0, 0.5)',
-              ambientRadius: 10,
-            })
-          }}
         />
       </div>
     )
