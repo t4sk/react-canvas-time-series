@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
+import * as point from './canvas/point'
 
 const GRAPHS = {
   'line': line,
+  'point': point,
 }
 
 const DEFAULT_PROPS = {
@@ -41,6 +43,12 @@ const DEFAULT_PROPS = {
   // line
   lineColor: "black",
   lineWidth: 1,
+
+  // point
+  pointColor: 'orange',
+  pointRadius: 3,
+  pointAmbientColor: 'rgba(255, 255, 0, 0.5)',
+  pointAmbientRadius: 10,
 
   yMin: 0,
   yMax: 0,
@@ -86,7 +94,7 @@ export default class GraphCanvas extends Component {
 
     // graphs
     graphs: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf(["line"]).isRequired,
+      type: PropTypes.oneOf(["line", "point"]).isRequired,
       data: PropTypes.arrayOf(PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired,
@@ -96,6 +104,12 @@ export default class GraphCanvas extends Component {
     // line
     lineColor: PropTypes.string.isRequired,
     lineWidth: PropTypes.number.isRequired,
+
+    // point
+    pointColor: PropTypes.string.isRequired,
+    pointRadius: PropTypes.number.isRequired,
+    pointAmbientColor: PropTypes.string.isRequired,
+    pointAmbientRadius: PropTypes.number.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,

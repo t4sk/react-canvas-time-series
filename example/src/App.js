@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BackgroundTestRender from './test-render/background'
 import LineTestRender from './test-render/line'
+import PointTestRender from './test-render/point'
 // import BarTestRender from './test-render/bar'
 // import CandlestickTestRender from './test-render/candlestick'
 // import UITestRender from './test-render/ui'
@@ -16,6 +17,7 @@ export default class App extends Component {
         <CandlestickTestRender />
         <BarTestRender />
         */}
+        <PointTestRender />
         <LineTestRender />
         <BackgroundTestRender />
       </div>
