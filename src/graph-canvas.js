@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
+import * as bar from './canvas/bar'
 
 const GRAPHS = {
-  'line': line,
-  'point': point,
+  line,
+  point,
+  bar,
 }
 
 const DEFAULT_PROPS = {
@@ -49,6 +51,12 @@ const DEFAULT_PROPS = {
   pointRadius: 3,
   pointAmbientColor: 'rgba(255, 255, 0, 0.5)',
   pointAmbientRadius: 10,
+
+  // bar
+  getBarBackgroundColor: d => 'rgba(0, 175, 0, 0.6)',
+  getBarBorderColor: d => 'yellow',
+  barBorderWidth: 1,
+  barWidth: 10,
 
   yMin: 0,
   yMax: 0,
@@ -94,7 +102,12 @@ export default class GraphCanvas extends Component {
 
     // graphs
     graphs: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf(["line", "point"]).isRequired,
+      type: PropTypes.oneOf([
+        "line",
+        "point",
+        "bar",
+        "candlestick"
+      ]).isRequired,
       data: PropTypes.arrayOf(PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired,
@@ -110,6 +123,12 @@ export default class GraphCanvas extends Component {
     pointRadius: PropTypes.number.isRequired,
     pointAmbientColor: PropTypes.string.isRequired,
     pointAmbientRadius: PropTypes.number.isRequired,
+
+    // bar
+    getBarBackgroundColor: PropTypes.func.isRequired,
+    getBarBorderColor: PropTypes.func.isRequired,
+    barBorderWidth: PropTypes.number.isRequired,
+    barWidth: PropTypes.number.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,

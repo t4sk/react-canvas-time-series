@@ -1,5 +1,6 @@
 // @flow
 import { toCanvasX, toCanvasY } from '../math'
+import { getGraphDimensions } from '../background/util'
 import type { Props } from './types'
 
 export function draw (ctx: any, props: Props) {
@@ -9,9 +10,10 @@ export function draw (ctx: any, props: Props) {
     yMin,
     yMax,
     data,
-    graph,
     barWidth,
   } = props
+
+  const graph = getGraphDimensions(props)
 
   const getCanvasX = toCanvasX({
     width: graph.width,
@@ -27,6 +29,7 @@ export function draw (ctx: any, props: Props) {
     yMin,
   })
 
+  // TODO render only part of bar that is inside graph
   for (let i = 0; i < data.length; i++) {
     const bar = data[i]
 
@@ -35,7 +38,7 @@ export function draw (ctx: any, props: Props) {
 
     const barHeight = graph.top + graph.height - canvasY
 
-    ctx.fillStyle = props.getBackgroundColor(bar)
+    ctx.fillStyle = props.getBarBackgroundColor(bar)
     ctx.fillRect(
       canvasX - barWidth / 2,
       canvasY,
@@ -43,15 +46,17 @@ export function draw (ctx: any, props: Props) {
       barHeight
     )
 
-    ctx.beginPath()
-    ctx.lineWidth = props.lineWidth
-    ctx.strokeStyle = props.getLineColor(bar)
-    ctx.rect(
-      canvasX - barWidth / 2,
-      canvasY,
-      barWidth,
-      barHeight
-    )
-    ctx.stroke()
+    if (props.barBorderWidth > 0) {
+      ctx.beginPath()
+      ctx.lineWidth = props.barBorderWidth
+      ctx.strokeStyle = props.getBarBorderColor(bar)
+      ctx.rect(
+        canvasX - barWidth / 2,
+        canvasY,
+        barWidth,
+        barHeight
+      )
+      ctx.stroke()
+    }
   }
 }
