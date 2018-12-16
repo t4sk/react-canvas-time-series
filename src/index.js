@@ -29,3 +29,5 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO pass getCanvasX, Y from top function
 // TODO function arg order (ctx, props, internal stuff...)
 // TODO compute barWidth from xStep
+
+// TODO ? set graph canvas size in render()
