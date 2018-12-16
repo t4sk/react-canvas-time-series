@@ -4,7 +4,7 @@ import LineTestRender from './test-render/line'
 import PointTestRender from './test-render/point'
 import BarTestRender from './test-render/bar'
 import CandlestickTestRender from './test-render/candlestick'
-// import UITestRender from './test-render/ui'
+import UITestRender from './test-render/ui'
 // import IntegrationTestRender from './test-render/integration'
 
 export default class App extends Component {
@@ -13,8 +13,8 @@ export default class App extends Component {
       <div>
         {/*}
         <IntegrationTestRender />
-        <UITestRender />
         */}
+        <UITestRender />
         <CandlestickTestRender />
         <BarTestRender />
         <PointTestRender />

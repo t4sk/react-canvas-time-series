@@ -1,125 +1,25 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-graph'
-import TestZoom from './test-zoom'
-import TestNearest from './test-nearest'
-import TestDrag from './test-drag'
-import TestUpdateProps from './test-update-props'
+import { GraphCanvas} from 'react-canvas-time-series'
+// import TestZoom from './test-zoom'
+// import TestNearest from './test-nearest'
+// import TestDrag from './test-drag'
+// import TestUpdateProps from './test-update-props'
 
-const { background, ui } = canvas
-
-const X_MIN = 1900
-const X_MAX = 2010
-const Y_MIN = 10
-const Y_MAX = 110
+const X_MIN = 0
+const X_MAX = 1000
+const Y_MIN = 0
+const Y_MAX = 100
 
 class UITestRender extends Component {
-  drawBackground = (ctx, props) => {
-    canvas.fill(ctx, props.canvas)
-    background.draw(ctx, props.background)
-  }
-
   render () {
     return (
       <div>
-        <h3>Update Canvas Props</h3>
-        <TestUpdateProps {...this.props} />
-
-        <h3>X Drag</h3>
-        <TestDrag {...this.props} />
-
-        <h3>Scroll to Zoom</h3>
-        <TestZoom {...this.props} />
-
-        <h3>Get Nearest Data at X</h3>
-        <TestNearest {...this.props} />
-
-        <h3>Hide X Label</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showXLabel: false,
-            })
-          }}
-        />
-
-        <h3>Hide X Line</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showXLine: false,
-            })
-          }}
-        />
-
-        <h3>Hide Y Label</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showYLabel: false,
-            })
-          }}
-        />
-
-        <h3>Hide Y Line</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showYLine: false,
-            })
-          }}
-        />
-
         <h3>X Label Bottom</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props,
-              mouse,
-            })
-          }}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xAxisAt: 'bottom'
-              }
-            })
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              xLabelAt: 'bottom',
-            })
-          }}
+          {...this.props}
         />
 
+        {/*}
         <h3>X Label Top</h3>
         <GraphCanvas
           canvas={this.props.canvas}
@@ -190,7 +90,85 @@ class UITestRender extends Component {
             })
           }}
         />
+        */}
 
+        {/*}
+        <h3>Update Canvas Props</h3>
+        <TestUpdateProps {...this.props} />
+
+        <h3>X Drag</h3>
+        <TestDrag {...this.props} />
+
+        <h3>Scroll to Zoom</h3>
+        <TestZoom {...this.props} />
+
+        <h3>Get Nearest Data at X</h3>
+        <TestNearest {...this.props} />
+        */}
+
+        {/*}
+        <h3>Hide X Label</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, this.props)
+          }}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props.ui,
+              mouse,
+              showXLabel: false,
+            })
+          }}
+        />
+
+        <h3>Hide X Line</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, this.props)
+          }}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props.ui,
+              mouse,
+              showXLine: false,
+            })
+          }}
+        />
+
+        <h3>Hide Y Label</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, this.props)
+          }}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props.ui,
+              mouse,
+              showYLabel: false,
+            })
+          }}
+        />
+
+        <h3>Hide Y Line</h3>
+        <GraphCanvas
+          canvas={this.props.canvas}
+          drawBackground={(ctx) => {
+            this.drawBackground(ctx, this.props)
+          }}
+          drawUI={(ctx, mouse) => {
+            ui.draw(ctx, {
+              ...this.props.ui,
+              mouse,
+              showYLine: false,
+            })
+          }}
+        />
+        */}
+
+        {/*}
         <h3>X Label Fixed</h3>
         <GraphCanvas
           canvas={this.props.canvas}
@@ -256,51 +234,22 @@ class UITestRender extends Component {
             })
           }}
         />
+        */}
       </div>
     )
   }
 }
 
 UITestRender.defaultProps = {
-  canvas: {
-    width: 500,
-    height: 300,
-    backgroundColor: 'beige',
-  },
-  background: {
-    top: 10,
-    left: 20,
-    width: 450,
-    height: 270,
-    backgroundColor: 'lightgrey',
+  backgroundColor: 'beige',
+  yTickInterval: 10,
+  xTickInterval: 100,
 
-    showYLabel: true,
-    showYLine: true,
-    yLineWidth: 1,
-    yLineColor: 'red',
-    yAxisAt: 'left',
-    yAxisWidth: 50,
-    yLabelFont: '12px Arial',
-    yLabelColor: 'black',
-    renderYLabel: y => y,
-    yStep: 10,
+  xMin: X_MIN,
+  xMax: X_MAX,
+  yMin: Y_MIN,
+  yMax: Y_MAX,
 
-    showXLabel: true,
-    showXLine: true,
-    xLineWidth: 1,
-    xLineColor: 'blue',
-    xAxisAt: 'bottom',
-    xAxisHeight: 50,
-    xLabelFont: '12px Arial',
-    xLabelColor: 'black',
-    renderXLabel: x => x,
-    xStep: 15,
-
-    yMin: Y_MIN,
-    yMax: Y_MAX,
-    xMin: X_MIN,
-    xMax: X_MAX
-  },
   ui: {
     canvas: {
       width: 500,
