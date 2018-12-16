@@ -24,3 +24,8 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO performance of spread operators when drawing
 // TODO highlight column
 // TODO draw tick
+
+// TODO pass graph from draw(ctx, props, graph)
+// TODO pass getCanvasX, Y from top function
+// TODO function arg order (ctx, props, internal stuff...)
+// TODO compute barWidth from xStep

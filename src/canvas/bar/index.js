@@ -38,7 +38,7 @@ export function draw (ctx: any, props: Props) {
 
     const barHeight = graph.top + graph.height - canvasY
 
-    ctx.fillStyle = props.getBarBackgroundColor(bar)
+    ctx.fillStyle = props.getBarColor(bar)
     ctx.fillRect(
       canvasX - barWidth / 2,
       canvasY,

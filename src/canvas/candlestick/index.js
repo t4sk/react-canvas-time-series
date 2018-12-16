@@ -1,15 +1,26 @@
 // @flow
-import { toCanvasY } from '../math'
+import { toCanvasX, toCanvasY } from '../math'
 import type { Props } from './types'
+import { getGraphDimensions } from '../background/util'
 
-// TODO render candle at timestamp
 export function draw (ctx: any, props: Props) {
   const {
+    xMin,
+    xMax,
     yMin,
     yMax,
     data,
-    graph
+    candlestickWidth,
   } = props
+
+  const graph = getGraphDimensions(props)
+
+  const getCanvasX = toCanvasX({
+    width: graph.width,
+    left: graph.left,
+    xMax,
+    xMin,
+  })
 
   const getCanvasY = toCanvasY({
     height: graph.height,
@@ -18,47 +29,41 @@ export function draw (ctx: any, props: Props) {
     yMin,
   })
 
-  const leftInterval = graph.width / data.length
-  const barWidth = Math.max(leftInterval, 1)
-
   for (let i = 0; i < data.length; i++) {
     const {
       high,
       low,
       open,
-      close
+      close,
+      timestamp
     } = data[i]
 
-    const l = graph.left + i * leftInterval
-    const top = getCanvasY(Math.max(open, close))
-    const bottom = getCanvasY(Math.min(open, close))
+    const canvasX = getCanvasX(timestamp)
+    const bodyTop = getCanvasY(Math.max(open, close))
+    const bodyBottom = getCanvasY(Math.min(open, close))
+    const bodyHeight = Math.max(bodyBottom - bodyTop, 1)
 
-    const barHeight = Math.max(bottom - top, 1)
+    ctx.fillStyle = props.getCandlestickColor(data[i])
 
     // body
-    ctx.fillStyle = props.getBackgroundColor(data[i])
+    ctx.fillRect(
+      canvasX - candlestickWidth / 2,
+      bodyTop,
+      candlestickWidth,
+      bodyHeight
+    )
 
-    ctx.fillRect(l, top, barWidth, barHeight)
-
-    ctx.strokeStyle = props.getLineColor(data[i])
-    ctx.lineWidth = props.lineWidth
-
-    ctx.beginPath()
-    ctx.rect(l, top, barWidth, barHeight)
-    ctx.stroke()
-
-    // wick
-    ctx.strokeStyle = props.getWickColor(data[i])
-    ctx.lineWidth = props.wickWidth
+    ctx.strokeStyle = ctx.fillStyle
+    ctx.lineWidth = props.candlestickWickWidth
 
     // top wick
     ctx.beginPath()
-    ctx.moveTo(l + barWidth / 2, top)
-    ctx.lineTo(l + barWidth / 2, getCanvasY(high))
+    ctx.moveTo(canvasX, bodyTop)
+    ctx.lineTo(canvasX, getCanvasY(high))
 
     // bottom wick
-    ctx.moveTo(l + barWidth / 2, top + barHeight)
-    ctx.lineTo(l + barWidth / 2, getCanvasY(low))
+    ctx.moveTo(canvasX, bodyTop + bodyHeight)
+    ctx.lineTo(canvasX, getCanvasY(low))
     ctx.stroke()
   }
 }

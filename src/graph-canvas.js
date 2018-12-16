@@ -4,11 +4,13 @@ import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
 import * as bar from './canvas/bar'
+import * as candlestick from './canvas/candlestick'
 
 const GRAPHS = {
   line,
   point,
   bar,
+  candlestick,
 }
 
 const DEFAULT_PROPS = {
@@ -53,10 +55,15 @@ const DEFAULT_PROPS = {
   pointAmbientRadius: 10,
 
   // bar
-  getBarBackgroundColor: d => 'rgba(0, 175, 0, 0.6)',
+  getBarColor: d => 'rgba(0, 175, 0, 0.6)',
   getBarBorderColor: d => 'yellow',
   barBorderWidth: 1,
   barWidth: 10,
+
+  // candlestick
+  candlestickWidth: 10,
+  getCandlestickColor: d => d.open <= d.close ? 'yellowgreen' : 'deeppink',
+  candlestickWickWidth: 1,
 
   yMin: 0,
   yMax: 0,
@@ -125,10 +132,15 @@ export default class GraphCanvas extends Component {
     pointAmbientRadius: PropTypes.number.isRequired,
 
     // bar
-    getBarBackgroundColor: PropTypes.func.isRequired,
+    getBarColor: PropTypes.func.isRequired,
     getBarBorderColor: PropTypes.func.isRequired,
     barBorderWidth: PropTypes.number.isRequired,
     barWidth: PropTypes.number.isRequired,
+
+    // candlestick
+    candlestickWidth: PropTypes.number.isRequired,
+    getCandlestickColor: PropTypes.func.isRequired,
+    candlestickWickWidth: PropTypes.number.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
