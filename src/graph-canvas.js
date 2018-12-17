@@ -16,6 +16,28 @@ const GRAPHS = {
   candlestick,
 }
 
+const DEFAULT_GRAPH_PROPS = {
+  line: {
+    color: "black",
+    width: 1,
+  },
+  point: {
+    color: 'orange',
+    radius: 3,
+    ambientColor: 'rgba(255, 255, 0, 0.5)',
+    ambientRadius: 10,
+  },
+  bar: {
+    getColor: d => 'rgba(0, 175, 0, 0.6)',
+    width: 10,
+  },
+  candlestick: {
+    width: 10,
+    getColor: d => d.open <= d.close ? 'yellowgreen' : 'deeppink',
+    wickWidth: 1,
+  }
+}
+
 const DEFAULT_PROPS = {
   width: 500,
   height: 300,
@@ -48,31 +70,6 @@ const DEFAULT_PROPS = {
   },
 
   graphs: [],
-
-  // line
-  line: {
-    color: "black",
-    width: 1,
-  },
-
-  // point
-  point: {
-    color: 'orange',
-    radius: 3,
-    ambientColor: 'rgba(255, 255, 0, 0.5)',
-    ambientRadius: 10,
-  },
-
-  // bar
-  getBarColor: d => 'rgba(0, 175, 0, 0.6)',
-  getBarBorderColor: d => 'yellow',
-  barBorderWidth: 1,
-  barWidth: 10,
-
-  // candlestick
-  candlestickWidth: 10,
-  getCandlestickColor: d => d.open <= d.close ? 'yellowgreen' : 'deeppink',
-  candlestickWickWidth: 1,
 
   yMin: 0,
   yMax: 0,
@@ -155,15 +152,17 @@ export default class GraphCanvas extends Component {
     // }),
 
     // bar
-    getBarColor: PropTypes.func.isRequired,
-    getBarBorderColor: PropTypes.func.isRequired,
-    barBorderWidth: PropTypes.number.isRequired,
-    barWidth: PropTypes.number.isRequired,
+    // bar: PropTypes.shape({
+    //   getColor: PropTypes.func.isRequired,
+    //   width: PropTypes.number.isRequired,
+    // }),
 
     // candlestick
-    candlestickWidth: PropTypes.number.isRequired,
-    getCandlestickColor: PropTypes.func.isRequired,
-    candlestickWickWidth: PropTypes.number.isRequired,
+    // candlestick: PropTypes.shape({
+    //   width: PropTypes.number.isRequired,
+    //   getColor: PropTypes.func.isRequired,
+    //   wickWidth: PropTypes.number.isRequired,
+    // }),
   }
 
   static defaultProps = DEFAULT_PROPS
@@ -292,13 +291,11 @@ export default class GraphCanvas extends Component {
     for (let g of this.props.graphs) {
       GRAPHS[g.type].draw(this.ctx.graph, {
         ...this.props,
-        graph,
         getCanvasX,
         getCanvasY,
-        [g.type]: {
-          ...DEFAULT_PROPS[g.type],
-          ...g,
-        }
+        graph,
+        ...DEFAULT_GRAPH_PROPS[g.type],
+        ...g,
       })
     }
   }

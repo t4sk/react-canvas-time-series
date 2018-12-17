@@ -27,18 +27,15 @@ function drawPoint(ctx: any, props, canvasX, canvasY) {
 
 export function draw (ctx: any, props: Props) {
   const {
-    graph,
     getCanvasX,
     getCanvasY,
-    point,
+    data,
   } = props
-
-  const { data } = point
 
   for (let i = 0; i < data.length; i++) {
     drawPoint(
       ctx,
-      {...point, ...data[i]},
+      {...props, ...data[i]},
       getCanvasX(data[i].x),
       getCanvasY(data[i].y)
     )
