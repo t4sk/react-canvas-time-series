@@ -5,6 +5,7 @@ import * as line from './canvas/line'
 import * as point from './canvas/point'
 import * as bar from './canvas/bar'
 import * as candlestick from './canvas/candlestick'
+import * as ui from './canvas/ui'
 
 import {toCanvasX, toCanvasY} from './canvas/math'
 import {getGraphDimensions} from './canvas/background/util'
@@ -36,6 +37,30 @@ const DEFAULT_GRAPH_PROPS = {
     getColor: d => d.open <= d.close ? 'yellowgreen' : 'deeppink',
     wickWidth: 1,
   }
+}
+
+const DEFAULT_UI_PROPS = {
+  showXLabel: true,
+  showXLine: true,
+  xLineColor: 'black',
+  xLabelAt: 'bottom',
+  xLabelWidth: 50,
+  xLabelHeight: 20,
+  xLabelBackgroundColor: 'black',
+  xLabelFont: '12px Arial',
+  xLabelColor: 'white',
+  renderXLabel: x => x,
+
+  showYLabel: true,
+  showYLine: true,
+  yLineColor: 'black',
+  yLabelAt: 'left',
+  yLabelWidth: 50,
+  yLabelHeight: 20,
+  yLabelBackgroundColor: 'black',
+  yLabelFont: '12px Arial',
+  yLabelColor: 'white',
+  renderYLabel: y => y,
 }
 
 const DEFAULT_PROPS = {
@@ -75,6 +100,13 @@ const DEFAULT_PROPS = {
   yMax: 0,
   xMin: 0,
   xMax: 0,
+
+  showUI: false,
+  onMouseMove: (e, mouse) => {},
+  onMouseDown: (e, mouse) => {},
+  onMouseUp: (e, mouse) => {},
+  onMouseOut: (e, mouse) => {},
+  onWheel: (e, mouse) => {},
 }
 
 // TODO component to set default props
@@ -163,6 +195,9 @@ export default class GraphCanvas extends Component {
     //   getColor: PropTypes.func.isRequired,
     //   wickWidth: PropTypes.number.isRequired,
     // }),
+
+    // TODO UI prop types
+    showUI: PropTypes.bool.isRequired,
   }
 
   static defaultProps = DEFAULT_PROPS
@@ -218,7 +253,7 @@ export default class GraphCanvas extends Component {
       background: this.background.current.getContext('2d', { alpha: false })
     }
 
-    if (this.props.drawUI) {
+    if (this.props.showUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
       this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
       this.ctx.ui.canvas.addEventListener('mouseup', this.onMouseUp)
@@ -291,9 +326,9 @@ export default class GraphCanvas extends Component {
     for (let g of this.props.graphs) {
       GRAPHS[g.type].draw(this.ctx.graph, {
         ...this.props,
+        graph,
         getCanvasX,
         getCanvasY,
-        graph,
         ...DEFAULT_GRAPH_PROPS[g.type],
         ...g,
       })
@@ -303,10 +338,40 @@ export default class GraphCanvas extends Component {
   animate = () => {
     this.animation = window.requestAnimationFrame(this.animate)
 
-    this.props.drawBackground(this.ctx.background)
-    this.props.drawData(this.ctx.graph)
+    this.draw()
 
-    this.props.drawUI(this.ctx.ui, this.mouse)
+    const graph = getGraphDimensions({
+      width: this.props.width,
+      height: this.props.height,
+      ...DEFAULT_PROPS.background,
+      ...this.props.background
+    })
+
+    const getCanvasX = toCanvasX({
+      width: graph.width,
+      left: graph.left,
+      xMax: this.props.xMax,
+      xMin: this.props.xMin,
+    })
+
+    const getCanvasY = toCanvasY({
+      height: graph.height,
+      top: graph.top,
+      yMax: this.props.yMax,
+      yMin: this.props.yMin,
+    })
+
+    ui.draw(this.ctx.ui, {
+      ...this.props,
+      graph,
+      getCanvasX,
+      getCanvasY,
+      ui: {
+        ...DEFAULT_UI_PROPS,
+        ...this.props.ui,
+      },
+      mouse: this.mouse,
+    })
   }
 
   render () {

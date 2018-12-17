@@ -13,8 +13,8 @@ export default class App extends Component {
       <div>
         {/*}
         <IntegrationTestRender />
-        <UITestRender />
         */}
+        <UITestRender />
         <CandlestickTestRender />
         <BarTestRender />
         <PointTestRender />

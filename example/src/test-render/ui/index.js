@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GraphCanvas} from 'react-canvas-time-series'
+import {GraphCanvas} from 'react-canvas-time-series'
 // import TestZoom from './test-zoom'
 // import TestNearest from './test-nearest'
 // import TestDrag from './test-drag'
@@ -17,80 +17,54 @@ class UITestRender extends Component {
         <h3>X Label Bottom</h3>
         <GraphCanvas
           {...this.props}
+          background={{
+            ...this.props.background,
+            xAxisAt: 'bottom',
+          }}
+          ui={{
+            ...this.props.ui,
+            xLabelAt: 'bottom'
+          }}
         />
 
-        {/*}
         <h3>X Label Top</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                xAxisAt: 'top'
-              }
-            })
+          {...this.props}
+          background={{
+            ...this.props.background,
+            xAxisAt: 'top',
           }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              graph: {
-                ...this.props.ui.graph,
-                top: 60,
-              },
-              xLabelAt: 'top'
-            })
+          ui={{
+            ...this.props.ui,
+            xLabelAt: 'top'
           }}
         />
 
         <h3>Y Label Left</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                yAxisAt: 'left'
-              }
-            })
+          {...this.props}
+          background={{
+            ...this.props.background,
+            yAxisAt: 'left',
           }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              yLabelAt: 'left',
-            })
+          ui={{
+            ...this.props.ui,
+            yLabelAt: 'left'
           }}
         />
 
         <h3>Y Label Right</h3>
         <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, {
-              ...this.props,
-              background: {
-                ...this.props.background,
-                yAxisAt: 'right'
-              }
-            })
+          {...this.props}
+          background={{
+            ...this.props.background,
+            yAxisAt: 'right',
           }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              graph: {
-                ...this.props.ui.graph,
-                left: 20,
-              },
-              yLabelAt: 'right'
-            })
+          ui={{
+            ...this.props.ui,
+            yLabelAt: 'right'
           }}
         />
-        */}
 
         {/*}
         <h3>Update Canvas Props</h3>
@@ -241,43 +215,22 @@ class UITestRender extends Component {
 }
 
 UITestRender.defaultProps = {
-  backgroundColor: 'beige',
-  yTickInterval: 10,
-  xTickInterval: 100,
+  background: {
+    color: 'beige',
+    yTickInterval: 10,
+    xTickInterval: 100,
+  },
 
   xMin: X_MIN,
   xMax: X_MAX,
   yMin: Y_MIN,
   yMax: Y_MAX,
 
+  showUI: true,
   ui: {
-    showXLabel: true,
-    showXLine: true,
-    xLineColor: 'blue',
-    xLabelAt: 'bottom',
-    xLabelWidth: 70,
-    xLabelHeight: 20,
-    xLabelBackgroundColor: 'green',
-    xLabelFont: '12px Arial',
-    xLabelColor: 'black',
     renderXLabel: x => Math.round(x),
-
-    showYLabel: true,
-    showYLine: true,
-    yLineColor: 'green',
-    yLabelAt: 'left',
-    yLabelWidth: 50,
-    yLabelHeight: 20,
-    yLabelBackgroundColor: 'black',
-    yLabelFont: '12px Arial',
-    yLabelColor: 'white',
     renderYLabel: y => y.toFixed(2),
   },
-    yMin: Y_MIN,
-    yMax: Y_MAX,
-    xMin: X_MIN,
-    xMax: X_MAX
-
 }
 
 export default UITestRender

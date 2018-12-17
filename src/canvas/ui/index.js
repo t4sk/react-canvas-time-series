@@ -44,7 +44,7 @@ export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
 export function drawXLine (ctx: any, props: DrawXLineAtProps) {
   ctx.beginPath()
 
-  ctx.strokeStyle = props.lineColor
+  ctx.strokeStyle = props.color
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(props.canvasX, props.graph.top)
@@ -57,7 +57,7 @@ export function drawXLine (ctx: any, props: DrawXLineAtProps) {
 export function drawYLine (ctx: any, props: DrawYLineAtProps) {
   ctx.beginPath()
 
-  ctx.strokeStyle = props.lineColor
+  ctx.strokeStyle = props.color
   ctx.setLineDash([5, 5])
 
   ctx.moveTo(props.graph.left, props.canvasY)
@@ -176,68 +176,77 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 }
 
 export function draw (ctx: any, props: Props) {
-  ctx.clearRect(0, 0, props.canvas.width, props.canvas.height)
+  const {
+    graph,
+    ui,
+    mouse,
+  } = props
 
-  if (!isInsideRect(props.mouse, props.graph)) {
+  ctx.clearRect(0, 0, props.width, props.height)
+
+  if (!isInsideRect(mouse, graph)) {
     return
   }
 
-  if (props.showXLine) {
+  if (ui.showXLine) {
     drawXLine(ctx, {
-      lineColor: props.xLineColor,
-      graph: props.graph,
-      canvasX: props.mouse.x
+      color: ui.xLineColor,
+      graph,
+      canvasX: mouse.x
     })
   }
-  if (props.showXLabel) {
-    const canvasX = props.mouse.isDragging ? props.mouse.dragStartCanvasX : props.mouse.x
-    const xMax = props.mouse.isDragging ? props.mouse.dragStartXMax : props.xMax
-    const xMin = props.mouse.isDragging ? props.mouse.dragStartXMin : props.xMin
+  if (ui.showXLabel) {
+    // TODO is this necessary? why not just pass xMax and xMin
+    const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
+    const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
+    const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
 
+    // TODO pass from props
     const x = toX({
-      width: props.graph.width,
-      left: props.graph.left,
+      width: graph.width,
+      left: graph.left,
       xMax,
       xMin,
     })(canvasX)
 
     drawXLabel(ctx, {
-      graph: props.graph,
-      left: props.mouse.x,
-      height: props.xLabelHeight,
-      width: props.xLabelWidth,
-      text: props.renderXLabel(x),
-      labelAt: props.xLabelAt,
-      backgroundColor: props.xLabelBackgroundColor,
-      font: props.xLabelFont,
-      color: props.xLabelColor
+      graph,
+      left: mouse.x,
+      height: ui.xLabelHeight,
+      width: ui.xLabelWidth,
+      text: ui.renderXLabel(x),
+      labelAt: ui.xLabelAt,
+      backgroundColor: ui.xLabelBackgroundColor,
+      font: ui.xLabelFont,
+      color: ui.xLabelColor
     })
   }
-  if (props.showYLine) {
+  if (ui.showYLine) {
     drawYLine(ctx, {
-      lineColor: props.yLineColor,
-      graph: props.graph,
-      canvasY: props.mouse.y
+      color: ui.yLineColor,
+      graph,
+      canvasY: mouse.y
     })
   }
-  if (props.showYLabel) {
+  if (ui.showYLabel) {
+    // TODO pass from props
     const y = toY({
-      height: props.graph.height,
-      top: props.graph.top,
+      height: graph.height,
+      top: graph.top,
       yMin: props.yMin,
       yMax: props.yMax
-    })(props.mouse.y)
+    })(mouse.y)
 
     drawYLabel(ctx, {
-      graph: props.graph,
-      top: props.mouse.y,
-      width: props.yLabelWidth,
-      height: props.yLabelHeight,
-      labelAt: props.yLabelAt,
-      text: props.renderYLabel(y),
-      backgroundColor: props.yLabelBackgroundColor,
-      font: props.yLabelFont,
-      color: props.yLabelColor
+      graph,
+      top: mouse.y,
+      width: ui.yLabelWidth,
+      height: ui.yLabelHeight,
+      labelAt: ui.yLabelAt,
+      text: ui.renderYLabel(y),
+      backgroundColor: ui.yLabelBackgroundColor,
+      font: ui.yLabelFont,
+      color: ui.yLabelColor
     })
   }
 }
