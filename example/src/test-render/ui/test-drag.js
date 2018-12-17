@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {canvas, GraphCanvas} from 'react-canvas-time-series'
 import { rand } from '../../util'
-const { background, ui, line, math } = canvas
-const { toX, findIndexOfNearestData } = math
+const { background, ui, math } = canvas
+const { toX } = math
 
 class TestDrag extends Component {
   constructor (props) {
