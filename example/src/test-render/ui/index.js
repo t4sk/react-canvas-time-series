@@ -251,16 +251,6 @@ UITestRender.defaultProps = {
   yMax: Y_MAX,
 
   ui: {
-    canvas: {
-      width: 500,
-      height: 300,
-    },
-    graph: {
-      left: 70,
-      top: 10,
-      width: 400,
-      height: 220
-    },
     showXLabel: true,
     showXLine: true,
     xLineColor: 'blue',
@@ -282,12 +272,12 @@ UITestRender.defaultProps = {
     yLabelFont: '12px Arial',
     yLabelColor: 'white',
     renderYLabel: y => y.toFixed(2),
-
+  },
     yMin: Y_MIN,
     yMax: Y_MAX,
     xMin: X_MIN,
     xMax: X_MAX
-  },
+
 }
 
 export default UITestRender

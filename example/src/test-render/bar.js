@@ -57,7 +57,7 @@ class BarTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'bar',
-            barWidth: 20,
+            width: 20,
             data: RANDOM_DATA_SMALL,
           }]}
         />
@@ -67,7 +67,7 @@ class BarTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'bar',
-            barWidth: 5,
+            width: 5,
             data: RANDOM_DATA_MEDIUM,
           }]}
         />
@@ -77,7 +77,7 @@ class BarTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'bar',
-            barWidth: 2,
+            width: 2,
             data: RANDOM_DATA_LARGE,
           }]}
         />
@@ -87,10 +87,9 @@ class BarTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'bar',
-            barWidth: 60,
-            getBarBackgroundColor: d => 'rgba(255, 0, 255, 0.5)',
-            getBarBorderColor: d => 'red',
-            barBorderWidth: 4,
+            width: 60,
+            getColor: d => 'rgba(255, 0, 255, 0.5)',
+            width: 4,
             data: [{
               x: (X_MAX + X_MIN) / 2,
               y: (Y_MAX - Y_MIN) / 2
@@ -103,10 +102,11 @@ class BarTestRender extends Component {
 }
 
 BarTestRender.defaultProps = {
-  backgroundColor: 'beige',
-  yTickInterval: 10,
-  xTickInterval: 10,
-
+  background: {
+    color: 'beige',
+    yTickInterval: 10,
+    xTickInterval: 10,
+  },
   xMin: X_MIN,
   xMax: X_MAX,
   yMin: Y_MIN,
