@@ -4,7 +4,7 @@ import { drawXLines } from './x-lines'
 import { drawYLines } from './y-lines'
 
 export function draw (ctx: any, props) {
-  ctx.fillStyle = props.color
+  ctx.fillStyle = props.background.color
   ctx.fillRect(0, 0, props.width, props.height)
 
   drawXLines(ctx, props)

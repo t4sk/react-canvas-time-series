@@ -50,8 +50,10 @@ const DEFAULT_PROPS = {
   graphs: [],
 
   // line
-  lineColor: "black",
-  lineWidth: 1,
+  line: {
+    color: "black",
+    width: 1,
+  },
 
   // point
   pointColor: 'orange',
@@ -76,6 +78,7 @@ const DEFAULT_PROPS = {
   xMax: 0,
 }
 
+// TODO component to set default props
 export default class GraphCanvas extends Component {
   static propTypes = {
     onMouseMove: PropTypes.func,
@@ -86,6 +89,13 @@ export default class GraphCanvas extends Component {
 
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+
+    yMin: PropTypes.number.isRequired,
+    yMax: PropTypes.number.isRequired,
+    xMin: PropTypes.number.isRequired,
+    xMax: PropTypes.number.isRequired,
+
+    // TODO graph, getCanvasX, getCanvasY props
 
     // background
     background: PropTypes.shape({
@@ -129,8 +139,10 @@ export default class GraphCanvas extends Component {
     })).isRequired,
 
     // line
-    lineColor: PropTypes.string.isRequired,
-    lineWidth: PropTypes.number.isRequired,
+    line: PropTypes.shape({
+      color: PropTypes.string.isRequired,
+      width: PropTypes.number.isRequired,
+    }),
 
     // point
     pointColor: PropTypes.string.isRequired,
@@ -148,11 +160,6 @@ export default class GraphCanvas extends Component {
     candlestickWidth: PropTypes.number.isRequired,
     getCandlestickColor: PropTypes.func.isRequired,
     candlestickWickWidth: PropTypes.number.isRequired,
-
-    yMin: PropTypes.number.isRequired,
-    yMax: PropTypes.number.isRequired,
-    xMin: PropTypes.number.isRequired,
-    xMax: PropTypes.number.isRequired,
   }
 
   static defaultProps = DEFAULT_PROPS
@@ -268,26 +275,23 @@ export default class GraphCanvas extends Component {
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
     background.draw(this.ctx.background, {
-      width: this.props.width,
-      height: this.props.height,
+      ...this.props,
       graph,
       getCanvasX,
       getCanvasY,
-      yMin: this.props.yMin,
-      yMax: this.props.yMax,
-      xMin: this.props.xMin,
-      xMax: this.props.xMax,
-      ...DEFAULT_PROPS.background,
-      ...this.props.background,
+      background: {
+        ...DEFAULT_PROPS.background,
+        ...this.props.background,
+      },
     })
 
-    for (let i = 0; i < this.props.graphs.length; i++) {
-      GRAPHS[graph.type].draw(this.ctx.data, {
+    for (let g of this.props.graphs) {
+      GRAPHS[g.type].draw(this.ctx.data, {
         ...this.props,
-        ...this.props.graphs[i],
         graph,
         getCanvasX,
         getCanvasY,
+        ...g,
       })
     }
   }

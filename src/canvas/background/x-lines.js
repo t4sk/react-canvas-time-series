@@ -6,8 +6,10 @@ const X_LABEL_VERTICAL_PADDING = 12
 
 function getLabelTop (props: Props): number {
   const {
-    xAxisAt,
-    xAxisHeight,
+    background: {
+      xAxisAt,
+      xAxisHeight,
+    },
     height,
   } = props
 
@@ -27,20 +29,21 @@ export function drawXLines (ctx: any, props: Props) {
     xMax,
     graph,
     getCanvasX,
+    background
   } = props
 
   // style line
-  ctx.lineWidth = props.xLineWidth
-  ctx.strokeStyle = props.xLineColor
+  ctx.lineWidth = background.xLineWidth
+  ctx.strokeStyle = background.xLineColor
   // style labels
-  ctx.font = props.xTickFont
-  ctx.fillStyle = props.xTickBackgroundColor
+  ctx.font = background.xTickFont
+  ctx.fillStyle = background.xTickBackgroundColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
   const labelTop = getLabelTop(props)
 
-  if (props.showXLine) {
+  if (background.showXLine) {
     // draw x line at start
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
@@ -54,15 +57,15 @@ export function drawXLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  if (props.xTickInterval > 0) {
-    const x0 = nearestStepBelow(xMin, props.xTickInterval)
+  if (background.xTickInterval > 0) {
+    const x0 = nearestStepBelow(xMin, background.xTickInterval)
 
-    for (let x = x0, i = 0; x <= xMax; x += props.xTickInterval, i++) {
+    for (let x = x0, i = 0; x <= xMax; x += background.xTickInterval, i++) {
       const canvasX = getCanvasX(x)
 
       if (canvasX >= graph.left && canvasX <= graph.left + graph.width) {
         // draw line
-        if (props.showXLine) {
+        if (background.showXLine) {
           ctx.beginPath()
           ctx.moveTo(canvasX, graph.top)
           ctx.lineTo(canvasX, graph.top + graph.height)
@@ -71,8 +74,8 @@ export function drawXLines (ctx: any, props: Props) {
 
         // draw text
         // TODO show x labels at xMin and xMax?
-        if (props.showXTick) {
-          ctx.fillText(props.renderXTick(x, i), canvasX, labelTop)
+        if (background.showXTick) {
+          ctx.fillText(background.renderXTick(x, i), canvasX, labelTop)
         }
       }
     }
