@@ -14,8 +14,8 @@ export default class App extends Component {
         {/*}
         <IntegrationTestRender />
         <UITestRender />
-        <CandlestickTestRender />
         */}
+        <CandlestickTestRender />
         <BarTestRender />
         <PointTestRender />
         <LineTestRender />

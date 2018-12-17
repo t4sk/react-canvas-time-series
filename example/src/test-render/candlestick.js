@@ -77,7 +77,7 @@ class CandlestickTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'candlestick',
-            candlestickWickWidth: 3,
+            wickWidth: 3,
             data: FIXED_DATA,
           }]}
         />
@@ -87,7 +87,7 @@ class CandlestickTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'candlestick',
-            candlestickWickWidth: 3,
+            wickWidth: 3,
             data: RANDOM_DATA_SMALL,
           }]}
         />
@@ -97,7 +97,7 @@ class CandlestickTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'candlestick',
-            candlestickWidth: 5,
+            width: 5,
             data: RANDOM_DATA_MEDIUM,
           }]}
         />
@@ -107,7 +107,7 @@ class CandlestickTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'candlestick',
-            candlestickWidth: 2,
+            width: 2,
             data: RANDOM_DATA_LARGE,
           }]}
         />
@@ -117,10 +117,11 @@ class CandlestickTestRender extends Component {
 }
 
 CandlestickTestRender.defaultProps = {
-  backgroundColor: 'beige',
-  yTickInterval: 10,
-  xTickInterval: 100,
-
+  background: {
+    color: 'beige',
+    yTickInterval: 10,
+    xTickInterval: 100,
+  },
   xMin: X_MIN,
   xMax: X_MAX,
   yMin: Y_MIN,

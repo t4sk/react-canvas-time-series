@@ -1,33 +1,13 @@
 // @flow
-import { toCanvasX, toCanvasY } from '../math'
 import type { Props } from './types'
-import { getGraphDimensions } from '../background/util'
 
 export function draw (ctx: any, props: Props) {
   const {
-    xMin,
-    xMax,
-    yMin,
-    yMax,
+    getCanvasX,
+    getCanvasY,
     data,
-    candlestickWidth,
+    width,
   } = props
-
-  const graph = getGraphDimensions(props)
-
-  const getCanvasX = toCanvasX({
-    width: graph.width,
-    left: graph.left,
-    xMax,
-    xMin,
-  })
-
-  const getCanvasY = toCanvasY({
-    height: graph.height,
-    top: graph.top,
-    yMax,
-    yMin,
-  })
 
   for (let i = 0; i < data.length; i++) {
     const {
@@ -43,18 +23,18 @@ export function draw (ctx: any, props: Props) {
     const bodyBottom = getCanvasY(Math.min(open, close))
     const bodyHeight = Math.max(bodyBottom - bodyTop, 1)
 
-    ctx.fillStyle = props.getCandlestickColor(data[i])
+    ctx.fillStyle = props.getColor(data[i])
 
     // body
     ctx.fillRect(
-      canvasX - candlestickWidth / 2,
+      canvasX - width / 2,
       bodyTop,
-      candlestickWidth,
+      width,
       bodyHeight
     )
 
     ctx.strokeStyle = ctx.fillStyle
-    ctx.lineWidth = props.candlestickWickWidth
+    ctx.lineWidth = props.wickWidth
 
     // top wick
     ctx.beginPath()
