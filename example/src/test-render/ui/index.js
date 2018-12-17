@@ -66,6 +66,42 @@ class UITestRender extends Component {
           }}
         />
 
+        <h3>Hide X Label</h3>
+        <GraphCanvas
+          {...this.props}
+          ui={{
+            ...this.props.ui,
+            showXLabel: false
+          }}
+        />
+
+        <h3>Hide X Line</h3>
+        <GraphCanvas
+          {...this.props}
+          ui={{
+            ...this.props.ui,
+            showXLine: false,
+          }}
+        />
+
+        <h3>Hide Y Label</h3>
+        <GraphCanvas
+          {...this.props}
+          ui={{
+            ...this.props.ui,
+            showYLabel: false,
+          }}
+        />
+
+        <h3>Hide Y Line</h3>
+        <GraphCanvas
+          {...this.props}
+          ui={{
+            ...this.props.ui,
+            showYLine: false,
+          }}
+        />
+
         {/*}
         <h3>Update Canvas Props</h3>
         <TestUpdateProps {...this.props} />
@@ -78,68 +114,6 @@ class UITestRender extends Component {
 
         <h3>Get Nearest Data at X</h3>
         <TestNearest {...this.props} />
-        */}
-
-        {/*}
-        <h3>Hide X Label</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showXLabel: false,
-            })
-          }}
-        />
-
-        <h3>Hide X Line</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showXLine: false,
-            })
-          }}
-        />
-
-        <h3>Hide Y Label</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showYLabel: false,
-            })
-          }}
-        />
-
-        <h3>Hide Y Line</h3>
-        <GraphCanvas
-          canvas={this.props.canvas}
-          drawBackground={(ctx) => {
-            this.drawBackground(ctx, this.props)
-          }}
-          drawUI={(ctx, mouse) => {
-            ui.draw(ctx, {
-              ...this.props.ui,
-              mouse,
-              showYLine: false,
-            })
-          }}
-        />
         */}
 
         {/*}
