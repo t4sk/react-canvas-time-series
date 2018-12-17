@@ -5,7 +5,7 @@ import { drawXLines } from './x-lines'
 import { drawYLines } from './y-lines'
 
 export function draw (ctx: any, props) {
-  ctx.fillStyle = props.backgroundColor
+  ctx.fillStyle = props.color
   ctx.fillRect(0, 0, props.width, props.height)
 
   const graph = getGraphDimensions(props)

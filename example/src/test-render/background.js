@@ -8,49 +8,73 @@ class BackgroundTestRender extends Component {
         <h3>Hide X Labels</h3>
         <GraphCanvas
           {...this.props}
-          showXLabel={false}
+          background={{
+            ...this.props.background,
+            showXLabel: false
+          }}
         />
 
         <h3>Hide X Lines</h3>
         <GraphCanvas
           {...this.props}
-          showXLine={false}
+          background={{
+            ...this.props.background,
+            showXLine: false
+          }}
         />
 
         <h3>Hide Y Labels</h3>
         <GraphCanvas
           {...this.props}
-          showYLabel={false}
+          background={{
+            ...this.props.background,
+            showYLabel: false,
+          }}
         />
 
         <h3>Hide Y Lines</h3>
         <GraphCanvas
           {...this.props}
-          showYLine={false}
+          background={{
+            ...this.props.background,
+            showYLine: false,
+          }}
         />
 
         <h3>X Axis Bottom</h3>
         <GraphCanvas
           {...this.props}
-          xAxisAt='bottom'
+          background={{
+            ...this.props.background,
+            xAxisAt: 'bottom',
+          }}
         />
 
         <h3>X Axis Top</h3>
         <GraphCanvas
           {...this.props}
-          xAxisAt='top'
+          background={{
+            ...this.props.background,
+            xAxisAt: 'top',
+          }}
         />
 
         <h3>Y Axis Left</h3>
         <GraphCanvas
           {...this.props}
-          yAxisAt='left'
+          background={{
+            ...this.props.background,
+            yAxisAt: 'left'
+          }}
         />
 
         <h3>Y Axis Right</h3>
         <GraphCanvas
           {...this.props}
-          yAxisAt='right'
+          background={{
+            ...this.props.background,
+            yAxisAt: 'right'
+          }}
         />
       </div>
     )
@@ -58,13 +82,13 @@ class BackgroundTestRender extends Component {
 }
 
 BackgroundTestRender.defaultProps = {
-  backgroundColor: "beige",
-  yLineColor: 'red',
-  yTickInterval: 10,
-
-  xLineColor: 'blue',
-  xTickInterval: 100,
-
+  background: {
+    color: "beige",
+    yLineColor: 'red',
+    yTickInterval: 10,
+    xLineColor: 'blue',
+    xTickInterval: 100,
+  },
   yMin: 10,
   yMax: 110,
   xMin: 100,

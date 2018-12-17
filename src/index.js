@@ -31,3 +31,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO compute barWidth from xStep
 
 // TODO ? set graph canvas size in render()
+// TODO remove bar.getBorderColor

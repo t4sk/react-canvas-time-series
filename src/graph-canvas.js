@@ -18,29 +18,31 @@ const DEFAULT_PROPS = {
   height: 300,
 
   // background
-  backgroundColor: "white",
+  background: {
+    color: "white",
 
-  yAxisAt: 'left',
-  yAxisWidth: 50,
-  showYLine: true,
-  yLineWidth: 1,
-  yLineColor: 'black',
-  showYTick: true,
-  yTickFont: '12px Arial',
-  yTickBackgroundColor: 'black',
-  renderYTick: y => y,
-  yTickInterval: 1,
+    yAxisAt: 'left',
+    yAxisWidth: 50,
+    showYLine: true,
+    yLineWidth: 1,
+    yLineColor: 'black',
+    showYTick: true,
+    yTickFont: '12px Arial',
+    yTickBackgroundColor: 'black',
+    renderYTick: y => y,
+    yTickInterval: 1,
 
-  xAxisAt: 'bottom',
-  xAxisHeight: 50,
-  showXLine: true,
-  xLineWidth: 1,
-  xLineColor: 'black',
-  showXTick: true,
-  xTickFont: '12px Arial',
-  xTickBackgroundColor: 'black',
-  renderXTick: x => x,
-  xTickInterval: 1,
+    xAxisAt: 'bottom',
+    xAxisHeight: 50,
+    showXLine: true,
+    xLineWidth: 1,
+    xLineColor: 'black',
+    showXTick: true,
+    xTickFont: '12px Arial',
+    xTickBackgroundColor: 'black',
+    renderXTick: x => x,
+    xTickInterval: 1,
+  },
 
   graphs: [],
 
@@ -239,7 +241,16 @@ export default class GraphCanvas extends Component {
     this.ctx.background.fillStyle = this.props.backgroundColor
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
-    background.draw(this.ctx.background, this.props)
+    background.draw(this.ctx.background, {
+      width: this.props.width,
+      height: this.props.height,
+      yMin: this.props.yMin,
+      yMax: this.props.yMax,
+      xMin: this.props.xMin,
+      xMax: this.props.xMax,
+      ...DEFAULT_PROPS.background,
+      ...this.props.background,
+    })
 
     for (let graph of this.props.graphs) {
       GRAPHS[graph.type].draw(this.ctx.data, {...this.props, ...graph})
