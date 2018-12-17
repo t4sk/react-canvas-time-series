@@ -43,8 +43,8 @@ export function drawYLines (ctx: any, graph: any, props: Props) {
   ctx.strokeStyle = props.yLineColor
 
   // style labels
-  ctx.font = props.yLabelFont
-  ctx.fillStyle = props.yLabelColor
+  ctx.font = props.yTickFont
+  ctx.fillStyle = props.yTickBackgroundColor
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
@@ -88,8 +88,8 @@ export function drawYLines (ctx: any, graph: any, props: Props) {
 
         // draw text
         // TODO show labels at yMin and yMax?
-        if (props.showYLabel) {
-          ctx.fillText(props.renderYLabel(y, i), labelLeft, canvasY)
+        if (props.showYTick) {
+          ctx.fillText(props.renderYTick(y, i), labelLeft, canvasY)
         }
       }
     }

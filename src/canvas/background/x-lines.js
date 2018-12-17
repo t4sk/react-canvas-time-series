@@ -31,8 +31,8 @@ export function drawXLines (ctx: any, graph: any, props: Props) {
   ctx.lineWidth = props.xLineWidth
   ctx.strokeStyle = props.xLineColor
   // style labels
-  ctx.font = props.xLabelFont
-  ctx.fillStyle = props.xLabelColor
+  ctx.font = props.xTickFont
+  ctx.fillStyle = props.xTickBackgroundColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
@@ -76,8 +76,8 @@ export function drawXLines (ctx: any, graph: any, props: Props) {
 
         // draw text
         // TODO show x labels at xMin and xMax?
-        if (props.showXLabel) {
-          ctx.fillText(props.renderXLabel(x, i), canvasX, labelTop)
+        if (props.showXTick) {
+          ctx.fillText(props.renderXTick(x, i), canvasX, labelTop)
         }
       }
     }
