@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { toCanvasY, nearestStepBelow } from '../math'
+import { nearestStepBelow } from '../math'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
   switch (props.yAxisAt) {
@@ -32,10 +32,12 @@ function getLabelLeft (props: Props): number {
   }
 }
 
-export function drawYLines (ctx: any, graph: any, props: Props) {
+export function drawYLines (ctx: any, props: Props) {
   const {
     yMin,
-    yMax
+    yMax,
+    graph,
+    getCanvasY,
   } = props
 
   // style line
@@ -63,13 +65,6 @@ export function drawYLines (ctx: any, graph: any, props: Props) {
     ctx.lineTo(graph.left + graph.width, graph.top + graph.height)
     ctx.stroke()
   }
-
-  const getCanvasY = toCanvasY({
-    height: graph.height,
-    top: graph.top,
-    yMax,
-    yMin
-  })
 
   if (props.yTickInterval > 0) {
     const y0 = nearestStepBelow(yMin, props.yTickInterval)

@@ -6,6 +6,9 @@ import * as point from './canvas/point'
 import * as bar from './canvas/bar'
 import * as candlestick from './canvas/candlestick'
 
+import {toCanvasX, toCanvasY} from './canvas/math'
+import {getGraphDimensions} from './canvas/background/util'
+
 const GRAPHS = {
   line,
   point,
@@ -239,6 +242,27 @@ export default class GraphCanvas extends Component {
   }
 
   draw = () => {
+    const graph = getGraphDimensions({
+      width: this.props.width,
+      height: this.props.height,
+      ...DEFAULT_PROPS.background,
+      ...this.props.background
+    })
+
+    const getCanvasX = toCanvasX({
+      width: graph.width,
+      left: graph.left,
+      xMax: this.props.xMax,
+      xMin: this.props.xMin,
+    })
+
+    const getCanvasY = toCanvasY({
+      height: graph.height,
+      top: graph.top,
+      yMax: this.props.yMax,
+      yMin: this.props.yMin,
+    })
+
     // TODO shouldDrawBackground, shouldDrawGraph, shouldDrawUI
     this.ctx.background.fillStyle = this.props.backgroundColor
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
@@ -246,6 +270,9 @@ export default class GraphCanvas extends Component {
     background.draw(this.ctx.background, {
       width: this.props.width,
       height: this.props.height,
+      graph,
+      getCanvasX,
+      getCanvasY,
       yMin: this.props.yMin,
       yMax: this.props.yMax,
       xMin: this.props.xMin,
@@ -254,8 +281,14 @@ export default class GraphCanvas extends Component {
       ...this.props.background,
     })
 
-    for (let graph of this.props.graphs) {
-      GRAPHS[graph.type].draw(this.ctx.data, {...this.props, ...graph})
+    for (let i = 0; i < this.props.graphs.length; i++) {
+      GRAPHS[graph.type].draw(this.ctx.data, {
+        ...this.props,
+        ...this.props.graphs[i],
+        graph,
+        getCanvasX,
+        getCanvasY,
+      })
     }
   }
 

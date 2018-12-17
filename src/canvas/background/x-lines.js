@@ -1,6 +1,6 @@
 // @flow
 import type { Props } from './types'
-import { toCanvasX, nearestStepBelow } from '../math'
+import { nearestStepBelow } from '../math'
 
 const X_LABEL_VERTICAL_PADDING = 12
 
@@ -21,10 +21,12 @@ function getLabelTop (props: Props): number {
   }
 }
 
-export function drawXLines (ctx: any, graph: any, props: Props) {
+export function drawXLines (ctx: any, props: Props) {
   const {
     xMin,
-    xMax
+    xMax,
+    graph,
+    getCanvasX,
   } = props
 
   // style line
@@ -51,13 +53,6 @@ export function drawXLines (ctx: any, graph: any, props: Props) {
     ctx.lineTo(graph.left + graph.width, graph.top + graph.height)
     ctx.stroke()
   }
-
-  const getCanvasX = toCanvasX({
-    width: graph.width,
-    left: graph.left,
-    xMax,
-    xMin
-  })
 
   if (props.xTickInterval > 0) {
     const x0 = nearestStepBelow(xMin, props.xTickInterval)
