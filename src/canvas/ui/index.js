@@ -196,10 +196,10 @@ export function draw (ctx: any, props: Props) {
     })
   }
   if (ui.showXLabel) {
-    // TODO is this necessary? why not just pass xMax and xMin
-    const canvasX = mouse.isDragging ? mouse.dragStartCanvasX : mouse.x
-    const xMax = mouse.isDragging ? mouse.dragStartXMax : props.xMax
-    const xMin = mouse.isDragging ? mouse.dragStartXMin : props.xMin
+    const {
+      xMax,
+      xMin
+    } = props
 
     // TODO pass from props
     const x = toX({
@@ -207,7 +207,7 @@ export function draw (ctx: any, props: Props) {
       left: graph.left,
       xMax,
       xMin,
-    })(canvasX)
+    })(mouse.x)
 
     drawXLabel(ctx, {
       graph,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-graph'
+import {canvas, GraphCanvas} from 'react-canvas-time-series'
 import { rand } from '../../util'
 const { background, ui, line, math } = canvas
 const { toX, findIndexOfNearestData } = math
@@ -8,8 +8,8 @@ class TestDrag extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      xMin: 1900,
-      xMax: 2010,
+      xMin: 0,
+      xMax: 1000,
     }
 
     this.mouse = {
@@ -21,16 +21,22 @@ class TestDrag extends Component {
   }
 
   onMouseMove = (e, mouse) => {
-    // TODO fix drag
     if (!this.mouse.isDragging) {
       return
     }
 
-    if (!ui.isInsideRect(mouse, this.props.ui.graph)) {
+    // TODO where to get graph from?
+    const graph = {
+      top: 0,
+      left: 50,
+      height: 250,
+      width: 450
+    }
+
+    if (!ui.isInsideRect(mouse, graph)) {
       return
     }
 
-    const graph = this.props.ui.graph
 
     const { dragStartXMin, dragStartXMax } = this.mouse
 
@@ -53,7 +59,15 @@ class TestDrag extends Component {
   }
 
   onMouseDown = (e, mouse) => {
-    if (ui.isInsideRect(mouse, this.props.ui.graph)) {
+    // TODO where to get graph from?
+    const graph = {
+      top: 0,
+      left: 50,
+      height: 250,
+      width: 450
+    }
+
+    if (ui.isInsideRect(mouse, graph)) {
       this.mouse.isDragging = true
       this.mouse.dragStartCanvasX = mouse.x
       this.mouse.dragStartXMin = this.state.xMin
@@ -78,30 +92,13 @@ class TestDrag extends Component {
   render () {
     return (
       <GraphCanvas
-        canvas={this.props.canvas}
-        drawBackground={(ctx) => {
-          canvas.fill(ctx, this.props.canvas)
-          background.draw(ctx, {
-            ...this.props.background,
-            xMin: this.state.xMin,
-            xMax: this.state.xMax,
-          })
-        }}
-        drawUI={(ctx, mouse) => {
-          ui.draw(ctx, {
-            ...this.props.ui,
-            mouse: {
-              ...mouse,
-              ...this.mouse,
-            },
-            xMin: this.state.xMin,
-            xMax: this.state.xMax,
-          })
-        }}
+        {...this.props}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
         onMouseOut={this.onMouseOut}
+        xMin={this.state.xMin}
+        xMax={this.state.xMax}
       />
     )
   }

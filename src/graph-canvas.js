@@ -280,13 +280,16 @@ export default class GraphCanvas extends Component {
   shouldComponentUpdate (nextProps) {
     // TODO props.shouldComponentUpdate()
     // TODO when props.drawUI is absent, draw is not re-triggered after prop updates
-    return (
-      nextProps.canvas.width !== this.props.canvas.width ||
-      nextProps.canvas.height !== this.props.canvas.height
-    )
+    // TODO fix
+    // return (
+    //   nextProps.canvas.width !== this.props.canvas.width ||
+    //   nextProps.canvas.height !== this.props.canvas.height
+    // )
+    return false
   }
 
   draw = () => {
+    // TODO fix getCanvasX, getCanvasY does not update after prop changes
     const graph = getGraphDimensions({
       width: this.props.width,
       height: this.props.height,
@@ -340,6 +343,7 @@ export default class GraphCanvas extends Component {
 
     this.draw()
 
+    // TODO fix getCanvasX, getCanvasY does not update after prop changes
     const graph = getGraphDimensions({
       width: this.props.width,
       height: this.props.height,
