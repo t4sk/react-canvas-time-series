@@ -51,13 +51,13 @@ class LineTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'line',
-            lineColor: 'green',
-            lineWidth: 3,
+            color: 'green',
+            width: 3,
             data: FIXED_DATA,
           }, {
             type: 'line',
-            lineColor: 'blue',
-            lineWidth: 1,
+            color: 'blue',
+            width: 1,
             data: RANDOM_DATA,
           }]}
         />
@@ -67,10 +67,11 @@ class LineTestRender extends Component {
 }
 
 LineTestRender.defaultProps = {
-  backgroundColor: 'beige',
-  yTickInterval: 10,
-  xTickInterval: 100,
-
+  background: {
+    color: 'beige',
+    yTickInterval: 10,
+    xTickInterval: 100,
+  },
   xMin: X_MIN,
   xMax: X_MAX,
   yMin: Y_MIN,

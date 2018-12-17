@@ -139,10 +139,10 @@ export default class GraphCanvas extends Component {
     })).isRequired,
 
     // line
-    line: PropTypes.shape({
-      color: PropTypes.string.isRequired,
-      width: PropTypes.number.isRequired,
-    }),
+    // line: PropTypes.shape({
+    //   color: PropTypes.string.isRequired,
+    //   width: PropTypes.number.isRequired,
+    // }),
 
     // point
     pointColor: PropTypes.string.isRequired,
@@ -168,7 +168,7 @@ export default class GraphCanvas extends Component {
     super(props)
 
     this.background = React.createRef()
-    this.data = React.createRef()
+    this.graph = React.createRef()
     this.ui = React.createRef()
 
     this.mouse = {
@@ -211,7 +211,7 @@ export default class GraphCanvas extends Component {
   componentDidMount () {
     this.ctx = {
       ui: this.ui.current.getContext('2d'),
-      data: this.data.current.getContext('2d'),
+      graph: this.graph.current.getContext('2d'),
       background: this.background.current.getContext('2d', { alpha: false })
     }
 
@@ -286,12 +286,15 @@ export default class GraphCanvas extends Component {
     })
 
     for (let g of this.props.graphs) {
-      GRAPHS[g.type].draw(this.ctx.data, {
+      GRAPHS[g.type].draw(this.ctx.graph, {
         ...this.props,
         graph,
         getCanvasX,
         getCanvasY,
-        ...g,
+        [g.type]: {
+          ...DEFAULT_PROPS[g.type],
+          ...g,
+        }
       })
     }
   }
@@ -300,7 +303,7 @@ export default class GraphCanvas extends Component {
     this.animation = window.requestAnimationFrame(this.animate)
 
     this.props.drawBackground(this.ctx.background)
-    this.props.drawData(this.ctx.data)
+    this.props.drawData(this.ctx.graph)
 
     this.props.drawUI(this.ctx.ui, this.mouse)
   }
@@ -319,8 +322,8 @@ export default class GraphCanvas extends Component {
           height={this.props.height}
         />
         <canvas
-          ref={this.data}
-          style={styles.data}
+          ref={this.graph}
+          style={styles.graph}
           width={this.props.width}
           height={this.props.height}
         />
@@ -346,7 +349,7 @@ const styles = {
     top: 0,
     zIndex: 1,
   },
-  data: {
+  graph: {
     position: 'absolute',
     left: 0,
     top: 0,
