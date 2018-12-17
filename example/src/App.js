@@ -16,8 +16,8 @@ export default class App extends Component {
         <UITestRender />
         <CandlestickTestRender />
         <BarTestRender />
-        <PointTestRender />
         */}
+        <PointTestRender />
         <LineTestRender />
         <BackgroundTestRender />
       </div>

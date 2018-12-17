@@ -34,10 +34,10 @@ const COLORS = [
 let RANDOM_DATA = []
 for (let i = 0; i < 100; i++) {
   RANDOM_DATA.push({
-    pointColor: COLORS[i % COLORS.length],
-    pointRadius: i % 4,
-    pointAmbientColor: 'rgba(255, 255, 0, 0.5)',
-    pointAmbientRadius: 10,
+    color: COLORS[i % COLORS.length],
+    radius: i % 4,
+    ambientColor: 'rgba(255, 255, 0, 0.5)',
+    ambientRadius: 10,
     x: rand(X_MIN, X_MAX),
     y: rand(Y_MIN, Y_MAX)
   })
@@ -70,10 +70,10 @@ class PointTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'point',
-            pointColor: "red",
-            pointRadius: 4,
-            pointAmbientColor: 'rgba(255, 0, 0, 0.1)',
-            pointAmbientRadius: 14,
+            color: "red",
+            radius: 4,
+            ambientColor: 'rgba(255, 0, 0, 0.1)',
+            ambientRadius: 14,
             data: FIXED_DATA
           }]}
         />
@@ -83,10 +83,11 @@ class PointTestRender extends Component {
 }
 
 PointTestRender.defaultProps = {
-  backgroundColor: 'beige',
-  yTickInterval: 10,
-  xTickInterval: 100,
-
+  background: {
+    color: 'beige',
+    yTickInterval: 10,
+    xTickInterval: 100,
+  },
   xMin: X_MIN,
   xMax: X_MAX,
   yMin: Y_MIN,

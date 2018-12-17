@@ -56,10 +56,12 @@ const DEFAULT_PROPS = {
   },
 
   // point
-  pointColor: 'orange',
-  pointRadius: 3,
-  pointAmbientColor: 'rgba(255, 255, 0, 0.5)',
-  pointAmbientRadius: 10,
+  point: {
+    color: 'orange',
+    radius: 3,
+    ambientColor: 'rgba(255, 255, 0, 0.5)',
+    ambientRadius: 10,
+  },
 
   // bar
   getBarColor: d => 'rgba(0, 175, 0, 0.6)',
@@ -145,10 +147,12 @@ export default class GraphCanvas extends Component {
     // }),
 
     // point
-    pointColor: PropTypes.string.isRequired,
-    pointRadius: PropTypes.number.isRequired,
-    pointAmbientColor: PropTypes.string.isRequired,
-    pointAmbientRadius: PropTypes.number.isRequired,
+    // point: PropTypes.shape({
+    //   color: PropTypes.string.isRequired,
+    //   radius: PropTypes.number.isRequired,
+    //   ambientColor: PropTypes.string.isRequired,
+    //   ambientRadius: PropTypes.number.isRequired,
+    // }),
 
     // bar
     getBarColor: PropTypes.func.isRequired,
