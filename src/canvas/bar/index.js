@@ -1,6 +1,4 @@
 // @flow
-import { toCanvasX, toCanvasY } from '../math'
-import { getGraphDimensions } from '../background/util'
 import type { Props } from './types'
 
 export function draw (ctx: any, props: Props) {
