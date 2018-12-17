@@ -87,9 +87,8 @@ class BarTestRender extends Component {
           {...this.props}
           graphs={[{
             type: 'bar',
-            width: 60,
             getColor: d => 'rgba(255, 0, 255, 0.5)',
-            width: 4,
+            width: 60,
             data: [{
               x: (X_MAX + X_MIN) / 2,
               y: (Y_MAX - Y_MIN) / 2
