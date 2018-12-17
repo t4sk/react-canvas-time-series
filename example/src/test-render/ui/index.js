@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {GraphCanvas} from 'react-canvas-time-series'
 // import TestZoom from './test-zoom'
 // import TestNearest from './test-nearest'
-// import TestDrag from './test-drag'
+import TestDrag from './test-drag'
 // import TestUpdateProps from './test-update-props'
 
 const X_MIN = 0
@@ -102,12 +102,12 @@ class UITestRender extends Component {
           }}
         />
 
+        <h3>X Drag</h3>
+        <TestDrag {...this.props} />
+
         {/*}
         <h3>Update Canvas Props</h3>
         <TestUpdateProps {...this.props} />
-
-        <h3>X Drag</h3>
-        <TestDrag {...this.props} />
 
         <h3>Scroll to Zoom</h3>
         <TestZoom {...this.props} />
