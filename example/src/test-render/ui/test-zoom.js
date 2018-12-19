@@ -1,85 +1,106 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-graph'
-const { background, ui } = canvas
+import {canvas, GraphCanvas} from 'react-canvas-time-series'
+const { ui } = canvas
+
+// ZOOM_RATE should be < 0.5
+const ZOOM_RATE = 0.1
+const MIN_X_TICK_INTERVAL = 10
+const NUM_X_TICKS = 10
+const MIN_Y_TICK_INTERVAL = 1
+const NUM_Y_TICKS = 10
 
 class TestZoom extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      xMin: 1900,
-      xMax: 2010,
-      yMin: 10,
-      yMax: 110,
-      xStep: 15,
-      yStep: 10,
+      xMin: 0,
+      xMax: 1000,
+      yMin: 0,
+      yMax: 100,
+      xTickInterval: 100,
+      yTickInterval: 10,
     }
   }
 
   onWheel = (e, mouse) => {
-    if (ui.isInsideRect(mouse, this.props.ui.graph)) {
+    // TODO where to get graph
+    const graph = {
+      top: 0,
+      left: 50,
+      height: 250,
+      width: 450,
+    }
+
+    if (ui.isInsideRect(mouse, graph)) {
       e.preventDefault()
 
       if (e.deltaY > 0) {
         // zoom out
-        this.setState((state) => ({
-          ...state,
-          xMin: state.xMin - 15,
-          xMax: state.xMax + 15,
-          xStep: state.xStep + 5,
-          yMin: state.yMin - 10,
-          yMax: state.yMax + 10,
-          yStep: state.yStep + 5,
-        }))
+        this.setState((state) => {
+          const xDiff = state.xMax - state.xMin
+          const xTickInterval = Math.max(
+            (1 + 2 * ZOOM_RATE) * xDiff / NUM_X_TICKS,
+            MIN_X_TICK_INTERVAL
+          )
+
+          const yDiff = state.yMax - state.yMin
+          const yTickInterval = Math.max(
+            (1 + 2 * ZOOM_RATE) * yDiff / NUM_Y_TICKS,
+            MIN_Y_TICK_INTERVAL
+          )
+
+          return {
+            ...state,
+            xMin: state.xMin - ZOOM_RATE * xDiff,
+            xMax: state.xMax + ZOOM_RATE * xDiff,
+            xTickInterval,
+            yMin: state.yMin - ZOOM_RATE * yDiff,
+            yMax: state.yMax + ZOOM_RATE * yDiff,
+            yTickInterval,
+          }
+        })
       } else {
         // zoom in
-        this.setState((state) => ({
-          ...state,
-          xMin: state.xMin + 15,
-          xMax: state.xMax +-15,
-          xStep: state.xStep - 5,
-          yMin: state.yMin + 10,
-          yMax: state.yMax - 10,
-          yStep: state.yStep - 5,
-        }))
+        this.setState((state) => {
+          const xDiff = state.xMax - state.xMin
+          const xTickInterval = Math.max(
+            (1 - 2 * ZOOM_RATE) * xDiff / NUM_X_TICKS,
+            MIN_X_TICK_INTERVAL
+          )
+
+          const yDiff = state.yMax - state.yMin
+          const yTickInterval = Math.max(
+            (1 - 2 * ZOOM_RATE) * yDiff / NUM_Y_TICKS,
+            MIN_Y_TICK_INTERVAL
+          )
+
+          return {
+            ...state,
+            xMin: state.xMin + ZOOM_RATE * xDiff,
+            xMax: state.xMax - ZOOM_RATE * xDiff,
+            xTickInterval,
+            yMin: state.yMin + ZOOM_RATE * yDiff,
+            yMax: state.yMax - ZOOM_RATE * yDiff,
+            yTickInterval,
+          }
+        })
       }
     }
-  }
-
-  drawBackground = (ctx, props) => {
-    canvas.fill(ctx, props.canvas)
-    background.draw(ctx, props.background)
   }
 
   render () {
     return (
       <GraphCanvas
-        canvas={this.props.canvas}
+        {...this.props}
+        background={{
+          ...this.props.background,
+          xTickInterval: this.state.xTickInterval,
+          yTickInterval: this.state.yTickInterval,
+        }}
         xMin={this.state.xMin}
         xMax={this.state.xMax}
         yMin={this.state.yMin}
         yMax={this.state.yMax}
-        drawBackground={(ctx) => {
-          canvas.fill(ctx, this.props.canvas)
-          background.draw(ctx, {
-            ...this.props.background,
-            xMin: this.state.xMin,
-            xMax: this.state.xMax,
-            yMin: this.state.yMin,
-            yMax: this.state.yMax,
-            xStep: this.state.xStep,
-            yStep: this.state.yStep,
-          })
-        }}
-        drawUI={(ctx, mouse) => {
-          ui.draw(ctx, {
-            ...this.props.ui,
-            mouse,
-            xMin: this.state.xMin,
-            xMax: this.state.xMax,
-            yMin: this.state.yMin,
-            yMax: this.state.yMax,
-          })
-        }}
         onWheel={this.onWheel}
       />
     )

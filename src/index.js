@@ -1,4 +1,4 @@
-// TODO unexport canvas
+// TODO unexport canvas but export helpers like ui and math
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
 

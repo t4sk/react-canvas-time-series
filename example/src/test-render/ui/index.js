@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {GraphCanvas} from 'react-canvas-time-series'
-// import TestZoom from './test-zoom'
+import TestZoom from './test-zoom'
 // import TestNearest from './test-nearest'
 import TestDrag from './test-drag'
 // import TestUpdateProps from './test-update-props'
@@ -105,12 +105,12 @@ class UITestRender extends Component {
         <h3>X Drag</h3>
         <TestDrag {...this.props} />
 
+        <h3>Scroll to Zoom</h3>
+        <TestZoom {...this.props} />
+
         {/*}
         <h3>Update Canvas Props</h3>
         <TestUpdateProps {...this.props} />
-
-        <h3>Scroll to Zoom</h3>
-        <TestZoom {...this.props} />
 
         <h3>Get Nearest Data at X</h3>
         <TestNearest {...this.props} />
@@ -193,6 +193,8 @@ UITestRender.defaultProps = {
     color: 'beige',
     yTickInterval: 10,
     xTickInterval: 100,
+    renderXTick: x => Math.round(x),
+    renderYTick: y => y.toFixed(2),
   },
 
   xMin: X_MIN,
