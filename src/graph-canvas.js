@@ -341,6 +341,7 @@ export default class GraphCanvas extends Component {
   animate = () => {
     this.animation = window.requestAnimationFrame(this.animate)
 
+    // TODO only draw if data or background changed
     this.draw()
 
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
