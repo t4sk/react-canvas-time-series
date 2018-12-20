@@ -1,5 +1,12 @@
 // @flow
 import { toX, toY } from '../math'
+import {
+  drawXLine,
+  drawXLabel,
+  drawYLine,
+  drawYLabel
+} from '../label'
+
 import type {
   Props,
   Mouse,
@@ -41,140 +48,6 @@ export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
   )
 }
 
-export function drawXLine (ctx: any, props: DrawXLineAtProps) {
-  ctx.beginPath()
-
-  ctx.strokeStyle = props.color
-  ctx.setLineDash([5, 5])
-
-  ctx.moveTo(props.canvasX, props.graph.top)
-  ctx.lineTo(props.canvasX, props.graph.top + props.graph.height)
-  ctx.stroke()
-
-  ctx.setLineDash([])
-}
-
-export function drawYLine (ctx: any, props: DrawYLineAtProps) {
-  ctx.beginPath()
-
-  ctx.strokeStyle = props.color
-  ctx.setLineDash([5, 5])
-
-  ctx.moveTo(props.graph.left, props.canvasY)
-  ctx.lineTo(props.graph.left + props.graph.width, props.canvasY)
-  ctx.stroke()
-
-  ctx.setLineDash([])
-}
-
-function getYLabelTextAlign (props: DrawYLabelAtProps): 'left' | 'right' {
-  switch (props.labelAt) {
-    case 'left':
-      return 'right'
-    case 'right':
-      return 'left'
-    default:
-      throw new Error(`invalid labelAt ${props.labelAt}`)
-  }
-}
-
-function getYLabelLeft (props: DrawYLabelAtProps): number {
-  switch (props.labelAt) {
-    case 'left':
-      return props.graph.left - props.width
-    case 'right':
-      return props.graph.left + props.graph.width
-    default:
-      throw new Error(`invalid labelAt ${props.labelAt}`)
-  }
-}
-
-const Y_LABEL_HORIZONTAL_PADDING = 5
-
-function getYLabelTextLeft (props: DrawYLabelAtProps): number {
-  switch (props.labelAt) {
-    case 'left':
-      return props.graph.left - Y_LABEL_HORIZONTAL_PADDING
-    case 'right':
-      return props.graph.left + props.graph.width + Y_LABEL_HORIZONTAL_PADDING
-    default:
-      throw new Error(`invalid labelAt ${props.labelAt}`)
-  }
-}
-
-export function drawYLabel (ctx: any, props: DrawYLabelAtProps) {
-  // label
-  ctx.fillStyle = props.backgroundColor
-
-  ctx.fillRect(
-    getYLabelLeft(props),
-    props.top - props.height / 2,
-    props.width,
-    props.height
-  )
-
-  // label text
-  ctx.font = props.font
-  ctx.fillStyle = props.color
-  ctx.textAlign = getYLabelTextAlign(props)
-  ctx.textBaseline = 'middle'
-
-  ctx.fillText(
-    props.text,
-    getYLabelTextLeft(props),
-    props.top
-  )
-}
-
-function getXLabelTop (props: DrawXLabelAtProps): number {
-  switch (props.labelAt) {
-    case 'top':
-      return props.graph.top - props.height
-    case 'bottom':
-      return props.graph.top + props.graph.height
-    default:
-      throw new Error(`invalid labelAt ${props.labelAt}`)
-  }
-}
-
-const X_LABEL_VERTICAL_PADDING = 10
-
-function getXLabelTextTop (props: DrawXLabelAtProps): number {
-  switch (props.labelAt) {
-    case 'top':
-      return props.graph.top - X_LABEL_VERTICAL_PADDING
-    case 'bottom':
-      return props.graph.top + props.graph.height + X_LABEL_VERTICAL_PADDING
-    default:
-      throw new Error(`invalid labelAt ${props.labelAt}`)
-  }
-}
-
-export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
-  // label
-  ctx.fillStyle = props.backgroundColor
-
-  // label rect
-  ctx.fillRect(
-    props.left - props.width / 2,
-    getXLabelTop(props),
-    props.width,
-    props.height
-  )
-
-  // label text
-  ctx.font = props.font
-  ctx.fillStyle = props.color
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-
-  ctx.fillText(
-    props.text,
-    props.left,
-    getXLabelTextTop(props)
-  )
-}
-
 export function draw (ctx: any, props: Props) {
   const {
     graph,
@@ -190,7 +63,7 @@ export function draw (ctx: any, props: Props) {
 
   if (ui.showXLine) {
     drawXLine(ctx, {
-      color: ui.xLineColor,
+      xLineColor: ui.xLineColor,
       graph,
       canvasX: mouse.x
     })
@@ -211,19 +84,19 @@ export function draw (ctx: any, props: Props) {
 
     drawXLabel(ctx, {
       graph,
-      left: mouse.x,
-      height: ui.xLabelHeight,
-      width: ui.xLabelWidth,
-      text: ui.renderXLabel(x),
-      labelAt: ui.xLabelAt,
-      backgroundColor: ui.xLabelBackgroundColor,
-      font: ui.xLabelFont,
-      color: ui.xLabelColor
+      xLabelLeft: mouse.x,
+      xLabelHeight: ui.xLabelHeight,
+      xLabelWidth: ui.xLabelWidth,
+      xLabelText: ui.renderXLabel(x),
+      xLabelAt: ui.xLabelAt,
+      xLabelBackgroundColor: ui.xLabelBackgroundColor,
+      xLabelFont: ui.xLabelFont,
+      xLabelColor: ui.xLabelColor
     })
   }
   if (ui.showYLine) {
     drawYLine(ctx, {
-      color: ui.yLineColor,
+      yLineColor: ui.yLineColor,
       graph,
       canvasY: mouse.y
     })
@@ -239,14 +112,14 @@ export function draw (ctx: any, props: Props) {
 
     drawYLabel(ctx, {
       graph,
-      top: mouse.y,
-      width: ui.yLabelWidth,
-      height: ui.yLabelHeight,
-      labelAt: ui.yLabelAt,
-      text: ui.renderYLabel(y),
-      backgroundColor: ui.yLabelBackgroundColor,
-      font: ui.yLabelFont,
-      color: ui.yLabelColor
+      yLabelTop: mouse.y,
+      yLabelWidth: ui.yLabelWidth,
+      yLabelHeight: ui.yLabelHeight,
+      yLabelAt: ui.yLabelAt,
+      yLabelText: ui.renderYLabel(y),
+      yLabelBackgroundColor: ui.yLabelBackgroundColor,
+      yLabelFont: ui.yLabelFont,
+      yLabelColor: ui.yLabelColor
     })
   }
 }
