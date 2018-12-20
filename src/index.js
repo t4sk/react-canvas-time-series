@@ -33,3 +33,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO ? set graph canvas size in render()
 // TODO remove bar.getBorderColor
 // TODO render ui labels near canvas borders
+// TODO graph margin
