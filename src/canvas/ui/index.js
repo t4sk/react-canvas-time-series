@@ -82,8 +82,6 @@ export function draw (ctx: any, props: Props) {
     ...ui,
     graph,
     xLabelText: ui.renderXLabel(x),
-    xLabelLeft: mouse.x,
-    yLabelTop: mouse.y,
     yLabelText: ui.renderYLabel(y),
     canvasX: mouse.x,
     canvasY: mouse.y,

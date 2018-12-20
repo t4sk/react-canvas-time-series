@@ -34,3 +34,4 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO remove bar.getBorderColor
 // TODO render ui labels near canvas borders
 // TODO graph margin
+// TODO nested props and lazy spread

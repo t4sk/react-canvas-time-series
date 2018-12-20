@@ -65,7 +65,7 @@ export function drawYLabel (ctx: any, props: DrawYLabelAtProps) {
 
   ctx.fillRect(
     getYLabelLeft(props),
-    props.yLabelTop - props.yLabelHeight / 2,
+    props.canvasY - props.yLabelHeight / 2,
     props.yLabelWidth,
     props.yLabelHeight
   )
@@ -79,7 +79,7 @@ export function drawYLabel (ctx: any, props: DrawYLabelAtProps) {
   ctx.fillText(
     props.yLabelText,
     getYLabelTextLeft(props),
-    props.yLabelTop,
+    props.canvasY,
   )
 }
 
@@ -113,7 +113,7 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 
   // label rect
   ctx.fillRect(
-    props.xLabelLeft - props.xLabelWidth / 2,
+    props.canvasX - props.xLabelWidth / 2,
     getXLabelTop(props),
     props.xLabelWidth,
     props.xLabelHeight,
@@ -127,7 +127,7 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 
   ctx.fillText(
     props.xLabelText,
-    props.xLabelLeft,
+    props.canvasX,
     getXLabelTextTop(props)
   )
 }

@@ -5,6 +5,7 @@ import * as line from './canvas/line'
 import * as point from './canvas/point'
 import * as bar from './canvas/bar'
 import * as candlestick from './canvas/candlestick'
+import * as label from './canvas/label'
 import * as ui from './canvas/ui'
 
 import {toCanvasX, toCanvasY} from './canvas/math'
@@ -39,27 +40,43 @@ const DEFAULT_GRAPH_PROPS = {
   }
 }
 
-const DEFAULT_UI_PROPS = {
-  showXLabel: true,
-  showXLine: true,
+const DEFAULT_LABEL_PROPS = {
+  canvasX: 0,
+
+  showXLine: false,
   xLineColor: 'black',
+
+  showXLabel: false,
   xLabelAt: 'bottom',
   xLabelWidth: 50,
   xLabelHeight: 20,
   xLabelBackgroundColor: 'black',
   xLabelFont: '12px Arial',
   xLabelColor: 'white',
-  renderXLabel: x => x,
+  xLabelText: '',
 
-  showYLabel: true,
-  showYLine: true,
+  canvasY: 0,
+
+  showYLabel: false,
   yLineColor: 'black',
+
+  showYLine: false,
   yLabelAt: 'left',
   yLabelWidth: 50,
   yLabelHeight: 20,
   yLabelBackgroundColor: 'black',
   yLabelFont: '12px Arial',
   yLabelColor: 'white',
+  yLabelText: '',
+}
+
+const DEFAULT_UI_PROPS = {
+  ...DEFAULT_LABEL_PROPS,
+  showXLine: true,
+  showXLabel: true,
+  showYLine: true,
+  showYLabel: true,
+  renderXLabel: x => x,
   renderYLabel: y => y,
 }
 
@@ -95,6 +112,7 @@ const DEFAULT_PROPS = {
   },
 
   graphs: [],
+  labels: [],
 
   yMin: 0,
   yMax: 0,
@@ -168,6 +186,31 @@ export default class GraphCanvas extends Component {
         y: PropTypes.number.isRequired,
       })).isRequired,
     })).isRequired,
+
+    labels: PropTypes.arrayOf(PropTypes.shape({
+      canvasX: PropTypes.number.isRequired,
+      showXLine: PropTypes.bool,
+      xLineColor: PropTypes.string.isRequired,
+      showXLabel: Proptypes.bool,
+      xLabelAt: PropTypes.oneOf(['top', 'bottom']),
+      xLabelWidth: PropTypes.number.isRequired,
+      xLabelHeight: PropTypes.number.isRequired,,
+      xLabelBackgroundColor: PropTypes.string.isRequired,
+      xLabelFont: PropTypes.string.isRequired,
+      xLabelColor: PropTypes.string.isRequired,
+      xLabelText: PropTypes.string.isRequired,
+      canvasY: PropTypes.number.isRequired,
+      showYLabel: PropTypes.bool,
+      yLineColor: PropTypes.string.isRequired,
+      showYLine: PropTypes.bool,
+      yLabelAt: PropTypes.oneOf(['left', 'right']),
+      yLabelWidth: PropTypes.number.isRequired,
+      yLabelHeight: PropTypes.number.isRequired,
+      yLabelBackgroundColor: PropTypes.string.isRequired,
+      yLabelFont: PropTypes.string.isRequired,
+      yLabelColor: PropTypes.string.isRequired,
+      yLabelText: PropTypes.string.isRequired,
+    }))
 
     // line
     // line: PropTypes.shape({
@@ -334,6 +377,14 @@ export default class GraphCanvas extends Component {
         getCanvasY,
         ...DEFAULT_GRAPH_PROPS[g.type],
         ...g,
+      })
+    }
+
+    for (let l of this.props.labels) {
+      label.draw(this.ctx.ui, {
+        graph,
+        ...DEFAULT_LABEL_PROPS,
+        ...l,
       })
     }
   }
