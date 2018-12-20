@@ -133,4 +133,19 @@ export function drawXLabel (ctx: any, props: DrawXLabelAtProps) {
 }
 
 export function draw (ctx: any, props: Props) {
+  if (props.showXLine) {
+    drawXLine(ctx, props)
+  }
+
+  if (props.showXLabel) {
+    drawXLabel(ctx, props)
+  }
+
+  if (props.showYLine) {
+    drawYLine(ctx, props)
+  }
+
+  if (props.showYLabel) {
+    drawYLabel(ctx, props)
+  }
 }
