@@ -127,7 +127,6 @@ const DEFAULT_PROPS = {
   onWheel: (e, mouse) => {},
 }
 
-// TODO component to set default props
 export default class GraphCanvas extends Component {
   static propTypes = {
     onMouseMove: PropTypes.func,
@@ -191,10 +190,10 @@ export default class GraphCanvas extends Component {
       canvasX: PropTypes.number.isRequired,
       showXLine: PropTypes.bool,
       xLineColor: PropTypes.string.isRequired,
-      showXLabel: Proptypes.bool,
+      showXLabel: PropTypes.bool,
       xLabelAt: PropTypes.oneOf(['top', 'bottom']),
       xLabelWidth: PropTypes.number.isRequired,
-      xLabelHeight: PropTypes.number.isRequired,,
+      xLabelHeight: PropTypes.number.isRequired,
       xLabelBackgroundColor: PropTypes.string.isRequired,
       xLabelFont: PropTypes.string.isRequired,
       xLabelColor: PropTypes.string.isRequired,
@@ -210,7 +209,7 @@ export default class GraphCanvas extends Component {
       yLabelFont: PropTypes.string.isRequired,
       yLabelColor: PropTypes.string.isRequired,
       yLabelText: PropTypes.string.isRequired,
-    }))
+    })),
 
     // line
     // line: PropTypes.shape({
