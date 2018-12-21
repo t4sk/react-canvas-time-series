@@ -48,6 +48,10 @@ export function draw (ctx: any, props: Props) {
     graph,
     ui,
     mouse,
+    xMax,
+    xMin,
+    yMax,
+    yMin,
   } = props
 
   ctx.clearRect(0, 0, props.width, props.height)
@@ -55,11 +59,6 @@ export function draw (ctx: any, props: Props) {
   if (!isInsideRect(mouse, graph)) {
     return
   }
-
-  const {
-    xMax,
-    xMin
-  } = props
 
   // TODO pass from props
   const x = toX({
@@ -73,8 +72,8 @@ export function draw (ctx: any, props: Props) {
   const y = toY({
     height: graph.height,
     top: graph.top,
-    yMin: props.yMin,
-    yMax: props.yMax
+    yMin,
+    yMax,
   })(mouse.y)
 
 
