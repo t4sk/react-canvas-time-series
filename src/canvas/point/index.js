@@ -1,6 +1,6 @@
 // @flow
 import { toCanvasX, toCanvasY } from '../math'
-import { getGraphDimensions } from '../background/util'
+import { getGraphDimensions } from '../util'
 
 function drawPoint(ctx: any, props, canvasX, canvasY) {
   const {

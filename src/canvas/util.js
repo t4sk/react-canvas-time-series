@@ -1,31 +1,31 @@
 // @flow
 function getGraphWidth (props: Props): number {
-  return props.width - props.yAxisWidth
+  return props.width - props.background.yAxisWidth
 }
 
 function getGraphHeight (props: Props): number {
-  return props.height - props.xAxisHeight
+  return props.height - props.background.xAxisHeight
 }
 
 function getGraphLeft (props: Props): number {
-  switch (props.yAxisAt) {
+  switch (props.background.yAxisAt) {
     case 'left':
-      return props.yAxisWidth
+      return props.background.yAxisWidth
     case 'right':
       return 0
     default:
-      throw new Error(`invalid yAxisAt ${props.yAxisAt}`)
+      throw new Error(`invalid background.yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
 function getGraphTop (props: Props): number {
-  switch (props.xAxisAt) {
+  switch (props.background.xAxisAt) {
     case 'top':
-      return props.xAxisHeight
+      return props.background.xAxisHeight
     case 'bottom':
       return 0
     default:
-      throw new Error(`invalid xAxisAt ${props.xAxisAt}`)
+      throw new Error(`invalid background.xAxisAt ${props.background.xAxisAt}`)
   }
 }
 

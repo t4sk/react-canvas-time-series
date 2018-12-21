@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import setDefaultProps from './set-default-props'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
@@ -9,7 +10,7 @@ import * as label from './canvas/label'
 import * as ui from './canvas/ui'
 
 import {toCanvasX, toCanvasY} from './canvas/math'
-import {getGraphDimensions} from './canvas/background/util'
+import {getGraphDimensions} from './canvas/util'
 
 const GRAPHS = {
   line,
@@ -80,36 +81,38 @@ const DEFAULT_UI_PROPS = {
   renderYLabel: y => y,
 }
 
+const DEFAULT_BACKGROUND_PROPS = {
+  color: "white",
+
+  yAxisAt: 'left',
+  yAxisWidth: 50,
+  showYLine: true,
+  yLineWidth: 1,
+  yLineColor: 'black',
+  showYTick: true,
+  yTickFont: '12px Arial',
+  yTickBackgroundColor: 'black',
+  renderYTick: y => y,
+  yTickInterval: 1,
+
+  xAxisAt: 'bottom',
+  xAxisHeight: 50,
+  showXLine: true,
+  xLineWidth: 1,
+  xLineColor: 'black',
+  showXTick: true,
+  xTickFont: '12px Arial',
+  xTickBackgroundColor: 'black',
+  renderXTick: x => x,
+  xTickInterval: 1,
+}
+
 const DEFAULT_PROPS = {
   width: 500,
   height: 300,
 
   // background
-  background: {
-    color: "white",
-
-    yAxisAt: 'left',
-    yAxisWidth: 50,
-    showYLine: true,
-    yLineWidth: 1,
-    yLineColor: 'black',
-    showYTick: true,
-    yTickFont: '12px Arial',
-    yTickBackgroundColor: 'black',
-    renderYTick: y => y,
-    yTickInterval: 1,
-
-    xAxisAt: 'bottom',
-    xAxisHeight: 50,
-    showXLine: true,
-    xLineWidth: 1,
-    xLineColor: 'black',
-    showXTick: true,
-    xTickFont: '12px Arial',
-    xTickBackgroundColor: 'black',
-    renderXTick: x => x,
-    xTickInterval: 1,
-  },
+  background: DEFAULT_BACKGROUND_PROPS,
 
   graphs: [],
   labels: [],
@@ -127,7 +130,7 @@ const DEFAULT_PROPS = {
   onWheel: (e, mouse) => {},
 }
 
-export default class GraphCanvas extends Component {
+class GraphCanvas extends Component {
   static propTypes = {
     onMouseMove: PropTypes.func,
     onMouseDown: PropTypes.func,
@@ -332,12 +335,7 @@ export default class GraphCanvas extends Component {
 
   draw = () => {
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const graph = getGraphDimensions({
-      width: this.props.width,
-      height: this.props.height,
-      ...DEFAULT_PROPS.background,
-      ...this.props.background
-    })
+    const graph = getGraphDimensions(this.props)
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -362,30 +360,26 @@ export default class GraphCanvas extends Component {
       graph,
       getCanvasX,
       getCanvasY,
-      background: {
-        ...DEFAULT_PROPS.background,
-        ...this.props.background,
-      },
     })
 
-    for (let g of this.props.graphs) {
-      GRAPHS[g.type].draw(this.ctx.graph, {
-        ...this.props,
-        graph,
-        getCanvasX,
-        getCanvasY,
-        ...DEFAULT_GRAPH_PROPS[g.type],
-        ...g,
-      })
-    }
-
-    for (let l of this.props.labels) {
-      label.draw(this.ctx.ui, {
-        graph,
-        ...DEFAULT_LABEL_PROPS,
-        ...l,
-      })
-    }
+    // for (let g of this.props.graphs) {
+    //   GRAPHS[g.type].draw(this.ctx.graph, {
+    //     ...this.props,
+    //     graph,
+    //     getCanvasX,
+    //     getCanvasY,
+    //     ...DEFAULT_GRAPH_PROPS[g.type],
+    //     ...g,
+    //   })
+    // }
+    //
+    // for (let l of this.props.labels) {
+    //   label.draw(this.ctx.ui, {
+    //     graph,
+    //     ...DEFAULT_LABEL_PROPS,
+    //     ...l,
+    //   })
+    // }
   }
 
   animate = () => {
@@ -483,3 +477,13 @@ const styles = {
     zIndex: 3,
   }
 }
+
+export default setDefaultProps(props => {
+  return {
+    ...props,
+    background:  {
+      ...DEFAULT_BACKGROUND_PROPS,
+      ...props.background,
+    }
+  }
+})(GraphCanvas)
