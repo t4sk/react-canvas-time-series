@@ -368,13 +368,13 @@ class GraphCanvas extends Component {
       getCanvasY,
     })
 
-    // for (let g of this.props.graphs) {
-    //   GRAPHS[g.type].draw(this.ctx.graph, this.props, {
-    //     graph,
-    //     getCanvasX,
-    //     getCanvasY,
-    //   }, g)
-    // }
+    for (let g of this.props.graphs) {
+      GRAPHS[g.type].draw(this.ctx.graph, {
+        getCanvasX,
+        getCanvasY,
+        ...g,
+      })
+    }
     //
     // for (let l of this.props.labels) {
     //   label.draw(this.ctx.ui, {

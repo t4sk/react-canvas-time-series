@@ -5,7 +5,7 @@ export function draw (ctx: any, props: Props) {
   const {
     getCanvasX,
     getCanvasY,
-    data,
+    data
   } = props
 
   ctx.strokeStyle = props.color
