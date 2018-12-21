@@ -3,10 +3,10 @@ import type { Props } from './types'
 import { drawXLines } from './x-lines'
 import { drawYLines } from './y-lines'
 
-export function draw (ctx: any, props, internalProps) {
-  ctx.fillStyle = props.background.color
+export function draw (ctx: any, props) {
+  ctx.fillStyle = props.color
   ctx.fillRect(0, 0, props.width, props.height)
 
-  drawXLines(ctx, props, internalProps)
-  drawYLines(ctx, props, internalProps)
+  drawXLines(ctx, props)
+  drawYLines(ctx, props)
 }

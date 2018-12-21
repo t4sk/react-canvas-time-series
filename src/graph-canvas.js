@@ -355,21 +355,26 @@ class GraphCanvas extends Component {
     this.ctx.background.fillStyle = this.props.backgroundColor
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
-    background.draw(this.ctx.background, this.props, {
+    background.draw(this.ctx.background, {
+      width: this.props.width,
+      height: this.props.height,
+      xMin: this.props.xMin,
+      xMax: this.props.xMax,
+      yMin: this.props.yMin,
+      yMax: this.props.yMax,
+      ...this.props.background,
       graph,
       getCanvasX,
       getCanvasY,
     })
 
-    for (let g of this.props.graphs) {
-      GRAPHS[g.type].draw(this.ctx.graph, {
-        ...this.props,
-        graph,
-        getCanvasX,
-        getCanvasY,
-        ...g,
-      })
-    }
+    // for (let g of this.props.graphs) {
+    //   GRAPHS[g.type].draw(this.ctx.graph, this.props, {
+    //     graph,
+    //     getCanvasX,
+    //     getCanvasY,
+    //   }, g)
+    // }
     //
     // for (let l of this.props.labels) {
     //   label.draw(this.ctx.ui, {

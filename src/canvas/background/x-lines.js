@@ -6,10 +6,8 @@ const X_LABEL_VERTICAL_PADDING = 12
 
 function getLabelTop (props: Props): number {
   const {
-    background: {
-      xAxisAt,
-      xAxisHeight,
-    },
+    xAxisAt,
+    xAxisHeight,
     height,
   } = props
 
@@ -23,30 +21,26 @@ function getLabelTop (props: Props): number {
   }
 }
 
-export function drawXLines (ctx: any, props: Props, internalProps) {
+export function drawXLines (ctx: any, props: Props) {
   const {
     xMin,
     xMax,
-    background
-  } = props
-
-  const {
     graph,
     getCanvasX
-  } = internalProps
+  } = props
 
   // style line
-  ctx.lineWidth = background.xLineWidth
-  ctx.strokeStyle = background.xLineColor
+  ctx.lineWidth = props.xLineWidth
+  ctx.strokeStyle = props.xLineColor
   // style labels
-  ctx.font = background.xTickFont
-  ctx.fillStyle = background.xTickBackgroundColor
+  ctx.font = props.xTickFont
+  ctx.fillStyle = props.xTickBackgroundColor
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
   const labelTop = getLabelTop(props)
 
-  if (background.showXLine) {
+  if (props.showXLine) {
     // draw x line at start
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
@@ -60,15 +54,15 @@ export function drawXLines (ctx: any, props: Props, internalProps) {
     ctx.stroke()
   }
 
-  if (background.xTickInterval > 0) {
-    const x0 = nearestStepBelow(xMin, background.xTickInterval)
+  if (props.xTickInterval > 0) {
+    const x0 = nearestStepBelow(xMin, props.xTickInterval)
 
-    for (let x = x0, i = 0; x <= xMax; x += background.xTickInterval, i++) {
+    for (let x = x0, i = 0; x <= xMax; x += props.xTickInterval, i++) {
       const canvasX = getCanvasX(x)
 
       if (canvasX >= graph.left && canvasX <= graph.left + graph.width) {
         // draw line
-        if (background.showXLine) {
+        if (props.showXLine) {
           ctx.beginPath()
           ctx.moveTo(canvasX, graph.top)
           ctx.lineTo(canvasX, graph.top + graph.height)
@@ -77,8 +71,8 @@ export function drawXLines (ctx: any, props: Props, internalProps) {
 
         // draw text
         // TODO show x labels at xMin and xMax?
-        if (background.showXTick) {
-          ctx.fillText(background.renderXTick(x, i), canvasX, labelTop)
+        if (props.showXTick) {
+          ctx.fillText(props.renderXTick(x, i), canvasX, labelTop)
         }
       }
     }
