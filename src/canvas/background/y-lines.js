@@ -34,14 +34,17 @@ function getLabelLeft (props: Props): number {
   }
 }
 
-export function drawYLines (ctx: any, props: Props) {
+export function drawYLines (ctx: any, props: Props, internalProps) {
   const {
     yMin,
     yMax,
-    graph,
-    getCanvasY,
     background,
   } = props
+
+  const {
+    graph,
+    getCanvasY,
+  } = internalProps
 
   // style line
   ctx.lineWidth = background.yLineWidth

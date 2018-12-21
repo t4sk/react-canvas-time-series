@@ -23,14 +23,17 @@ function getLabelTop (props: Props): number {
   }
 }
 
-export function drawXLines (ctx: any, props: Props) {
+export function drawXLines (ctx: any, props: Props, internalProps) {
   const {
     xMin,
     xMax,
-    graph,
-    getCanvasX,
     background
   } = props
+
+  const {
+    graph,
+    getCanvasX
+  } = internalProps
 
   // style line
   ctx.lineWidth = background.xLineWidth

@@ -355,23 +355,21 @@ class GraphCanvas extends Component {
     this.ctx.background.fillStyle = this.props.backgroundColor
     this.ctx.background.fillRect(0, 0, this.props.width, this.props.height)
 
-    background.draw(this.ctx.background, {
-      ...this.props,
+    background.draw(this.ctx.background, this.props, {
       graph,
       getCanvasX,
       getCanvasY,
     })
 
-    // for (let g of this.props.graphs) {
-    //   GRAPHS[g.type].draw(this.ctx.graph, {
-    //     ...this.props,
-    //     graph,
-    //     getCanvasX,
-    //     getCanvasY,
-    //     ...DEFAULT_GRAPH_PROPS[g.type],
-    //     ...g,
-    //   })
-    // }
+    for (let g of this.props.graphs) {
+      GRAPHS[g.type].draw(this.ctx.graph, {
+        ...this.props,
+        graph,
+        getCanvasX,
+        getCanvasY,
+        ...g,
+      })
+    }
     //
     // for (let l of this.props.labels) {
     //   label.draw(this.ctx.ui, {
@@ -479,11 +477,17 @@ const styles = {
 }
 
 export default setDefaultProps(props => {
+  const graphs = (props.graphs || []).map(graph => ({
+    ...DEFAULT_GRAPH_PROPS[graph.type],
+    ...graph
+  }))
+
   return {
     ...props,
     background:  {
       ...DEFAULT_BACKGROUND_PROPS,
       ...props.background,
-    }
+    },
+    graphs,
   }
 })(GraphCanvas)
