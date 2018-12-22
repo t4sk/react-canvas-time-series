@@ -5,9 +5,10 @@ export function draw (ctx: any, props: Props) {
   const {
     getCanvasX,
     getCanvasY,
-    data,
-    width,
+    candlestick,
   } = props
+
+  const { data } = candlestick
 
   for (let i = 0; i < data.length; i++) {
     const {
@@ -23,18 +24,18 @@ export function draw (ctx: any, props: Props) {
     const bodyBottom = getCanvasY(Math.min(open, close))
     const bodyHeight = Math.max(bodyBottom - bodyTop, 1)
 
-    ctx.fillStyle = props.getColor(data[i])
+    ctx.fillStyle = props.candlestick.getColor(data[i])
 
     // body
     ctx.fillRect(
-      canvasX - width / 2,
+      canvasX - candlestick.width / 2,
       bodyTop,
-      width,
+      candlestick.width,
       bodyHeight
     )
 
     ctx.strokeStyle = ctx.fillStyle
-    ctx.lineWidth = props.wickWidth
+    ctx.lineWidth = props.candlestick.wickWidth
 
     // top wick
     ctx.beginPath()

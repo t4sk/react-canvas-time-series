@@ -5,11 +5,13 @@ export function draw (ctx: any, props: Props) {
   const {
     getCanvasX,
     getCanvasY,
-    data
+    line
   } = props
 
-  ctx.strokeStyle = props.color
-  ctx.lineWidth = props.width
+  const { data } = line
+
+  ctx.strokeStyle = line.color
+  ctx.lineWidth = line.width
 
   ctx.beginPath()
   for (let i = 0; i < data.length; i++) {

@@ -372,7 +372,7 @@ class GraphCanvas extends Component {
       GRAPHS[g.type].draw(this.ctx.graph, {
         getCanvasX,
         getCanvasY,
-        ...g,
+        [g.type]: g,
       })
     }
 
