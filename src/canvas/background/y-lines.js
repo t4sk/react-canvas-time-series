@@ -3,13 +3,13 @@ import type { Props } from './types'
 import { nearestStepBelow } from '../math'
 
 function getYAxisTextAlign (props: Props): 'left' | 'right' {
-  switch (props.yAxisAt) {
+  switch (props.background.yAxisAt) {
     case 'left':
       return 'right'
     case 'right':
       return 'left'
     default:
-      throw new Error(`invalid yAxisAt ${props.yAxisAt}`)
+      throw new Error(`invalid yAxisAt ${props.background.yAxisAt}`)
   }
 }
 
@@ -17,8 +17,10 @@ const Y_LABEL_HORIZONTAL_PADDING = 10
 
 function getLabelLeft (props: Props): number {
   const {
-    yAxisAt,
-    yAxisWidth,
+    background: {
+      yAxisAt,
+      yAxisWidth,
+    },
     width,
   } = props
 
@@ -41,18 +43,18 @@ export function drawYLines (ctx: any, props: Props) {
   } = props
 
   // style line
-  ctx.lineWidth = props.yLineWidth
-  ctx.strokeStyle = props.yLineColor
+  ctx.lineWidth = props.background.yLineWidth
+  ctx.strokeStyle = props.background.yLineColor
 
   // style labels
-  ctx.font = props.yTickFont
-  ctx.fillStyle = props.yTickBackgroundColor
+  ctx.font = props.background.yTickFont
+  ctx.fillStyle = props.background.yTickBackgroundColor
   ctx.textBaseline = 'middle'
   ctx.textAlign = getYAxisTextAlign(props)
 
   const labelLeft = getLabelLeft(props)
 
-  if (props.showYLine) {
+  if (props.background.showYLine) {
     // draw y line top
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
@@ -66,15 +68,15 @@ export function drawYLines (ctx: any, props: Props) {
     ctx.stroke()
   }
 
-  if (props.yTickInterval > 0) {
-    const y0 = nearestStepBelow(yMin, props.yTickInterval)
+  if (props.background.yTickInterval > 0) {
+    const y0 = nearestStepBelow(yMin, props.background.yTickInterval)
 
-    for (let y = y0, i = 0; y <= yMax; y += props.yTickInterval, i++) {
+    for (let y = y0, i = 0; y <= yMax; y += props.background.yTickInterval, i++) {
       const canvasY = getCanvasY(y)
 
       if (canvasY >= graph.top && canvasY <= graph.top + graph.height) {
         // draw line
-        if (props.showYLine) {
+        if (props.background.showYLine) {
           ctx.beginPath()
           ctx.moveTo(graph.left, canvasY)
           ctx.lineTo(graph.left + graph.width, canvasY)
@@ -83,8 +85,8 @@ export function drawYLines (ctx: any, props: Props) {
 
         // draw text
         // TODO show labels at yMin and yMax?
-        if (props.showYTick) {
-          ctx.fillText(props.renderYTick(y, i), labelLeft, canvasY)
+        if (props.background.showYTick) {
+          ctx.fillText(props.background.renderYTick(y, i), labelLeft, canvasY)
         }
       }
     }
