@@ -362,7 +362,7 @@ class GraphCanvas extends Component {
       xMax: this.props.xMax,
       yMin: this.props.yMin,
       yMax: this.props.yMax,
-      ...this.props.background,
+      background: this.props.background,
       graph,
       getCanvasX,
       getCanvasY,
@@ -375,14 +375,13 @@ class GraphCanvas extends Component {
         ...g,
       })
     }
-    //
-    // for (let l of this.props.labels) {
-    //   label.draw(this.ctx.ui, {
-    //     graph,
-    //     ...DEFAULT_LABEL_PROPS,
-    //     ...l,
-    //   })
-    // }
+
+    for (let l of this.props.labels) {
+      label.draw(this.ctx.ui, {
+        graph,
+        label: l,
+      })
+    }
   }
 
   animate = () => {
@@ -487,6 +486,11 @@ export default setDefaultProps(props => {
     ...graph
   }))
 
+  const labels = (props.labels || []).map(label => ({
+    ...DEFAULT_LABEL_PROPS,
+    ...label
+  }))
+
   return {
     ...props,
     background:  {
@@ -494,5 +498,6 @@ export default setDefaultProps(props => {
       ...props.background,
     },
     graphs,
+    labels,
   }
 })(GraphCanvas)
