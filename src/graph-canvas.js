@@ -391,12 +391,7 @@ class GraphCanvas extends Component {
     this.draw()
 
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const graph = getGraphDimensions({
-      width: this.props.width,
-      height: this.props.height,
-      ...DEFAULT_PROPS.background,
-      ...this.props.background
-    })
+    const graph = getGraphDimensions(this.props)
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -413,14 +408,16 @@ class GraphCanvas extends Component {
     })
 
     ui.draw(this.ctx.ui, {
-      ...this.props,
+      width: this.props.width,
+      height: this.props.height,
+      xMin: this.props.xMin,
+      xMax: this.props.xMax,
+      yMin: this.props.yMin,
+      yMax: this.props.yMax,
+      ui: this.props.ui,
       graph,
       getCanvasX,
       getCanvasY,
-      ui: {
-        ...DEFAULT_UI_PROPS,
-        ...this.props.ui,
-      },
       mouse: this.mouse,
     })
   }
@@ -499,5 +496,9 @@ export default setDefaultProps(props => {
     },
     graphs,
     labels,
+    ui: {
+      ...DEFAULT_UI_PROPS,
+      ...props.ui,
+    }
   }
 })(GraphCanvas)

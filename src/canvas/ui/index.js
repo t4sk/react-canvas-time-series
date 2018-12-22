@@ -78,11 +78,13 @@ export function draw (ctx: any, props: Props) {
 
 
   label.draw(ctx, {
-    ...ui,
     graph,
-    xLabelText: ui.renderXLabel(x),
-    yLabelText: ui.renderYLabel(y),
-    canvasX: mouse.x,
-    canvasY: mouse.y,
+    label: {
+      ...ui,
+      xLabelText: ui.renderXLabel(x),
+      yLabelText: ui.renderYLabel(y),
+      canvasX: mouse.x,
+      canvasY: mouse.y,
+    },
   })
 }
