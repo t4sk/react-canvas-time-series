@@ -107,9 +107,18 @@ const DEFAULT_BACKGROUND_PROPS = {
   xTickInterval: 1,
 }
 
+const DEFAULT_PADDING = {
+  top: 10,
+  bottom: 10,
+  left: 10,
+  right: 10,
+}
+
 const DEFAULT_PROPS = {
   width: 500,
   height: 300,
+
+  padding: DEFAULT_PADDING,
 
   // background
   background: DEFAULT_BACKGROUND_PROPS,
@@ -490,6 +499,10 @@ export default setDefaultProps(props => {
 
   return {
     ...props,
+    padding: {
+      ...props.padding,
+      ...DEFAULT_PADDING,
+    },
     background:  {
       ...DEFAULT_BACKGROUND_PROPS,
       ...props.background,
