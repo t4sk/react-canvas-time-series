@@ -34,6 +34,25 @@ function getLabelLeft (props: Props): number {
   }
 }
 
+function getTickLeft(props) {
+  const {
+    background: {
+      yAxisAt,
+      yTickWidth,
+    },
+    graph,
+  } = props
+
+  switch (yAxisAt) {
+    case 'left':
+      return graph.left - yTickWidth
+    case 'right':
+      return graph.left + graph.width
+    default:
+      throw new Error(`invalid yAxisAt ${yAxisAt}`)
+  }
+}
+
 export function drawYLines (ctx: any, props: Props) {
   const {
     yMin,
@@ -42,10 +61,6 @@ export function drawYLines (ctx: any, props: Props) {
     getCanvasY,
   } = props
 
-  // style line
-  ctx.lineWidth = props.background.yLineWidth
-  ctx.strokeStyle = props.background.yLineColor
-
   // style labels
   ctx.font = props.background.yTickLabelFont
   ctx.fillStyle = props.background.yTickLabelColor
@@ -53,6 +68,7 @@ export function drawYLines (ctx: any, props: Props) {
   ctx.textAlign = getYAxisTextAlign(props)
 
   const labelLeft = getLabelLeft(props)
+  const tickLeft = getTickLeft(props)
 
   if (props.background.showYLine) {
     // draw y line top
@@ -77,9 +93,20 @@ export function drawYLines (ctx: any, props: Props) {
       if (canvasY >= graph.top && canvasY <= graph.top + graph.height) {
         // draw line
         if (props.background.showYLine) {
+          ctx.lineWidth = props.background.yLineWidth
+          ctx.strokeStyle = props.background.yLineColor
+
           ctx.beginPath()
           ctx.moveTo(graph.left, canvasY)
           ctx.lineTo(graph.left + graph.width, canvasY)
+          ctx.stroke()
+
+          ctx.lineWidth = 1
+          ctx.strokeStyle = props.background.yTickColor
+
+          ctx.beginPath()
+          ctx.moveTo(tickLeft, canvasY)
+          ctx.lineTo(tickLeft + props.background.yTickWidth, canvasY)
           ctx.stroke()
         }
 

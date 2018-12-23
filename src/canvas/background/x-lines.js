@@ -23,6 +23,25 @@ function getLabelTop (props: Props): number {
   }
 }
 
+function getTickTop(props) {
+  const {
+    background: {
+      xAxisAt,
+      xTickHeight,
+    },
+    graph,
+  } = props
+
+  switch (xAxisAt) {
+    case 'top':
+      return graph.top - xTickHeight
+    case 'bottom':
+      return graph.top + graph.height
+    default:
+      throw new Error(`invalid xAxisAt ${xAxisAt}`)
+  }
+}
+
 export function drawXLines (ctx: any, props: Props) {
   const {
     xMin,
@@ -31,9 +50,6 @@ export function drawXLines (ctx: any, props: Props) {
     getCanvasX
   } = props
 
-  // style line
-  ctx.lineWidth = props.background.xLineWidth
-  ctx.strokeStyle = props.background.xLineColor
   // style labels
   ctx.font = props.background.xTickLabelFont
   ctx.fillStyle = props.background.xTickLabelColor
@@ -41,6 +57,7 @@ export function drawXLines (ctx: any, props: Props) {
   ctx.textBaseline = 'middle'
 
   const labelTop = getLabelTop(props)
+  const tickTop = getTickTop(props)
 
   if (props.background.showXLine) {
     // draw x line at start
@@ -65,9 +82,20 @@ export function drawXLines (ctx: any, props: Props) {
       if (canvasX >= graph.left && canvasX <= graph.left + graph.width) {
         // draw line
         if (props.background.showXLine) {
+          ctx.lineWidth = props.background.xLineWidth
+          ctx.strokeStyle = props.background.xLineColor
+
           ctx.beginPath()
           ctx.moveTo(canvasX, graph.top)
           ctx.lineTo(canvasX, graph.top + graph.height)
+          ctx.stroke()
+
+          ctx.lineWidth = 1
+          ctx.strokeStyle = props.background.xTickColor
+
+          ctx.beginPath()
+          ctx.moveTo(canvasX, tickTop)
+          ctx.lineTo(canvasX, tickTop + props.background.xTickHeight)
           ctx.stroke()
         }
 
