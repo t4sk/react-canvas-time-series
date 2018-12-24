@@ -62,7 +62,7 @@ export function drawXLines (ctx: any, props: Props) {
   if (props.background.showXLine) {
     ctx.lineWidth = props.background.xLineWidth
     ctx.strokeStyle = props.background.xLineColor
-    
+
     // draw x line at start
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
@@ -103,7 +103,6 @@ export function drawXLines (ctx: any, props: Props) {
         }
 
         // draw text
-        // TODO show x labels at xMin and xMax?
         if (props.background.showXTick) {
           ctx.fillText(props.background.renderXTickLabel(x, i), canvasX, labelTop)
         }

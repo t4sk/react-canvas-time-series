@@ -76,7 +76,6 @@ export function draw (ctx: any, props: Props) {
     yMax,
   })(mouse.y)
 
-
   label.draw(ctx, {
     graph,
     label: {

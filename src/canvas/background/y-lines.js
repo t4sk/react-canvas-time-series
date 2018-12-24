@@ -73,7 +73,7 @@ export function drawYLines (ctx: any, props: Props) {
   if (props.background.showYLine) {
     ctx.lineWidth = props.background.yLineWidth
     ctx.strokeStyle = props.background.yLineColor
-    
+
     // draw y line top
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
@@ -114,7 +114,6 @@ export function drawYLines (ctx: any, props: Props) {
         }
 
         // draw text
-        // TODO show labels at yMin and yMax?
         if (props.background.showYTick) {
           ctx.fillText(props.background.renderYTickLabel(y, i), labelLeft, canvasY)
         }
