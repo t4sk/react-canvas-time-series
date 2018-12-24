@@ -523,7 +523,7 @@ export default setDefaultProps(props => {
     },
     graphs,
     labels,
-    ui: {
+    ui: props.showUI && {
       ...DEFAULT_UI_PROPS,
       ...props.ui,
     }
