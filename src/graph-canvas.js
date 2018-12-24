@@ -161,7 +161,6 @@ class GraphCanvas extends Component {
 
     // TODO graph, getCanvasX, getCanvasY props
 
-    // background
     background: PropTypes.shape({
       color: PropTypes.string,
 
@@ -188,19 +187,50 @@ class GraphCanvas extends Component {
       xTickInterval: PropTypes.number.isRequired,
     }),
 
-    // graphs
-    graphs: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf([
-        "line",
-        "point",
-        "bar",
-        "candlestick"
-      ]).isRequired,
-      data: PropTypes.arrayOf(PropTypes.shape({
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired,
-      })).isRequired,
-    })).isRequired,
+    graphs: PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.shape({
+        type: PropTypes.oneOf(["line"]).isRequired,
+        data: PropTypes.arrayOf(PropTypes.shape({
+          x: PropTypes.number.isRequired,
+          y: PropTypes.number.isRequired,
+        })).isRequired,
+        color: PropTypes.string.isRequired,
+        width: PropTypes.number.isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(["point"]).isRequired,
+        data: PropTypes.arrayOf(PropTypes.shape({
+          x: PropTypes.number.isRequired,
+          y: PropTypes.number.isRequired,
+        })).isRequired,
+        color: PropTypes.string.isRequired,
+        radius: PropTypes.number.isRequired,
+        ambientColor: PropTypes.string.isRequired,
+        ambientRadius: PropTypes.number.isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(["bar"]).isRequired,
+        data: PropTypes.arrayOf(PropTypes.shape({
+          x: PropTypes.number.isRequired,
+          y: PropTypes.number.isRequired,
+        })).isRequired,
+        getColor: PropTypes.func.isRequired,
+        width: PropTypes.number.isRequired,
+      }),
+      PropTypes.shape({
+        type: PropTypes.oneOf(["candlestick"]).isRequired,
+        data: PropTypes.arrayOf(PropTypes.shape({
+          open: PropTypes.number.isRequired,
+          close: PropTypes.number.isRequired,
+          high: PropTypes.number.isRequired,
+          low: PropTypes.number.isRequired,
+          timestamp: PropTypes.number.isRequired,
+        })).isRequired,
+        width: PropTypes.number.isRequired,
+        getColor: PropTypes.func.isRequired,
+        wickWidth: PropTypes.number.isRequired,
+      }),
+    ])).isRequired,
 
     labels: PropTypes.arrayOf(PropTypes.shape({
       canvasX: PropTypes.number.isRequired,
@@ -225,34 +255,7 @@ class GraphCanvas extends Component {
       yLabelFont: PropTypes.string.isRequired,
       yLabelColor: PropTypes.string.isRequired,
       yLabelText: PropTypes.string.isRequired,
-    })),
-
-    // line
-    // line: PropTypes.shape({
-    //   color: PropTypes.string.isRequired,
-    //   width: PropTypes.number.isRequired,
-    // }),
-
-    // point
-    // point: PropTypes.shape({
-    //   color: PropTypes.string.isRequired,
-    //   radius: PropTypes.number.isRequired,
-    //   ambientColor: PropTypes.string.isRequired,
-    //   ambientRadius: PropTypes.number.isRequired,
-    // }),
-
-    // bar
-    // bar: PropTypes.shape({
-    //   getColor: PropTypes.func.isRequired,
-    //   width: PropTypes.number.isRequired,
-    // }),
-
-    // candlestick
-    // candlestick: PropTypes.shape({
-    //   width: PropTypes.number.isRequired,
-    //   getColor: PropTypes.func.isRequired,
-    //   wickWidth: PropTypes.number.isRequired,
-    // }),
+    })).isRequired,
 
     showUI: PropTypes.bool,
     ui: PropTypes.shape({
