@@ -25,17 +25,9 @@ export default function draggable(Component) {
       }
     }
 
-    getXRange = (mouse) => {
+    getXRange = (mouse, graph) => {
       if (!this.mouse.isDragging) {
         return
-      }
-
-      // TODO where to get graph from?
-      const graph = {
-        top: 10,
-        left: 60,
-        height: 230,
-        width: 430
       }
 
       if (!ui.isInsideRect(mouse, graph)) {
@@ -59,21 +51,13 @@ export default function draggable(Component) {
       }
     }
 
-    onMouseMove = (e, mouse) => {
-      const xRange = this.getXRange(mouse)
+    onMouseMove = (e, mouse, graph) => {
+      const xRange = this.getXRange(mouse, graph)
 
-      this.props.onMouseMove(e, mouse, xRange)
+      this.props.onMouseMove(e, mouse, graph, xRange)
     }
 
-    onMouseDown = (e, mouse) => {
-      // TODO where to get graph from?
-      const graph = {
-        top: 10,
-        left: 60,
-        height: 230,
-        width: 430
-      }
-
+    onMouseDown = (e, mouse, graph) => {
       if (ui.isInsideRect(mouse, graph)) {
         this.mouse.isDragging = true
         this.mouse.dragStartCanvasX = mouse.x

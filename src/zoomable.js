@@ -38,15 +38,7 @@ export default function zoomable(Component) {
       }
     }
 
-    getRange = (e, mouse) => {
-      // TODO where to get graph
-      const graph = {
-        top: 10,
-        left: 60,
-        height: 230,
-        width: 430,
-      }
-
+    getRange = (e, mouse, graph) => {
       if (!ui.isInsideRect(mouse, graph)) {
         return
       }
@@ -109,9 +101,9 @@ export default function zoomable(Component) {
       }
     }
 
-    onWheel = (e, mouse) => {
-      const range = this.getRange(e, mouse)
-      this.props.onWheel(e, mouse, range)
+    onWheel = (e, mouse, graph) => {
+      const range = this.getRange(e, mouse, graph)
+      this.props.onWheel(e, mouse, graph, range)
     }
 
     render() {

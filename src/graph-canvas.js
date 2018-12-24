@@ -263,9 +263,17 @@ class GraphCanvas extends Component {
   constructor (props) {
     super(props)
 
-    this.background = React.createRef()
-    this.graph = React.createRef()
-    this.ui = React.createRef()
+    this.backgroundRef = React.createRef()
+    this.graphRef = React.createRef()
+    this.uiRef = React.createRef()
+
+    // graph dimensions
+    this.graph = {
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0
+    }
 
     this.mouse = {
       x: undefined,
@@ -276,40 +284,14 @@ class GraphCanvas extends Component {
     this.animation = undefined
   }
 
-  onMouseMove = (e) => {
-    const rect = this.ctx.ui.canvas.getBoundingClientRect()
-
-    this.mouse.x = e.clientX - rect.left
-    this.mouse.y = e.clientY - rect.top
-
-    this.props.onMouseMove(e, this.mouse)
-  }
-
-  onMouseDown = (e) => {
-    this.props.onMouseDown(e, this.mouse)
-  }
-
-  onMouseUp = (e) => {
-    this.props.onMouseUp(e, this.mouse)
-  }
-
-  onMouseOut = (e) => {
-    this.mouse.x = undefined
-    this.mouse.y = undefined
-
-    this.props.onMouseOut(e, this.mouse)
-  }
-
-  onWheel = (e) => {
-    this.props.onWheel(e, this.mouse)
-  }
-
   componentDidMount () {
     this.ctx = {
-      ui: this.ui.current.getContext('2d'),
-      graph: this.graph.current.getContext('2d'),
-      background: this.background.current.getContext('2d', { alpha: false })
+      ui: this.uiRef.current.getContext('2d'),
+      graph: this.graphRef.current.getContext('2d'),
+      background: this.backgroundRef.current.getContext('2d', { alpha: false })
     }
+
+    this.graph = getGraphDimensions(this.props)
 
     if (this.props.showUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
@@ -346,9 +328,37 @@ class GraphCanvas extends Component {
     return false
   }
 
+  onMouseMove = (e) => {
+    const rect = this.ctx.ui.canvas.getBoundingClientRect()
+
+    this.mouse.x = e.clientX - rect.left
+    this.mouse.y = e.clientY - rect.top
+
+    this.props.onMouseMove(e, this.mouse, this.graph)
+  }
+
+  onMouseDown = (e) => {
+    this.props.onMouseDown(e, this.mouse, this.graph)
+  }
+
+  onMouseUp = (e) => {
+    this.props.onMouseUp(e, this.mouse, this.graph)
+  }
+
+  onMouseOut = (e) => {
+    this.mouse.x = undefined
+    this.mouse.y = undefined
+
+    this.props.onMouseOut(e, this.mouse, this.graph)
+  }
+
+  onWheel = (e) => {
+    this.props.onWheel(e, this.mouse, this.graph)
+  }
+
   draw = () => {
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const graph = getGraphDimensions(this.props)
+    const {graph} = this
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -404,7 +414,7 @@ class GraphCanvas extends Component {
     this.draw()
 
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const graph = getGraphDimensions(this.props)
+    const {graph} = this
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -443,19 +453,19 @@ class GraphCanvas extends Component {
         height: this.props.height
       }}>
         <canvas
-          ref={this.background}
+          ref={this.backgroundRef}
           style={styles.background}
           width={this.props.width}
           height={this.props.height}
         />
         <canvas
-          ref={this.graph}
+          ref={this.graphRef}
           style={styles.graph}
           width={this.props.width}
           height={this.props.height}
         />
         <canvas
-          ref={this.ui}
+          ref={this.uiRef}
           style={styles.ui}
           width={this.props.width}
           height={this.props.height}

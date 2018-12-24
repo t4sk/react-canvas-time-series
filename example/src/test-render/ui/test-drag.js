@@ -12,7 +12,7 @@ class TestDrag extends Component {
     }
   }
 
-  onMouseMove = (e, mouse, xRange) => {
+  onMouseMove = (e, mouse, graph, xRange) => {
     if (xRange) {
       const {
         xMin, xMax

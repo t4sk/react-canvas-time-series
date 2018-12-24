@@ -16,7 +16,7 @@ class TestZoom extends Component {
     }
   }
 
-  onWheel = (e, mouse, range) => {
+  onWheel = (e, mouse, graph, range) => {
     if (range) {
       e.preventDefault()
 
