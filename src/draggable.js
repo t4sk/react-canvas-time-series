@@ -6,7 +6,7 @@ const { ui, math } = canvas
 export default function draggable(Component) {
   return class extends React.Component {
     static propTypes = {
-      onMouseMove: PropTypes.func,
+      onMouseMove: PropTypes.func.isRequired,
       onMouseDown: PropTypes.func,
       onMouseUp: PropTypes.func,
       onMouseOut: PropTypes.func,
@@ -62,9 +62,7 @@ export default function draggable(Component) {
     onMouseMove = (e, mouse) => {
       const xRange = this.getXRange(mouse)
 
-      if (this.props.onMouseMove) {
-        this.props.onMouseMove(e, mouse, xRange)
-      }
+      this.props.onMouseMove(e, mouse, xRange)
     }
 
     onMouseDown = (e, mouse) => {

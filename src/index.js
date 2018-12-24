@@ -2,15 +2,18 @@
 import canvas from './canvas'
 import GraphCanvas from './graph-canvas'
 import draggable from './draggable'
+import zoomable from './zoomable'
 
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
 export { default as draggable } from './draggable'
+export { default as zoomable } from './zoomable'
 
 const ReactCanvasTimeSeries = {
   canvas,
   GraphCanvas,
-  draggable
+  draggable,
+  zoomable,
 }
 
 export default ReactCanvasTimeSeries
