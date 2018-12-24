@@ -1,6 +1,19 @@
 // TODO unexport canvas but export helpers like ui and math
+import canvas from './canvas'
+import GraphCanvas from './graph-canvas'
+import draggable from './draggable'
+
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
+export { default as draggable } from './draggable'
+
+const ReactCanvasTimeSeries = {
+  canvas,
+  GraphCanvas,
+  draggable
+}
+
+export default ReactCanvasTimeSeries
 
 // TODO flow
 
@@ -13,7 +26,6 @@ export { default as GraphCanvas } from './graph-canvas'
 // TODO reusable component for drag
 
 // TODO optimizations mentioned in mozilla website
-// TODO highlight column
 
 // TODO compute barWidth from xStep
 
