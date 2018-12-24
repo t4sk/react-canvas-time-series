@@ -60,6 +60,9 @@ export function drawXLines (ctx: any, props: Props) {
   const tickTop = getTickTop(props)
 
   if (props.background.showXLine) {
+    ctx.lineWidth = props.background.xLineWidth
+    ctx.strokeStyle = props.background.xLineColor
+    
     // draw x line at start
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)

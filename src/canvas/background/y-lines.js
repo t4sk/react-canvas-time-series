@@ -71,6 +71,9 @@ export function drawYLines (ctx: any, props: Props) {
   const tickLeft = getTickLeft(props)
 
   if (props.background.showYLine) {
+    ctx.lineWidth = props.background.yLineWidth
+    ctx.strokeStyle = props.background.yLineColor
+    
     // draw y line top
     ctx.beginPath()
     ctx.moveTo(graph.left, graph.top)
