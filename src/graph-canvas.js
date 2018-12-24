@@ -207,7 +207,7 @@ class GraphCanvas extends Component {
       showXLine: PropTypes.bool,
       xLineColor: PropTypes.string.isRequired,
       showXLabel: PropTypes.bool,
-      xLabelAt: PropTypes.oneOf(['top', 'bottom']),
+      xLabelAt: PropTypes.oneOf(['top', 'bottom']).isRequired,
       xLabelWidth: PropTypes.number.isRequired,
       xLabelHeight: PropTypes.number.isRequired,
       xLabelBackgroundColor: PropTypes.string.isRequired,
@@ -218,7 +218,7 @@ class GraphCanvas extends Component {
       showYLabel: PropTypes.bool,
       yLineColor: PropTypes.string.isRequired,
       showYLine: PropTypes.bool,
-      yLabelAt: PropTypes.oneOf(['left', 'right']),
+      yLabelAt: PropTypes.oneOf(['left', 'right']).isRequired,
       yLabelWidth: PropTypes.number.isRequired,
       yLabelHeight: PropTypes.number.isRequired,
       yLabelBackgroundColor: PropTypes.string.isRequired,
@@ -254,8 +254,34 @@ class GraphCanvas extends Component {
     //   wickWidth: PropTypes.number.isRequired,
     // }),
 
-    // TODO UI prop types
-    showUI: PropTypes.bool.isRequired,
+    showUI: PropTypes.bool,
+    ui: PropTypes.shape({
+      showXLine: PropTypes.bool,
+      xLineColor: PropTypes.string.isRequired,
+      showXLabel: PropTypes.bool,
+      xLabelAt: PropTypes.oneOf(['top', 'bottom']).isRequired,
+      xLabelWidth: PropTypes.number.isRequired,
+      xLabelHeight: PropTypes.number.isRequired,
+      xLabelBackgroundColor: PropTypes.string.isRequired,
+      xLabelFont: PropTypes.string.isRequired,
+      xLabelColor: PropTypes.string.isRequired,
+      xLabelText: PropTypes.string.isRequired,
+      showYLabel: PropTypes.bool,
+      yLineColor: PropTypes.string.isRequired,
+
+      showYLine: PropTypes.bool,
+      yLabelAt: PropTypes.oneOf(['left', 'right']).isRequired,
+
+      yLabelWidth: PropTypes.number.isRequired,
+      yLabelHeight: PropTypes.number.isRequired,
+      yLabelBackgroundColor: PropTypes.string.isRequired,
+      yLabelFont: PropTypes.string.isRequired,
+      yLabelColor: PropTypes.string.isRequired,
+      yLabelText: PropTypes.string.isRequired,
+
+      renderXLabel: PropTypes.func.isRequired,
+      renderYLabel: PropTypes.func.isRequired,
+    })
   }
 
   static defaultProps = DEFAULT_PROPS
