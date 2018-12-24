@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import {canvas, GraphCanvas} from 'react-canvas-time-series'
-const { ui } = canvas
+import ReactCanvasTimeSeries, {zoomable} from 'react-canvas-time-series'
 
-// ZOOM_RATE should be < 0.5
-const ZOOM_RATE = 0.1
-const MIN_X_TICK_INTERVAL = 10
-const NUM_X_TICKS = 10
-const MIN_Y_TICK_INTERVAL = 1
-const NUM_Y_TICKS = 10
+const GraphCanvas = zoomable(ReactCanvasTimeSeries.GraphCanvas)
 
 class TestZoom extends Component {
   constructor (props) {
@@ -22,69 +16,27 @@ class TestZoom extends Component {
     }
   }
 
-  onWheel = (e, mouse) => {
-    // TODO where to get graph
-    const graph = {
-      top: 0,
-      left: 50,
-      height: 250,
-      width: 450,
-    }
-
-    if (ui.isInsideRect(mouse, graph)) {
+  onWheel = (e, mouse, range) => {
+    if (range) {
       e.preventDefault()
 
-      if (e.deltaY > 0) {
-        // zoom out
-        this.setState((state) => {
-          const xDiff = state.xMax - state.xMin
-          const xTickInterval = Math.max(
-            (1 + 2 * ZOOM_RATE) * xDiff / NUM_X_TICKS,
-            MIN_X_TICK_INTERVAL
-          )
+      const {
+        xMin,
+        xMax,
+        yMin,
+        yMax,
+        xTickInterval,
+        yTickInterval
+      } = range
 
-          const yDiff = state.yMax - state.yMin
-          const yTickInterval = Math.max(
-            (1 + 2 * ZOOM_RATE) * yDiff / NUM_Y_TICKS,
-            MIN_Y_TICK_INTERVAL
-          )
-
-          return {
-            ...state,
-            xMin: state.xMin - ZOOM_RATE * xDiff,
-            xMax: state.xMax + ZOOM_RATE * xDiff,
-            xTickInterval,
-            yMin: state.yMin - ZOOM_RATE * yDiff,
-            yMax: state.yMax + ZOOM_RATE * yDiff,
-            yTickInterval,
-          }
-        })
-      } else {
-        // zoom in
-        this.setState((state) => {
-          const xDiff = state.xMax - state.xMin
-          const xTickInterval = Math.max(
-            (1 - 2 * ZOOM_RATE) * xDiff / NUM_X_TICKS,
-            MIN_X_TICK_INTERVAL
-          )
-
-          const yDiff = state.yMax - state.yMin
-          const yTickInterval = Math.max(
-            (1 - 2 * ZOOM_RATE) * yDiff / NUM_Y_TICKS,
-            MIN_Y_TICK_INTERVAL
-          )
-
-          return {
-            ...state,
-            xMin: state.xMin + ZOOM_RATE * xDiff,
-            xMax: state.xMax - ZOOM_RATE * xDiff,
-            xTickInterval,
-            yMin: state.yMin + ZOOM_RATE * yDiff,
-            yMax: state.yMax - ZOOM_RATE * yDiff,
-            yTickInterval,
-          }
-        })
-      }
+      this.setState(state => ({
+        xMin,
+        xMax,
+        yMin,
+        yMax,
+        xTickInterval,
+        yTickInterval
+      }))
     }
   }
 

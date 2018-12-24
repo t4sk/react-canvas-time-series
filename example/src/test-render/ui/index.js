@@ -125,8 +125,8 @@ UITestRender.defaultProps = {
     color: 'beige',
     yTickInterval: 10,
     xTickInterval: 100,
-    renderXTick: x => Math.round(x),
-    renderYTick: y => y.toFixed(2),
+    renderXTickLabel: x => Math.round(x),
+    renderYTickLabel: y => Math.round(y),
   },
 
   xMin: X_MIN,
@@ -137,7 +137,7 @@ UITestRender.defaultProps = {
   showUI: true,
   ui: {
     renderXLabel: x => Math.round(x),
-    renderYLabel: y => y.toFixed(2),
+    renderYLabel: y => Math.round(y),
   },
 }
 
