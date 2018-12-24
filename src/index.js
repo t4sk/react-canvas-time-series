@@ -25,9 +25,6 @@ export default ReactCanvasTimeSeries
 // TODO drag example with data
 // TODO zoom example with data
 
-// TODO zoomable composable component
-// TODO reusable component for drag
-
 // TODO optimizations mentioned in mozilla website
 
 // TODO compute barWidth from xStep
