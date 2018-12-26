@@ -125,6 +125,13 @@ const DEFAULT_PROPS = {
 
   padding: DEFAULT_PADDING,
 
+  graph: {
+    top: 0,
+    left: 0,
+    width: 0,
+    height: 0
+  },
+
   // background
   background: DEFAULT_BACKGROUND_PROPS,
 
@@ -154,6 +161,20 @@ class GraphCanvas extends Component {
 
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+
+    padding: PropTypes.shape({
+      top: PropTypes.number.isRequired,
+      bottom: PropTypes.number.isRequired,
+      left: PropTypes.number.isRequired,
+      right: PropTypes.number.isRequired,
+    }).isRequired,
+
+    graph: PropTypes.shape({
+      top: PropTypes.number.isRequired,
+      left: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+    }).isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
