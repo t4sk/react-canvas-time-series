@@ -22,3 +22,28 @@ export function rand (min, max) {
 export function randInt (min, max) {
   return Math.floor(rand(min, max))
 }
+
+export function timeout(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
+
+export async function fakeFetch(data, ms) {
+  await timeout(ms)
+  return data
+}
+
+export function getRandomData(length, xMin, xMax, yMin, yMax) {
+  let data = []
+  for (let i = 0; i < length; i++) {
+    data.push({
+      x: rand(xMin, xMax),
+      y: rand(yMin, yMax)
+    })
+  }
+
+  data.sort((a, b) => a.x - b.x)
+
+  return data
+}
