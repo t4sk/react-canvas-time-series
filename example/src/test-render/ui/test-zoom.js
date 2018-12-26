@@ -9,33 +9,24 @@ class TestZoom extends Component {
     this.state = {
       xMin: 0,
       xMax: 1000,
-      yMin: 0,
-      yMax: 100,
       xTickInterval: 100,
-      yTickInterval: 10,
     }
   }
 
-  onWheel = (e, mouse, graph, range) => {
-    if (range) {
+  onWheel = (e, mouse, graph, xRange) => {
+    if (xRange) {
       e.preventDefault()
 
       const {
         xMin,
         xMax,
-        yMin,
-        yMax,
         xTickInterval,
-        yTickInterval
-      } = range
+      } = xRange
 
       this.setState(state => ({
         xMin,
         xMax,
-        yMin,
-        yMax,
         xTickInterval,
-        yTickInterval
       }))
     }
   }
@@ -47,12 +38,12 @@ class TestZoom extends Component {
         background={{
           ...this.props.background,
           xTickInterval: this.state.xTickInterval,
-          yTickInterval: this.state.yTickInterval,
+          yTickInterval: 10,
         }}
         xMin={this.state.xMin}
         xMax={this.state.xMax}
-        yMin={this.state.yMin}
-        yMax={this.state.yMax}
+        yMin={0}
+        yMax={100}
         onWheel={this.onWheel}
       />
     )

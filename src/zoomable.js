@@ -11,12 +11,8 @@ export default function zoomable(Component) {
       zoomRate: PropTypes.number.isRequired,
       xMin: PropTypes.number.isRequired,
       xMax: PropTypes.number.isRequired,
-      yMin: PropTypes.number.isRequired,
-      yMax: PropTypes.number.isRequired,
       minXTickInterval: PropTypes.number.isRequired,
-      minYTickInterval: PropTypes.number.isRequired,
       numXTicks: PropTypes.number.isRequired,
-      numYTicks: PropTypes.number.isRequired,
     }
 
     static defaultProps = {
@@ -38,7 +34,7 @@ export default function zoomable(Component) {
       }
     }
 
-    getRange = (e, mouse, graph) => {
+    getXRange = (e, mouse, graph) => {
       if (!ui.isInsideRect(mouse, graph)) {
         return
       }
@@ -47,16 +43,11 @@ export default function zoomable(Component) {
         zoomRate,
         xMin,
         xMax,
-        yMin,
-        yMax,
         minXTickInterval,
-        minYTickInterval,
         numXTicks,
-        numYTicks,
       } = this.props
 
       const xDiff = xMax - xMin
-      const yDiff = yMax - yMin
 
       if (e.deltaY > 0) {
         // zoom out
@@ -65,18 +56,10 @@ export default function zoomable(Component) {
           minXTickInterval
         )
 
-        const yTickInterval = Math.max(
-          (1 + 2 * zoomRate) * yDiff / numYTicks,
-          minYTickInterval
-        )
-
         return {
           xMin: xMin - zoomRate * xDiff,
           xMax: xMax + zoomRate * xDiff,
           xTickInterval,
-          yMin: yMin - zoomRate * yDiff,
-          yMax: yMax + zoomRate * yDiff,
-          yTickInterval,
         }
       } else {
         // zoom in
@@ -85,25 +68,17 @@ export default function zoomable(Component) {
           minXTickInterval
         )
 
-        const yTickInterval = Math.max(
-          (1 - 2 * zoomRate) * yDiff / numYTicks,
-          minYTickInterval
-        )
-
         return {
           xMin: xMin + zoomRate * xDiff,
           xMax: xMax - zoomRate * xDiff,
           xTickInterval,
-          yMin: yMin + zoomRate * yDiff,
-          yMax: yMax - zoomRate * yDiff,
-          yTickInterval,
         }
       }
     }
 
     onWheel = (e, mouse, graph) => {
-      const range = this.getRange(e, mouse, graph)
-      this.props.onWheel(e, mouse, graph, range)
+      const xRange = this.getXRange(e, mouse, graph)
+      this.props.onWheel(e, mouse, graph, xRange)
     }
 
     render() {
