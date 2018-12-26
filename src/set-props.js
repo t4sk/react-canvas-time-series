@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function setDefaultProps(setDefaults) {
+export default function setProps(setDefaults) {
   return Component => class extends React.Component {
     render() {
       return (

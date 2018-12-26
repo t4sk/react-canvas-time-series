@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import setDefaultProps from './set-default-props'
+import setProps from './set-props'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
@@ -529,7 +529,7 @@ const styles = {
   }
 }
 
-export default setDefaultProps(props => {
+export default setProps(props => {
   const graphs = (props.graphs || []).map(graph => ({
     ...DEFAULT_GRAPH_PROPS[graph.type],
     ...graph
