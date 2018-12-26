@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import setProps from './set-props'
+import {compose} from './util'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
@@ -529,32 +530,40 @@ const styles = {
   }
 }
 
-export default setProps(props => {
-  const graphs = (props.graphs || []).map(graph => ({
-    ...DEFAULT_GRAPH_PROPS[graph.type],
-    ...graph
-  }))
+export default compose(
+  setProps(props => {
+    const graphs = (props.graphs || []).map(graph => ({
+      ...DEFAULT_GRAPH_PROPS[graph.type],
+      ...graph
+    }))
 
-  const labels = (props.labels || []).map(label => ({
-    ...DEFAULT_LABEL_PROPS,
-    ...label
-  }))
+    const labels = (props.labels || []).map(label => ({
+      ...DEFAULT_LABEL_PROPS,
+      ...label
+    }))
 
-  return {
-    ...props,
-    padding: {
-      ...props.padding,
-      ...DEFAULT_PADDING,
-    },
-    background:  {
-      ...DEFAULT_BACKGROUND_PROPS,
-      ...props.background,
-    },
-    graphs,
-    labels,
-    ui: props.showUI && {
-      ...DEFAULT_UI_PROPS,
-      ...props.ui,
+    return {
+      ...props,
+      padding: {
+        ...props.padding,
+        ...DEFAULT_PADDING,
+      },
+      background:  {
+        ...DEFAULT_BACKGROUND_PROPS,
+        ...props.background,
+      },
+      graphs,
+      labels,
+      ui: props.showUI && {
+        ...DEFAULT_UI_PROPS,
+        ...props.ui,
+      }
     }
-  }
-})(GraphCanvas)
+  }),
+  setProps(props => {
+    return {
+      ...props,
+      graph: getGraphDimensions(props)
+    }
+  })
+)(GraphCanvas)
