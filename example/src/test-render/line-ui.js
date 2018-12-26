@@ -8,6 +8,7 @@ const X_MIN = 0
 const X_MAX = 1000
 const Y_MIN = 0
 const Y_MAX = 100
+const Y_TICK_INTERVAL = 10
 
 class LineUITestRender extends Component {
   constructor(props) {
@@ -17,10 +18,7 @@ class LineUITestRender extends Component {
       data: [[], []],
       xMin: X_MIN,
       xMax: X_MAX,
-      yMin: Y_MIN,
-      yMax: Y_MAX,
       xTickInterval: 100,
-      yTickInterval: 10,
     }
   }
 
@@ -82,7 +80,7 @@ class LineUITestRender extends Component {
           background={{
             color: 'beige',
             xTickInterval: this.state.xTickInterval,
-            yTickInterval: this.state.yTickInterval,
+            yTickInterval: Y_TICK_INTERVAL,
             renderXTickLabel: x => Math.round(x),
             renderYTickLabel: y => Math.round(y),
           }}
@@ -106,8 +104,8 @@ class LineUITestRender extends Component {
           onWheel={this.onWheel}
           xMin={this.state.xMin}
           xMax={this.state.xMax}
-          yMin={this.state.yMin}
-          yMax={this.state.yMax}
+          yMin={Y_MIN}
+          yMax={Y_MAX}
           numXTicks={10}
         />
       </div>
