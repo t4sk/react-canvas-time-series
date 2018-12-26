@@ -29,5 +29,4 @@ export default ReactCanvasTimeSeries
 
 // TODO compute barWidth from xStep
 
-// TODO ? set graph canvas size in render()
 // TODO render ui labels near canvas borders

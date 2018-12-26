@@ -179,8 +179,6 @@ class GraphCanvas extends Component {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
 
-    // TODO getCanvasX, getCanvasY props
-
     background: PropTypes.shape({
       color: PropTypes.string,
 
@@ -358,8 +356,6 @@ class GraphCanvas extends Component {
 
   shouldComponentUpdate (nextProps) {
     // TODO props.shouldComponentUpdate()
-    // TODO when props.drawUI is absent, draw is not re-triggered after prop updates
-    // TODO fix
     // return (
     //   nextProps.canvas.width !== this.props.canvas.width ||
     //   nextProps.canvas.height !== this.props.canvas.height
