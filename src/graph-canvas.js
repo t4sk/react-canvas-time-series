@@ -181,7 +181,7 @@ class GraphCanvas extends Component {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
 
-    // TODO graph, getCanvasX, getCanvasY props
+    // TODO getCanvasX, getCanvasY props
 
     background: PropTypes.shape({
       color: PropTypes.string,
@@ -318,14 +318,6 @@ class GraphCanvas extends Component {
     this.graphRef = React.createRef()
     this.uiRef = React.createRef()
 
-    // graph dimensions
-    this.graph = {
-      top: 0,
-      left: 0,
-      width: 0,
-      height: 0
-    }
-
     this.mouse = {
       x: undefined,
       y: undefined,
@@ -341,8 +333,6 @@ class GraphCanvas extends Component {
       graph: this.graphRef.current.getContext('2d'),
       background: this.backgroundRef.current.getContext('2d', { alpha: false })
     }
-
-    this.graph = getGraphDimensions(this.props)
 
     if (this.props.showUI) {
       this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
@@ -376,7 +366,7 @@ class GraphCanvas extends Component {
     //   nextProps.canvas.width !== this.props.canvas.width ||
     //   nextProps.canvas.height !== this.props.canvas.height
     // )
-    return false
+    return true
   }
 
   onMouseMove = (e) => {
@@ -385,31 +375,31 @@ class GraphCanvas extends Component {
     this.mouse.x = e.clientX - rect.left
     this.mouse.y = e.clientY - rect.top
 
-    this.props.onMouseMove(e, this.mouse, this.graph)
+    this.props.onMouseMove(e, this.mouse, this.props.graph)
   }
 
   onMouseDown = (e) => {
-    this.props.onMouseDown(e, this.mouse, this.graph)
+    this.props.onMouseDown(e, this.mouse, this.props.graph)
   }
 
   onMouseUp = (e) => {
-    this.props.onMouseUp(e, this.mouse, this.graph)
+    this.props.onMouseUp(e, this.mouse, this.props.graph)
   }
 
   onMouseOut = (e) => {
     this.mouse.x = undefined
     this.mouse.y = undefined
 
-    this.props.onMouseOut(e, this.mouse, this.graph)
+    this.props.onMouseOut(e, this.mouse, this.props.graph)
   }
 
   onWheel = (e) => {
-    this.props.onWheel(e, this.mouse, this.graph)
+    this.props.onWheel(e, this.mouse, this.props.graph)
   }
 
   draw = () => {
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const {graph} = this
+    const {graph} = this.props
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -465,7 +455,7 @@ class GraphCanvas extends Component {
     this.draw()
 
     // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const {graph} = this
+    const {graph} = this.props
 
     const getCanvasX = toCanvasX({
       width: graph.width,
@@ -511,9 +501,13 @@ class GraphCanvas extends Component {
         />
         <canvas
           ref={this.graphRef}
-          style={styles.graph}
-          width={this.props.width}
-          height={this.props.height}
+          style={{
+            ...styles.graph,
+            top: this.props.graph.top,
+            left: this.props.graph.left,
+          }}
+          width={this.props.graph.width}
+          height={this.props.graph.height}
         />
         <canvas
           ref={this.uiRef}
@@ -564,6 +558,7 @@ export default compose(
     }))
 
     return {
+      ...DEFAULT_PROPS,
       ...props,
       padding: {
         ...props.padding,
