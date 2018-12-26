@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactCanvasTimeSeries, {draggable, zoomable} from 'react-canvas-time-series'
-import { getRandomData } from '../util'
+import { getRandomData, fakeFetch } from '../util'
 
 const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
 
@@ -9,16 +9,12 @@ const X_MAX = 1000
 const Y_MIN = 0
 const Y_MAX = 100
 
-let DATA = [
-  getRandomData(10, X_MIN, X_MAX, Y_MIN, Y_MAX),
-  getRandomData(10, X_MIN, X_MAX, Y_MIN, Y_MAX),
-]
-
 class LineUITestRender extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      data: [[], []],
       xMin: X_MIN,
       xMax: X_MAX,
       yMin: Y_MIN,
@@ -26,6 +22,24 @@ class LineUITestRender extends Component {
       xTickInterval: 100,
       yTickInterval: 10,
     }
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  async fetchData() {
+    const data = await fakeFetch(
+      [
+        getRandomData(10, X_MIN, X_MAX, Y_MIN, Y_MAX),
+        getRandomData(10, X_MIN, X_MAX, Y_MIN, Y_MAX),
+      ],
+      1000
+    )
+
+    this.setState({
+      data,
+    })
   }
 
   onMouseMove = (e, mouse, graph, xRange) => {
@@ -76,12 +90,12 @@ class LineUITestRender extends Component {
             type: 'line',
             color: 'lime',
             width: 2,
-            data: DATA[0],
+            data: this.state.data[0],
           }, {
             type: 'line',
             color: 'olive',
             width: 2,
-            data: DATA[1],
+            data: this.state.data[1],
           }]}
           showUI={true}
           ui={{
