@@ -125,13 +125,6 @@ const DEFAULT_PROPS = {
 
   padding: DEFAULT_PADDING,
 
-  graph: {
-    top: 0,
-    left: 0,
-    width: 0,
-    height: 0
-  },
-
   // background
   background: DEFAULT_BACKGROUND_PROPS,
 
@@ -175,6 +168,11 @@ class GraphCanvas extends Component {
       width: PropTypes.number.isRequired,
       height: PropTypes.number.isRequired,
     }).isRequired,
+
+    getCanvasX: PropTypes.func.isRequired,
+    getCanvasY: PropTypes.func.isRequired,
+    getGraphCanvasX: PropTypes.func.isRequired,
+    getGraphCanvasY: PropTypes.func.isRequired,
 
     yMin: PropTypes.number.isRequired,
     yMax: PropTypes.number.isRequired,
@@ -398,22 +396,13 @@ class GraphCanvas extends Component {
   }
 
   draw = () => {
-    // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const {graph} = this.props
-
-    const getCanvasX = toCanvasX({
-      width: graph.width,
-      left: graph.left,
-      xMax: this.props.xMax,
-      xMin: this.props.xMin,
-    })
-
-    const getCanvasY = toCanvasY({
-      height: graph.height,
-      top: graph.top,
-      yMax: this.props.yMax,
-      yMin: this.props.yMin,
-    })
+    const {
+      graph,
+      getCanvasX,
+      getCanvasY,
+      getGraphCanvasX,
+      getGraphCanvasY,
+    } = this.props
 
     // TODO shouldDrawBackground, shouldDrawGraph, shouldDrawUI
     this.ctx.background.fillStyle = this.props.backgroundColor
@@ -432,10 +421,12 @@ class GraphCanvas extends Component {
       getCanvasY,
     })
 
+    this.ctx.graph.clearRect(0, 0, graph.width, graph.height)
+
     for (let g of this.props.graphs) {
       GRAPHS[g.type].draw(this.ctx.graph, {
-        getCanvasX,
-        getCanvasY,
+        getCanvasX: getGraphCanvasX,
+        getCanvasY: getGraphCanvasY,
         [g.type]: g,
       })
     }
@@ -454,22 +445,11 @@ class GraphCanvas extends Component {
     // TODO only draw if data or background changed
     this.draw()
 
-    // TODO fix getCanvasX, getCanvasY does not update after prop changes
-    const {graph} = this.props
-
-    const getCanvasX = toCanvasX({
-      width: graph.width,
-      left: graph.left,
-      xMax: this.props.xMax,
-      xMin: this.props.xMin,
-    })
-
-    const getCanvasY = toCanvasY({
-      height: graph.height,
-      top: graph.top,
-      yMax: this.props.yMax,
-      yMin: this.props.yMin,
-    })
+    const {
+      graph,
+      getCanvasX,
+      getCanvasY,
+    } = this.props
 
     ui.draw(this.ctx.ui, {
       width: this.props.width,
@@ -577,9 +557,50 @@ export default compose(
     }
   }),
   setProps(props => {
+    const {
+      xMin,
+      xMax,
+      yMin,
+      yMax
+    } = props
+
+    const graph = getGraphDimensions(props)
+
+    const getCanvasX = toCanvasX({
+      width: graph.width,
+      left: graph.left,
+      xMax,
+      xMin,
+    })
+
+    const getCanvasY = toCanvasY({
+      height: graph.height,
+      top: graph.top,
+      yMax,
+      yMin,
+    })
+
+    const getGraphCanvasX = toCanvasX({
+      width: graph.width,
+      left: 0,
+      xMax,
+      xMin,
+    })
+
+    const getGraphCanvasY = toCanvasY({
+      height: graph.height,
+      top: 0,
+      yMax,
+      yMin,
+    })
+
     return {
       ...props,
-      graph: getGraphDimensions(props)
+      graph,
+      getCanvasX,
+      getCanvasY,
+      getGraphCanvasX,
+      getGraphCanvasY,
     }
   })
 )(GraphCanvas)
