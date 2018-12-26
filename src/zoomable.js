@@ -18,9 +18,6 @@ export default function zoomable(Component) {
     static defaultProps = {
       zoomRate: 0.1,
       minXTickInterval: 1,
-      minYTickInterval: 1,
-      numXTicks: 10,
-      numYTicks: 10,
     }
 
     constructor (props) {

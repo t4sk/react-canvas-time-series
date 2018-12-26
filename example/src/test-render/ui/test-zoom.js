@@ -45,6 +45,7 @@ class TestZoom extends Component {
         yMin={0}
         yMax={100}
         onWheel={this.onWheel}
+        numXTicks={10}
       />
     )
   }
