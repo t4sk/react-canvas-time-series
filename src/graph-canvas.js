@@ -325,9 +325,9 @@ class GraphCanvas extends Component {
 
   componentDidMount () {
     this.ctx = {
-      ui: this.uiRef.current.getContext('2d'),
-      graph: this.graphRef.current.getContext('2d'),
-      background: this.backgroundRef.current.getContext('2d', { alpha: false })
+      ui: this.uiRef.current.getContext('2d', { antialias: false }),
+      graph: this.graphRef.current.getContext('2d', { antialias: false }),
+      background: this.backgroundRef.current.getContext('2d', { alpha: false, antialias: false })
     }
 
     if (this.props.showUI) {
