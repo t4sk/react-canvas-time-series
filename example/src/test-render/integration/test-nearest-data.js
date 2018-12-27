@@ -20,25 +20,8 @@ const DATA = [{
 }]
 
 class TestNearestData extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      mouse: {
-        x: undefined,
-        y: undefined,
-      }
-    }
-  }
-
   onMouseMove = (e, mouse, graph, xRange) => {
     if (!ui.isInsideRect(mouse, graph)) {
-      this.setState(state => ({
-        mouse: {
-          x: undefined,
-          y: undefined,
-        }
-      }))
       return
     }
 
@@ -51,28 +34,12 @@ class TestNearestData extends Component {
 
     const i = math.findNearestIndex(DATA.map(d => d.x), x)
 
-    const canvasX = math.toCanvasX({
+    mouse.x = math.toCanvasX({
       width: graph.width,
       left: graph.left,
       xMin: X_MIN,
       xMax: X_MAX
     })(DATA[i].x)
-
-    this.setState(state => ({
-      mouse: {
-        x: canvasX,
-        y: mouse.y,
-      }
-    }))
-  }
-
-  onMouseOut = () => {
-    this.setState(state => ({
-      mouse: {
-        x: undefined,
-        y: undefined,
-      }
-    }))
   }
 
   render () {
@@ -89,7 +56,6 @@ class TestNearestData extends Component {
         }]}
         onMouseMove={this.onMouseMove}
         onMouseOut={this.onMouseOut}
-        mouse={this.state.mouse}
       />
     )
   }

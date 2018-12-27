@@ -302,10 +302,6 @@ class GraphCanvas extends Component {
 
       renderXLabel: PropTypes.func.isRequired,
       renderYLabel: PropTypes.func.isRequired,
-    }),
-    mouse: PropTypes.shape({
-      x: PropTypes.number,
-      y: PropTypes.number,
     })
   }
 
@@ -462,7 +458,7 @@ class GraphCanvas extends Component {
       graph,
       getCanvasX,
       getCanvasY,
-      mouse: this.props.mouse || this.mouse,
+      mouse: this.mouse,
     })
   }
 
