@@ -4,7 +4,7 @@ export function nearestStepBelow (x: number, step: number): number {
   return Math.floor(x / step) * step
 }
 
-export function nearestIndexOf (
+export function findNearestIndex (
   x: number,
   arr: Array<number>
 ): {x: number} {
@@ -82,6 +82,6 @@ export function toY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
   return linear({
     dy: yMin - yMax,
     dx: height,
-    y0: yMax - (yMin - yMax) / height * top    
+    y0: yMax - (yMin - yMax) / height * top
   })
 }
