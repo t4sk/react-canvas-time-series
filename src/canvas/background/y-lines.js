@@ -103,7 +103,10 @@ export function drawYLines (ctx: any, props: Props) {
           ctx.moveTo(graph.left, canvasY)
           ctx.lineTo(graph.left + graph.width, canvasY)
           ctx.stroke()
+        }
 
+        // draw text
+        if (props.background.showYTick) {
           ctx.lineWidth = 1
           ctx.strokeStyle = props.background.yTickColor
 
@@ -111,10 +114,7 @@ export function drawYLines (ctx: any, props: Props) {
           ctx.moveTo(tickLeft, canvasY)
           ctx.lineTo(tickLeft + props.background.yTickWidth, canvasY)
           ctx.stroke()
-        }
-
-        // draw text
-        if (props.background.showYTick) {
+          
           ctx.fillText(props.background.renderYTickLabel(y, i), labelLeft, canvasY)
         }
       }

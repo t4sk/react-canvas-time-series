@@ -5,12 +5,12 @@ class BackgroundTestRender extends Component {
   render () {
     return (
       <div style={{margin: 10}}>
-        <h3>Hide X Labels</h3>
+        <h3>Hide X Ticks</h3>
         <GraphCanvas
           {...this.props}
           background={{
             ...this.props.background,
-            showXLabel: false
+            showXTick: false
           }}
         />
 
@@ -23,12 +23,12 @@ class BackgroundTestRender extends Component {
           }}
         />
 
-        <h3>Hide Y Labels</h3>
+        <h3>Hide Y Ticks</h3>
         <GraphCanvas
           {...this.props}
           background={{
             ...this.props.background,
-            showYLabel: false,
+            showYTick: false,
           }}
         />
 

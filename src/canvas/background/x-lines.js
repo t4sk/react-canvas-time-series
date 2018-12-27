@@ -92,7 +92,10 @@ export function drawXLines (ctx: any, props: Props) {
           ctx.moveTo(canvasX, graph.top)
           ctx.lineTo(canvasX, graph.top + graph.height)
           ctx.stroke()
+        }
 
+        // draw text
+        if (props.background.showXTick) {
           ctx.lineWidth = 1
           ctx.strokeStyle = props.background.xTickColor
 
@@ -100,10 +103,7 @@ export function drawXLines (ctx: any, props: Props) {
           ctx.moveTo(canvasX, tickTop)
           ctx.lineTo(canvasX, tickTop + props.background.xTickHeight)
           ctx.stroke()
-        }
 
-        // draw text
-        if (props.background.showXTick) {
           ctx.fillText(props.background.renderXTickLabel(x, i), canvasX, labelTop)
         }
       }
