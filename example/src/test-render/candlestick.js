@@ -1,48 +1,11 @@
 import React, { Component } from 'react'
 import {GraphCanvas} from 'react-canvas-time-series'
-import { rand } from '../util'
+import { generateRandomCandlestickData } from '../util'
 
 const X_MIN = 0
 const X_MAX = 1000
 const Y_MIN = 0
 const Y_MAX = 100
-
-function generateRandomData (length) {
-  let data = []
-
-  const xStep = (X_MAX - X_MIN) / length
-
-  let high = rand(Y_MIN, Y_MAX)
-  let low = rand(Y_MIN, high)
-  for (let i = 0; i < length; i++) {
-    if (Math.random() > 0.5) {
-      high += rand(0, (Y_MAX - Y_MIN) * 0.1)
-      low += rand(0, (Y_MAX - Y_MIN) * 0.1)
-
-      high = Math.min(high, Y_MAX)
-      low = Math.min(low, Y_MAX)
-    } else {
-      high -= rand(0, (Y_MAX - Y_MIN) * 0.1)
-      low -= rand(0, (Y_MAX - Y_MIN) * 0.1)
-
-      high = Math.max(high, Y_MIN)
-      low = Math.max(low, Y_MIN)
-    }
-
-    const open = rand(low, high)
-    const close = rand(low, high)
-
-    data.push({
-      high,
-      low,
-      open,
-      close,
-      timestamp: xStep * i,
-    })
-  }
-
-  return data
-}
 
 const FIXED_DATA = [{
   open: 20,
@@ -64,9 +27,9 @@ const FIXED_DATA = [{
   timestamp: X_MAX
 }]
 
-const RANDOM_DATA_SMALL = generateRandomData(10)
-const RANDOM_DATA_MEDIUM = generateRandomData(100)
-const RANDOM_DATA_LARGE = generateRandomData(1000)
+const RANDOM_DATA_SMALL = generateRandomCandlestickData(10, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_MEDIUM = generateRandomCandlestickData(100, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_LARGE = generateRandomCandlestickData(1000, X_MIN, X_MAX, Y_MIN, Y_MAX)
 
 class CandlestickTestRender extends Component {
   render () {

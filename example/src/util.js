@@ -47,3 +47,49 @@ export function getRandomData(length, xMin, xMax, yMin, yMax) {
 
   return data
 }
+
+export function generateRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
+  let data = []
+
+  const xStep = (xMax - xMin) / length
+
+  let high = rand(yMin, yMax)
+  let low = rand(yMin, high)
+  for (let i = 0; i < length; i++) {
+    if (Math.random() > 0.5) {
+      high += rand(0, (yMax - yMin) * 0.1)
+      low += rand(0, (yMax - yMin) * 0.1)
+
+      high = Math.min(high, yMax)
+      low = Math.min(low, yMax)
+    } else {
+      high -= rand(0, (yMax - yMin) * 0.1)
+      low -= rand(0, (yMax - yMin) * 0.1)
+
+      high = Math.max(high, yMin)
+      low = Math.max(low, yMin)
+    }
+
+    const open = rand(low, high)
+    const close = rand(low, high)
+
+    data.push({
+      high,
+      low,
+      open,
+      close,
+      timestamp: xStep * i,
+    })
+  }
+
+  return data
+}
+
+export function debounce(func, time) {
+  let timeout
+  return function(...args) {
+    const context = this
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func.apply(context, args), time)
+  }
+}
