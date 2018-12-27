@@ -30,5 +30,3 @@ export default ReactCanvasTimeSeries
 // TODO compute barWidth from xStep
 
 // TODO render ui labels near canvas borders
-
-// TODO test render nearest data, mouse at nearest data
