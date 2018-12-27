@@ -537,8 +537,8 @@ export default compose(
       ...DEFAULT_PROPS,
       ...props,
       padding: {
-        ...props.padding,
         ...DEFAULT_PADDING,
+        ...props.padding,
       },
       background:  {
         ...DEFAULT_BACKGROUND_PROPS,
