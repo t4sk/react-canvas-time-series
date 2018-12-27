@@ -83,29 +83,29 @@ const DATA = [0, 5, 10]
 
 describe("find index of nearest data to x", () => {
   test("should return -1 if data empty", () => {
-    expect(findNearestIndex(2, [])).toEqual(-1)
+    expect(findNearestIndex([], 2)).toEqual(-1)
   })
 
   test("should return 0 if data length == 1", () => {
-    expect(findNearestIndex(2, [1])).toEqual(0)
+    expect(findNearestIndex([1], 2)).toEqual(0)
   })
 
   test("should throw if data not sorted by ascending order", () => {
     expect(() => {
-      findNearestIndex(2, [2, 1])
+      findNearestIndex([2, 1], 2)
     }).toThrow()
   })
 
   test("should return index of min", () => {
-    expect(findNearestIndex(2, DATA)).toEqual(0)
+    expect(findNearestIndex(DATA, 2)).toEqual(0)
   })
 
   test("should return index of mid", () => {
-    expect(findNearestIndex(3, DATA)).toEqual(1)
-    expect(findNearestIndex(7, DATA)).toEqual(1)
+    expect(findNearestIndex(DATA, 3)).toEqual(1)
+    expect(findNearestIndex(DATA, 7)).toEqual(1)
   })
 
   test("should return index of max", () => {
-    expect(findNearestIndex(8, DATA)).toEqual(2)
+    expect(findNearestIndex(DATA, 8)).toEqual(2)
   })
 })

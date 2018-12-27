@@ -5,8 +5,8 @@ export function nearestStepBelow (x: number, step: number): number {
 }
 
 export function findNearestIndex (
-  x: number,
-  arr: Array<number>
+  arr: Array<number>,
+  x: number
 ): {x: number} {
   let low = 0
   let high = arr.length - 1
