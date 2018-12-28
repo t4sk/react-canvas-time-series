@@ -78,6 +78,7 @@ export function generateRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
       low,
       open,
       close,
+      volume: rand(0, yMax),
       timestamp: xStep * i,
     })
   }
