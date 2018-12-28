@@ -27,9 +27,9 @@ const FIXED_DATA = [{
   timestamp: X_MAX
 }]
 
-const RANDOM_DATA_SMALL = getRandomCandlestickData(10, X_MIN, X_MAX, Y_MIN, Y_MAX)
-const RANDOM_DATA_MEDIUM = getRandomCandlestickData(100, X_MIN, X_MAX, Y_MIN, Y_MAX)
-const RANDOM_DATA_LARGE = getRandomCandlestickData(1000, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_SMALL = getRandomCandlestickData(100, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_MEDIUM = getRandomCandlestickData(10, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_LARGE = getRandomCandlestickData(1, X_MIN, X_MAX, Y_MIN, Y_MAX)
 
 class CandlestickTestRender extends Component {
   render () {

@@ -48,13 +48,14 @@ export function getRandomData(length, xMin, xMax, yMin, yMax) {
   return data
 }
 
-export function getRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
+export function getRandomCandlestickData (xStep, xMin, xMax, yMin, yMax) {
   let data = []
 
-  const xStep = (xMax - xMin) / length
+  const length = Math.round((xMax - xMin) / xStep)
 
   let high = rand(yMin, yMax)
   let low = rand(yMin, high)
+  
   for (let i = 0; i < length; i++) {
     if (Math.random() > 0.5) {
       high += rand(0, (yMax - yMin) * 0.1)
@@ -79,7 +80,7 @@ export function getRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
       open,
       close,
       volume: rand(0, yMax),
-      timestamp: xStep * i,
+      timestamp: xMin + xStep * i,
     })
   }
 
