@@ -94,6 +94,27 @@ class TestCandlestick extends Component {
     if (this.mouse.x >= 10 && this.mouse.x <= 440) {
       this.candlestick.cursor.x = this.mouse.x
       this.volume.cursor.x = this.mouse.x
+
+      const x = math.toX({
+        width: 430,
+        left: 10,
+        xMin: this.state.xMin,
+        xMax: this.state.xMax,
+      })(this.mouse.x)
+
+      const i = math.findNearestIndex(this.state.data.map(d => d.timestamp), x)
+
+      if (this.state.data[i]) {
+        const canvasX = math.toCanvasX({
+          width: 430,
+          left: 10,
+          xMin: this.state.xMin,
+          xMax: this.state.xMax,
+        })(this.state.data[i].timestamp)
+
+        this.candlestick.cursor.x = canvasX
+        this.volume.cursor.x = canvasX
+      }
     }
 
     this.candlestick.cursor.y = undefined

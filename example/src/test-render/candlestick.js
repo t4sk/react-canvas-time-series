@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {GraphCanvas} from 'react-canvas-time-series'
-import { generateRandomCandlestickData } from '../util'
+import { getRandomCandlestickData } from '../util'
 
 const X_MIN = 0
 const X_MAX = 1000
@@ -27,9 +27,9 @@ const FIXED_DATA = [{
   timestamp: X_MAX
 }]
 
-const RANDOM_DATA_SMALL = generateRandomCandlestickData(10, X_MIN, X_MAX, Y_MIN, Y_MAX)
-const RANDOM_DATA_MEDIUM = generateRandomCandlestickData(100, X_MIN, X_MAX, Y_MIN, Y_MAX)
-const RANDOM_DATA_LARGE = generateRandomCandlestickData(1000, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_SMALL = getRandomCandlestickData(10, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_MEDIUM = getRandomCandlestickData(100, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const RANDOM_DATA_LARGE = getRandomCandlestickData(1000, X_MIN, X_MAX, Y_MIN, Y_MAX)
 
 class CandlestickTestRender extends Component {
   render () {
