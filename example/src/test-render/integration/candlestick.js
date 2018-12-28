@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactCanvasTimeSeries, {canvas, draggable, zoomable} from 'react-canvas-time-series'
-import { generateRandomCandlestickData } from '../../util'
+import { getRandomCandlestickData, fakeFetch, debounce } from '../../util'
 const { ui, math } = canvas
 
 const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
@@ -10,7 +10,7 @@ const X_MAX = 1000
 const Y_MIN = 0
 const Y_MAX = 100
 
-const DATA = generateRandomCandlestickData(20, X_MIN, X_MAX, Y_MIN, Y_MAX)
+const DATA = getRandomCandlestickData(20, X_MIN, X_MAX, Y_MIN, Y_MAX)
 
 class TestCandlestick extends Component {
   constructor(props) {
@@ -42,6 +42,25 @@ class TestCandlestick extends Component {
       xMax: 1000,
       xTickInterval: 100,
     }
+  }
+
+  async fetchData(args) {
+    const {
+      xMin,
+      xMax
+    } = args
+
+    const data = await fakeFetch(
+      [
+        getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
+        getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
+      ],
+      1000
+    )
+
+    this.setState(state => ({
+      data,
+    }))
   }
 
   onMouseMove = (e) => {

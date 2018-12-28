@@ -48,7 +48,7 @@ export function getRandomData(length, xMin, xMax, yMin, yMax) {
   return data
 }
 
-export function generateRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
+export function getRandomCandlestickData (length, xMin, xMax, yMin, yMax) {
   let data = []
 
   const xStep = (xMax - xMin) / length
