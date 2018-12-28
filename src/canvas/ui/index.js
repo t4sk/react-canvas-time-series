@@ -47,7 +47,7 @@ export function draw (ctx: any, props: Props) {
   const {
     graph,
     ui,
-    mouse,
+    cursor,
     xMax,
     xMin,
     yMax,
@@ -56,17 +56,13 @@ export function draw (ctx: any, props: Props) {
 
   ctx.clearRect(0, 0, props.width, props.height)
 
-  if (!isInsideRect(mouse, graph)) {
-    return
-  }
-
   // TODO pass from props
   const x = toX({
     width: graph.width,
     left: graph.left,
     xMax,
     xMin,
-  })(mouse.x)
+  })(cursor.x)
 
   // TODO pass from props
   const y = toY({
@@ -74,16 +70,20 @@ export function draw (ctx: any, props: Props) {
     top: graph.top,
     yMin,
     yMax,
-  })(mouse.y)
+  })(cursor.y)
 
   label.draw(ctx, {
     graph,
     label: {
+      showXLine: cursor.x >= 0,
+      showXLabel: cursor.x >= 0,
+      showYLine: cursor.y >= 0,
+      showYLabel: cursor.y >= 0,
       ...ui,
       xLabelText: ui.renderXLabel(x),
       yLabelText: ui.renderYLabel(y),
-      canvasX: mouse.x,
-      canvasY: mouse.y,
+      canvasX: cursor.x,
+      canvasY: cursor.y,
     },
   })
 }
