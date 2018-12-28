@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import {GraphCanvas, canvas} from 'react-canvas-time-series'
+import ReactCanvasTimeSeries, {canvas, draggable, zoomable} from 'react-canvas-time-series'
 import { generateRandomCandlestickData } from '../../util'
 const { ui, math } = canvas
+
+const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
 
 const X_MIN = 0
 const X_MAX = 1000
@@ -33,6 +35,12 @@ class TestCandlestick extends Component {
         x: undefined,
         y: undefined,
       }
+    }
+
+    this.state = {
+      xMin: 0,
+      xMax: 1000,
+      xTickInterval: 100,
     }
   }
 
@@ -73,12 +81,6 @@ class TestCandlestick extends Component {
     }
   }
 
-  onMouseDown = (e) => {
-  }
-
-  onMouseUp = (e) => {
-  }
-
   onMouseOut = (e) => {
     this.mouse.x = undefined
     this.mouse.y = undefined
@@ -90,7 +92,36 @@ class TestCandlestick extends Component {
     this.volume.cursor.y = undefined
   }
 
-  onWheel = (e) => {
+  onMouseMoveGraph = (e, mouse, graph, xRange) => {
+    if (xRange) {
+      const {
+        xMin,
+        xMax
+      } = xRange
+
+      this.setState(state => ({
+        xMin,
+        xMax
+      }))
+    }
+  }
+
+  onWheelGraph = (e, mouse, graph, xRange) => {
+    if (xRange) {
+      e.preventDefault()
+
+      const {
+        xMin,
+        xMax,
+        xTickInterval,
+      } = xRange
+
+      this.setState(state => ({
+        xMin,
+        xMax,
+        xTickInterval
+      }))
+    }
   }
 
   render () {
@@ -102,10 +133,7 @@ class TestCandlestick extends Component {
           height: 450
         }}
         onMouseMove={this.onMouseMove}
-        onMouseDown={this.onMouseDown}
-        onMouseUp={this.onMouseUp}
         onMouseOut={this.onMouseOut}
-        onWheel={this.onWheel}
       >
         <GraphCanvas
           {...this.props}
@@ -115,14 +143,15 @@ class TestCandlestick extends Component {
             showXTick: false,
             xAxisHeight: 0,
             yTickInterval: 10,
-            xTickInterval: 100,
+            xTickInterval: this.state.xTickInterval,
           }}
           ui={{
+            ...this.props.ui,
             yLabelAt: 'right',
             showXLabel: false,
           }}
-          xMin={X_MIN}
-          xMax={X_MAX}
+          xMin={this.state.xMin}
+          xMax={this.state.xMax}
           yMin={Y_MIN}
           yMax={Y_MAX}
           graphs={[{
@@ -131,6 +160,9 @@ class TestCandlestick extends Component {
           }]}
           cursor={this.candlestick.cursor}
           shouldDrawUI={() => this.candlestick.cursor.x || this.candlestick.cursor.y}
+          onMouseMove={this.onMouseMoveGraph}
+          onWheel={this.onWheelGraph}
+          numXTicks={10}
         />
 
         <GraphCanvas
@@ -140,13 +172,14 @@ class TestCandlestick extends Component {
             ...this.props.background,
             yAxisAt: 'right',
             yTickInterval: 25,
-            xTickInterval: 100,
+            xTickInterval: this.state.xTickInterval,
           }}
           ui={{
+            ...this.props.ui,
             yLabelAt: 'right',
           }}
-          xMin={X_MIN}
-          xMax={X_MAX}
+          xMin={this.state.xMin}
+          xMax={this.state.xMax}
           yMin={Y_MIN}
           yMax={Y_MAX}
           graphs={[{
@@ -158,6 +191,9 @@ class TestCandlestick extends Component {
           }]}
           cursor={this.volume.cursor}
           shouldDrawUI={() => this.volume.cursor.x || this.volume.cursor.y}
+          onMouseMove={this.onMouseMoveGraph}
+          onWheel={this.onWheelGraph}
+          numXTicks={10}
         />
       </div>
     )
