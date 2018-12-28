@@ -7,15 +7,11 @@ import CandlestickTestRender from './test-render/candlestick'
 import LabelTestRender from './test-render/label'
 import UITestRender from './test-render/ui'
 import IntegrationTestRender from './test-render/integration'
-// import LineUITestRender from './test-render/line-ui'
 
 export default class App extends Component {
   render () {
     return (
       <div>
-        {/*}
-        <LineUITestRender />
-        */}
         <IntegrationTestRender />
         <UITestRender />
         <LabelTestRender />
