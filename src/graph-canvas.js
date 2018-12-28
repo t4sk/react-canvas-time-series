@@ -137,11 +137,11 @@ const DEFAULT_PROPS = {
   xMax: 0,
 
   showUI: false,
-  onMouseMove: (e, mouse) => {},
-  onMouseDown: (e, mouse) => {},
-  onMouseUp: (e, mouse) => {},
-  onMouseOut: (e, mouse) => {},
-  onWheel: (e, mouse) => {},
+  onMouseMove: () => {},
+  onMouseDown: () => {},
+  onMouseUp: () => {},
+  onMouseOut: () => {},
+  onWheel: () => {},
 }
 
 class GraphCanvas extends Component {
