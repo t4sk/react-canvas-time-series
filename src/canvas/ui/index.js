@@ -52,11 +52,12 @@ export function draw (ctx: any, props: Props) {
     xMin,
     yMax,
     yMin,
+    shouldDraw,
   } = props
 
   ctx.clearRect(0, 0, props.width, props.height)
 
-  if (!isInsideRect(cursor, graph)) {
+  if (!shouldDraw(cursor, graph)) {
     return
   }
 

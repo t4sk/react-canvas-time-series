@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import {GraphCanvas} from 'react-canvas-time-series'
 import TestNearestData from './test-nearest-data'
+import Candlestick from './candlestick'
 
 class IntegrationTestRender extends Component {
   render () {
     return (
       <div>
+        <h3>Candlestick</h3>
+        <Candlestick {...this.props} />
+
         <h3>Nearest Data</h3>
         <TestNearestData {...this.props} />
       </div>

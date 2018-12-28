@@ -137,6 +137,7 @@ const DEFAULT_PROPS = {
   xMax: 0,
 
   showUI: false,
+  shouldDrawUI: ui.isInsideRect,
   onMouseMove: () => {},
   onMouseDown: () => {},
   onMouseUp: () => {},
@@ -276,6 +277,11 @@ class GraphCanvas extends Component {
     })).isRequired,
 
     showUI: PropTypes.bool,
+    shouldDrawUI: PropTypes.func,
+    cursor: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+    }),
     ui: PropTypes.shape({
       showXLine: PropTypes.bool,
       xLineColor: PropTypes.string.isRequired,
@@ -447,8 +453,8 @@ class GraphCanvas extends Component {
       graph,
       getCanvasX,
       getCanvasY,
-      // TODO prop type mouse
-      cursor: this.props.mouse || this.mouse,
+      cursor: this.props.cursor || this.mouse,
+      shouldDraw: this.props.shouldDrawUI,
     })
   }
 
