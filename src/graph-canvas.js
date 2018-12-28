@@ -331,9 +331,10 @@ class GraphCanvas extends Component {
     }
 
     if (this.props.showUI) {
-      this.animate()
+      this.drawGraphs()
+      this.drawUI()
     } else {
-      this.draw()
+      this.drawGraphs()
     }
   }
 
@@ -348,6 +349,10 @@ class GraphCanvas extends Component {
     //   nextProps.canvas.height !== this.props.canvas.height
     // )
     return true
+  }
+
+  componentDidUpdate() {
+    this.drawGraphs()
   }
 
   onMouseMove = (e) => {
@@ -378,7 +383,7 @@ class GraphCanvas extends Component {
     this.props.onWheel(e, this.mouse, this.props.graph)
   }
 
-  draw = () => {
+  drawGraphs = () => {
     const {
       graph,
       getCanvasX,
@@ -422,11 +427,8 @@ class GraphCanvas extends Component {
     }
   }
 
-  animate = () => {
-    this.animation = window.requestAnimationFrame(this.animate)
-
-    // TODO only draw if data or background changed
-    this.draw()
+  drawUI = () => {
+    this.animation = window.requestAnimationFrame(this.drawUI)
 
     const {
       graph,
