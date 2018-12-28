@@ -5,12 +5,8 @@ const { ui, math } = canvas
 
 const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
 
-const X_MIN = 0
-const X_MAX = 1000
 const Y_MIN = 0
 const Y_MAX = 100
-
-const DATA = getRandomCandlestickData(20, X_MIN, X_MAX, Y_MIN, Y_MAX)
 
 class TestCandlestick extends Component {
   constructor(props) {
@@ -38,10 +34,24 @@ class TestCandlestick extends Component {
     }
 
     this.state = {
+      data: [],
       xMin: 0,
       xMax: 1000,
       xTickInterval: 100,
     }
+
+    this.fetchData = debounce(this.fetchData, 1000)
+  }
+
+  componentDidMount() {
+    this.fetchData({
+      xMin: this.state.xMin,
+      xMax: this.state.xMax,
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
   }
 
   async fetchData(args) {
@@ -51,10 +61,7 @@ class TestCandlestick extends Component {
     } = args
 
     const data = await fakeFetch(
-      [
-        getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
-        getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
-      ],
+      getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
       1000
     )
 
@@ -175,7 +182,7 @@ class TestCandlestick extends Component {
           yMax={Y_MAX}
           graphs={[{
             type: 'candlestick',
-            data: DATA
+            data: this.state.data
           }]}
           cursor={this.candlestick.cursor}
           shouldDrawUI={() => this.candlestick.cursor.x || this.candlestick.cursor.y}
@@ -203,7 +210,7 @@ class TestCandlestick extends Component {
           yMax={Y_MAX}
           graphs={[{
             type: 'bar',
-            data: DATA.map(d => ({
+            data: this.state.data.map(d => ({
               x: d.timestamp,
               y: d.volume,
             }))
