@@ -12,11 +12,11 @@ import type {
   DrawXLabelAtProps,
 } from './types'
 
-export function isInsideRectHorizontal (mouse: Mouse, rect: Graph): boolean {
+export function isInsideRectHorizontal (cursor: Mouse, rect: Graph): boolean {
   if (
-    !mouse.x ||
-    mouse.x < rect.left ||
-    mouse.x > rect.left + rect.width
+    !cursor.x ||
+    cursor.x < rect.left ||
+    cursor.x > rect.left + rect.width
   ) {
     return false
   }
@@ -24,11 +24,11 @@ export function isInsideRectHorizontal (mouse: Mouse, rect: Graph): boolean {
   return true
 }
 
-export function isInsideRectVertical (mouse: Mouse, rect: Graph): boolean {
+export function isInsideRectVertical (cursor: Mouse, rect: Graph): boolean {
   if (
-    !mouse.y ||
-    mouse.y < rect.top ||
-    mouse.y > rect.top + rect.height
+    !cursor.y ||
+    cursor.y < rect.top ||
+    cursor.y > rect.top + rect.height
   ) {
     return false
   }
@@ -36,10 +36,10 @@ export function isInsideRectVertical (mouse: Mouse, rect: Graph): boolean {
   return true
 }
 
-export function isInsideRect (mouse: Mouse, rect: Graph): boolean {
+export function isInsideRect (cursor: Mouse, rect: Graph): boolean {
   return (
-    isInsideRectHorizontal(mouse, rect) &&
-    isInsideRectVertical(mouse, rect)
+    isInsideRectHorizontal(cursor, rect) &&
+    isInsideRectVertical(cursor, rect)
   )
 }
 
@@ -55,6 +55,10 @@ export function draw (ctx: any, props: Props) {
   } = props
 
   ctx.clearRect(0, 0, props.width, props.height)
+
+  if (!isInsideRect(cursor, graph)) {
+    return
+  }
 
   // TODO pass from props
   const x = toX({
