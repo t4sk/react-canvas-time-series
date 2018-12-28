@@ -331,12 +331,6 @@ class GraphCanvas extends Component {
     }
 
     if (this.props.showUI) {
-      this.ctx.ui.canvas.addEventListener('mousemove', this.onMouseMove)
-      this.ctx.ui.canvas.addEventListener('mousedown', this.onMouseDown)
-      this.ctx.ui.canvas.addEventListener('mouseup', this.onMouseUp)
-      this.ctx.ui.canvas.addEventListener('mouseout', this.onMouseOut)
-      this.ctx.ui.canvas.addEventListener('wheel', this.onWheel)
-
       this.animate()
     } else {
       this.draw()
@@ -344,13 +338,6 @@ class GraphCanvas extends Component {
   }
 
   componentWillUnmount() {
-    // TODO test unmount event listeners
-    this.ctx.ui.canvas.removeEventListener('mousemove', this.onMouseMove)
-    this.ctx.ui.canvas.removeEventListener('mousedown', this.onMouseDown)
-    this.ctx.ui.canvas.removeEventListener('mouseup', this.onMouseUp)
-    this.ctx.ui.canvas.removeEventListener('mouseout', this.onMouseOut)
-    this.ctx.ui.canvas.removeEventListener('wheel', this.onWheel)
-
     window.cancelAnimationFrame(this.animation)
   }
 
@@ -490,6 +477,11 @@ class GraphCanvas extends Component {
           style={styles.ui}
           width={this.props.width}
           height={this.props.height}
+          onMouseMove={this.onMouseMove}
+          onMouseDown={this.onMouseDown}
+          onMouseUp={this.onMouseUp}
+          onMouseOut={this.onMouseOut}
+          onWheel={this.onWheel}
         />
       </div>
     )
