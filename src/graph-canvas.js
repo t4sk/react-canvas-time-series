@@ -447,7 +447,8 @@ class GraphCanvas extends Component {
       graph,
       getCanvasX,
       getCanvasY,
-      mouse: this.mouse,
+      // TODO prop type mouse
+      cursor: this.props.mouse || this.mouse,
     })
   }
 
