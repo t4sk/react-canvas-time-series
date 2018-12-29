@@ -5,8 +5,15 @@ const { ui, math } = canvas
 
 const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
 
+const X_STEP = 100
 const Y_MIN = 0
 const Y_MAX = 100
+
+const CACHE = {
+  xMin: undefined,
+  xMax: undefined,
+  data: {}
+}
 
 class TestCandlestick extends Component {
   constructor(props) {
@@ -35,12 +42,13 @@ class TestCandlestick extends Component {
 
     this.state = {
       data: [],
-      xMin: 0,
-      xMax: 1000,
+      xMin: 10000,
+      xMax: 11000,
       xTickInterval: 100,
+      width: Math.floor(430 / 1000 * X_STEP) - 2
     }
 
-    this.fetchData = debounce(this.fetchData, 1000)
+    this.fetchData = debounce(this.fetchData, 500)
   }
 
   componentDidMount() {
@@ -51,7 +59,28 @@ class TestCandlestick extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.xMin != prevState.xMin || prevState.xMax != this.state.xMax) {
+      if (CACHE.xMin < this.state.xMin || CACHE.xMax > this.state.xMax) {
+        // const data = Object.values(CACHE.data).filter(
+        //   d => d.timestamp >= this.state.xMin && d.timestamp <= this.state.xMax
+        // )
 
+        const data = Object.values(CACHE.data)
+
+        data.sort((a, b) => a.timestamp - b.timestamp)
+
+        this.setState({
+          data,
+        })
+
+        return
+      }
+
+      this.fetchData({
+        xMin: this.state.xMin,
+        xMax: this.state.xMax,
+      })
+    }
   }
 
   async fetchData(args) {
@@ -60,10 +89,29 @@ class TestCandlestick extends Component {
       xMax
     } = args
 
-    const data = await fakeFetch(
-      getRandomCandlestickData(10, xMin, xMax, Y_MIN, Y_MAX),
-      1000
+    const res = await fakeFetch(
+      getRandomCandlestickData(100,
+        Math.floor(xMin / 100) * 100,
+        Math.ceil(xMax / 100) * 100,
+        Y_MIN,
+        Y_MAX
+      ),
+      500
     )
+
+    CACHE.xMin = Math.min(CACHE.xMin, xMin)
+    CACHE.xMax = Math.min(CACHE.xMax, xMax)
+
+    for (let d of res) {
+      if (!CACHE.data[d.timestamp]) {
+        CACHE.data[d.timestamp] = d
+      }
+    }
+
+    // const data = Object.values(CACHE.data).filter(d => d.timestamp >= xMin && d.timestamp <= xMax)
+    const data = Object.values(CACHE.data)
+
+    data.sort((a, b) => a.timestamp - b.timestamp)
 
     this.setState(state => ({
       data,
@@ -163,10 +211,16 @@ class TestCandlestick extends Component {
         xTickInterval,
       } = xRange
 
+      const width = Math.max(
+        1,
+        Math.floor(430 / (xMax - xMin) * X_STEP) - 2
+      )
+
       this.setState(state => ({
         xMin,
         xMax,
-        xTickInterval
+        xTickInterval,
+        width,
       }))
     }
   }
@@ -203,7 +257,8 @@ class TestCandlestick extends Component {
           yMax={Y_MAX}
           graphs={[{
             type: 'candlestick',
-            data: this.state.data
+            data: this.state.data,
+            width: this.state.width,
           }]}
           cursor={this.candlestick.cursor}
           shouldDrawUI={() => this.candlestick.cursor.x || this.candlestick.cursor.y}
@@ -234,7 +289,8 @@ class TestCandlestick extends Component {
             data: this.state.data.map(d => ({
               x: d.timestamp,
               y: d.volume,
-            }))
+            })),
+            width: this.state.width,
           }]}
           cursor={this.volume.cursor}
           shouldDrawUI={() => this.volume.cursor.x || this.volume.cursor.y}

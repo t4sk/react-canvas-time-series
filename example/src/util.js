@@ -55,7 +55,7 @@ export function getRandomCandlestickData (xStep, xMin, xMax, yMin, yMax) {
 
   let high = rand(yMin, yMax)
   let low = rand(yMin, high)
-  
+
   for (let i = 0; i < length; i++) {
     if (Math.random() > 0.5) {
       high += rand(0, (yMax - yMin) * 0.1)
