@@ -69,10 +69,6 @@ export function draw (ctx: any, props: Props) {
   label.draw(ctx, {
     graph,
     label: {
-      showXLine: cursor.x >= 0,
-      showXLabel: cursor.x >= 0,
-      showYLine: cursor.y >= 0,
-      showYLabel: cursor.y >= 0,
       ...ui,
       xLabelText: ui.renderXLabel(x),
       yLabelText: ui.renderYLabel(y),
