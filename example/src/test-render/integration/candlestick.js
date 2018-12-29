@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactCanvasTimeSeries, {canvas, draggable, zoomable} from 'react-canvas-time-series'
 import { getRandomCandlestickData, fakeFetch, debounce } from '../../util'
-const { ui, math } = canvas
+const { math } = canvas
 
 const GraphCanvas = draggable(zoomable(ReactCanvasTimeSeries.GraphCanvas))
 

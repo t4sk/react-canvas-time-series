@@ -20,11 +20,6 @@ export default ReactCanvasTimeSeries
 
 // TODO flow
 
-// TODO fix flickering canvas border
-
-// TODO drag example with data
-// TODO zoom example with data
-
 // TODO optimizations mentioned in mozilla website
 
 // TODO compute barWidth from xStep

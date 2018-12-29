@@ -12,7 +12,7 @@ import type {
   DrawXLabelAtProps,
 } from './types'
 
-export function isInsideRectHorizontal (cursor: Mouse, rect: Graph): boolean {
+export function isInsideRect (cursor: Mouse, rect: Graph): boolean {
   if (
     !cursor.x ||
     cursor.x < rect.left ||
@@ -21,10 +21,6 @@ export function isInsideRectHorizontal (cursor: Mouse, rect: Graph): boolean {
     return false
   }
 
-  return true
-}
-
-export function isInsideRectVertical (cursor: Mouse, rect: Graph): boolean {
   if (
     !cursor.y ||
     cursor.y < rect.top ||
@@ -34,13 +30,6 @@ export function isInsideRectVertical (cursor: Mouse, rect: Graph): boolean {
   }
 
   return true
-}
-
-export function isInsideRect (cursor: Mouse, rect: Graph): boolean {
-  return (
-    isInsideRectHorizontal(cursor, rect) &&
-    isInsideRectVertical(cursor, rect)
-  )
 }
 
 export function draw (ctx: any, props: Props) {
