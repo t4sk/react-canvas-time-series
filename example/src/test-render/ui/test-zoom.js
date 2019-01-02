@@ -3,6 +3,8 @@ import ReactCanvasTimeSeries, {zoomable} from 'react-canvas-time-series'
 
 const GraphCanvas = zoomable(ReactCanvasTimeSeries.GraphCanvas)
 
+// TODO why zoomable.numXTicks ?
+
 class TestZoom extends Component {
   constructor (props) {
     super(props)
