@@ -15,6 +15,9 @@ const CACHE = {
   data: {}
 }
 
+// TODO replace should draw ui with something else
+// TODO mouse component
+
 class TestCandlestick extends Component {
   constructor(props) {
     super(props)
