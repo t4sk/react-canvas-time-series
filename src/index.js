@@ -27,3 +27,6 @@ export default ReactCanvasTimeSeries
 // TODO render ui labels near canvas borders
 // TODO sometimes x tick on the edges is not drawn
 // TODO option to show / hide xMin, xMax, yMin, yMax
+
+// TODO ui label padding
+// TODO web worker
