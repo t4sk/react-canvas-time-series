@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Axes from './test-render/axes'
 import BackgroundTestRender from './test-render/background'
 import LineTestRender from './test-render/line'
 import PointTestRender from './test-render/point'
@@ -11,7 +12,9 @@ import IntegrationTestRender from './test-render/integration'
 export default class App extends Component {
   render () {
     return (
-      <div>
+      <div style={{margin: 20}}>
+        <Axes />
+        {/*
         <IntegrationTestRender />
         <UITestRender />
         <LabelTestRender />
@@ -20,6 +23,7 @@ export default class App extends Component {
         <PointTestRender />
         <LineTestRender />
         <BackgroundTestRender />
+        */}
       </div>
     )
   }
