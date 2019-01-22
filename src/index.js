@@ -1,20 +1,20 @@
 // TODO unexport canvas but export helpers like ui and math
 import canvas from './canvas'
 import GraphCanvas from './graph-canvas'
-import Layers from './layers'
+import Graphs from './graphs'
 import draggable from './draggable'
 import zoomable from './zoomable'
 
 export { default as canvas } from './canvas'
 export { default as GraphCanvas } from './graph-canvas'
-export { default as Layers } from './layers'
+export { default as Graphs } from './graphs'
 export { default as draggable } from './draggable'
 export { default as zoomable } from './zoomable'
 
 const ReactCanvasTimeSeries = {
   canvas,
   GraphCanvas,
-  Layers,
+  Graphs,
   draggable,
   zoomable,
 }

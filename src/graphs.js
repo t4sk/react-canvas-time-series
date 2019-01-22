@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-class Layers extends Component {
+class Graphs extends Component {
   render() {
     return (
       <div>layer</div>
@@ -9,4 +9,4 @@ class Layers extends Component {
   }
 }
 
-export default Layers
+export default Graphs

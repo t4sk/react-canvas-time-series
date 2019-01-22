@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import {Layers} from 'react-canvas-time-series'
+import {Graphs} from 'react-canvas-time-series'
 
 function Axes() {
   return (
     <div>
-      <Layers />
+      <Graphs />
       axes
     </div>
   )
