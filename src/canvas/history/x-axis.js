@@ -4,10 +4,11 @@ import { getCanvasX } from './math'
 const TICK_TEXT_TOP_PADDING = 10
 
 const propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  graph: PropTypes.shape({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }).isRequired,
 
-  xAxisHeight: PropTypes.number.isRequired,
   xAxisColor: PropTypes.string.isRequired,
 
   xMin: PropTypes.number.isRequired,
@@ -22,9 +23,7 @@ const propTypes = {
 
 export function draw(ctx, props) {
   const {
-    width,
-    height,
-    xAxisHeight,
+    graph,
     xAxisColor,
     xMin,
     xMax,
@@ -35,17 +34,15 @@ export function draw(ctx, props) {
     textColor,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'drawAxes')
+  PropTypes.checkPropTypes(propTypes, props, 'prop', 'x-axis')
 
   // style x axis
   ctx.lineWidth = 1
   ctx.strokeStyle = xAxisColor
 
-  const graphHeight = height - xAxisHeight
-
   ctx.beginPath()
-  ctx.moveTo(0, graphHeight)
-  ctx.lineTo(width, graphHeight)
+  ctx.moveTo(0, graph.height)
+  ctx.lineTo(graph.width, graph.height)
   ctx.stroke()
 
   // style ticks
@@ -55,17 +52,17 @@ export function draw(ctx, props) {
   ctx.textBaseline = 'middle'
 
   for (let tick of ticks) {
-    const canvasX = getCanvasX(width, xMax, xMin, tick)
+    const canvasX = getCanvasX(graph.width, xMax, xMin, tick)
 
     ctx.beginPath()
-    ctx.moveTo(canvasX, graphHeight)
-    ctx.lineTo(canvasX, graphHeight + tickHeight)
+    ctx.moveTo(canvasX, graph.height)
+    ctx.lineTo(canvasX, graph.height + tickHeight)
     ctx.stroke()
 
     ctx.fillText(
       renderTick(tick),
       canvasX,
-      graphHeight + tickHeight + TICK_TEXT_TOP_PADDING
+      graph.height + tickHeight + TICK_TEXT_TOP_PADDING
     )
   }
 }
