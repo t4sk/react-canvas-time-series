@@ -1,8 +1,8 @@
 // @flow
 import {
   linear,
-  toCanvasX,
-  toCanvasY,
+  getCanvasX,
+  getCanvasY,
   toX,
   toY,
   nearestStepBelow,
@@ -21,31 +21,40 @@ test("linear", () => {
   expect(toY(125)).toEqual(60)
 })
 
-test("to canvas x", () => {
-  const getCanvasX = toCanvasX({
-    width: 100,
-    left: 10,
-    xMin: 0,
-    xMax: 10
-  })
+test("get canvas x", () => {
+  const width = 100
+  const left = 10
+  const xMin = 0
+  const xMax = 10
 
-  expect(getCanvasX(0)).toEqual(10)
-  expect(getCanvasX(5)).toEqual(60)
-  expect(getCanvasX(10)).toEqual(110)
+  expect(getCanvasX(width, left, xMax, xMin, 0)).toEqual(10)
+  expect(getCanvasX(width, left, xMax, xMin, 5)).toEqual(60)
+  expect(getCanvasX(width, left, xMax, xMin, 10)).toEqual(110)
 })
 
-test("to canvas y", () => {
-  const getCanvasY = toCanvasY({
-    height: 100,
-    top: 10,
-    yMin: 0,
-    yMax: 10
-  })
+test("get canvas y", () => {
+  const height = 100
+  const top = 10
+  const yMin = 0
+  const yMax = 10
 
-  expect(getCanvasY(0)).toEqual(110)
-  expect(getCanvasY(5)).toEqual(60)
-  expect(getCanvasY(10)).toEqual(10)
+  expect(getCanvasY(height, top, yMax, yMin, 0)).toEqual(110)
+  expect(getCanvasY(height, top, yMax, yMin, 5)).toEqual(60)
+  expect(getCanvasY(height, top, yMax, yMin, 10)).toEqual(10)
 })
+
+// test("get canvas y", () => {
+//   const getCanvasY = toCanvasY({
+//     height: 100,
+//     top: 10,
+//     yMin: 0,
+//     yMax: 10
+//   })
+//
+//   expect(getCanvasY(0)).toEqual(110)
+//   expect(getCanvasY(5)).toEqual(60)
+//   expect(getCanvasY(10)).toEqual(10)
+// })
 
 test("to x", () => {
   const getX = toX({
