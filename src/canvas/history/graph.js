@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import {
   getCanvasX,
   getCanvasY
-} from './math'
+} from '../math'
 
 const propTypes = {
   graph: PropTypes.shape({

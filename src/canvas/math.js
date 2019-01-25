@@ -85,3 +85,17 @@ export function toY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
     y0: yMax - (yMin - yMax) / height * top
   })
 }
+
+export function getCanvasX(width, xMax, xMin, x) {
+  const dx = xMax - xMin
+  const y0 = - width * xMin / dx
+
+  return width / dx * x  + y0
+}
+
+export function getCanvasY(height, yMax, yMin, y) {
+  const dy = yMax - yMin
+  const y0 = height * yMax / dy
+
+  return - height / dy * y  + y0
+}

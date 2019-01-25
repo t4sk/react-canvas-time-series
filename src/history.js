@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import * as history from './canvas/history'
 import { draw as drawXAxis } from './canvas/history/x-axis'
 import { draw as drawGraph } from './canvas/history/graph'
 import { draw as drawWindow } from './canvas/history/window'

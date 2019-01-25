@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { getCanvasX } from './math'
+import { getCanvasX } from '../math'
 
 const TICK_TEXT_TOP_PADDING = 10
 
