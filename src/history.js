@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import * as history from './canvas/history'
 import { draw as drawXAxis } from './canvas/history/x-axis'
 import { draw as drawGraph } from './canvas/history/graph'
+import { draw as drawWindow } from './canvas/history/window'
 
 class History extends Component {
   constructor (props) {
@@ -50,7 +51,11 @@ class History extends Component {
       yMin,
       yMax,
     })
-    history.drawWindow(this.ctx.window)
+
+    drawWindow(this.ctx.window, {
+      ...this.props,
+      graph,
+    })
   }
 
   render() {
@@ -81,7 +86,7 @@ class History extends Component {
 const styles = {
   container: {
     position: 'relative',
-    cursor: 'crosshair',
+    cursor: 'move',
   },
   canvas: {
     position: 'absolute',
@@ -101,11 +106,19 @@ History.defaultProps = {
   renderTick: x => x,
   font: '12px Arial',
   textColor: "",
+
   // graph
   data: [],
   lineColor: "",
   lineWidth: 1,
   step: 1,
+
+  // window
+  windowColor: "rgba(100, 100, 100, 0.5)",
+  window: {
+    left: 0,
+    right: 0,
+  },
 }
 
 History.propTypes = {
@@ -128,6 +141,13 @@ History.propTypes = {
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
+
+  // window
+  windowColor: PropTypes.string.isRequired,
+  window: PropTypes.shape({
+    left: PropTypes.number.isRequired,
+    right: PropTypes.number.isRequired,
+  }).isRequired,
 }
 
 export default History

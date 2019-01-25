@@ -40,6 +40,12 @@ class TestRenderHistory extends Component {
         lineColor="orange"
         lineWidth={1}
         step={1}
+
+        windowColor="rgba(0, 0, 255, 0.3)"
+        window={{
+          left: 200,
+          right: 400,
+        }}
       />
     )
   }
