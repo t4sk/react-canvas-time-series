@@ -52,7 +52,7 @@ export function draw(ctx, props) {
   ctx.textBaseline = 'middle'
 
   for (let tick of ticks) {
-    const canvasX = getCanvasX(graph.width, xMax, xMin, tick)
+    const canvasX = getCanvasX(graph.width, 0, xMax, xMin, tick)
 
     ctx.beginPath()
     ctx.moveTo(canvasX, graph.height)

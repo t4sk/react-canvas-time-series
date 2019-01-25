@@ -44,8 +44,8 @@ export function draw(ctx, props) {
   for (let i = 0; i < data.length; i += step) {
     const { x, y } = data[i]
 
-    const canvasX = getCanvasX(graph.width, xMax, xMin, x)
-    const canvasY = getCanvasY(graph.height, yMax, yMin, y)
+    const canvasX = getCanvasX(graph.width, 0, xMax, xMin, x)
+    const canvasY = getCanvasY(graph.height, 0, yMax, yMin, y)
 
     ctx.lineTo(canvasX, canvasY)
   }
