@@ -86,6 +86,19 @@ export function toY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
   })
 }
 
+export function isInsideRect(rect, { x, y }) {
+  if (!x || x < rect.left || x > rect.left + rect.width) {
+    return false
+  }
+
+  if (!y || y < rect.top || y > rect.top + rect.height) {
+    return false
+  }
+
+  return true
+}
+
+// TODO rename linear
 function _linear(dy, dx, x, y0) {
   return dy / dx * x + y0
 }

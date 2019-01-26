@@ -9,7 +9,29 @@ import {
   toY,
   nearestStepBelow,
   findNearestIndex,
+  isInsideRect,
 } from './math'
+
+test('isInsideRect', () => {
+  const rect = {
+    top: 10,
+    left: 20,
+    width: 100,
+    height: 200
+  }
+
+  expect(isInsideRect(rect, {x: 20, y: 10})).toBe(true)
+  expect(isInsideRect(rect, {x: 120, y: 10})).toBe(true)
+  expect(isInsideRect(rect, {x: 20, y: 210})).toBe(true)
+  expect(isInsideRect(rect, {x: 120, y: 210})).toBe(true)
+  expect(isInsideRect(rect, {x: 70, y: 110})).toBe(true)
+
+  expect(isInsideRect(rect, {})).toBe(false)
+  expect(isInsideRect(rect, {x: 19, y: 10})).toBe(false)
+  expect(isInsideRect(rect, {x: 121, y: 10})).toBe(false)
+  expect(isInsideRect(rect, {x: 20, y: 9})).toBe(false)
+  expect(isInsideRect(rect, {x: 120, y: 211})).toBe(false)
+})
 
 test("linear", () => {
   const toY = linear({
