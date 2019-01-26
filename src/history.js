@@ -10,6 +10,9 @@ class History extends Component {
 
     this.window = React.createRef()
     this.graph = React.createRef()
+
+    // ref to animation frame
+    this.animation = undefined
   }
 
   componentDidMount() {
@@ -19,6 +22,11 @@ class History extends Component {
     }
 
     this.draw()
+    this.animate()
+  }
+
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.animation)
   }
 
   draw = () => {
@@ -50,6 +58,17 @@ class History extends Component {
       yMin,
       yMax,
     })
+  }
+
+  animate = () => {
+    this.animation = window.requestAnimationFrame(this.animate)
+
+    this.ctx.window.clearRect(0, 0, this.props.width, this.props.height)
+
+    const graph = {
+      width: this.props.width,
+      height: this.props.height - this.props.xAxisHeight
+    }
 
     drawWindow(this.ctx.window, {
       ...this.props,

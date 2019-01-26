@@ -24,7 +24,31 @@ const DATA = getRandomData(3650, X_MIN, X_MAX, Y_MIN, Y_MAX)
 //   }
 // })
 
+const WINDOW_SIZE = 200
+
 class TestRenderHistory extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      window: {
+        left: 0,
+        right: WINDOW_SIZE
+      }
+    }
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState(state => ({
+        window: {
+          left: state.window.left + 10,
+          right: state.window.left + 10 + WINDOW_SIZE,
+        }
+      }))
+    }, 1000)
+  }
+
   render() {
     return (
       <History
@@ -42,10 +66,7 @@ class TestRenderHistory extends Component {
         step={1}
 
         windowColor="rgba(0, 0, 255, 0.3)"
-        window={{
-          left: 200,
-          right: 400,
-        }}
+        window={this.state.window}
       />
     )
   }
