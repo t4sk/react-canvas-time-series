@@ -24,6 +24,9 @@ const DATA = getRandomData(3650, X_MIN, X_MAX, Y_MIN, Y_MAX)
 //   }
 // })
 
+const WIDTH = 900
+const HEIGHT = 150
+const X_AXIS_HEIGHT = 30
 const WINDOW_SIZE = 200
 
 class TestRenderHistory extends Component {
@@ -46,8 +49,7 @@ class TestRenderHistory extends Component {
       top: 0,
       left: this.state.window.left,
       width: WINDOW_SIZE,
-      // canvas height - xAxisHeight
-      height: 170,
+      height: HEIGHT - X_AXIS_HEIGHT,
     }
   }
 
@@ -69,7 +71,7 @@ class TestRenderHistory extends Component {
       return {
         window: {
           ...state.window,
-          left: Math.max(0, Math.min(left, 800 - WINDOW_SIZE))
+          left: Math.max(0, Math.min(left, WIDTH - WINDOW_SIZE))
         }
       }
     })
@@ -108,6 +110,10 @@ class TestRenderHistory extends Component {
   render() {
     return (
       <History
+        width={WIDTH}
+        height={HEIGHT}
+        xAxisHeight={X_AXIS_HEIGHT}
+
         backgroundColor="beige"
         xAxisColor="green"
         ticks={YEARS}
