@@ -7,7 +7,7 @@ const propTypes = {
   }).isRequired,
   window: PropTypes.shape({
     left: PropTypes.number.isRequired,
-    right: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }).isRequired,
   windowColor: PropTypes.string.isRequired,
 }
@@ -25,7 +25,7 @@ export function draw(ctx, props) {
   ctx.fillRect(
     window.left,
     0,
-    window.right - window.left,
+    window.width,
     graph.height,
   )
 }

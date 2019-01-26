@@ -77,6 +77,31 @@ class History extends Component {
     })
   }
 
+  getMouse = e => {
+    const rect = this.ctx.ui.canvas.getBoundingClientRect()
+
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    }
+  }
+
+  onMouseMove = e => {
+    this.props.onMouseMove(e, this.getMouse(e))
+  }
+
+  onMouseDown = e => {
+    this.props.onMouseDown(e, this.getMouse(e))
+  }
+
+  onMouseUp = e => {
+    this.props.onMouseUp(e, this.getMouse(e))
+  }
+
+  onMouseOut = e => {
+    this.props.onMouseOut(e)
+  }
+
   render() {
     return (
       <div style={{
@@ -96,6 +121,10 @@ class History extends Component {
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
+          onMouseMove={this.onMouseMove}
+          onMouseDown={this.onMouseDown}
+          onMouseUp={this.onMouseUp}
+          onMouseOut={this.onMouseOut}
         />
       </div>
     )
@@ -136,8 +165,13 @@ History.defaultProps = {
   windowColor: "rgba(100, 100, 100, 0.5)",
   window: {
     left: 0,
-    right: 0,
+    width: 0,
   },
+
+  onMouseMove: () => {},
+  onMouseDown: () => {},
+  onMouseUp: () => {},
+  onMouseOut: () => {},
 }
 
 History.propTypes = {
@@ -165,8 +199,13 @@ History.propTypes = {
   windowColor: PropTypes.string.isRequired,
   window: PropTypes.shape({
     left: PropTypes.number.isRequired,
-    right: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
   }).isRequired,
+
+  onMouseMove: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onMouseOut: PropTypes.func,
 }
 
 export default History

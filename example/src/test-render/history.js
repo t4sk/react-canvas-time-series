@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { History } from 'react-canvas-time-series'
+import { History, canvas } from 'react-canvas-time-series'
 import moment from 'moment'
 import { getRandomData } from '../util'
 
@@ -31,22 +31,78 @@ class TestRenderHistory extends Component {
     super(props)
 
     this.state = {
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartWindowLeft: undefined,
       window: {
         left: 0,
-        right: WINDOW_SIZE
+        width: WINDOW_SIZE
       }
     }
   }
 
-  componentDidMount() {
-    setInterval(() => {
-      this.setState(state => ({
+  getWindow = () => {
+    return {
+      top: 0,
+      left: this.state.window.left,
+      width: WINDOW_SIZE,
+      // canvas height - xAxisHeight
+      height: 170,
+    }
+  }
+
+  onMouseMove = (e, { x, y }) => {
+    if (!this.state.dragging) {
+      return
+    }
+
+    const rect = this.getWindow()
+
+    if (!canvas.math.isInsideRect(rect, { x, y })) {
+      return
+    }
+
+    this.setState(state => {
+      const diff = x - state.dragStartCanvasX
+      const left = state.dragStartWindowLeft + diff
+
+      return {
         window: {
-          left: state.window.left + 10,
-          right: state.window.left + 10 + WINDOW_SIZE,
+          ...state.window,
+          left: Math.max(0, Math.min(left, 800 - WINDOW_SIZE))
         }
-      }))
-    }, 1000)
+      }
+    })
+  }
+
+  onMouseUp = (e, { x, y }) => {
+    this.setState(state => ({
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartWindowLeft: undefined,
+    }))
+  }
+
+  onMouseDown = (e, { x, y }) => {
+    const rect = this.getWindow()
+
+    if (!canvas.math.isInsideRect(rect, { x, y })) {
+      return
+    }
+
+    this.setState(state => ({
+      dragging: true,
+      dragStartCanvasX: x,
+      dragStartWindowLeft: state.window.left,
+    }))
+  }
+
+  onMouseOut = e => {
+    this.setState(state => ({
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartWindowLeft: undefined,
+    }))
   }
 
   render() {
@@ -67,6 +123,11 @@ class TestRenderHistory extends Component {
 
         windowColor="rgba(0, 0, 255, 0.3)"
         window={this.state.window}
+
+        onMouseMove={this.onMouseMove}
+        onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp}
+        onMouseOut={this.onMouseOut}
       />
     )
   }
