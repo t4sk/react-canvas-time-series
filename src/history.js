@@ -29,6 +29,13 @@ class History extends Component {
     window.cancelAnimationFrame(this.animation)
   }
 
+  getGraph = () => {
+    return {
+      width: this.props.width,
+      height: this.props.height - this.props.xAxisHeight
+    }
+  }
+
   draw = () => {
     const { data } = this.props
     const xMin = data[0].x
@@ -38,10 +45,7 @@ class History extends Component {
     const yMin = Math.min(...ys)
     const yMax = Math.max(...ys)
 
-    const graph = {
-      width: this.props.width,
-      height: this.props.height - this.props.xAxisHeight
-    }
+    const graph = this.getGraph()
 
     drawXAxis(this.ctx.graph, {
       ...this.props,
@@ -65,10 +69,7 @@ class History extends Component {
 
     this.ctx.window.clearRect(0, 0, this.props.width, this.props.height)
 
-    const graph = {
-      width: this.props.width,
-      height: this.props.height - this.props.xAxisHeight
-    }
+    const graph = this.getGraph()
 
     drawWindow(this.ctx.window, {
       ...this.props,
