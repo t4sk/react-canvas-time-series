@@ -8,7 +8,7 @@ class History extends Component {
   constructor (props) {
     super(props)
 
-    this.window = React.createRef()
+    this.ui = React.createRef()
     this.graph = React.createRef()
 
     // ref to animation frame
@@ -17,7 +17,7 @@ class History extends Component {
 
   componentDidMount() {
     this.ctx = {
-      window: this.window.current.getContext('2d'),
+      ui: this.ui.current.getContext('2d'),
       graph: this.graph.current.getContext('2d')
     }
 
@@ -67,11 +67,11 @@ class History extends Component {
   animate = () => {
     this.animation = window.requestAnimationFrame(this.animate)
 
-    this.ctx.window.clearRect(0, 0, this.props.width, this.props.height)
+    this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
 
     const graph = this.getGraph()
 
-    drawWindow(this.ctx.window, {
+    drawWindow(this.ctx.ui, {
       ...this.props,
       graph,
     })
@@ -92,7 +92,7 @@ class History extends Component {
           height={this.props.height}
         />
         <canvas
-          ref={this.window}
+          ref={this.ui}
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
