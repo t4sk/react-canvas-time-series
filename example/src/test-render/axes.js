@@ -5,6 +5,9 @@ class Axes extends Component {
   render() {
     return (
       <Graphs
+        width={900}
+        height={500}
+        backgroundColor="beige"
       />
     )
   }
