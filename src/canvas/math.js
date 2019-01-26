@@ -86,16 +86,30 @@ export function toY({ height = 0, top = 0, yMin = 0, yMax = 0 }) {
   })
 }
 
+function _linear(dy, dx, x, y0) {
+  return dy / dx * x + y0
+}
+
 export function getCanvasX(width, left, xMax, xMin, x) {
   const dx = xMax - xMin
-  const y0 = left - width * xMin / dx
 
-  return width / dx * x  + y0
+  return _linear(width, dx, x, left - width * xMin / dx)
 }
 
 export function getCanvasY(height, top, yMax, yMin, y) {
   const dy = yMax - yMin
-  const y0 = top + height * yMax / dy
 
-  return - height / dy * y  + y0
+  return _linear(-height, dy, y, top + height * yMax / dy)
+}
+
+export function getX(width, left, xMax, xMin, canvasX) {
+  const dx = xMax - xMin
+
+  return _linear(dx, width, canvasX, xMin - dx / width * left)
+}
+
+export function getY(height, top, yMax, yMin, canvasY) {
+  const dy = yMax - yMin
+
+  return _linear(-dy, height, canvasY, yMax + dy / height * top)
 }

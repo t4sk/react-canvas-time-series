@@ -3,6 +3,8 @@ import {
   linear,
   getCanvasX,
   getCanvasY,
+  getX,
+  getY,
   toX,
   toY,
   nearestStepBelow,
@@ -43,43 +45,26 @@ test("get canvas y", () => {
   expect(getCanvasY(height, top, yMax, yMin, 10)).toEqual(10)
 })
 
-// test("get canvas y", () => {
-//   const getCanvasY = toCanvasY({
-//     height: 100,
-//     top: 10,
-//     yMin: 0,
-//     yMax: 10
-//   })
-//
-//   expect(getCanvasY(0)).toEqual(110)
-//   expect(getCanvasY(5)).toEqual(60)
-//   expect(getCanvasY(10)).toEqual(10)
-// })
-
 test("to x", () => {
-  const getX = toX({
-    width: 100,
-    left: 10,
-    xMin: 0,
-    xMax: 10
-  })
+  const width = 100
+  const left = 10
+  const xMin = 0
+  const xMax = 10
 
-  expect(getX(10)).toEqual(0)
-  expect(getX(60)).toEqual(5)
-  expect(getX(110)).toEqual(10)
+  expect(getX(width, left, xMax, xMin, 10)).toEqual(0)
+  expect(getX(width, left, xMax, xMin, 60)).toEqual(5)
+  expect(getX(width, left, xMax, xMin, 110)).toEqual(10)
 })
 
 test("to y", () => {
-  const getY = toY({
-    height: 100,
-    top: 10,
-    yMin: 0,
-    yMax: 10
-  })
+  const height = 100
+  const top = 10
+  const yMin = 0
+  const yMax = 10
 
-  expect(getY(10)).toEqual(10)
-  expect(getY(60)).toEqual(5)
-  expect(getY(110)).toEqual(0)
+  expect(getY(height, top, yMax, yMin, 10)).toEqual(10)
+  expect(getY(height, top, yMax, yMin, 60)).toEqual(5)
+  expect(getY(height, top, yMax, yMin, 110)).toEqual(0)
 })
 
 test("nearest step", () => {
