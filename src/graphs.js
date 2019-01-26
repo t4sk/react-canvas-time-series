@@ -1,6 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import * as xAxis from './canvas/x-axis'
+import * as yAxis from './canvas/y-axis'
+
+const AXES = {
+  top: xAxis,
+  bottom: xAxis,
+  // left: yAxis,
+  // right: yAxis
+}
+
 class Graphs extends Component {
   constructor(props) {
     super(props)
@@ -27,7 +37,9 @@ class Graphs extends Component {
   }
 
   draw = () => {
-
+    for (let axis of this.props.axes) {
+      AXES[axis.at].draw(this.ctx.axes, axis)
+    }
   }
 
   animate = () => {
@@ -87,12 +99,23 @@ Graphs.defaultProps = {
   width: 800,
   height: 400,
   backgroundColor: "",
+  axes: [],
 }
 
 Graphs.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
+  axes: PropTypes.arrayOf(PropTypes.shape({
+    at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    left: PropTypes.number.isRequired,
+    top: PropTypes.number.isRequired,
+
+    lineWidth: PropTypes.number.isRequired,
+    lineColor: PropTypes.string.isRequired,
+  })).isRequired,
 }
 
 const styles = {
