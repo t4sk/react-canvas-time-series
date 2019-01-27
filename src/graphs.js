@@ -7,8 +7,8 @@ import * as yAxis from './canvas/y-axis'
 const AXES = {
   top: xAxis,
   bottom: xAxis,
-  // left: yAxis,
-  // right: yAxis
+  left: yAxis,
+  right: yAxis
 }
 
 class Graphs extends Component {

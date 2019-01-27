@@ -10,7 +10,6 @@ const propTypes = {
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
 
-  lineWidth: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 
   xMin: PropTypes.number.isRequired,
@@ -21,20 +20,15 @@ const propTypes = {
 
   ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
   tickHeight: PropTypes.number.isRequired,
-  tickLineWidth: PropTypes.number.isRequired,
-  tickLineColor: PropTypes.string.isRequired,
   renderTick: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
-  lineWidth: 1,
   lineColor: '',
   font: '',
   textColor: '',
   ticks: [],
   tickHeight: 10,
-  tickLineWidth: 1,
-  tickLineColor: '',
   renderTick: x => x,
 }
 
@@ -52,11 +46,8 @@ export function draw(ctx, props) {
     height,
     left,
     top,
-    lineWidth,
     lineColor,
     ticks,
-    tickLineWidth,
-    tickLineColor,
     tickHeight,
     renderTick,
     font,
@@ -68,7 +59,7 @@ export function draw(ctx, props) {
   PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'x-axis')
 
   // style x axis line
-  ctx.lineWidth = lineWidth
+  ctx.lineWidth = 1
   ctx.strokeStyle = lineColor
 
   if (at == 'top') {
@@ -85,8 +76,6 @@ export function draw(ctx, props) {
   }
 
   // style ticks
-  ctx.lineWidth = tickLineWidth
-  ctx.strokeStyle = tickLineColor
   ctx.font = font
   ctx.fillStyle = textColor
   ctx.textAlign = 'center'
