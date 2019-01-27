@@ -15,11 +15,13 @@ const propTypes = {
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
   })).isRequired,
+  step: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
-  lineColor: ''
+  lineColor: '',
+  step: 1
 }
 
 function setDefaults(props) {
@@ -40,7 +42,8 @@ export function draw(ctx, props) {
     yMin,
     yMax,
     data,
-    lineColor
+    lineColor,
+    step,
   } = setDefaults(props)
 
   PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'line')
@@ -49,7 +52,9 @@ export function draw(ctx, props) {
   ctx.lineWidth = 1
 
   ctx.beginPath()
-  for (let { x, y } of data) {
+  for (let i = 0; i < data.length; i += step) {
+    const { x, y } = data[i]
+    
     ctx.lineTo(
       getCanvasX(width, left, xMax, xMin, x),
       getCanvasY(height, top, yMax, yMin, y)
