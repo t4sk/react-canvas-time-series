@@ -1,67 +1,91 @@
 import React, { Component } from 'react'
-import {GraphCanvas} from 'react-canvas-time-series'
-import { rand } from '../util'
+import { Graphs, canvas } from 'react-canvas-time-series'
+import moment from 'moment'
+import { getRandomData } from '../util'
 
-const X_MIN = 0
-const X_MAX = 1000
+const now = moment()
+
+const DAYS = [
+  ...Array(10).keys()
+]
+.map(i => now.clone().startOf("day").subtract(i, "day").unix())
+.reverse()
+
+const X_MIN = DAYS[0]
+const X_MAX = DAYS[DAYS.length - 1]
+const X_TICKS = DAYS.slice(1, -1)
 const Y_MIN = 0
-const Y_MAX = 100
+const Y_MAX = 5000
+const Y_TICKS = [0, 1000, 2000, 3000, 4000, 5000]
 
-const FIXED_DATA = [{
-  x: X_MIN, y: Y_MIN
-}, {
-  x: X_MAX, y: Y_MAX
-}]
+const DATA = [
+  [{
+    x: X_MIN,
+    y: Y_MIN,
+  }, {
+    x: X_MAX,
+    y: Y_MAX,
+  }]
+]
 
-let RANDOM_DATA = []
-
-for (let i = 0; i < 100; i++) {
-  RANDOM_DATA.push({
-    x: rand(X_MIN, X_MAX),
-    y: rand(Y_MIN, Y_MAX)
-  })
-}
-
-RANDOM_DATA.sort((a, b) => a.x - b.x)
+const WIDTH = 800
+const HEIGHT = 500
 
 class LineTestRender extends Component {
   render () {
     return (
-      <div>
-        <h3>Line</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'line',
-            data: FIXED_DATA,
-          }]}
-        />
-
-        <h3>Line (Random)</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'line',
-            data: RANDOM_DATA,
-          }]}
-        />
-
-        <h3>Multiple Lines</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'line',
-            color: 'green',
-            width: 3,
-            data: FIXED_DATA,
-          }, {
-            type: 'line',
-            color: 'blue',
-            width: 1,
-            data: RANDOM_DATA,
-          }]}
-        />
-      </div>
+      <Graphs
+        width={WIDTH}
+        height={HEIGHT}
+        backgroundColor="beige"
+        axes={[{
+          at: 'bottom',
+          top: 440,
+          left: 10,
+          width: 740,
+          height: 50,
+          lineColor: 'blue',
+          xMin: X_MIN,
+          xMax: X_MAX,
+          ticks: X_TICKS,
+          renderTick: x => moment(x * 1000).format("MM-DD")
+        }, {
+          at: 'right',
+          top: 10,
+          left: 740,
+          width: 50,
+          height: 200,
+          lineColor: 'blue',
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          ticks: Y_TICKS,
+          renderTick: x => x,
+        }, {
+          at: 'right',
+          top: 230,
+          left: 740,
+          width: 50,
+          height: 200,
+          lineColor: 'blue',
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          ticks: Y_TICKS,
+          renderTick: x => x,
+        }]}
+        graphs={[{
+          type: 'line',
+          top: 10,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          data: DATA[0],
+          lineColor: 'green'
+        }]}
+      />
     )
   }
 }

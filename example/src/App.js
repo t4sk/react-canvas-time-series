@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TestRenderHistory from './test-render/history'
 import TestRenderAxes from './test-render/axes'
 import BackgroundTestRender from './test-render/background'
-import LineTestRender from './test-render/line'
+import TestRenderLine from './test-render/line'
 import PointTestRender from './test-render/point'
 import BarTestRender from './test-render/bar'
 import CandlestickTestRender from './test-render/candlestick'
@@ -14,8 +14,9 @@ export default class App extends Component {
   render () {
     return (
       <div style={{margin: 20}}>
-        <TestRenderAxes />
+        <TestRenderLine />
         {/*}
+        <TestRenderAxes />
         <TestRenderHistory />
         */}
         {/*

@@ -58,8 +58,6 @@ export function draw(ctx, props) {
 
   PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'y-axis')
 
-  console.log('y', setDefaults(props))
-
   // style y axis line
   ctx.lineWidth = 1
   ctx.strokeStyle = lineColor

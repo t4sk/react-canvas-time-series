@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import * as line from './canvas/line'
 import * as xAxis from './canvas/x-axis'
 import * as yAxis from './canvas/y-axis'
 
@@ -9,6 +10,10 @@ const AXES = {
   bottom: xAxis,
   left: yAxis,
   right: yAxis
+}
+
+const GRAPHS = {
+  line,
 }
 
 class Graphs extends Component {
@@ -39,6 +44,10 @@ class Graphs extends Component {
   draw = () => {
     for (let axis of this.props.axes) {
       AXES[axis.at].draw(this.ctx.axes, axis)
+    }
+
+    for (let graph of this.props.graphs) {
+      GRAPHS[graph.type].draw(this.ctx.graphs, graph)
     }
   }
 
@@ -100,6 +109,7 @@ Graphs.defaultProps = {
   height: 400,
   backgroundColor: "",
   axes: [],
+  graphs: [],
 }
 
 Graphs.propTypes = {
@@ -108,6 +118,9 @@ Graphs.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   axes: PropTypes.arrayOf(PropTypes.shape({
     at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
+  })).isRequired,
+  graphs: PropTypes.arrayOf(PropTypes.shape({
+    type: PropTypes.oneOf(['line'])
   })).isRequired,
 }
 
