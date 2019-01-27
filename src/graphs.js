@@ -108,13 +108,6 @@ Graphs.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   axes: PropTypes.arrayOf(PropTypes.shape({
     at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
-
-    lineWidth: PropTypes.number.isRequired,
-    lineColor: PropTypes.string.isRequired,
   })).isRequired,
 }
 

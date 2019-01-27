@@ -26,6 +26,25 @@ const propTypes = {
   renderTick: PropTypes.func.isRequired,
 }
 
+const defaultProps = {
+  lineWidth: 1,
+  lineColor: '',
+  font: '',
+  textColor: '',
+  ticks: [],
+  tickHeight: 10,
+  tickLineWidth: 1,
+  tickLineColor: '',
+  renderTick: x => x,
+}
+
+function setDefaults(props) {
+  return {
+    ...defaultProps,
+    ...props,
+  }
+}
+
 export function draw(ctx, props) {
   const {
     at,
@@ -33,20 +52,20 @@ export function draw(ctx, props) {
     height,
     left,
     top,
-    lineWidth = 1,
-    lineColor = '',
-    ticks = [],
-    tickLineWidth = 1,
-    tickLineColor = '',
-    tickHeight = 10,
-    renderTick = x => x,
-    font = '',
-    textColor = '',
+    lineWidth,
+    lineColor,
+    ticks,
+    tickLineWidth,
+    tickLineColor,
+    tickHeight,
+    renderTick,
+    font,
+    textColor,
     xMin,
     xMax,
-  } = props
+  } = setDefaults(props)
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'x-axis')
+  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'x-axis')
 
   // style x axis line
   ctx.lineWidth = lineWidth
