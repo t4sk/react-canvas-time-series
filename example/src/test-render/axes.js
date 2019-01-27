@@ -25,7 +25,7 @@ class Axes extends Component {
           xMin: X_MIN,
           xMax: X_MAX,
           ticks: X_TICKS,
-          tickHeight: 5,
+          tickLength: 5,
           renderTick: x => x,
           textColor: 'blue'
         }, {

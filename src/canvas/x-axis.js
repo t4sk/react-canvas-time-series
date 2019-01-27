@@ -19,7 +19,7 @@ const propTypes = {
   textColor: PropTypes.string.isRequired,
 
   ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
-  tickHeight: PropTypes.number.isRequired,
+  tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 }
 
@@ -28,7 +28,7 @@ const defaultProps = {
   font: '',
   textColor: '',
   ticks: [],
-  tickHeight: 10,
+  tickLength: 10,
   renderTick: x => x,
 }
 
@@ -48,7 +48,7 @@ export function draw(ctx, props) {
     top,
     lineColor,
     ticks,
-    tickHeight,
+    tickLength,
     renderTick,
     font,
     textColor,
@@ -87,25 +87,25 @@ export function draw(ctx, props) {
     if (at == 'top') {
       ctx.beginPath()
       ctx.moveTo(canvasX, top + height)
-      ctx.lineTo(canvasX, top + height - tickHeight)
+      ctx.lineTo(canvasX, top + height - tickLength)
       ctx.stroke()
 
       ctx.fillText(
         renderTick(tick),
         canvasX,
-        top + height - tickHeight - TICK_TEXT_PADDING
+        top + height - tickLength - TICK_TEXT_PADDING
       )
     }
     else if (at == 'bottom') {
       ctx.beginPath()
       ctx.moveTo(canvasX, top)
-      ctx.lineTo(canvasX, top + tickHeight)
+      ctx.lineTo(canvasX, top + tickLength)
       ctx.stroke()
 
       ctx.fillText(
         renderTick(tick),
         canvasX,
-        top + tickHeight + TICK_TEXT_PADDING
+        top + tickLength + TICK_TEXT_PADDING
       )
     }
   }
