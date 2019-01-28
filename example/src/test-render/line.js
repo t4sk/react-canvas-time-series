@@ -27,6 +27,8 @@ const DATA = [
     y: Y_MAX,
   }],
   getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
+  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
+  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
 ]
 
 const WIDTH = 800
@@ -138,6 +140,32 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           data: Y_TICKS,
           lineColor: 'lightgrey',
+        }, {
+          type: 'line',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          data: DATA[2],
+          step: 100,
+          lineColor: 'lime'
+        }, {
+          type: 'line',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          data: DATA[3],
+          step: 100,
+          lineColor: 'olive'
         }]}
       />
     )
