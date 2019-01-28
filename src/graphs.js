@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import * as xLine from './canvas/x-line'
 import * as yLine from './canvas/y-line'
 import * as line from './canvas/line'
 import * as xAxis from './canvas/x-axis'
@@ -14,6 +15,7 @@ const AXES = {
 }
 
 const GRAPHS = {
+  xLine,
   yLine,
   line,
 }

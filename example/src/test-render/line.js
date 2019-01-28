@@ -74,6 +74,16 @@ class LineTestRender extends Component {
           renderTick: x => x,
         }]}
         graphs={[{
+          type: 'xLine',
+          top: 10,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          data: X_TICKS,
+          lineColor: 'lightgrey',
+        }, {
           type: 'yLine',
           top: 10,
           left: 10,
@@ -108,6 +118,16 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           data: DATA[0],
           lineColor: 'blue'
+        }, {
+          type: 'xLine',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          data: X_TICKS,
+          lineColor: 'lightgrey',
         }, {
           type: 'yLine',
           top: 230,
