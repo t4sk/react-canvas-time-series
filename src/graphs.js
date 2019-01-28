@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import * as yLine from './canvas/y-line'
 import * as line from './canvas/line'
 import * as xAxis from './canvas/x-axis'
 import * as yAxis from './canvas/y-axis'
@@ -13,6 +14,7 @@ const AXES = {
 }
 
 const GRAPHS = {
+  yLine,
   line,
 }
 
@@ -120,7 +122,7 @@ Graphs.propTypes = {
     at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
   })).isRequired,
   graphs: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['line'])
+    type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
   })).isRequired,
 }
 

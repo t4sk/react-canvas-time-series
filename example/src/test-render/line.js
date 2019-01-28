@@ -26,7 +26,7 @@ const DATA = [
     x: X_MAX,
     y: Y_MAX,
   }],
-  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX)
+  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
 ]
 
 const WIDTH = 800
@@ -74,6 +74,16 @@ class LineTestRender extends Component {
           renderTick: x => x,
         }]}
         graphs={[{
+          type: 'yLine',
+          top: 10,
+          left: 10,
+          height: 200,
+          width: 730,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          data: Y_TICKS,
+          lineColor: 'lightgrey',
+        }, {
           type: 'line',
           top: 10,
           left: 10,
@@ -85,7 +95,7 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           data: DATA[1],
           lineColor: 'green',
-          step: 10,
+          step: 100,
         }, {
           type: 'line',
           top: 10,
@@ -98,6 +108,16 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           data: DATA[0],
           lineColor: 'blue'
+        }, {
+          type: 'yLine',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          data: Y_TICKS,
+          lineColor: 'lightgrey',
         }]}
       />
     )
