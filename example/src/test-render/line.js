@@ -43,7 +43,7 @@ class LineTestRender extends Component {
           at: 'bottom',
           top: 440,
           left: 10,
-          width: 740,
+          width: 730,
           height: 50,
           lineColor: 'blue',
           xMin: X_MIN,
