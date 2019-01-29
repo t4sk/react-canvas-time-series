@@ -167,6 +167,18 @@ class LineTestRender extends Component {
           step: 100,
           lineColor: 'olive'
         }]}
+        crosshair={{
+          top: 10,
+          left: 10,
+          height: 430,
+          width: 730,
+          canvasX: 300,
+          canvasY: 100,
+          yLineColor: 'orange',
+          yLineWidth: 0.5,
+          xLineColor: 'rgba(255, 140, 0, 0.5)',
+          xLineWidth: 10,
+        }}
       />
     )
   }

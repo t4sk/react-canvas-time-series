@@ -26,6 +26,9 @@ const ReactCanvasTimeSeries = {
 
 export default ReactCanvasTimeSeries
 
+// TODO line width
+
+
 // TODO flow
 // TODO custom graph canvases for stock price / volume
 

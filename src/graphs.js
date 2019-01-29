@@ -6,6 +6,7 @@ import * as yLine from './canvas/y-line'
 import * as line from './canvas/line'
 import * as xAxis from './canvas/x-axis'
 import * as yAxis from './canvas/y-axis'
+import * as crosshair from './canvas/crosshair'
 
 const AXES = {
   top: xAxis,
@@ -59,7 +60,10 @@ class Graphs extends Component {
     this.animation = window.requestAnimationFrame(this.animate)
 
     // this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
-    // this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
+    if (this.props.crosshair) {
+      this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
+      crosshair.draw(this.ctx.crosshair, this.props.crosshair)
+    }
   }
 
   componentWillUnmount() {
@@ -126,6 +130,7 @@ Graphs.propTypes = {
   graphs: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
   })).isRequired,
+  crosshair: PropTypes.object.isRequired,
 }
 
 const styles = {
