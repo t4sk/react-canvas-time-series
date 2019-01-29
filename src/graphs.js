@@ -70,6 +70,45 @@ class Graphs extends Component {
     window.cancelAnimationFrame(this.animation)
   }
 
+  getMouse = e => {
+    const rect = this.ctx.crosshair.canvas.getBoundingClientRect()
+
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    }
+  }
+
+  onMouseMove = e => {
+    if (this.props.onMouseMove) {
+      this.props.onMouseMove(e, this.getMouse(e))
+    }
+  }
+
+  onMouseDown = e => {
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown(e, this.getMouse(e))
+    }
+  }
+
+  onMouseUp = e => {
+    if (this.props.onMouseUp) {
+      this.props.onMouseUp(e, this.getMouse(e))
+    }
+  }
+
+  onMouseOut = e => {
+    if (this.props.onMouseOut) {
+      this.props.onMouseOut(e)
+    }
+  }
+
+  onWheel = (e) => {
+    if (this.props.onWheel) {
+      this.props.onWheel(e)
+    }
+  }
+
   render() {
     return (
       <div style={{
@@ -131,6 +170,11 @@ Graphs.propTypes = {
     type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
   })).isRequired,
   crosshair: PropTypes.object.isRequired,
+  onMouseMove: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  onMouseOut: PropTypes.func,
+  onWheel: PropTypes.func,
 }
 
 const styles = {

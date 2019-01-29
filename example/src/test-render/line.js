@@ -35,6 +35,26 @@ const WIDTH = 800
 const HEIGHT = 500
 
 class LineTestRender extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      mouse: {
+        x: undefined,
+        y: undefined,
+      }
+    }
+  }
+
+  onMouseMove = (e, mouse) => {
+    this.setState(state => ({
+      mouse: {
+        x: mouse.x,
+        y: mouse.y
+      }
+    }))
+  }
+
   render () {
     return (
       <Graphs
@@ -172,13 +192,14 @@ class LineTestRender extends Component {
           left: 10,
           height: 430,
           width: 730,
-          canvasX: 300,
-          canvasY: 100,
+          canvasX: this.state.mouse.x,
+          canvasY: this.state.mouse.y,
           yLineColor: 'orange',
           yLineWidth: 0.5,
           xLineColor: 'rgba(255, 140, 0, 0.5)',
           xLineWidth: 10,
         }}
+        onMouseMove={this.onMouseMove}
       />
     )
   }
