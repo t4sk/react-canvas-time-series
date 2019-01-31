@@ -169,7 +169,7 @@ Graphs.propTypes = {
   graphs: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
   })).isRequired,
-  crosshair: PropTypes.object.isRequired,
+  crosshair: PropTypes.object,
   onMouseMove: PropTypes.func,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
