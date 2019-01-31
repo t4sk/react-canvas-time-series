@@ -118,7 +118,7 @@ export function draw(ctx, props) {
   }
 
   for (let label of labels) {
-    if (!label.y) {
+    if (label.y === undefined) {
       return
     }
 
