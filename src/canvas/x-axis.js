@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import * as xLabel from './x-label'
 import { getCanvasX } from './math'
+import * as xLabel from './x-label'
 
 const TICK_TEXT_PADDING = 10
 

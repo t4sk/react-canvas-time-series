@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { getCanvasY } from './math'
+import * as yLabel from './y-label'
 
 const TICK_TEXT_PADDING = 5
 
@@ -21,6 +22,10 @@ const propTypes = {
   ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
+
+  labels: PropTypes.arrayOf(PropTypes.shape({
+    y: PropTypes.number
+  })).isRequired,
 }
 
 const defaultProps = {
@@ -30,6 +35,7 @@ const defaultProps = {
   ticks: [],
   tickLength: 10,
   renderTick: x => x,
+  labels: [],
 }
 
 function setDefaults(props) {
@@ -54,6 +60,7 @@ export function draw(ctx, props) {
     textColor,
     yMin,
     yMax,
+    labels,
   } = setDefaults(props)
 
   PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'y-axis')
@@ -107,6 +114,41 @@ export function draw(ctx, props) {
         left + tickLength + TICK_TEXT_PADDING,
         canvasY
       )
+    }
+  }
+
+  for (let label of labels) {
+    if (!label.y) {
+      return
+    }
+
+    if (at == "left") {
+      yLabel.draw(ctx, {
+        axisAt: at,
+        rect: {
+          top,
+          left,
+          height,
+          width: width - tickLength,
+        },
+        yMin,
+        yMax,
+        ...label,
+      })
+    }
+    else if (at == "right") {
+      yLabel.draw(ctx, {
+        axisAt: at,
+        rect: {
+          top,
+          left: left + tickLength,
+          height,
+          width: width - tickLength,
+        },
+        yMin,
+        yMax,
+        ...label,
+      })
     }
   }
 }

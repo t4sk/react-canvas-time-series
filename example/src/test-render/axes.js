@@ -44,6 +44,12 @@ class Axes extends Component {
           yMin: Y_MIN,
           yMax: Y_MAX,
           ticks: Y_TICKS,
+          labels: [{
+            y: (Y_MIN + Y_MAX) / 2,
+            color: 'white',
+            backgroundColor: 'green',
+            text: 'left'
+          }],
         }, {
           at: 'right',
           top: 60,
@@ -54,6 +60,12 @@ class Axes extends Component {
           yMin: Y_MIN,
           yMax: Y_MAX,
           ticks: Y_TICKS,
+          labels: [{
+            y: (Y_MIN + Y_MAX) / 2,
+            color: 'white',
+            backgroundColor: 'orange',
+            text: 'right'
+          }],
         }, {
           at: 'bottom',
           top: 440,
@@ -67,7 +79,7 @@ class Axes extends Component {
           labels: [{
             x: (X_MIN + X_MAX) / 2,
             color: 'white',
-            backgroundColor: 'black',
+            backgroundColor: 'blue',
             text: 'bottom'
           }],
         }]}
