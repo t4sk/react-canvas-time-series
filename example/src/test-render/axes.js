@@ -27,7 +27,13 @@ class Axes extends Component {
           ticks: X_TICKS,
           tickLength: 5,
           renderTick: x => x,
-          textColor: 'blue'
+          textColor: 'blue',
+          labels: [{
+            x: (X_MIN + X_MAX) / 2,
+            color: 'white',
+            backgroundColor: 'red',
+            text: 'top'
+          }],
         }, {
           at: 'left',
           top: 60,
@@ -58,6 +64,12 @@ class Axes extends Component {
           xMin: X_MIN,
           xMax: X_MAX,
           ticks: X_TICKS,
+          labels: [{
+            x: (X_MIN + X_MAX) / 2,
+            color: 'white',
+            backgroundColor: 'black',
+            text: 'bottom'
+          }],
         }]}
       />
     )
