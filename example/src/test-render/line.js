@@ -71,7 +71,13 @@ class LineTestRender extends Component {
           xMin: X_MIN,
           xMax: X_MAX,
           ticks: X_TICKS,
-          renderTick: x => moment(x * 1000).format("MM-DD")
+          renderTick: x => moment(x * 1000).format("MM-DD"),
+          labels: [{
+            x: undefined,
+            color: 'white',
+            backgroundColor: 'black',
+            render: x => x,
+          }],
         }, {
           at: 'right',
           top: 10,
@@ -83,6 +89,12 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           ticks: Y_TICKS,
           renderTick: x => x,
+          labels: [{
+            y: (Y_MIN + Y_MAX) / 2,
+            color: 'white',
+            backgroundColor: 'black',
+            render: y => y,
+          }],
         }, {
           at: 'right',
           top: 230,
@@ -94,6 +106,12 @@ class LineTestRender extends Component {
           yMax: Y_MAX,
           ticks: Y_TICKS,
           renderTick: x => x,
+          labels: [{
+            y: undefined,
+            color: 'white',
+            backgroundColor: 'black',
+            render: y => y,
+          }],
         }]}
         graphs={[{
           type: 'xLine',

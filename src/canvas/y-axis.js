@@ -29,9 +29,9 @@ const propTypes = {
 }
 
 const defaultProps = {
-  lineColor: '',
+  lineColor: 'black',
   font: '',
-  textColor: '',
+  textColor: 'black',
   ticks: [],
   tickLength: 10,
   renderTick: x => x,

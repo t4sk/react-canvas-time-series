@@ -17,16 +17,16 @@ const propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   font: PropTypes.string.isRequired,
-  render: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
   textPadding: PropTypes.number.isRequired,
 }
 
 const defaultProps = {
   width: 50,
   height: 20,
-  backgroundColor: '',
+  backgroundColor: 'white',
   font: '',
-  color: '',
+  color: 'black',
   render: x => x,
   textPadding: 10,
 }

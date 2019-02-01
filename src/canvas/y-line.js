@@ -14,7 +14,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  lineColor: '',
+  lineColor: 'black',
 }
 
 function setDefaults(props) {
