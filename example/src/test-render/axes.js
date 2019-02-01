@@ -32,7 +32,7 @@ class Axes extends Component {
             x: (X_MIN + X_MAX) / 2,
             color: 'white',
             backgroundColor: 'red',
-            text: 'top'
+            render: x => 'top',
           }],
         }, {
           at: 'left',
@@ -48,7 +48,7 @@ class Axes extends Component {
             y: (Y_MIN + Y_MAX) / 2,
             color: 'white',
             backgroundColor: 'green',
-            text: 'left'
+            render: y => 'left'
           }],
         }, {
           at: 'right',
@@ -64,7 +64,7 @@ class Axes extends Component {
             y: (Y_MIN + Y_MAX) / 2,
             color: 'white',
             backgroundColor: 'orange',
-            text: 'right'
+            render: y => 'right'
           }],
         }, {
           at: 'bottom',
@@ -80,7 +80,7 @@ class Axes extends Component {
             x: (X_MIN + X_MAX) / 2,
             color: 'white',
             backgroundColor: 'blue',
-            text: 'bottom'
+            render: x => 'bottom',
           }],
         }]}
       />

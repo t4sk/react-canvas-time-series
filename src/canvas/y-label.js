@@ -17,7 +17,7 @@ const propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   font: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  render: PropTypes.string.isRequired,
   textPadding: PropTypes.number.isRequired,
 }
 
@@ -27,7 +27,7 @@ const defaultProps = {
   backgroundColor: '',
   font: '',
   color: '',
-  text: '',
+  render: x => x,
   textPadding: 10,
 }
 
@@ -103,7 +103,7 @@ function _draw(ctx, props) {
     backgroundColor,
     font,
     color,
-    text,
+    render,
     textPadding,
   } = props
 
@@ -129,7 +129,7 @@ function _draw(ctx, props) {
   ctx.textBaseline = 'middle'
 
   ctx.fillText(
-    text,
+    render(y),
     getTextLeft(props),
     canvasY,
   )
