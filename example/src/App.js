@@ -14,9 +14,9 @@ export default class App extends Component {
   render () {
     return (
       <div style={{margin: 20}}>
-        <TestRenderAxes />
-        {/*}
         <TestRenderLine />
+        {/*}
+        <TestRenderAxes />
         <TestRenderAxes />
         <TestRenderHistory />
         */}

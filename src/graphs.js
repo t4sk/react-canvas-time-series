@@ -42,18 +42,7 @@ class Graphs extends Component {
       crosshair: this.crosshair.current.getContext('2d'),
     }
 
-    this.draw()
     this.animate()
-  }
-
-  draw = () => {
-    for (let axis of this.props.axes) {
-      AXES[axis.at].draw(this.ctx.axes, axis)
-    }
-
-    for (let graph of this.props.graphs) {
-      GRAPHS[graph.type].draw(this.ctx.graphs, graph)
-    }
   }
 
   animate = () => {
@@ -63,6 +52,18 @@ class Graphs extends Component {
     if (this.props.crosshair) {
       this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
       crosshair.draw(this.ctx.crosshair, this.props.crosshair)
+    }
+
+    this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
+
+    for (let axis of this.props.axes) {
+      AXES[axis.at].draw(this.ctx.axes, axis)
+    }
+
+    this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)
+
+    for (let graph of this.props.graphs) {
+      GRAPHS[graph.type].draw(this.ctx.graphs, graph)
     }
   }
 

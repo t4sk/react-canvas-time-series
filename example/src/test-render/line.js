@@ -55,7 +55,18 @@ class LineTestRender extends Component {
     }))
   }
 
+  onMouseOut = () => {
+    this.setState(state => ({
+      mouse: {
+        x: undefined,
+        y: undefined,
+      }
+    }))
+  }
+
   render () {
+    const { mouse } = this.state
+
     return (
       <Graphs
         width={WIDTH}
@@ -73,10 +84,16 @@ class LineTestRender extends Component {
           ticks: X_TICKS,
           renderTick: x => moment(x * 1000).format("MM-DD"),
           labels: [{
-            x: undefined,
+            x: canvas.math.isInsideRect({
+              top: 10,
+              left: 10,
+              width: 730,
+              height: 440,
+            }, mouse) ? canvas.math.getX(730, 10, X_MAX, X_MIN, mouse.x) : undefined,
             color: 'white',
             backgroundColor: 'black',
-            render: x => x,
+            render: x => moment(x * 1000).format("MM-DD HH:mm"),
+            width: 80,
           }],
         }, {
           at: 'right',
@@ -90,7 +107,12 @@ class LineTestRender extends Component {
           ticks: Y_TICKS,
           renderTick: x => x,
           labels: [{
-            y: (Y_MIN + Y_MAX) / 2,
+            y: canvas.math.isInsideRect({
+              top: 10,
+              left: 10,
+              width: 730,
+              height: 200,
+            }, mouse) ? canvas.math.getY(200, 10, Y_MAX, Y_MIN, mouse.y) : undefined,
             color: 'white',
             backgroundColor: 'black',
             render: y => y,
@@ -107,7 +129,12 @@ class LineTestRender extends Component {
           ticks: Y_TICKS,
           renderTick: x => x,
           labels: [{
-            y: undefined,
+            y: canvas.math.isInsideRect({
+              top: 230,
+              left: 10,
+              width: 730,
+              height: 200,
+            }, mouse) ? canvas.math.getY(200, 230, Y_MAX, Y_MIN, mouse.y) : undefined,
             color: 'white',
             backgroundColor: 'black',
             render: y => y,
@@ -218,6 +245,7 @@ class LineTestRender extends Component {
           xLineWidth: 10,
         }}
         onMouseMove={this.onMouseMove}
+        onMouseOut={this.onMouseOut}
       />
     )
   }
