@@ -7,6 +7,7 @@ import * as line from './canvas/line'
 import * as xAxis from './canvas/x-axis'
 import * as yAxis from './canvas/y-axis'
 import * as crosshair from './canvas/crosshair'
+import * as text from './canvas/text'
 
 const AXES = {
   top: xAxis,
@@ -48,12 +49,6 @@ class Graphs extends Component {
   animate = () => {
     this.animation = window.requestAnimationFrame(this.animate)
 
-    // this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
-    if (this.props.crosshair) {
-      this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
-      crosshair.draw(this.ctx.crosshair, this.props.crosshair)
-    }
-
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let axis of this.props.axes) {
@@ -64,6 +59,18 @@ class Graphs extends Component {
 
     for (let graph of this.props.graphs) {
       GRAPHS[graph.type].draw(this.ctx.graphs, graph)
+    }
+
+    // this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
+    if (this.props.crosshair) {
+      this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
+      crosshair.draw(this.ctx.crosshair, this.props.crosshair)
+    }
+
+    this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
+
+    for (let frame of this.props.frames) {
+      text.draw(this.ctx.frames, frame)
     }
   }
 
@@ -158,6 +165,7 @@ Graphs.defaultProps = {
   backgroundColor: "",
   axes: [],
   graphs: [],
+  frames: [],
 }
 
 Graphs.propTypes = {
@@ -170,6 +178,7 @@ Graphs.propTypes = {
   graphs: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
   })).isRequired,
+  frames: PropTypes.array.isRequired,
   crosshair: PropTypes.object,
   onMouseMove: PropTypes.func,
   onMouseDown: PropTypes.func,

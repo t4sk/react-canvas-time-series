@@ -39,6 +39,7 @@ class LineTestRender extends Component {
     super(props)
 
     this.state = {
+      nearest: [],
       mouse: {
         x: undefined,
         y: undefined,
@@ -47,16 +48,42 @@ class LineTestRender extends Component {
   }
 
   onMouseMove = (e, mouse) => {
-    this.setState(state => ({
-      mouse: {
-        x: mouse.x,
-        y: mouse.y
+    this.setState(state => {
+      let nearest = []
+      let nearestCanvasX
+
+      if (canvas.math.isInsideRect({
+        top: 10,
+        left: 10,
+        width: 730,
+        height: 430
+      }, mouse)) {
+        const x = canvas.math.getX(730, 10, X_MAX, X_MIN, state.mouse.x)
+
+        for (let i = 0; i < DATA.length; i++) {
+          const index = canvas.math.findNearestIndex(DATA[i].map(d => d.x), x)
+
+          nearest.push(DATA[i][index])
+        }
+
+        nearestCanvasX = canvas.math.getCanvasX(730, 10, X_MAX, X_MIN, nearest[1].x)
       }
-    }))
+
+      return {
+        nearestCanvasX,
+        nearest,
+        mouse: {
+          x: mouse.x,
+          y: mouse.y
+        }
+      }
+    })
   }
 
   onMouseOut = () => {
     this.setState(state => ({
+      nearestCanvasX: undefined,
+      nearest: [],
       mouse: {
         x: undefined,
         y: undefined,
@@ -65,7 +92,7 @@ class LineTestRender extends Component {
   }
 
   render () {
-    const { mouse } = this.state
+    const { mouse, nearest } = this.state
 
     return (
       <Graphs
@@ -232,12 +259,43 @@ class LineTestRender extends Component {
           step: 100,
           lineColor: 'olive'
         }]}
+        frames={[{
+          text: nearest[1] && moment(nearest[1].x * 1000).format("YYYY-MM-DD HH:mm") || '' ,
+          color: 'black',
+          canvasX: 10,
+          canvasY: 10
+        }, {
+          text: nearest[0] ? nearest[0].y :  '',
+          color: 'blue',
+          canvasX: 10,
+          canvasY: 10 + 15,
+        }, {
+          text: `${nearest[1] ? nearest[1].y.toFixed() : ''}`,
+          color: 'green',
+          canvasX: 50,
+          canvasY: 10 + 15,
+        }, {
+          text: nearest[2] && moment(nearest[2].x * 1000).format("YYYY-MM-DD HH:mm") || '' ,
+          color: 'black',
+          canvasX: 10,
+          canvasY: 240,
+        }, {
+          text: `${nearest[2] ? nearest[2].y.toFixed() : ''}`,
+          color: 'lime',
+          canvasX: 10,
+          canvasY: 240 + 15,
+        }, {
+          text: `${nearest[3] ? nearest[3].y.toFixed() : ''}`,
+          color: 'olive',
+          canvasX: 50,
+          canvasY: 240 + 15,
+        }]}
         crosshair={{
           top: 10,
           left: 10,
           height: 430,
           width: 730,
-          canvasX: this.state.mouse.x,
+          canvasX: this.state.nearestCanvasX || this.state.mouse.x,
           canvasY: this.state.mouse.y,
           yLineColor: 'orange',
           yLineWidth: 0.5,
