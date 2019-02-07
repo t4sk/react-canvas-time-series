@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import { getCanvasY } from './math'
 
 const propTypes = {
-  type: PropTypes.oneOf(['yLine']).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,

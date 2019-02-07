@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import { getCanvasX, getCanvasY } from './math'
 
 const propTypes = {
-  type: PropTypes.oneOf(['line']).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,
@@ -54,7 +53,7 @@ export function draw(ctx, props) {
   ctx.beginPath()
   for (let i = 0; i < data.length; i += step) {
     const { x, y } = data[i]
-    
+
     ctx.lineTo(
       getCanvasX(width, left, xMax, xMin, x),
       getCanvasY(height, top, yMax, yMin, y)
