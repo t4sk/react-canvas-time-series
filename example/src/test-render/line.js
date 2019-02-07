@@ -168,7 +168,7 @@ class LineTestRender extends Component {
           }],
         }]}
         graphs={[{
-          type: 'xLine',
+          type: 'xLines',
           top: 10,
           left: 10,
           height: 200,
@@ -178,7 +178,7 @@ class LineTestRender extends Component {
           data: X_TICKS,
           lineColor: 'lightgrey',
         }, {
-          type: 'yLine',
+          type: 'yLines',
           top: 10,
           left: 10,
           height: 200,
@@ -213,7 +213,35 @@ class LineTestRender extends Component {
           data: DATA[0],
           lineColor: 'blue'
         }, {
-          type: 'xLine',
+          type: 'point',
+          top: 10,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          x: nearest[1] ? nearest[1].x : undefined,
+          y: nearest[1] ? nearest[1].y : undefined,
+          color: 'green',
+          ambientColor: 'rgba(0, 255, 0, 0.1)'
+        }, {
+          type: 'point',
+          top: 10,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          x: nearest[0] ? nearest[0].x : undefined,
+          y: nearest[0] ? nearest[0].y : undefined,
+          color: 'blue',
+          ambientColor: 'rgba(0, 0, 255, 0.1)'
+        }, {
+          type: 'xLines',
           top: 230,
           left: 10,
           height: 200,
@@ -223,7 +251,7 @@ class LineTestRender extends Component {
           data: X_TICKS,
           lineColor: 'lightgrey',
         }, {
-          type: 'yLine',
+          type: 'yLines',
           top: 230,
           left: 10,
           height: 200,
@@ -258,6 +286,34 @@ class LineTestRender extends Component {
           data: DATA[3],
           step: 100,
           lineColor: 'olive'
+        }, {
+          type: 'point',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          x: nearest[2] ? nearest[2].x : undefined,
+          y: nearest[2] ? nearest[2].y : undefined,
+          color: 'lime',
+          ambientColor: 'rgba(0, 255, 0, 0.1)'
+        }, {
+          type: 'point',
+          top: 230,
+          left: 10,
+          height: 200,
+          width: 730,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          x: nearest[3] ? nearest[3].x : undefined,
+          y: nearest[3] ? nearest[3].y : undefined,
+          color: 'olive',
+          ambientColor: 'rgba(0, 255, 0, 0.1)'
         }]}
         frames={[{
           text: nearest[1] && moment(nearest[1].x * 1000).format("YYYY-MM-DD HH:mm") || '' ,

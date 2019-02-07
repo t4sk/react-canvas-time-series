@@ -178,7 +178,7 @@ Graphs.propTypes = {
     at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
   })).isRequired,
   graphs: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['xLine', 'yLine', 'line'])
+    type: PropTypes.oneOf(['xLines', 'yLines', 'line', 'point'])
   })).isRequired,
   frames: PropTypes.array.isRequired,
   crosshair: PropTypes.object,

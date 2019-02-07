@@ -4,7 +4,7 @@ const propTypes = {
   canvasX: PropTypes.number.isRequired,
   canvasY: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   font: PropTypes.string.isRequired,
 }
 
@@ -37,5 +37,5 @@ export function draw(ctx, props) {
   ctx.font = font
   ctx.fillStyle = color
 
-  ctx.fillText(text, canvasX, canvasY)
+  ctx.fillText(`${text}`, canvasX, canvasY)
 }
