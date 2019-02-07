@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import * as xLine from './canvas/x-line'
-import * as yLine from './canvas/y-line'
+import * as xLines from './canvas/x-lines'
+import * as yLines from './canvas/y-lines'
 import * as line from './canvas/line'
+import * as point from './canvas/point'
 import * as xAxis from './canvas/x-axis'
 import * as yAxis from './canvas/y-axis'
 import * as crosshair from './canvas/crosshair'
@@ -17,9 +18,10 @@ const AXES = {
 }
 
 const GRAPHS = {
-  xLine,
-  yLine,
+  xLines,
+  yLines,
   line,
+  point,
 }
 
 class Graphs extends Component {

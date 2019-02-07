@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
-import { getCanvasY } from './math'
+import { getCanvasX } from './math'
 
 const propTypes = {
-  type: PropTypes.oneOf(['yLine']).isRequired,
+  type: PropTypes.oneOf(['xLine']).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,
   top: PropTypes.number.isRequired,
-  yMin: PropTypes.number.isRequired,
-  yMax: PropTypes.number.isRequired,
+  xMin: PropTypes.number.isRequired,
+  xMax: PropTypes.number.isRequired,
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   lineColor: PropTypes.string.isRequired,
 }
@@ -30,23 +30,23 @@ export function draw(ctx, props) {
     left,
     width,
     height,
-    yMin,
-    yMax,
+    xMin,
+    xMax,
     data,
     lineColor,
   } = setDefaults(props)
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'y-line')
+  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'x-lines')
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
 
-  for (let y of data) {
-    const canvasY = getCanvasY(height, top, yMax, yMin, y)
+  for (let x of data) {
+    const canvasX = getCanvasX(width, left, xMax, xMin, x)
 
     ctx.beginPath()
-    ctx.moveTo(left, canvasY)
-    ctx.lineTo(left + width, canvasY)
+    ctx.moveTo(canvasX, top)
+    ctx.lineTo(canvasX, top + height)
     ctx.stroke()
   }
 }
