@@ -34,12 +34,12 @@ export async function fakeFetch(data, ms) {
   return data
 }
 
-async function fetch(cache, { xMin, xMax }, opts = {}) {
+export async function fetch(cache, { xMin, xMax }, opts = {}) {
   const {
     ms = 1000,
     length = 10000,
     yMin = 0,
-    yMax = 10000,
+    yMax = 5000,
   } = opts
 
   await timeout(ms)
@@ -51,6 +51,9 @@ async function fetch(cache, { xMin, xMax }, opts = {}) {
   }
 
   const data = getRandomData(length, xMin, xMax, yMin, yMax)
+
+  cache.xMin = Math.min(cache.xMin, xMin)
+  cache.xMax = Math.max(cache.xMax, xMax)
 
   for (let d of data) {
     if (!cache.data[d.x]) {

@@ -1,7 +1,25 @@
 import React, { Component } from 'react'
 import { Graphs, canvas } from 'react-canvas-time-series'
 import moment from 'moment'
-import { getRandomData } from '../util'
+import { fetch, getRandomData } from '../util'
+
+let cache = [{
+  xMin: undefined,
+  xMax: undefined,
+  data: {},
+}, {
+  xMin: undefined,
+  xMax: undefined,
+  data: {},
+}, {
+  xMin: undefined,
+  xMax: undefined,
+  data: {},
+}, {
+  xMin: undefined,
+  xMax: undefined,
+  data: {},
+}]
 
 const now = moment()
 
@@ -43,8 +61,30 @@ class LineTestRender extends Component {
       mouse: {
         x: undefined,
         y: undefined,
-      }
+      },
+      lines: []
     }
+  }
+
+  componentDidMount() {
+    this.fetch()
+  }
+
+  fetch = async () => {
+    let lines = []
+
+    for (let i = 0; i < cache.length; i++) {
+      const res = await fetch(cache[i], {
+        xMin: X_MIN,
+        xMax: X_MAX,
+      })
+
+      lines.push(res)
+    }
+
+    this.setState(state => ({
+      lines
+    }))
   }
 
   onMouseMove = (e, mouse) => {
@@ -197,9 +237,9 @@ class LineTestRender extends Component {
           xMax: X_MAX,
           yMin: Y_MIN,
           yMax: Y_MAX,
-          data: DATA[1],
-          lineColor: 'green',
-          step: 100,
+          data: this.state.lines[0] || [],
+          step: 1000,
+          lineColor: 'blue'
         }, {
           type: 'line',
           top: 10,
@@ -210,8 +250,9 @@ class LineTestRender extends Component {
           xMax: X_MAX,
           yMin: Y_MIN,
           yMax: Y_MAX,
-          data: DATA[0],
-          lineColor: 'blue'
+          data: this.state.lines[1] || [],
+          lineColor: 'green',
+          step: 100,
         }, {
           type: 'point',
           top: 10,
@@ -271,6 +312,7 @@ class LineTestRender extends Component {
           yMin: Y_MIN,
           yMax: Y_MAX,
           data: DATA[2],
+          data: this.state.lines[2] || [],
           step: 100,
           lineColor: 'lime'
         }, {
@@ -283,7 +325,7 @@ class LineTestRender extends Component {
           xMax: X_MAX,
           yMin: Y_MIN,
           yMax: Y_MAX,
-          data: DATA[3],
+          data: this.state.lines[3] || [],
           step: 100,
           lineColor: 'olive'
         }, {
