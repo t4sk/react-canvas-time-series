@@ -36,19 +36,6 @@ const Y_MIN = 0
 const Y_MAX = 5000
 const Y_TICKS = [0, 1000, 2000, 3000, 4000, 5000]
 
-const DATA = [
-  [{
-    x: X_MIN,
-    y: Y_MIN,
-  }, {
-    x: X_MAX,
-    y: Y_MAX,
-  }],
-  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
-  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
-  getRandomData(10000, X_MIN, X_MAX, Y_MIN, Y_MAX),
-]
-
 const WIDTH = 800
 const HEIGHT = 500
 
@@ -100,10 +87,12 @@ class LineTestRender extends Component {
       }, mouse)) {
         const x = canvas.math.getX(730, 10, X_MAX, X_MIN, state.mouse.x)
 
-        for (let i = 0; i < DATA.length; i++) {
-          const index = canvas.math.findNearestIndex(DATA[i].map(d => d.x), x)
+        const { lines } = this.state
 
-          nearest.push(DATA[i][index])
+        for (let i = 0; i < lines.length; i++) {
+          const index = canvas.math.findNearestIndex(lines[i].map(d => d.x), x)
+
+          nearest.push(lines[i][index])
         }
 
         nearestCanvasX = canvas.math.getCanvasX(730, 10, X_MAX, X_MIN, nearest[1].x)
@@ -311,7 +300,6 @@ class LineTestRender extends Component {
           xMax: X_MAX,
           yMin: Y_MIN,
           yMax: Y_MAX,
-          data: DATA[2],
           data: this.state.lines[2] || [],
           step: 100,
           lineColor: 'lime'
