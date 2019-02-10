@@ -1,115 +1,119 @@
 import React, { Component } from 'react'
-import {GraphCanvas} from 'react-canvas-time-series'
-import { rand } from '../util'
+import { Graphs, canvas } from 'react-canvas-time-series'
+import moment from 'moment'
 
-const X_MIN = 0
-const X_MAX = 100
-const Y_MIN = 0
-const Y_MAX = 100
+const now = moment()
+const days = [
+  ...Array(10).keys()
+]
+.map(i => now.clone().startOf("day").subtract(i, "day").unix())
+.reverse()
 
-function generateRandomData (length) {
-  let data = []
+const WIDTH = 800
+const HEIGHT = 250
 
-  const xStep = (X_MAX - X_MIN) / length
-  for (let i = 0; i < length; i++) {
-    data.push({
-      x: i * xStep,
-      y: rand(Y_MIN, Y_MAX),
-    })
-  }
+// top, bottom, left, right
+const PADDING = 10
 
-  return data
+const X_AXIS_HEIGHT = 50
+const Y_AXIS_WIDTH = 50
+
+const X_AXIS = {
+  top: HEIGHT - PADDING - X_AXIS_HEIGHT,
+  left: PADDING,
+  width: WIDTH - Y_AXIS_WIDTH - 2 * PADDING,
+  height: HEIGHT - X_AXIS_HEIGHT - 2 * PADDING,
 }
 
-const FIXED_DATA = [{
-  x: X_MIN,
-  y: Y_MIN
-}, {
-  x: (X_MIN + X_MAX) / 2,
-  y: (Y_MAX + Y_MIN) / 2,
-}, {
-  x: X_MAX,
-  y: Y_MAX,
-}]
+const Y_AXIS = {
+  top: PADDING,
+  left: WIDTH - PADDING - Y_AXIS_WIDTH,
+  width: Y_AXIS_WIDTH,
+  height: HEIGHT - X_AXIS_HEIGHT - 2 * PADDING
+}
 
-const RANDOM_DATA_SMALL = generateRandomData(10)
-const RANDOM_DATA_MEDIUM = generateRandomData(100)
-const RANDOM_DATA_LARGE = generateRandomData(1000)
-
-const NUM_Y_INTERVALS = 10
+const GRAPH = {
+  top: PADDING,
+  left: PADDING,
+  width: X_AXIS.width,
+  height: Y_AXIS.height,
+}
 
 class BarTestRender extends Component {
-  render () {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      mouse: {
+        x: undefined,
+        y: undefined,
+      },
+      xMin: days[0],
+      xMax: days[days.length - 1],
+      xTicks: days,
+      yMin: 0,
+      yMax: 10000,
+      yTicks: [0, 2000, 4000, 6000, 8000, 10000]
+    }
+  }
+
+  render() {
+    const { xMin, xMax, yMin, yMax, mouse } = this.state
+
     return (
-      <div>
-        <h3>Bar (Fixed data)</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'bar',
-            barWidth: 100,
-            data: FIXED_DATA,
-          }]}
-        />
-
-        <h3>{`Bar (Random ${RANDOM_DATA_SMALL.length} data)`}</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'bar',
-            width: 20,
-            data: RANDOM_DATA_SMALL,
-          }]}
-        />
-
-        <h3>{`Bar (Random ${RANDOM_DATA_MEDIUM.length} data)`}</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'bar',
-            width: 5,
-            data: RANDOM_DATA_MEDIUM,
-          }]}
-        />
-
-        <h3>{`Bar (Random ${RANDOM_DATA_LARGE.length} data)`}</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'bar',
-            width: 2,
-            data: RANDOM_DATA_LARGE,
-          }]}
-        />
-
-        <h3>Bar (Bar props)</h3>
-        <GraphCanvas
-          {...this.props}
-          graphs={[{
-            type: 'bar',
-            getColor: d => 'rgba(255, 0, 255, 0.5)',
-            width: 60,
-            data: [{
-              x: (X_MAX + X_MIN) / 2,
-              y: (Y_MAX - Y_MIN) / 2
-            }]
-          }]}
-        />
-      </div>
+      <Graphs
+        width={WIDTH}
+        height={HEIGHT}
+        backgroundColor="beige"
+        axes={[{
+          at: 'bottom',
+          top: X_AXIS.top,
+          left: X_AXIS.left,
+          width: X_AXIS.width,
+          height: X_AXIS.height,
+          lineColor: 'blue',
+          xMin,
+          xMax,
+          ticks: this.state.xTicks,
+          renderTick: x => moment(x * 1000).format("MM-DD"),
+          labels: [{
+            x: canvas.math.isInsideRect({
+              top: GRAPH.top,
+              left: GRAPH.left,
+              width: GRAPH.width,
+              height: GRAPH.height,
+            }, mouse) ? canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x) : undefined,
+            color: 'white',
+            backgroundColor: 'black',
+            render: x => moment(x * 1000).format("MM-DD HH:mm"),
+            width: 80,
+          }],
+        }, {
+          at: 'right',
+          top: Y_AXIS.top,
+          left: Y_AXIS.left,
+          width: Y_AXIS.width,
+          height: Y_AXIS.height,
+          lineColor: 'blue',
+          yMin,
+          yMax,
+          ticks: this.state.yTicks,
+          renderTick: x => x,
+          labels: [{
+            y: canvas.math.isInsideRect({
+              top: GRAPH.top,
+              left: GRAPH.left,
+              width: GRAPH.width,
+              height: GRAPH.height,
+            }, mouse) ? canvas.math.getY(GRAPH.height, GRAPH.top, yMax, yMin, mouse.y) : undefined,
+            color: 'white',
+            backgroundColor: 'black',
+            render: y => y,
+          }],
+        }]}
+      />
     )
   }
-}
-
-BarTestRender.defaultProps = {
-  background: {
-    color: 'beige',
-    yTickInterval: 10,
-    xTickInterval: 10,
-  },
-  xMin: X_MIN,
-  xMax: X_MAX,
-  yMin: Y_MIN,
-  yMax: Y_MAX,
 }
 
 export default BarTestRender
