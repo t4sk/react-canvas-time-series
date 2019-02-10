@@ -72,13 +72,13 @@ export function draw(ctx, props) {
   if (at == 'top') {
     ctx.beginPath()
     ctx.moveTo(left, top + height)
-    ctx.lineTo(width, top + height)
+    ctx.lineTo(left + width, top + height)
     ctx.stroke()
   }
   else if (at == 'bottom') {
     ctx.beginPath()
     ctx.moveTo(left, top)
-    ctx.lineTo(width, top)
+    ctx.lineTo(left + width, top)
     ctx.stroke()
   }
 
