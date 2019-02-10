@@ -62,7 +62,7 @@ export function draw (ctx, props) {
       canvasX - barWidth / 2,
       canvasY,
       barWidth,
-      barHeight
+      Math.max(0, barHeight - 1),
     )
   }
 }
