@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Graphs, canvas } from 'react-canvas-time-series'
 import moment from 'moment'
+import { fetch } from '../util'
 
+// data
 const now = moment()
 const days = [
   ...Array(10).keys()
@@ -9,6 +11,16 @@ const days = [
 .map(i => now.clone().startOf("day").subtract(i, "day").unix())
 .reverse()
 
+const Y_MIN = 0
+const Y_MAX = 10000
+
+let cache = {
+  xMin: undefined,
+  xMax: undefined,
+  data: {}
+}
+
+// graph
 const WIDTH = 800
 const HEIGHT = 250
 
@@ -51,15 +63,37 @@ class BarTestRender extends Component {
       xMin: days[0],
       xMax: days[days.length - 1],
       xTicks: days,
-      yMin: 0,
-      yMax: 10000,
-      yTicks: [0, 2000, 4000, 6000, 8000, 10000]
+      yMin: Y_MIN,
+      yMax: Y_MAX,
+      yTicks: [0, 2000, 4000, 6000, 8000, 10000],
+      data: [],
     }
+  }
+
+  componentDidMount() {
+    this.fetch({
+      xMin: this.state.xMin,
+      xMax: this.state.xMax,
+    })
+  }
+
+  fetch = async ({ xMin, xMax }) => {
+    const data = await fetch(cache, {
+      xMin, xMax
+    }, {
+      ms: 1000,
+      length: 1000,
+      yMin: Y_MIN,
+      yMax: Y_MAX,
+    })
+
+    this.setState(state => ({ data }))
   }
 
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
+    console.log(this.state.data)
     return (
       <Graphs
         width={WIDTH}
@@ -131,6 +165,19 @@ class BarTestRender extends Component {
           yMax,
           data: this.state.yTicks,
           lineColor: 'lightgrey',
+        }, {
+          type: 'bars',
+          top: GRAPH.top,
+          left: GRAPH.left,
+          height: GRAPH.height,
+          width: GRAPH.width,
+          xMin,
+          xMax,
+          yMin,
+          yMax,
+          barWidth: 10,
+          getBarColor: () => 'orange',
+          data: this.state.data,
         }]}
       />
     )

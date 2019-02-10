@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import * as xLines from './canvas/x-lines'
 import * as yLines from './canvas/y-lines'
+import * as bars from './canvas/bars'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
 import * as xAxis from './canvas/x-axis'
@@ -22,6 +23,7 @@ const GRAPHS = {
   yLines,
   line,
   point,
+  bars,
 }
 
 class Graphs extends Component {
@@ -178,7 +180,7 @@ Graphs.propTypes = {
     at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
   })).isRequired,
   graphs: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['xLines', 'yLines', 'line', 'point'])
+    type: PropTypes.oneOf(['xLines', 'yLines', 'line', 'point', 'bars'])
   })).isRequired,
   frames: PropTypes.array.isRequired,
   crosshair: PropTypes.object,

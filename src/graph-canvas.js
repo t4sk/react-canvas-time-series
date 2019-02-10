@@ -5,7 +5,6 @@ import {compose} from './util'
 import * as background from './canvas/background'
 import * as line from './canvas/line'
 import * as point from './canvas/point'
-import * as bar from './canvas/bar'
 import * as candlestick from './canvas/candlestick'
 import * as label from './canvas/label'
 import * as ui from './canvas/ui'
@@ -16,7 +15,6 @@ import {getGraphDimensions} from './canvas/util'
 const GRAPHS = {
   line,
   point,
-  bar,
   candlestick,
 }
 
