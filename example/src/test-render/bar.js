@@ -111,6 +111,27 @@ class BarTestRender extends Component {
             render: y => y,
           }],
         }]}
+        graphs={[{
+          type: 'xLines',
+          top: GRAPH.top,
+          left: GRAPH.left,
+          height: GRAPH.height,
+          width: GRAPH.width,
+          xMin,
+          xMax,
+          data: this.state.xTicks,
+          lineColor: 'lightgrey',
+        }, {
+          type: 'yLines',
+          top: GRAPH.top,
+          left: GRAPH.left,
+          height: GRAPH.height,
+          width: GRAPH.width,
+          yMin,
+          yMax,
+          data: this.state.yTicks,
+          lineColor: 'lightgrey',
+        }]}
       />
     )
   }
