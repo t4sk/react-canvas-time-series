@@ -66,6 +66,7 @@ class BarTestRender extends Component {
       yMin: Y_MIN,
       yMax: Y_MAX,
       yTicks: [0, 2000, 4000, 6000, 8000, 10000],
+      fetching: false,
       data: [],
     }
   }
@@ -78,27 +79,33 @@ class BarTestRender extends Component {
   }
 
   fetch = async ({ xMin, xMax }) => {
+    this.setState(state => ({
+      fetching: true,
+    }))
+
     const data = await fetch(cache, {
       xMin, xMax
     }, {
       ms: 1000,
-      length: 1000,
+      length: 100,
       yMin: Y_MIN,
       yMax: Y_MAX,
     })
 
-    this.setState(state => ({ data }))
+    this.setState(state => ({
+      fetching: false,
+      data,
+    }))
   }
 
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
-    console.log(this.state.data)
     return (
       <Graphs
         width={WIDTH}
         height={HEIGHT}
-        backgroundColor="beige"
+        backgroundColor={this.state.fetching ? "#f2f2f2" : "beige"}
         axes={[{
           at: 'bottom',
           top: X_AXIS.top,

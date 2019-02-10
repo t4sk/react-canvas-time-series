@@ -127,3 +127,13 @@ export function debounce(func, time) {
     timeout = setTimeout(() => func.apply(context, args), time)
   }
 }
+
+export function takeEvery(step = 1, data = []) {
+  let arr = []
+
+  for (let i = 0; i < data.length; i += step) {
+    arr.push(data[i])
+  }
+  
+  return arr
+}
