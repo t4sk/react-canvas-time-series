@@ -56,6 +56,10 @@ class BarTestRender extends Component {
     super(props)
 
     this.state = {
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartXMin: undefined,
+      dragStartXMax: undefined,
       mouse: {
         x: undefined,
         y: undefined,
@@ -106,12 +110,7 @@ class BarTestRender extends Component {
       let labelY
 
       if (
-        canvas.math.isInsideRect({
-          top: GRAPH.top,
-          left: GRAPH.left,
-          width: GRAPH.width,
-          height: GRAPH.height,
-        }, mouse)
+        canvas.math.isInsideRect(GRAPH, mouse)
       ) {
         const { xMin, xMax, yMin, yMax } = state
         labelX = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
@@ -129,8 +128,36 @@ class BarTestRender extends Component {
     })
   }
 
+  onMouseDown = (e, mouse) => {
+    if (
+      canvas.math.isInsideRect(GRAPH, mouse)
+    ) {
+      const { xMin, xMax } = this.state
+
+      this.setState(state => ({
+        dragging: true,
+        dragStartCanvasX: mouse.x,
+        dragStartXMin: xMin,
+        dragStartXMax: xMax,
+      }))
+    }
+  }
+
+  onMouseUp = (e, mouse) => {
+    this.setState(state => ({
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartXMin: undefined,
+      dragStartXMax: undefined,
+    }))
+  }
+
   onMouseOut = () => {
     this.setState(state => ({
+      dragging: false,
+      dragStartCanvasX: undefined,
+      dragStartXMin: undefined,
+      dragStartXMax: undefined,
       mouse: {
         x: undefined,
         y: undefined,
@@ -232,6 +259,8 @@ class BarTestRender extends Component {
         }}
         onMouseMove={this.onMouseMove}
         onMouseOut={this.onMouseOut}
+        onMouseDown={this.onMouseDown}
+        onMouseUp={this.onMouseUp}
       />
     )
   }
