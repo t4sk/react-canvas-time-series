@@ -60,6 +60,8 @@ class BarTestRender extends Component {
         x: undefined,
         y: undefined,
       },
+      labelX: undefined,
+      labelY: undefined,
       xMin: days[0],
       xMax: days[days.length - 1],
       xTicks: days,
@@ -98,6 +100,46 @@ class BarTestRender extends Component {
     }))
   }
 
+  onMouseMove = (e, mouse) => {
+    this.setState(state => {
+      let labelX
+      let labelY
+
+      if (
+        canvas.math.isInsideRect({
+          top: GRAPH.top,
+          left: GRAPH.left,
+          width: GRAPH.width,
+          height: GRAPH.height,
+        }, mouse)
+      ) {
+        const { xMin, xMax, yMin, yMax } = state
+        labelX = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
+        labelY = canvas.math.getY(GRAPH.height, GRAPH.top, yMax, yMin, mouse.y)
+      }
+
+      return {
+        mouse: {
+          x: mouse.x,
+          y: mouse.y,
+        },
+        labelX,
+        labelY,
+      }
+    })
+  }
+
+  onMouseOut = () => {
+    this.setState(state => ({
+      mouse: {
+        x: undefined,
+        y: undefined,
+      },
+      labelX: undefined,
+      labelY: undefined,
+    }))
+  }
+
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
@@ -118,12 +160,7 @@ class BarTestRender extends Component {
           ticks: this.state.xTicks,
           renderTick: x => moment(x * 1000).format("MM-DD"),
           labels: [{
-            x: canvas.math.isInsideRect({
-              top: GRAPH.top,
-              left: GRAPH.left,
-              width: GRAPH.width,
-              height: GRAPH.height,
-            }, mouse) ? canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x) : undefined,
+            x: this.state.labelX,
             color: 'white',
             backgroundColor: 'black',
             render: x => moment(x * 1000).format("MM-DD HH:mm"),
@@ -141,15 +178,10 @@ class BarTestRender extends Component {
           ticks: this.state.yTicks,
           renderTick: x => x,
           labels: [{
-            y: canvas.math.isInsideRect({
-              top: GRAPH.top,
-              left: GRAPH.left,
-              width: GRAPH.width,
-              height: GRAPH.height,
-            }, mouse) ? canvas.math.getY(GRAPH.height, GRAPH.top, yMax, yMin, mouse.y) : undefined,
+            y: this.state.labelY,
             color: 'white',
             backgroundColor: 'black',
-            render: y => y,
+            render: y => Math.round(y),
           }],
         }]}
         graphs={[{
@@ -186,6 +218,20 @@ class BarTestRender extends Component {
           getBarColor: () => 'orange',
           data: this.state.data,
         }]}
+        crosshair={{
+          top: GRAPH.top,
+          left: GRAPH.left,
+          height: GRAPH.height,
+          width: GRAPH.width,
+          canvasX: mouse.x,
+          canvasY: mouse.y,
+          yLineColor: 'orange',
+          yLineWidth: 0.5,
+          xLineColor: 'rgba(255, 140, 0, 0.5)',
+          xLineWidth: 1,
+        }}
+        onMouseMove={this.onMouseMove}
+        onMouseOut={this.onMouseOut}
       />
     )
   }
