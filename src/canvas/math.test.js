@@ -1,12 +1,9 @@
 // @flow
 import {
-  linear,
   getCanvasX,
   getCanvasY,
   getX,
   getY,
-  toX,
-  toY,
   nearestStepBelow,
   findNearestIndex,
   isInsideRect,
@@ -31,18 +28,6 @@ test('isInsideRect', () => {
   expect(isInsideRect(rect, {x: 121, y: 10})).toBe(false)
   expect(isInsideRect(rect, {x: 20, y: 9})).toBe(false)
   expect(isInsideRect(rect, {x: 120, y: 211})).toBe(false)
-})
-
-test("linear", () => {
-  const toY = linear({
-    dy: 100,
-    dx: 250,
-    y0: 10,
-  })
-
-  expect(toY(250)).toEqual(110)
-  expect(toY(0)).toEqual(10)
-  expect(toY(125)).toEqual(60)
 })
 
 test("get canvas x", () => {
