@@ -196,6 +196,9 @@ class BarTestRender extends Component {
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
+    // TODO fetch on xMin or xMax change
+    // TODO update xTicks on drag
+    // TODO filter data by xMin and xMax on drag
     return (
       <Graphs
         width={WIDTH}
