@@ -108,6 +108,8 @@ class BarTestRender extends Component {
     this.setState(state => {
       let labelX
       let labelY
+      let newXMin
+      let newXMax
 
       if (
         canvas.math.isInsideRect(GRAPH, mouse)
@@ -115,6 +117,28 @@ class BarTestRender extends Component {
         const { xMin, xMax, yMin, yMax } = state
         labelX = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
         labelY = canvas.math.getY(GRAPH.height, GRAPH.top, yMax, yMin, mouse.y)
+
+        if (state.dragging) {
+          const { dragStartCanvasX, dragStartXMin, dragStartXMax } = state
+
+          const diff = mouse.x - dragStartCanvasX
+
+          newXMin = canvas.math.getX(
+            GRAPH.width,
+            GRAPH.left,
+            dragStartXMax,
+            dragStartXMin,
+            GRAPH.left - diff
+          )
+
+          newXMax = canvas.math.getX(
+            GRAPH.width,
+            GRAPH.left,
+            dragStartXMax,
+            dragStartXMin,
+            GRAPH.width + GRAPH.left - diff
+          )
+        }
       }
 
       return {
@@ -122,6 +146,8 @@ class BarTestRender extends Component {
           x: mouse.x,
           y: mouse.y,
         },
+        xMin: newXMin == undefined ? state.xMin : newXMin,
+        xMax: newXMax == undefined ? state.xMax : newXMax,
         labelX,
         labelY,
       }
