@@ -166,9 +166,7 @@ class BarTestRender extends Component {
   }
 
   onMouseDown = (e, mouse) => {
-    if (
-      canvas.math.isInsideRect(GRAPH, mouse)
-    ) {
+    if (canvas.math.isInsideRect(GRAPH, mouse)) {
       const { xMin, xMax } = this.state
 
       this.setState(state => ({
@@ -209,7 +207,6 @@ class BarTestRender extends Component {
 
     // TODO fetch on xMin or xMax change
     // TODO update xTicks on drag
-    // TODO filter data by xMin and xMax on drag
     return (
       <Graphs
         width={WIDTH}
@@ -283,7 +280,7 @@ class BarTestRender extends Component {
           yMax,
           barWidth: 10,
           getBarColor: () => 'orange',
-          data: this.state.data,
+          data: this.state.data.filter(d => d.x >= xMin && d.x <= xMax),
         }]}
         crosshair={{
           top: GRAPH.top,
