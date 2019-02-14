@@ -84,6 +84,15 @@ class BarTestRender extends Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.xMin != this.state.xMin || prevState.xMax != this.state.xMax) {
+      this.fetch({
+        xMin: this.state.xMin,
+        xMax: this.state.xMax,
+      })
+    }
+  }
+
   fetch = async ({ xMin, xMax }) => {
     this.setState(state => ({
       fetching: true,
@@ -205,7 +214,6 @@ class BarTestRender extends Component {
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
-    // TODO fetch on xMin or xMax change
     // TODO update xTicks on drag
     return (
       <Graphs

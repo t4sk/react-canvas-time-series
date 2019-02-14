@@ -39,7 +39,7 @@ export async function fetch(cache, { xMin, xMax }, opts = {}) {
     ms = 1000,
     yMin = 0,
     yMax = 5000,
-    xStep = 3600,
+    xStep = 3600 * 6,
   } = opts
 
   await timeout(ms)
