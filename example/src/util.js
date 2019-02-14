@@ -37,9 +37,9 @@ export async function fakeFetch(data, ms) {
 export async function fetch(cache, { xMin, xMax }, opts = {}) {
   const {
     ms = 1000,
-    length = 10000,
     yMin = 0,
     yMax = 5000,
+    xStep = 3600,
   } = opts
 
   await timeout(ms)
@@ -50,7 +50,7 @@ export async function fetch(cache, { xMin, xMax }, opts = {}) {
       .sort((a, b) => a.x - b.x)
   }
 
-  const data = getRandomData(length, xMin, xMax, yMin, yMax)
+  const data = getRandomData(xStep, xMin, xMax, yMin, yMax)
 
   cache.xMin = Math.min(cache.xMin, xMin)
   cache.xMax = Math.max(cache.xMax, xMax)
@@ -66,11 +66,13 @@ export async function fetch(cache, { xMin, xMax }, opts = {}) {
     .sort((a, b) => a.x - b.x)
 }
 
-export function getRandomData(length, xMin, xMax, yMin, yMax) {
+export function getRandomData(xStep, xMin, xMax, yMin, yMax) {
+  const x0 = Math.round(xMin / xStep) * xStep
+
   let data = []
-  for (let i = 0; i < length; i++) {
+  for (let x = x0; x <= xMax; x += xStep) {
     data.push({
-      x: rand(xMin, xMax),
+      x,
       y: rand(yMin, yMax)
     })
   }
@@ -134,6 +136,6 @@ export function takeEvery(step = 1, data = []) {
   for (let i = 0; i < data.length; i += step) {
     arr.push(data[i])
   }
-  
+
   return arr
 }
