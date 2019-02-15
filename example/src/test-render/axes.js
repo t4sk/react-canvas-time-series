@@ -6,7 +6,6 @@ const X_MAX = 110
 const Y_MIN = 1000
 const Y_MAX = 10000
 const X_TICKS = [20, 30, 40, 50, 60, 70, 80, 90, 100]
-const Y_TICKS = [2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
 
 class Axes extends Component {
   render() {
@@ -43,7 +42,7 @@ class Axes extends Component {
           lineColor: 'green',
           yMin: Y_MIN,
           yMax: Y_MAX,
-          ticks: Y_TICKS,
+          tickInterval: 1000,
           labels: [{
             y: (Y_MIN + Y_MAX) / 2,
             color: 'white',
@@ -59,7 +58,7 @@ class Axes extends Component {
           lineColor: 'orange',
           yMin: Y_MIN,
           yMax: Y_MAX,
-          ticks: Y_TICKS,
+          tickInterval: 1000,
           labels: [{
             y: (Y_MIN + Y_MAX) / 2,
             color: 'white',

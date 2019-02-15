@@ -19,7 +19,7 @@ const propTypes = {
   font: PropTypes.string.isRequired,
   textColor: PropTypes.string.isRequired,
 
-  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  tickInterval: PropTypes.number.isRequired,
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 
@@ -32,7 +32,7 @@ const defaultProps = {
   lineColor: 'black',
   font: '',
   textColor: 'black',
-  ticks: [],
+  tickInterval: 1,
   tickLength: 10,
   renderTick: x => x,
   labels: [],
@@ -53,7 +53,7 @@ export function draw(ctx, props) {
     left,
     top,
     lineColor,
-    ticks,
+    tickInterval,
     tickLength,
     renderTick,
     font,
@@ -88,8 +88,8 @@ export function draw(ctx, props) {
   ctx.textAlign = at == 'left' ? 'right' : 'left'
   ctx.textBaseline = 'middle'
 
-  for (let tick of ticks) {
-    const canvasY = getCanvasY(height, top, yMax, yMin, tick)
+  for (let y = yMin; y <= yMax; y += tickInterval) {
+    const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
     if (at == 'left') {
       ctx.beginPath()
@@ -98,7 +98,7 @@ export function draw(ctx, props) {
       ctx.stroke()
 
       ctx.fillText(
-        renderTick(tick),
+        renderTick(y),
         left + width - tickLength - TICK_TEXT_PADDING,
         canvasY
       )
@@ -110,7 +110,7 @@ export function draw(ctx, props) {
       ctx.stroke()
 
       ctx.fillText(
-        renderTick(tick),
+        renderTick(y),
         left + tickLength + TICK_TEXT_PADDING,
         canvasY
       )
