@@ -75,6 +75,7 @@ class Axes extends Component {
           xMin: X_MIN,
           xMax: X_MAX,
           ticks: X_TICKS,
+          tickInterval: 5,
           labels: [{
             x: (X_MIN + X_MAX) / 2,
             color: 'white',

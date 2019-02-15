@@ -19,7 +19,8 @@ const propTypes = {
   font: PropTypes.string.isRequired,
   textColor: PropTypes.string.isRequired,
 
-  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
+  tickInterval: PropTypes.number,
+  ticks: PropTypes.arrayOf(PropTypes.number),
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 
@@ -45,7 +46,51 @@ function setDefaults(props) {
   }
 }
 
+function drawTick(ctx, props) {
+  const {
+    at,
+    width,
+    height,
+    left,
+    top,
+    tickLength,
+    renderTick,
+    xMin,
+    xMax,
+    x,
+  } = props
+
+  const canvasX = getCanvasX(width, left, xMax, xMin, x)
+
+  if (at == 'top') {
+    ctx.beginPath()
+    ctx.moveTo(canvasX, top + height)
+    ctx.lineTo(canvasX, top + height - tickLength)
+    ctx.stroke()
+
+    ctx.fillText(
+      renderTick(x),
+      canvasX,
+      top + height - tickLength - TICK_TEXT_PADDING
+    )
+  }
+  else if (at == 'bottom') {
+    ctx.beginPath()
+    ctx.moveTo(canvasX, top)
+    ctx.lineTo(canvasX, top + tickLength)
+    ctx.stroke()
+
+    ctx.fillText(
+      renderTick(x),
+      canvasX,
+      top + tickLength + TICK_TEXT_PADDING
+    )
+  }
+}
+
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     at,
     width,
@@ -53,6 +98,7 @@ export function draw(ctx, props) {
     left,
     top,
     lineColor,
+    tickInterval,
     ticks,
     tickLength,
     renderTick,
@@ -61,9 +107,9 @@ export function draw(ctx, props) {
     xMin,
     xMax,
     labels,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'x-axis')
+  PropTypes.checkPropTypes(propTypes, props, 'prop', 'x-axis')
 
   // style x axis line
   ctx.lineWidth = 1
@@ -88,33 +134,20 @@ export function draw(ctx, props) {
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
+  if (tickInterval) {
+    for (let x = xMin; x <= xMax; x += tickInterval) {
+      drawTick(ctx, {
+        ...props,
+        x,
+      })
+    }
+  }
+
   for (let tick of ticks) {
-    const canvasX = getCanvasX(width, left, xMax, xMin, tick)
-
-    if (at == 'top') {
-      ctx.beginPath()
-      ctx.moveTo(canvasX, top + height)
-      ctx.lineTo(canvasX, top + height - tickLength)
-      ctx.stroke()
-
-      ctx.fillText(
-        renderTick(tick),
-        canvasX,
-        top + height - tickLength - TICK_TEXT_PADDING
-      )
-    }
-    else if (at == 'bottom') {
-      ctx.beginPath()
-      ctx.moveTo(canvasX, top)
-      ctx.lineTo(canvasX, top + tickLength)
-      ctx.stroke()
-
-      ctx.fillText(
-        renderTick(tick),
-        canvasX,
-        top + tickLength + TICK_TEXT_PADDING
-      )
-    }
+    drawTick(ctx, {
+      ...props,
+      x: tick,
+    })
   }
 
   for (let label of labels) {
