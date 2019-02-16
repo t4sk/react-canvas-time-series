@@ -4,7 +4,7 @@ import {
   getCanvasY,
   getX,
   getY,
-  nearestStepBelow,
+  stepBelow,
   findNearestIndex,
   isInsideRect,
 } from './math'
@@ -74,10 +74,10 @@ test("to y", () => {
   expect(getY(height, top, yMax, yMin, 110)).toEqual(0)
 })
 
-test("nearest step", () => {
-  expect(nearestStepBelow(1901, 5)).toEqual(1900)
-  expect(nearestStepBelow(1904, 5)).toEqual(1900)
-  expect(nearestStepBelow(1905, 5)).toEqual(1905)
+test("step below", () => {
+  expect(stepBelow(1901, 5)).toEqual(1900)
+  expect(stepBelow(1904, 5)).toEqual(1900)
+  expect(stepBelow(1905, 5)).toEqual(1905)
 })
 
 const DATA = [0, 5, 10]

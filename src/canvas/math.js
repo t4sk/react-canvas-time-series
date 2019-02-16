@@ -1,5 +1,10 @@
+// TODO remove
 export function nearestStepBelow (x, step) {
   return Math.floor(x / step) * step
+}
+
+export function stepBelow(x, step) {
+  return x - (x % step)
 }
 
 export function findNearestIndex (arr, x) {
