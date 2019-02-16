@@ -8,7 +8,7 @@ const propTypes = {
   top: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  tickInterval: PropTypes.number.isRequired,
+  yInterval: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
@@ -31,7 +31,7 @@ export function draw(ctx, props) {
     height,
     yMin,
     yMax,
-    tickInterval,
+    yInterval,
     lineColor,
   } = setDefaults(props)
 
@@ -40,7 +40,7 @@ export function draw(ctx, props) {
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
 
-  for (let y = yMin; y <= yMax; y += tickInterval) {
+  for (let y = yMin; y <= yMax; y += yInterval) {
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
     ctx.beginPath()
