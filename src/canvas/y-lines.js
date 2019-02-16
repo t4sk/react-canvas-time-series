@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { getCanvasY } from './math'
+import { getCanvasY, stepBelow } from './math'
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -40,8 +40,13 @@ export function draw(ctx, props) {
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
 
-  // TODO render ticks from y0 = stepBelow(yMin, yInterval)
-  for (let y = yMin; y <= yMax; y += yInterval) {
+  const y0 = stepBelow(yMin, yInterval)
+
+  for (let y = y0; y <= yMax; y += yInterval) {
+    if (y < yMin) {
+      continue
+    }
+    
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
     ctx.beginPath()

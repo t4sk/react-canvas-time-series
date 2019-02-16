@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { getCanvasY } from './math'
+import { getCanvasY, stepBelow } from './math'
 import * as yLabel from './y-label'
 
 const TICK_TEXT_PADDING = 5
@@ -88,8 +88,13 @@ export function draw(ctx, props) {
   ctx.textAlign = at == 'left' ? 'right' : 'left'
   ctx.textBaseline = 'middle'
 
-  // TODO render ticks from y0 = stepBelow(yMin, tickInterval)
-  for (let y = yMin; y <= yMax; y += tickInterval) {
+  const y0 = stepBelow(yMin, tickInterval)
+
+  for (let y = y0; y <= yMax; y += tickInterval) {
+    if (y < yMin) {
+      continue
+    }
+    
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
     if (at == 'left') {
