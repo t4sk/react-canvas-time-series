@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { getCanvasX } from './math'
+import { getCanvasX, stepBelow } from './math'
 import * as xLabel from './x-label'
 
 const TICK_TEXT_PADDING = 10
@@ -135,7 +135,13 @@ export function draw(ctx, props) {
   ctx.textBaseline = 'middle'
 
   if (tickInterval) {
-    for (let x = xMin; x <= xMax; x += tickInterval) {
+    const x0 = stepBelow(xMin, tickInterval)
+
+    for (let x = x0; x <= xMax; x += tickInterval) {
+      if (x < xMin) {
+        continue
+      }
+      
       drawTick(ctx, {
         ...props,
         x,
