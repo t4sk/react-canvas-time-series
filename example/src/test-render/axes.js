@@ -84,6 +84,17 @@ class Axes extends Component {
           }],
         }]}
         graphs={[{
+          type: 'xLines',
+          top: 60,
+          left: 10,
+          height: 380,
+          width: 880,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          xInterval: 5,
+          data: X_TICKS,
+          lineColor: 'lightgrey',
+        }, {
           type: 'yLines',
           top: 60,
           left: 60,
@@ -91,7 +102,7 @@ class Axes extends Component {
           width: 780,
           yMin: Y_MIN,
           yMax: Y_MAX,
-          tickInterval: 1000,
+          yInterval: 1000,
           lineColor: 'lightgrey',
         }]}
       />

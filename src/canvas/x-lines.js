@@ -8,12 +8,14 @@ const propTypes = {
   top: PropTypes.number.isRequired,
   xMin: PropTypes.number.isRequired,
   xMax: PropTypes.number.isRequired,
+  xInterval: PropTypes.number,
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
   lineColor: 'black',
+  data: [],
 }
 
 function setDefaults(props) {
@@ -32,6 +34,7 @@ export function draw(ctx, props) {
     xMin,
     xMax,
     data,
+    xInterval,
     lineColor,
   } = setDefaults(props)
 
@@ -39,6 +42,17 @@ export function draw(ctx, props) {
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
+
+  if (xInterval) {
+    for (let x = xMin; x <= xMax; x += xInterval) {
+      const canvasX = getCanvasX(width, left, xMax, xMin, x)
+
+      ctx.beginPath()
+      ctx.moveTo(canvasX, top)
+      ctx.lineTo(canvasX, top + height)
+      ctx.stroke()
+    }
+  }
 
   for (let x of data) {
     const canvasX = getCanvasX(width, left, xMax, xMin, x)
