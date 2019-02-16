@@ -40,6 +40,7 @@ export function draw(ctx, props) {
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
 
+  // TODO render ticks from y0 = stepBelow(yMin, yInterval)
   for (let y = yMin; y <= yMax; y += yInterval) {
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 

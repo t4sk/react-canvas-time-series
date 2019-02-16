@@ -5,6 +5,7 @@
 - [ ] TODO delete canvas.background
 - [ ] TODO Delete zoomable and draggable
 - [ ] TODO Drag and zoom example
+- [ ] TODO set default props
 
 > react canvas graph time series
 

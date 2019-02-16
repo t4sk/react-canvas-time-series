@@ -88,6 +88,7 @@ export function draw(ctx, props) {
   ctx.textAlign = at == 'left' ? 'right' : 'left'
   ctx.textBaseline = 'middle'
 
+  // TODO render ticks from y0 = stepBelow(yMin, tickInterval)
   for (let y = yMin; y <= yMax; y += tickInterval) {
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
