@@ -83,6 +83,17 @@ class Axes extends Component {
             render: x => 'bottom',
           }],
         }]}
+        graphs={[{
+          type: 'yLines',
+          top: 60,
+          left: 60,
+          height: 380,
+          width: 780,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          tickInterval: 1000,
+          lineColor: 'lightgrey',
+        }]}
       />
     )
   }
