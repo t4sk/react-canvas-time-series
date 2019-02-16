@@ -1,11 +1,11 @@
 # react-canvas-time-series
 
 - [ ] TODO point to points
-- [ ] TODO xTickInterval, yTickInterval
 - [ ] TODO delete canvas.background
 - [ ] TODO Delete zoomable and draggable
 - [ ] TODO Drag and zoom example
 - [ ] TODO set default props
+- [ ] TODO candlestick and volume
 
 > react canvas graph time series
 

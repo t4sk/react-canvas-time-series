@@ -213,8 +213,7 @@ class BarTestRender extends Component {
   render() {
     const { xMin, xMax, yMin, yMax, mouse } = this.state
 
-    // TODO update xTicks on drag
-    // TODO zoom
+    // TODO zoom around mouse
     return (
       <Graphs
         width={WIDTH}
@@ -229,6 +228,7 @@ class BarTestRender extends Component {
           lineColor: 'blue',
           xMin,
           xMax,
+          tickInterval: 3600 * 24,
           ticks: this.state.xTicks,
           renderTick: x => moment(x * 1000).format("MM-DD"),
           labels: [{
@@ -265,6 +265,7 @@ class BarTestRender extends Component {
           xMin,
           xMax,
           data: this.state.xTicks,
+          xInterval: 3600 * 24,
           lineColor: 'lightgrey',
         }, {
           type: 'yLines',
