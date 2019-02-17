@@ -64,6 +64,10 @@ class BarTestRender extends Component {
         x: undefined,
         y: undefined,
       },
+      nearest: {
+        x: undefined,
+        y: undefined,
+      },
       labelX: undefined,
       labelY: undefined,
       xMin: days[0],
@@ -150,6 +154,10 @@ class BarTestRender extends Component {
     this.setState(state => {
       let labelX
       let labelY
+      let nearest = {
+        x: undefined,
+        y: undefined,
+      }
 
       const { xMin, xMax } = this.getXRange(mouse, state)
 
@@ -158,6 +166,16 @@ class BarTestRender extends Component {
 
         labelX = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
         labelY = canvas.math.getY(GRAPH.height, GRAPH.top, yMax, yMin, mouse.y)
+
+        // find nearest data to mouse.x
+        const x = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
+        const i = canvas.math.findNearestIndex(
+          state.data.map(d => d.x).filter(x => x >= xMin && x <= xMax),
+          x
+        )
+
+        nearest.x = state.data[i] ? state.data[i].x : undefined
+        nearest.y = state.data[i] ? state.data[i].y : undefined
       }
 
       return {
@@ -169,6 +187,7 @@ class BarTestRender extends Component {
         xMax,
         labelX,
         labelY,
+        nearest,
       }
     })
   }
@@ -207,11 +226,15 @@ class BarTestRender extends Component {
       },
       labelX: undefined,
       labelY: undefined,
+      nearest: {
+        x: undefined,
+        y: undefined,
+      }
     }))
   }
 
   render() {
-    const { xMin, xMax, yMin, yMax, mouse } = this.state
+    const { xMin, xMax, yMin, yMax, mouse, nearest } = this.state
 
     // TODO zoom around mouse
     return (
@@ -303,6 +326,17 @@ class BarTestRender extends Component {
           xLineColor: 'rgba(255, 140, 0, 0.5)',
           xLineWidth: 1,
         }}
+        frames={[{
+          text: nearest.x ? moment(nearest.x * 1000).format("MM-DD HH:mm") : '',
+          color: 'black',
+          canvasX: 10,
+          canvasY: 10
+        }, {
+          text: nearest.y ? nearest.y.toFixed() : '',
+          color: 'orange',
+          canvasX: 10,
+          canvasY: 10 + 15,
+        }]}
         onMouseMove={this.onMouseMove}
         onMouseOut={this.onMouseOut}
         onMouseDown={this.onMouseDown}
