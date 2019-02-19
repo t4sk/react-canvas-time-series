@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
-import { getCanvasX, stepBelow } from './math'
-import * as xLabel from './x-label'
+import PropTypes from "prop-types"
+import { getCanvasX, stepBelow } from "./math"
+import * as xLabel from "./x-label"
 
 const TICK_TEXT_PADDING = 10
 
 const propTypes = {
-  at: PropTypes.oneOf(['top', 'bottom']).isRequired,
+  at: PropTypes.oneOf(["top", "bottom"]).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,
@@ -24,15 +24,17 @@ const propTypes = {
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 
-  labels: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number
-  })).isRequired,
+  labels: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number,
+    })
+  ).isRequired,
 }
 
 const defaultProps = {
-  lineColor: 'black',
-  font: '',
-  textColor: 'black',
+  lineColor: "black",
+  font: "",
+  textColor: "black",
   ticks: [],
   tickLength: 10,
   renderTick: x => x,
@@ -62,7 +64,7 @@ function drawTick(ctx, props) {
 
   const canvasX = getCanvasX(width, left, xMax, xMin, x)
 
-  if (at == 'top') {
+  if (at == "top") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top + height)
     ctx.lineTo(canvasX, top + height - tickLength)
@@ -73,18 +75,13 @@ function drawTick(ctx, props) {
       canvasX,
       top + height - tickLength - TICK_TEXT_PADDING
     )
-  }
-  else if (at == 'bottom') {
+  } else if (at == "bottom") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top)
     ctx.lineTo(canvasX, top + tickLength)
     ctx.stroke()
 
-    ctx.fillText(
-      renderTick(x),
-      canvasX,
-      top + tickLength + TICK_TEXT_PADDING
-    )
+    ctx.fillText(renderTick(x), canvasX, top + tickLength + TICK_TEXT_PADDING)
   }
 }
 
@@ -109,19 +106,18 @@ export function draw(ctx, props) {
     labels,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'x-axis')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "x-axis")
 
   // style x axis line
   ctx.lineWidth = 1
   ctx.strokeStyle = lineColor
 
-  if (at == 'top') {
+  if (at == "top") {
     ctx.beginPath()
     ctx.moveTo(left, top + height)
     ctx.lineTo(left + width, top + height)
     ctx.stroke()
-  }
-  else if (at == 'bottom') {
+  } else if (at == "bottom") {
     ctx.beginPath()
     ctx.moveTo(left, top)
     ctx.lineTo(left + width, top)
@@ -131,8 +127,8 @@ export function draw(ctx, props) {
   // style ticks
   ctx.font = font
   ctx.fillStyle = textColor
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
+  ctx.textAlign = "center"
+  ctx.textBaseline = "middle"
 
   if (tickInterval) {
     const x0 = stepBelow(xMin, tickInterval)
@@ -141,7 +137,7 @@ export function draw(ctx, props) {
       if (x < xMin) {
         continue
       }
-      
+
       drawTick(ctx, {
         ...props,
         x,
@@ -150,6 +146,10 @@ export function draw(ctx, props) {
   }
 
   for (let tick of ticks) {
+    if (tick < xMin || tick > xMax) {
+      continue
+    }
+
     drawTick(ctx, {
       ...props,
       x: tick,
@@ -174,8 +174,7 @@ export function draw(ctx, props) {
         xMax,
         ...label,
       })
-    }
-    else if (at == "bottom") {
+    } else if (at == "bottom") {
       xLabel.draw(ctx, {
         axisAt: at,
         rect: {

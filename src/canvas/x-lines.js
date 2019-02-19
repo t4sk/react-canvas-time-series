@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasX, stepBelow } from './math'
+import PropTypes from "prop-types"
+import { getCanvasX, stepBelow } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -14,7 +14,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  lineColor: 'black',
+  lineColor: "black",
   data: [],
 }
 
@@ -38,14 +38,14 @@ export function draw(ctx, props) {
     lineColor,
   } = setDefaults(props)
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'x-lines')
+  PropTypes.checkPropTypes(propTypes, setDefaults(props), "prop", "x-lines")
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1
 
   if (xInterval) {
     const x0 = stepBelow(xMin, xInterval)
-    
+
     for (let x = x0; x <= xMax; x += xInterval) {
       if (x < xMin) {
         continue
@@ -61,6 +61,10 @@ export function draw(ctx, props) {
   }
 
   for (let x of data) {
+    if (x < xMin || x > xMax) {
+      continue
+    }
+
     const canvasX = getCanvasX(width, left, xMax, xMin, x)
 
     ctx.beginPath()
