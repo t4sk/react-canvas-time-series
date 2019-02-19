@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasX, getCanvasY } from './math'
+import PropTypes from "prop-types"
+import { getCanvasX, getCanvasY } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -10,17 +10,19 @@ const propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   step: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
-  lineColor: '',
-  step: 1
+  lineColor: "",
+  step: 1,
 }
 
 function setDefaults(props) {
@@ -31,6 +33,8 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     top,
     left,
@@ -43,9 +47,9 @@ export function draw(ctx, props) {
     data,
     lineColor,
     step,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'line')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "line")
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1

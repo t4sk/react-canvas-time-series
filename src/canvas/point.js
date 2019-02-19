@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasX, getCanvasY } from './math'
+import PropTypes from "prop-types"
+import { getCanvasX, getCanvasY } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -19,9 +19,9 @@ const propTypes = {
 }
 
 const defaultProps = {
-  color: 'black',
+  color: "black",
   radius: 3,
-  ambientColor: 'rgba(80, 80, 80, 0.3)',
+  ambientColor: "rgba(80, 80, 80, 0.3)",
   ambientRadius: 6,
 }
 
@@ -33,6 +33,8 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     top,
     left,
@@ -48,9 +50,9 @@ export function draw(ctx, props) {
     radius,
     ambientColor,
     ambientRadius,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'point')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "point")
 
   if (x === undefined || y === undefined) {
     return

@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasX, getCanvasY } from './math'
+import PropTypes from "prop-types"
+import { getCanvasX, getCanvasY } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -10,27 +10,31 @@ const propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   getBarColor: PropTypes.func.isRequired,
   barWidth: PropTypes.number.isRequired,
 }
 
 const defaultProps = {
-  getBarColor: () => '',
+  getBarColor: () => "",
   barWidth: 1,
 }
 
 function setDefaults(props) {
   return {
     ...defaultProps,
-    ...props
+    ...props,
   }
 }
 
-export function draw (ctx, props) {
+export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     top,
     left,
@@ -43,9 +47,9 @@ export function draw (ctx, props) {
     data,
     getBarColor,
     barWidth,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'bar')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "bar")
 
   const canvasY0 = getCanvasY(height, top, yMax, yMin, yMin)
 
@@ -62,7 +66,7 @@ export function draw (ctx, props) {
       canvasX - barWidth / 2,
       canvasY,
       barWidth,
-      Math.max(0, barHeight - 1),
+      Math.max(0, barHeight - 1)
     )
   }
 }

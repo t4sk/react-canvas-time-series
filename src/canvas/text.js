@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 const propTypes = {
   canvasX: PropTypes.number.isRequired,
@@ -9,8 +9,8 @@ const propTypes = {
 }
 
 const defaultProps = {
-  color: 'black',
-  font: '12px Arial',
+  color: "black",
+  font: "12px Arial",
 }
 
 function setDefaults(props) {
@@ -21,15 +21,11 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
-  const {
-    canvasX,
-    canvasY,
-    color,
-    font,
-    text,
-  } = setDefaults(props)
+  props = setDefaults(props)
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'text')
+  const { canvasX, canvasY, color, font, text } = props
+
+  PropTypes.checkPropTypes(propTypes, props, "prop", "text")
 
   ctx.textBaseline = "top"
   ctx.textAlign = "left"

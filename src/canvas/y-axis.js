@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types'
-import { getCanvasY, stepBelow } from './math'
-import * as yLabel from './y-label'
+import PropTypes from "prop-types"
+import { getCanvasY, stepBelow } from "./math"
+import * as yLabel from "./y-label"
 
 const TICK_TEXT_PADDING = 5
 
 const propTypes = {
-  at: PropTypes.oneOf(['left', 'right']).isRequired,
+  at: PropTypes.oneOf(["left", "right"]).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,
@@ -23,15 +23,17 @@ const propTypes = {
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 
-  labels: PropTypes.arrayOf(PropTypes.shape({
-    y: PropTypes.number
-  })).isRequired,
+  labels: PropTypes.arrayOf(
+    PropTypes.shape({
+      y: PropTypes.number,
+    })
+  ).isRequired,
 }
 
 const defaultProps = {
-  lineColor: 'black',
-  font: '',
-  textColor: 'black',
+  lineColor: "black",
+  font: "",
+  textColor: "black",
   tickInterval: 1,
   tickLength: 10,
   renderTick: x => x,
@@ -46,6 +48,8 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     at,
     width,
@@ -61,21 +65,20 @@ export function draw(ctx, props) {
     yMin,
     yMax,
     labels,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'y-axis')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "y-axis")
 
   // style y axis line
   ctx.lineWidth = 1
   ctx.strokeStyle = lineColor
 
-  if (at == 'left') {
+  if (at == "left") {
     ctx.beginPath()
     ctx.moveTo(left + width, top)
     ctx.lineTo(left + width, top + height)
     ctx.stroke()
-  }
-  else if (at == 'right') {
+  } else if (at == "right") {
     ctx.beginPath()
     ctx.moveTo(left, top)
     ctx.lineTo(left, top + height)
@@ -85,8 +88,8 @@ export function draw(ctx, props) {
   // style ticks
   ctx.font = font
   ctx.fillStyle = textColor
-  ctx.textAlign = at == 'left' ? 'right' : 'left'
-  ctx.textBaseline = 'middle'
+  ctx.textAlign = at == "left" ? "right" : "left"
+  ctx.textBaseline = "middle"
 
   const y0 = stepBelow(yMin, tickInterval)
 
@@ -94,10 +97,10 @@ export function draw(ctx, props) {
     if (y < yMin) {
       continue
     }
-    
+
     const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
-    if (at == 'left') {
+    if (at == "left") {
       ctx.beginPath()
       ctx.moveTo(left + width, canvasY)
       ctx.lineTo(left + width - tickLength, canvasY)
@@ -108,8 +111,7 @@ export function draw(ctx, props) {
         left + width - tickLength - TICK_TEXT_PADDING,
         canvasY
       )
-    }
-    else if (at == 'right') {
+    } else if (at == "right") {
       ctx.beginPath()
       ctx.moveTo(left, canvasY)
       ctx.lineTo(left + tickLength, canvasY)
@@ -141,8 +143,7 @@ export function draw(ctx, props) {
         yMax,
         ...label,
       })
-    }
-    else if (at == "right") {
+    } else if (at == "right") {
       yLabel.draw(ctx, {
         axisAt: at,
         rect: {

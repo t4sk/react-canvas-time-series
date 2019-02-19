@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasY } from './math'
+import PropTypes from "prop-types"
+import { getCanvasY } from "./math"
 
 const propTypes = {
   rect: PropTypes.shape({
@@ -11,7 +11,7 @@ const propTypes = {
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  axisAt: PropTypes.oneOf(['left', 'right']).isRequired,
+  axisAt: PropTypes.oneOf(["left", "right"]).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
@@ -24,9 +24,9 @@ const propTypes = {
 const defaultProps = {
   width: 50,
   height: 20,
-  backgroundColor: 'white',
-  font: '',
-  color: 'black',
+  backgroundColor: "white",
+  font: "",
+  color: "black",
   render: x => x,
   textPadding: 10,
 }
@@ -39,60 +39,46 @@ function setDefaults(props) {
 }
 
 function getLeft(props) {
-  const {
-    axisAt,
-    rect,
-    width,
-  } = props
+  const { axisAt, rect, width } = props
 
   if (axisAt == "left") {
     return rect.left + rect.width - width
-  }
-  else if (axisAt == "right") {
+  } else if (axisAt == "right") {
     return rect.left
-  }
-  else {
+  } else {
     throw new Error(`invalid axisAt ${axisAt}`)
   }
 }
 
 function getTextAlign(props) {
-  const {
-    axisAt,
-  } = props
+  const { axisAt } = props
 
   if (axisAt == "left") {
     return "right"
-  }
-  else if (axisAt == "right") {
+  } else if (axisAt == "right") {
     return "left"
-  }
-  else {
+  } else {
     throw new Error(`invalid axisAt ${axisAt}`)
   }
 }
 
 function getTextLeft(props) {
-  const {
-    axisAt,
-    rect,
-    textPadding
-  } = props
+  const { axisAt, rect, textPadding } = props
 
   const left = getLeft(props)
 
   if (axisAt == "left") {
     return rect.left + rect.width - textPadding
-  }
-  else if (axisAt == "right") {
+  } else if (axisAt == "right") {
     return rect.left + textPadding
-  }
-  else {
+  } else {
     throw new Error(`invalid axisAt ${axisAt}`)
   }
 }
 
-function _draw(ctx, props) {
+export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     rect,
     yMin,
@@ -107,7 +93,7 @@ function _draw(ctx, props) {
     textPadding,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'y-label')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "y-label")
 
   const left = getLeft(props)
   const canvasY = getCanvasY(rect.height, rect.top, yMax, yMin, y)
@@ -115,26 +101,13 @@ function _draw(ctx, props) {
   ctx.fillStyle = backgroundColor
 
   // rect
-  ctx.fillRect(
-    left,
-    canvasY - height / 2,
-    width,
-    height,
-  )
+  ctx.fillRect(left, canvasY - height / 2, width, height)
 
   // text
   ctx.font = font
   ctx.fillStyle = color
   ctx.textAlign = getTextAlign(props)
-  ctx.textBaseline = 'middle'
+  ctx.textBaseline = "middle"
 
-  ctx.fillText(
-    render(y),
-    getTextLeft(props),
-    canvasY,
-  )
-}
-
-export function draw(ctx, props) {
-  _draw(ctx, setDefaults(props))
+  ctx.fillText(render(y), getTextLeft(props), canvasY)
 }

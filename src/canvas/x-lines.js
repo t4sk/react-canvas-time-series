@@ -26,6 +26,8 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     top,
     left,
@@ -36,9 +38,9 @@ export function draw(ctx, props) {
     data,
     xInterval,
     lineColor,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), "prop", "x-lines")
+  PropTypes.checkPropTypes(propTypes, props, "prop", "x-lines")
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = 1

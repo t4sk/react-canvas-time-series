@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { isInsideRect } from './math'
+import PropTypes from "prop-types"
+import { isInsideRect } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -15,9 +15,9 @@ const propTypes = {
 }
 
 const defaultProps = {
-  xLineColor: '',
+  xLineColor: "",
   xLineWidth: 0.5,
-  yLineColor: '',
+  yLineColor: "",
   yLineWidth: 0.5,
 }
 
@@ -29,6 +29,8 @@ function setDefaults(props) {
 }
 
 export function draw(ctx, props) {
+  props = setDefaults(props)
+
   const {
     width,
     height,
@@ -40,11 +42,11 @@ export function draw(ctx, props) {
     xLineWidth,
     yLineColor,
     yLineWidth,
-  } = setDefaults(props)
+  } = props
 
-  PropTypes.checkPropTypes(propTypes, setDefaults(props), 'prop', 'crosshair')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "crosshair")
 
-  if (!isInsideRect({ top, left, width, height, }, { x: canvasX, y: canvasY })) {
+  if (!isInsideRect({ top, left, width, height }, { x: canvasX, y: canvasY })) {
     return
   }
 

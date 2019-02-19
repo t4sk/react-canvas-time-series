@@ -2,7 +2,6 @@
 
 - [ ] TODO point to points
 - [ ] TODO Drag and zoom example
-- [ ] TODO set default props
 - [ ] TODO candlestick and volume
 - [ ] TODO render crosshairs (at mouse and at nearest)
 
