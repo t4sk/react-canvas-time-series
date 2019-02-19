@@ -117,7 +117,7 @@ class Graphs extends Component {
 
   onWheel = (e) => {
     if (this.props.onWheel) {
-      this.props.onWheel(e)
+      this.props.onWheel(e, this.getMouse(e))
     }
   }
 
