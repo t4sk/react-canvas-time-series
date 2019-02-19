@@ -278,7 +278,6 @@ class BarTestRender extends Component {
   render() {
     const { xMin, xMax, yMin, yMax, mouse, nearest } = this.state
 
-    // TODO zoom around mouse
     return (
       <Graphs
         width={WIDTH}
