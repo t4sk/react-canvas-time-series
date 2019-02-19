@@ -1,26 +1,21 @@
-export function merge (obj1 = {}, obj2 = {}) {
-  const keys1 = new Set(Object.keys(obj1))
-  const keys2 = new Set(Object.keys(obj2))
-
-  const intersection = [...new Set([...keys1].filter(k => keys2.has(k))).keys()]
-    .filter(k => obj2[k] !== null && typeof obj2[k] === 'object')
-
-  return {
-    ...obj1,
-    ...obj2,
-    ...intersection.reduce((merged, k) => {
-      merged[k] = merge(obj1[k], obj2[k])
-      return merged
-    }, {})
-  }
-}
-
-export function rand (min, max) {
+export function rand(min, max) {
   return Math.random() * (max - min) + min
 }
 
-export function randInt (min, max) {
-  return Math.floor(rand(min, max))
+export function getRandomData(xStep, xMin, xMax, yMin, yMax) {
+  const x0 = Math.round(xMin / xStep) * xStep
+
+  let data = []
+  for (let x = x0; x <= xMax; x += xStep) {
+    data.push({
+      x,
+      y: rand(yMin, yMax),
+    })
+  }
+
+  data.sort((a, b) => a.x - b.x)
+
+  return data
 }
 
 export function timeout(ms) {
@@ -29,18 +24,8 @@ export function timeout(ms) {
   })
 }
 
-export async function fakeFetch(data, ms) {
-  await timeout(ms)
-  return data
-}
-
 export async function fetch(cache, { xMin, xMax }, opts = {}) {
-  const {
-    ms = 1000,
-    yMin = 0,
-    yMax = 5000,
-    xStep = 3600 * 6,
-  } = opts
+  const { ms = 1000, yMin = 0, yMax = 5000, xStep = 3600 * 6 } = opts
 
   await timeout(ms)
 
@@ -66,23 +51,7 @@ export async function fetch(cache, { xMin, xMax }, opts = {}) {
     .sort((a, b) => a.x - b.x)
 }
 
-export function getRandomData(xStep, xMin, xMax, yMin, yMax) {
-  const x0 = Math.round(xMin / xStep) * xStep
-
-  let data = []
-  for (let x = x0; x <= xMax; x += xStep) {
-    data.push({
-      x,
-      y: rand(yMin, yMax)
-    })
-  }
-
-  data.sort((a, b) => a.x - b.x)
-
-  return data
-}
-
-export function getRandomCandlestickData (xStep, xMin, xMax, yMin, yMax) {
+export function getRandomCandlestickData(xStep, xMin, xMax, yMin, yMax) {
   let data = []
 
   const length = Math.round((xMax - xMin) / xStep)
@@ -119,23 +88,4 @@ export function getRandomCandlestickData (xStep, xMin, xMax, yMin, yMax) {
   }
 
   return data
-}
-
-export function debounce(func, time) {
-  let timeout
-  return function(...args) {
-    const context = this
-    clearTimeout(timeout)
-    timeout = setTimeout(() => func.apply(context, args), time)
-  }
-}
-
-export function takeEvery(step = 1, data = []) {
-  let arr = []
-
-  for (let i = 0; i < data.length; i += step) {
-    arr.push(data[i])
-  }
-
-  return arr
 }

@@ -118,7 +118,7 @@ class BarTestRender extends Component {
       },
       {
         ms: 1000,
-        length: 100,
+        xStep: 3600 * 3,
         yMin: Y_MIN,
         yMax: Y_MAX,
       }

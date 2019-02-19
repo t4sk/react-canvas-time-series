@@ -1,9 +1,7 @@
 # react-canvas-time-series
 
-- [ ] TODO point to points
 - [ ] TODO Drag and zoom example
 - [ ] TODO candlestick and volume
-- [ ] TODO render crosshairs (at mouse and at nearest)
 
 > react canvas graph time series
 
