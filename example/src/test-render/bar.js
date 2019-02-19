@@ -372,7 +372,15 @@ class BarTestRender extends Component {
           left: GRAPH.left,
           height: GRAPH.height,
           width: GRAPH.width,
-          canvasX: mouse.x,
+          canvasX: nearest.x
+            ? canvas.math.getCanvasX(
+                GRAPH.width,
+                GRAPH.left,
+                xMax,
+                xMin,
+                nearest.x
+              )
+            : mouse.x,
           canvasY: mouse.y,
           yLineColor: "orange",
           yLineWidth: 0.5,
