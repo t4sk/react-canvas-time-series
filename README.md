@@ -1,7 +1,6 @@
 # react-canvas-time-series
 
 - [ ] TODO point to points
-- [ ] TODO delete canvas.background
 - [ ] TODO Delete zoomable and draggable
 - [ ] TODO Drag and zoom example
 - [ ] TODO set default props
@@ -21,15 +20,13 @@ npm install --save react-canvas-time-series
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from "react"
 
-import MyComponent from 'react-canvas-time-series'
+import MyComponent from "react-canvas-time-series"
 
 class Example extends Component {
-  render () {
-    return (
-      <MyComponent />
-    )
+  render() {
+    return <MyComponent />
   }
 }
 ```
