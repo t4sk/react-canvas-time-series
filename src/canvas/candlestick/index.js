@@ -1,23 +1,10 @@
-// @flow
-import type { Props } from './types'
-
-export function draw (ctx: any, props: Props) {
-  const {
-    getCanvasX,
-    getCanvasY,
-    candlestick,
-  } = props
+export function draw(ctx: any, props: Props) {
+  const { getCanvasX, getCanvasY, candlestick } = props
 
   const { data } = candlestick
 
   for (let i = 0; i < data.length; i++) {
-    const {
-      high,
-      low,
-      open,
-      close,
-      timestamp
-    } = data[i]
+    const { high, low, open, close, timestamp } = data[i]
 
     const canvasX = getCanvasX(timestamp)
     const bodyTop = getCanvasY(Math.max(open, close))
