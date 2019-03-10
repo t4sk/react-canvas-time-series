@@ -1,5 +1,7 @@
 # react-canvas-time-series
 
+test push
+
 - [ ] TODO Drag and zoom example
 - [ ] TODO candlestick and volume
 - [ ] TODO render yTicks (to render yMax when tickInterval does not render yMax)
