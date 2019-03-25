@@ -55,10 +55,12 @@ export function draw(ctx, props) {
   for (let i = 0; i < data.length; i++) {
     const { x, y } = data[i]
 
-    ctx.lineTo(
-      getCanvasX(width, left, xMax, xMin, x),
-      getCanvasY(height, top, yMax, yMin, y)
-    )
+    if (x >= xMin && x <= xMax) {
+      ctx.lineTo(
+        getCanvasX(width, left, xMax, xMin, x),
+        getCanvasY(height, top, yMax, yMin, y)
+      )
+    }
   }
   ctx.stroke()
 }

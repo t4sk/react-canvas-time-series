@@ -363,7 +363,7 @@ class BarTestRender extends Component {
             yMax,
             barWidth: 10,
             getBarColor: () => "orange",
-            data: this.state.data.filter(d => d.x >= xMin && d.x <= xMax),
+            data: this.state.data,
           },
         ]}
         crosshair={{

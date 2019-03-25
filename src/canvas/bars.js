@@ -56,17 +56,19 @@ export function draw(ctx, props) {
   for (let d of data) {
     const { x, y } = d
 
-    const canvasX = getCanvasX(width, left, xMax, xMin, x)
-    const canvasY = getCanvasY(height, top, yMax, yMin, y)
+    if (x >= xMin && x <= xMax) {
+      const canvasX = getCanvasX(width, left, xMax, xMin, x)
+      const canvasY = getCanvasY(height, top, yMax, yMin, y)
 
-    const barHeight = canvasY0 - canvasY
+      const barHeight = canvasY0 - canvasY
 
-    ctx.fillStyle = getBarColor(d)
-    ctx.fillRect(
-      canvasX - barWidth / 2,
-      canvasY,
-      barWidth,
-      Math.max(0, barHeight - 1)
-    )
+      ctx.fillStyle = getBarColor(d)
+      ctx.fillRect(
+        canvasX - barWidth / 2,
+        canvasY,
+        barWidth,
+        Math.max(0, barHeight - 1)
+      )
+    }
   }
 }
