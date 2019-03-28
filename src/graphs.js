@@ -32,7 +32,7 @@ class Graphs extends Component {
 
     this.axes = React.createRef()
     this.graphs = React.createRef()
-    this.frames = React.createRef()
+    this.ui = React.createRef()
     this.crosshair = React.createRef()
 
     // ref to animation frame
@@ -43,7 +43,7 @@ class Graphs extends Component {
     this.ctx = {
       axes: this.axes.current.getContext("2d"),
       graphs: this.graphs.current.getContext("2d"),
-      frames: this.frames.current.getContext("2d"),
+      ui: this.ui.current.getContext("2d"),
       crosshair: this.crosshair.current.getContext("2d"),
     }
 
@@ -78,10 +78,10 @@ class Graphs extends Component {
       crosshair.draw(this.ctx.crosshair, this.props.crosshair)
     }
 
-    this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
+    this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let frame of this.props.frames) {
-      text.draw(this.ctx.frames, frame)
+      text.draw(this.ctx.ui, frame)
     }
   }
 
@@ -156,7 +156,7 @@ class Graphs extends Component {
           height={this.props.height}
         />
         <canvas
-          ref={this.frames}
+          ref={this.ui}
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
