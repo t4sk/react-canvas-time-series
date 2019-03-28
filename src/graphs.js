@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
 
-import * as xLines from './canvas/x-lines'
-import * as yLines from './canvas/y-lines'
-import * as bars from './canvas/bars'
-import * as line from './canvas/line'
-import * as point from './canvas/point'
-import * as xAxis from './canvas/x-axis'
-import * as yAxis from './canvas/y-axis'
-import * as crosshair from './canvas/crosshair'
-import * as text from './canvas/text'
+import * as xLines from "./canvas/x-lines"
+import * as yLines from "./canvas/y-lines"
+import * as bars from "./canvas/bars"
+import * as line from "./canvas/line"
+import * as point from "./canvas/point"
+import * as xAxis from "./canvas/x-axis"
+import * as yAxis from "./canvas/y-axis"
+import * as crosshair from "./canvas/crosshair"
+import * as text from "./canvas/text"
 
 const AXES = {
   top: xAxis,
   bottom: xAxis,
   left: yAxis,
-  right: yAxis
+  right: yAxis,
 }
 
 const GRAPHS = {
@@ -41,10 +41,10 @@ class Graphs extends Component {
 
   componentDidMount() {
     this.ctx = {
-      axes: this.axes.current.getContext('2d'),
-      graphs: this.graphs.current.getContext('2d'),
-      frames: this.frames.current.getContext('2d'),
-      crosshair: this.crosshair.current.getContext('2d'),
+      axes: this.axes.current.getContext("2d"),
+      graphs: this.graphs.current.getContext("2d"),
+      frames: this.frames.current.getContext("2d"),
+      crosshair: this.crosshair.current.getContext("2d"),
     }
 
     this.animate()
@@ -87,7 +87,7 @@ class Graphs extends Component {
 
     return {
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      y: e.clientY - rect.top,
     }
   }
 
@@ -115,7 +115,7 @@ class Graphs extends Component {
     }
   }
 
-  onWheel = (e) => {
+  onWheel = e => {
     if (this.props.onWheel) {
       this.props.onWheel(e, this.getMouse(e))
     }
@@ -123,12 +123,14 @@ class Graphs extends Component {
 
   render() {
     return (
-      <div style={{
-        ...styles.container,
-        width: this.props.width,
-        height: this.props.height,
-        backgroundColor: this.props.backgroundColor,
-      }}>
+      <div
+        style={{
+          ...styles.container,
+          width: this.props.width,
+          height: this.props.height,
+          backgroundColor: this.props.backgroundColor,
+        }}
+      >
         <canvas
           ref={this.axes}
           style={styles.canvas}
@@ -176,12 +178,16 @@ Graphs.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
-  axes: PropTypes.arrayOf(PropTypes.shape({
-    at: PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
-  })).isRequired,
-  graphs: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['xLines', 'yLines', 'line', 'point', 'bars'])
-  })).isRequired,
+  axes: PropTypes.arrayOf(
+    PropTypes.shape({
+      at: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
+    })
+  ).isRequired,
+  graphs: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf(["xLines", "yLines", "line", "point", "bars"]),
+    })
+  ).isRequired,
   frames: PropTypes.array.isRequired,
   crosshair: PropTypes.object,
   onMouseMove: PropTypes.func,
@@ -193,14 +199,14 @@ Graphs.propTypes = {
 
 const styles = {
   container: {
-    position: 'relative',
-    cursor: 'crosshair',
+    position: "relative",
+    cursor: "crosshair",
   },
   canvas: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     top: 0,
-  }
+  },
 }
 
 export default Graphs
