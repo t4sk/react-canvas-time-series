@@ -156,13 +156,13 @@ class Graphs extends Component {
           height={this.props.height}
         />
         <canvas
-          ref={this.ui}
+          ref={this.crosshair}
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
         />
         <canvas
-          ref={this.crosshair}
+          ref={this.ui}
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
