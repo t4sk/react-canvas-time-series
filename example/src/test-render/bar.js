@@ -392,14 +392,14 @@ class BarTestRender extends Component {
               ? moment(nearest.x * 1000).format("MM-DD HH:mm")
               : "",
             color: "black",
-            canvasX: 10,
-            canvasY: 10,
+            left: 10,
+            top: 10,
           },
           {
             text: nearest.y ? nearest.y.toFixed() : "",
             color: "orange",
-            canvasX: 10,
-            canvasY: 10 + 15,
+            left: 10,
+            top: 10 + 15,
           },
         ]}
         onMouseMove={this.onMouseMove}

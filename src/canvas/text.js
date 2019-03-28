@@ -1,8 +1,8 @@
 import PropTypes from "prop-types"
 
 const propTypes = {
-  canvasX: PropTypes.number.isRequired,
-  canvasY: PropTypes.number.isRequired,
+  left: PropTypes.number.isRequired,
+  top: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   font: PropTypes.string.isRequired,
@@ -23,7 +23,7 @@ function setDefaults(props) {
 export function draw(ctx, props) {
   props = setDefaults(props)
 
-  const { canvasX, canvasY, color, font, text } = props
+  const { left, top, color, font, text } = props
 
   PropTypes.checkPropTypes(propTypes, props, "prop", "text")
 
@@ -33,5 +33,5 @@ export function draw(ctx, props) {
   ctx.font = font
   ctx.fillStyle = color
 
-  ctx.fillText(`${text}`, canvasX, canvasY)
+  ctx.fillText(`${text}`, left, top)
 }
