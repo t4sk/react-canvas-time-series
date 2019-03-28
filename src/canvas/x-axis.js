@@ -156,37 +156,38 @@ export function draw(ctx, props) {
     })
   }
 
-  for (let label of labels) {
-    if (label.x === undefined) {
-      return
-    }
-
-    if (at == "top") {
-      xLabel.draw(ctx, {
-        axisAt: at,
-        rect: {
-          top,
-          left,
-          height: height - tickLength,
-          width,
-        },
-        xMin,
-        xMax,
-        ...label,
-      })
-    } else if (at == "bottom") {
-      xLabel.draw(ctx, {
-        axisAt: at,
-        rect: {
-          top: top + tickLength,
-          left,
-          height: height - tickLength,
-          width,
-        },
-        xMin,
-        xMax,
-        ...label,
-      })
-    }
-  }
+  // TODO remove
+  // for (let label of labels) {
+  //   if (label.x === undefined) {
+  //     return
+  //   }
+  //
+  //   if (at == "top") {
+  //     xLabel.draw(ctx, {
+  //       axisAt: at,
+  //       rect: {
+  //         top,
+  //         left,
+  //         height: height - tickLength,
+  //         width,
+  //       },
+  //       xMin,
+  //       xMax,
+  //       ...label,
+  //     })
+  //   } else if (at == "bottom") {
+  //     xLabel.draw(ctx, {
+  //       axisAt: at,
+  //       rect: {
+  //         top: top + tickLength,
+  //         left,
+  //         height: height - tickLength,
+  //         width,
+  //       },
+  //       xMin,
+  //       xMax,
+  //       ...label,
+  //     })
+  //   }
+  // }
 }
