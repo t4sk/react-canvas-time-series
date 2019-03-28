@@ -10,6 +10,8 @@ import * as xAxis from "./canvas/x-axis"
 import * as yAxis from "./canvas/y-axis"
 import * as crosshair from "./canvas/crosshair"
 import * as text from "./canvas/text"
+import * as xLabel from "./canvas/x-label"
+import * as yLabel from "./canvas/y-label"
 
 const AXES = {
   top: xAxis,
@@ -82,6 +84,14 @@ class Graphs extends Component {
 
     for (let frame of this.props.frames) {
       text.draw(this.ctx.ui, frame)
+    }
+
+    for (let label of this.props.xLabels) {
+      xLabel.draw(this.ctx.ui, label)
+    }
+
+    for (let label of this.props.yLabels) {
+      yLabel.draw(this.ctx.ui, label)
     }
   }
 
@@ -186,6 +196,8 @@ Graphs.defaultProps = {
   axes: [],
   graphs: [],
   frames: [],
+  xLabels: [],
+  yLabels: [],
 }
 
 Graphs.propTypes = {
@@ -205,6 +217,8 @@ Graphs.propTypes = {
     })
   ).isRequired,
   frames: PropTypes.array.isRequired,
+  xLabels: PropTypes.array.isRequired,
+  yLabels: PropTypes.array.isRequired,
   crosshair: PropTypes.object,
   onMouseMove: PropTypes.func,
   onMouseDown: PropTypes.func,

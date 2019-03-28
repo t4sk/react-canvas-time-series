@@ -296,15 +296,6 @@ class BarTestRender extends Component {
             tickInterval: 3600 * 24,
             ticks: this.state.xTicks,
             renderTick: x => moment(x * 1000).format("MM-DD"),
-            labels: [
-              {
-                x: this.state.labelX,
-                color: "white",
-                backgroundColor: "black",
-                render: x => moment(x * 1000).format("MM-DD HH:mm"),
-                width: 80,
-              },
-            ],
           },
           {
             at: "right",
@@ -317,6 +308,7 @@ class BarTestRender extends Component {
             yMax,
             tickInterval: 2000,
             renderTick: y => y,
+            // TODO move to labels: [{...}]
             labels: [
               {
                 y: this.state.labelY,
@@ -400,6 +392,25 @@ class BarTestRender extends Component {
             color: "orange",
             left: 10,
             top: 10 + 15,
+          },
+        ]}
+        xLabels={[
+          {
+            drawXline: !!this.state.labelX,
+            top: X_AXIS.top + 10,
+            left:
+              canvas.math.getCanvasX(
+                GRAPH.width,
+                GRAPH.left,
+                xMax,
+                xMin,
+                nearest.x
+              ) - 40,
+            width: 80,
+            text: moment(this.state.labelX * 1000).format("MM-DD HH:mm"),
+            color: "white",
+            backgroundColor: "black",
+            drawLine: false,
           },
         ]}
         onMouseMove={this.onMouseMove}

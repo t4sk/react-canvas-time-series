@@ -62,6 +62,7 @@ export function draw(ctx, props) {
     }
   }
 
+  // TODO remove ?
   for (let x of data) {
     if (x < xMin || x > xMax) {
       continue

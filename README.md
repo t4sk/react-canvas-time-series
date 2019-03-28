@@ -4,8 +4,6 @@
 - [ ] TODO candlestick and volume
 - [ ] TODO render yTicks (to render yMax when tickInterval does not render yMax)
 - [ ] TODO render label and yLine
-- [ ] TODO shouldRenderGraph
-  > react canvas graph time series
 
 [![NPM](https://img.shields.io/npm/v/react-canvas-time-series.svg)](https://www.npmjs.com/package/react-canvas-time-series) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 

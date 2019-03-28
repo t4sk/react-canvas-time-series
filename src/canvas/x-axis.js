@@ -23,12 +23,6 @@ const propTypes = {
   ticks: PropTypes.arrayOf(PropTypes.number),
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
-
-  labels: PropTypes.arrayOf(
-    PropTypes.shape({
-      x: PropTypes.number,
-    })
-  ).isRequired,
 }
 
 const defaultProps = {
@@ -38,7 +32,6 @@ const defaultProps = {
   ticks: [],
   tickLength: 10,
   renderTick: x => x,
-  labels: [],
 }
 
 function setDefaults(props) {
@@ -103,7 +96,6 @@ export function draw(ctx, props) {
     textColor,
     xMin,
     xMax,
-    labels,
   } = props
 
   PropTypes.checkPropTypes(propTypes, props, "prop", "x-axis")
@@ -155,39 +147,4 @@ export function draw(ctx, props) {
       x: tick,
     })
   }
-
-  // TODO remove
-  // for (let label of labels) {
-  //   if (label.x === undefined) {
-  //     return
-  //   }
-  //
-  //   if (at == "top") {
-  //     xLabel.draw(ctx, {
-  //       axisAt: at,
-  //       rect: {
-  //         top,
-  //         left,
-  //         height: height - tickLength,
-  //         width,
-  //       },
-  //       xMin,
-  //       xMax,
-  //       ...label,
-  //     })
-  //   } else if (at == "bottom") {
-  //     xLabel.draw(ctx, {
-  //       axisAt: at,
-  //       rect: {
-  //         top: top + tickLength,
-  //         left,
-  //         height: height - tickLength,
-  //         width,
-  //       },
-  //       xMin,
-  //       xMax,
-  //       ...label,
-  //     })
-  //   }
-  // }
 }
