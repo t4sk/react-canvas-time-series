@@ -47,12 +47,20 @@ class Graphs extends Component {
       crosshair: this.crosshair.current.getContext("2d"),
     }
 
-    this.animate()
+    if (this.props.animate) {
+      this.animate()
+    } else {
+      this.draw()
+    }
   }
 
-  animate = () => {
-    this.animation = window.requestAnimationFrame(this.animate)
+  componentDidUpdate() {
+    if (!this.props.animate && this.props.shouldRedrawGraph()) {
+      this.draw()
+    }
+  }
 
+  draw = () => {
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let axis of this.props.axes) {
@@ -65,7 +73,6 @@ class Graphs extends Component {
       GRAPHS[graph.type].draw(this.ctx.graphs, graph)
     }
 
-    // this.ctx.frames.clearRect(0, 0, this.props.width, this.props.height)
     if (this.props.crosshair) {
       this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
       crosshair.draw(this.ctx.crosshair, this.props.crosshair)
@@ -76,6 +83,11 @@ class Graphs extends Component {
     for (let frame of this.props.frames) {
       text.draw(this.ctx.frames, frame)
     }
+  }
+
+  animate = () => {
+    this.animation = window.requestAnimationFrame(this.animate)
+    this.draw()
   }
 
   componentWillUnmount() {
@@ -168,6 +180,8 @@ class Graphs extends Component {
 Graphs.defaultProps = {
   width: 800,
   height: 400,
+  animate: true,
+  shouldRedrawGraph: () => true,
   backgroundColor: "",
   axes: [],
   graphs: [],
@@ -178,6 +192,8 @@ Graphs.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
+  animate: PropTypes.bool.isRequired,
+  shouldRedrawGraph: PropTypes.func.isRequired,
   axes: PropTypes.arrayOf(
     PropTypes.shape({
       at: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
