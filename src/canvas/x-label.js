@@ -14,6 +14,7 @@ const propTypes = {
   drawLine: PropTypes.bool.isRequired,
   lineTop: PropTypes.number.isRequired,
   lineBottom: PropTypes.number.isRequired,
+  lineWidth: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
@@ -29,6 +30,7 @@ const defaultProps = {
   drawLine: true,
   lineTop: 0,
   lineBottom: 0,
+  lineWidth: 1,
   lineColor: "black",
 }
 
@@ -56,6 +58,7 @@ export function draw(ctx, props) {
     drawLine,
     lineTop,
     lineBottom,
+    lineWidth,
     lineColor,
   } = props
 
@@ -77,6 +80,7 @@ export function draw(ctx, props) {
   }
 
   if (drawLine) {
+    ctx.lineWidth = lineWidth
     ctx.strokeStyle = lineColor
 
     ctx.beginPath()
