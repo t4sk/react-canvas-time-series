@@ -398,10 +398,11 @@ class BarTestRender extends Component {
                 this.state.labelX
               ) - 40,
             width: 80,
-            text: moment(this.state.labelX * 1000).format("MM-DD HH:mm"),
+            renderText: () =>
+              moment(this.state.labelX * 1000).format("MM-DD HH:mm"),
             color: "white",
             backgroundColor: "black",
-            drawLine: true,
+            drawLine: !!this.state.labelX,
             lineTop: 10,
             lineBottom: X_AXIS.top + 10,
           },
@@ -409,7 +410,6 @@ class BarTestRender extends Component {
         yLabels={[
           {
             drawLabel: !!this.state.labelY,
-            drawLabel: true,
             top:
               canvas.math.getCanvasY(
                 GRAPH.height,
@@ -420,10 +420,10 @@ class BarTestRender extends Component {
               ) - 10,
             left: Y_AXIS.left + 10,
             width: 80,
-            text: Math.round(this.state.labelY).toString(),
+            renderText: () => Math.round(this.state.labelY).toString(),
             color: "white",
             backgroundColor: "black",
-            drawLine: true,
+            drawLine: !!this.state.labelY,
             lineLeft: 10,
             lineRight: Y_AXIS.left + 10,
           },

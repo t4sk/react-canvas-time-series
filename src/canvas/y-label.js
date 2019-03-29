@@ -10,7 +10,7 @@ const propTypes = {
   color: PropTypes.string.isRequired,
   font: PropTypes.string.isRequired,
   textPadding: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
+  renderText: PropTypes.func.isRequired,
   textAlign: PropTypes.oneOf(["left", "right"]).isRequired,
   drawLine: PropTypes.bool.isRequired,
   lineLeft: PropTypes.number.isRequired,
@@ -27,7 +27,7 @@ const defaultProps = {
   font: "",
   color: "black",
   textPadding: 10,
-  text: "",
+  renderText: () => "",
   textAlign: "left",
   drawLine: true,
   lineLeft: 0,
@@ -69,7 +69,7 @@ export function draw(ctx, props) {
     font,
     color,
     textPadding,
-    text,
+    renderText,
     textAlign,
     drawLine,
     lineLeft,
@@ -92,7 +92,7 @@ export function draw(ctx, props) {
     ctx.textAlign = textAlign
     ctx.textBaseline = "middle"
 
-    ctx.fillText(text, getTextLeft(props), top + textPadding)
+    ctx.fillText(renderText(), getTextLeft(props), top + textPadding)
   }
 
   if (drawLine) {
