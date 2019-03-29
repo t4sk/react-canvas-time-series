@@ -16,11 +16,13 @@ const propTypes = {
       y: PropTypes.number.isRequired,
     })
   ).isRequired,
+  step: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
   lineColor: "",
+  step: 1,
 }
 
 function setDefaults(props) {
@@ -43,6 +45,7 @@ export function draw(ctx, props) {
     yMin,
     yMax,
     data,
+    step,
     lineColor,
   } = props
 
@@ -52,7 +55,7 @@ export function draw(ctx, props) {
   ctx.lineWidth = 1
 
   ctx.beginPath()
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i += step) {
     const { x, y } = data[i]
 
     if (x >= xMin && x <= xMax) {

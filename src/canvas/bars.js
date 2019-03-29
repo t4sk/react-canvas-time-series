@@ -16,11 +16,13 @@ const propTypes = {
       y: PropTypes.number.isRequired,
     })
   ).isRequired,
+  step: PropTypes.number.isRequired,
   getBarColor: PropTypes.func.isRequired,
   barWidth: PropTypes.number.isRequired,
 }
 
 const defaultProps = {
+  step: 1,
   getBarColor: () => "",
   barWidth: 1,
 }
@@ -45,6 +47,7 @@ export function draw(ctx, props) {
     yMin,
     yMax,
     data,
+    step,
     getBarColor,
     barWidth,
   } = props
@@ -53,7 +56,8 @@ export function draw(ctx, props) {
 
   const canvasY0 = getCanvasY(height, top, yMax, yMin, yMin)
 
-  for (let d of data) {
+  for (let i = 0; i < data.length; i += step) {
+    const d = data[i]
     const { x, y } = d
 
     if (x >= xMin && x <= xMax) {
