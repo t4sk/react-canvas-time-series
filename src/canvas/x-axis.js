@@ -1,6 +1,5 @@
 import PropTypes from "prop-types"
 import { getCanvasX, stepBelow } from "./math"
-import * as xLabel from "./x-label"
 
 const TICK_TEXT_PADDING = 10
 
@@ -137,6 +136,7 @@ export function draw(ctx, props) {
     }
   }
 
+  // TODO remove?
   for (let tick of ticks) {
     if (tick < xMin || tick > xMax) {
       continue
