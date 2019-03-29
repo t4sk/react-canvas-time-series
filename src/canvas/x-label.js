@@ -13,6 +13,7 @@ const propTypes = {
   text: PropTypes.string.isRequired,
   drawLine: PropTypes.bool.isRequired,
   lineTop: PropTypes.number.isRequired,
+  lineBottom: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
@@ -27,6 +28,7 @@ const defaultProps = {
   text: "",
   drawLine: true,
   lineTop: 0,
+  lineBottom: 0,
   lineColor: "black",
 }
 
@@ -53,6 +55,7 @@ export function draw(ctx, props) {
     text,
     drawLine,
     lineTop,
+    lineBottom,
     lineColor,
   } = props
 
@@ -78,7 +81,7 @@ export function draw(ctx, props) {
 
     ctx.beginPath()
     ctx.moveTo(left + width / 2, lineTop)
-    ctx.lineTo(left + width / 2, top)
+    ctx.lineTo(left + width / 2, lineBottom)
     ctx.stroke()
   }
 }
