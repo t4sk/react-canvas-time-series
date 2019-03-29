@@ -19,7 +19,6 @@ const propTypes = {
   textColor: PropTypes.string.isRequired,
 
   tickInterval: PropTypes.number,
-  ticks: PropTypes.arrayOf(PropTypes.number),
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
 }
@@ -28,7 +27,6 @@ const defaultProps = {
   lineColor: "black",
   font: "",
   textColor: "black",
-  ticks: [],
   tickLength: 10,
   renderTick: x => x,
 }
@@ -88,7 +86,6 @@ export function draw(ctx, props) {
     top,
     lineColor,
     tickInterval,
-    ticks,
     tickLength,
     renderTick,
     font,
@@ -134,17 +131,5 @@ export function draw(ctx, props) {
         x,
       })
     }
-  }
-
-  // TODO remove?
-  for (let tick of ticks) {
-    if (tick < xMin || tick > xMax) {
-      continue
-    }
-
-    drawTick(ctx, {
-      ...props,
-      x: tick,
-    })
   }
 }
