@@ -39,6 +39,10 @@ class TestRenderHistory extends Component {
         left: 0,
         width: WINDOW_SIZE,
       },
+      mouse: {
+        x: undefined,
+        y: undefined,
+      },
     }
   }
 
@@ -51,22 +55,36 @@ class TestRenderHistory extends Component {
     }
   }
 
-  onMouseMove = (e, { x, y }) => {
-    if (!this.state.dragging) {
-      return
-    }
-
-    const rect = this.getWindow()
-
-    if (!canvas.math.isInsideRect(rect, { x, y })) {
-      return
-    }
-
+  onMouseMove = (e, mouse) => {
     this.setState(state => {
-      const diff = x - state.dragStartCanvasX
+      if (!this.state.dragging) {
+        return {
+          mouse: {
+            x: mouse.x,
+            y: mouse.y,
+          },
+        }
+      }
+
+      const rect = this.getWindow()
+
+      if (!canvas.math.isInsideRect(rect, mouse)) {
+        return {
+          mouse: {
+            x: mouse.x,
+            y: mouse.y,
+          },
+        }
+      }
+
+      const diff = mouse.x - state.dragStartCanvasX
       const left = state.dragStartWindowLeft + diff
 
       return {
+        mouse: {
+          x: mouse.x,
+          y: mouse.y,
+        },
         window: {
           ...state.window,
           left: Math.max(0, Math.min(left, WIDTH - WINDOW_SIZE)),
@@ -102,6 +120,10 @@ class TestRenderHistory extends Component {
       dragging: false,
       dragStartCanvasX: undefined,
       dragStartWindowLeft: undefined,
+      mouse: {
+        x: undefined,
+        y: undefined,
+      },
     }))
   }
 
@@ -124,6 +146,7 @@ class TestRenderHistory extends Component {
         step={1}
         windowColor="rgba(0, 0, 255, 0.3)"
         window={this.state.window}
+        mouse={this.state.mouse}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}

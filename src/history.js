@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { draw as drawXAxis } from './canvas/history/x-axis'
-import { draw as drawGraph } from './canvas/history/graph'
-import { draw as drawWindow } from './canvas/history/window'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import * as math from "./canvas/math"
+import { draw as drawXAxis } from "./canvas/history/x-axis"
+import { draw as drawGraph } from "./canvas/history/graph"
+import { draw as drawWindow } from "./canvas/history/window"
 
 class History extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.ui = React.createRef()
@@ -17,8 +18,8 @@ class History extends Component {
 
   componentDidMount() {
     this.ctx = {
-      ui: this.ui.current.getContext('2d'),
-      graph: this.graph.current.getContext('2d')
+      ui: this.ui.current.getContext("2d"),
+      graph: this.graph.current.getContext("2d"),
     }
 
     this.draw()
@@ -31,8 +32,10 @@ class History extends Component {
 
   getGraph = () => {
     return {
+      top: 0,
+      left: 0,
       width: this.props.width,
-      height: this.props.height - this.props.xAxisHeight
+      height: this.props.height - this.props.xAxisHeight,
     }
   }
 
@@ -82,7 +85,7 @@ class History extends Component {
 
     return {
       x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      y: e.clientY - rect.top,
     }
   }
 
@@ -102,14 +105,42 @@ class History extends Component {
     this.props.onMouseOut(e)
   }
 
+  getCursor() {
+    const { windowEdgeDelta, mouse, window } = this.props
+
+    const graph = this.getGraph()
+
+    if (!math.isInsideRect(graph, mouse)) {
+      return "auto"
+    }
+
+    if (
+      Math.abs(window.left - mouse.x) <= windowEdgeDelta ||
+      Math.abs(window.left + window.width - mouse.x) <= windowEdgeDelta
+    ) {
+      return "ew-resize"
+    }
+
+    if (mouse.x > window.left && mouse.x < window.left + window.width) {
+      return "grab"
+    }
+
+    return "auto"
+  }
+
   render() {
+    const cursor = this.getCursor()
+
     return (
-      <div style={{
-        ...styles.container,
-        backgroundColor: this.props.backgroundColor,
-        width: this.props.width,
-        height: this.props.height
-      }}>
+      <div
+        style={{
+          ...styles.container,
+          cursor,
+          backgroundColor: this.props.backgroundColor,
+          width: this.props.width,
+          height: this.props.height,
+        }}
+      >
         <canvas
           ref={this.graph}
           style={styles.canvas}
@@ -133,14 +164,14 @@ class History extends Component {
 
 const styles = {
   container: {
-    position: 'relative',
-    cursor: 'move',
+    position: "relative",
+    cursor: "auto",
   },
   canvas: {
-    position: 'absolute',
+    position: "absolute",
     left: 0,
     top: 0,
-  }
+  },
 }
 
 History.defaultProps = {
@@ -152,7 +183,7 @@ History.defaultProps = {
   tickHeight: 5,
   ticks: [],
   renderTick: x => x,
-  font: '12px Arial',
+  font: "12px Arial",
   textColor: "",
 
   // graph
@@ -167,7 +198,12 @@ History.defaultProps = {
     left: 0,
     width: 0,
   },
+  windowEdgeDelta: 10,
 
+  mouse: {
+    x: undefined,
+    y: undefined,
+  },
   onMouseMove: () => {},
   onMouseDown: () => {},
   onMouseUp: () => {},
@@ -187,10 +223,12 @@ History.propTypes = {
   textColor: PropTypes.string.isRequired,
 
   // graph
-  data: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
@@ -201,7 +239,12 @@ History.propTypes = {
     left: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
   }).isRequired,
+  windowEdgeDelta: PropTypes.number.isRequired,
 
+  mouse: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
   onMouseMove: PropTypes.func,
   onMouseDown: PropTypes.func,
   onMouseUp: PropTypes.func,
