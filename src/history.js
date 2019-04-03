@@ -22,6 +22,7 @@ class History extends Component {
       graph: this.graph.current.getContext("2d"),
     }
 
+    // TODO should update graph
     this.draw()
     this.animate()
   }
