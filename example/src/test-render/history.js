@@ -25,8 +25,10 @@ const DATA = getRandomData(3600 * 24 * 10, X_MIN, X_MAX, Y_MIN, Y_MAX)
 const WIDTH = 900
 const HEIGHT = 150
 const X_AXIS_HEIGHT = 30
-const WINDOW_SIZE = 200
+const MIN_WINDOW_SIZE = 100
+const WINDOW_EDGE_DELTA = 5
 
+// TODO fix cannot quickly drag window
 class TestRenderHistory extends Component {
   constructor(props) {
     super(props)
@@ -37,7 +39,7 @@ class TestRenderHistory extends Component {
       dragStartWindowLeft: undefined,
       window: {
         left: 0,
-        width: WINDOW_SIZE,
+        width: MIN_WINDOW_SIZE,
       },
       mouse: {
         x: undefined,
@@ -46,18 +48,18 @@ class TestRenderHistory extends Component {
     }
   }
 
-  getWindow = () => {
+  getWindow = state => {
     return {
       top: 0,
-      left: this.state.window.left,
-      width: WINDOW_SIZE,
+      left: state.window.left,
+      width: MIN_WINDOW_SIZE,
       height: HEIGHT - X_AXIS_HEIGHT,
     }
   }
 
   onMouseMove = (e, mouse) => {
     this.setState(state => {
-      if (!this.state.dragging) {
+      if (!state.dragging) {
         return {
           mouse: {
             x: mouse.x,
@@ -66,7 +68,7 @@ class TestRenderHistory extends Component {
         }
       }
 
-      const rect = this.getWindow()
+      const rect = this.getWindow(state)
 
       if (!canvas.math.isInsideRect(rect, mouse)) {
         return {
@@ -87,7 +89,7 @@ class TestRenderHistory extends Component {
         },
         window: {
           ...state.window,
-          left: Math.max(0, Math.min(left, WIDTH - WINDOW_SIZE)),
+          left: Math.max(0, Math.min(left, WIDTH - MIN_WINDOW_SIZE)),
         },
       }
     })
@@ -102,7 +104,7 @@ class TestRenderHistory extends Component {
   }
 
   onMouseDown = (e, { x, y }) => {
-    const rect = this.getWindow()
+    const rect = this.getWindow(this.state)
 
     if (!canvas.math.isInsideRect(rect, { x, y })) {
       return
@@ -146,6 +148,7 @@ class TestRenderHistory extends Component {
         step={1}
         windowColor="rgba(0, 0, 255, 0.3)"
         window={this.state.window}
+        windowEdgeDelta={WINDOW_EDGE_DELTA}
         mouse={this.state.mouse}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
