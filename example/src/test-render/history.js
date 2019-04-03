@@ -28,19 +28,27 @@ const X_AXIS_HEIGHT = 30
 const MIN_WINDOW_SIZE = 100
 const WINDOW_EDGE_DELTA = 5
 
-// TODO fix cannot quickly drag window
 class TestRenderHistory extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      dragging: false,
-      dragStartCanvasX: undefined,
-      dragStartWindowLeft: undefined,
       window: {
-        left: 0,
-        width: MIN_WINDOW_SIZE,
+        top: 0,
+        left: 100,
+        width: 2 * MIN_WINDOW_SIZE,
+        height: HEIGHT - X_AXIS_HEIGHT,
       },
+      draggingWindow: false,
+      // mouse.x when drag start
+      dragWindowStartMouseX: undefined,
+      // window.left when drag start
+      dragWindowStartWindowLeft: undefined,
+
+      draggingLeftEdge: false,
+      dragLeftEdgeStartMouseX: undefined,
+      dragLeftEdgeStartWindowLeft: undefined,
+
       mouse: {
         x: undefined,
         y: undefined,
@@ -48,18 +56,27 @@ class TestRenderHistory extends Component {
     }
   }
 
-  getWindow = state => {
-    return {
-      top: 0,
-      left: state.window.left,
-      width: MIN_WINDOW_SIZE,
-      height: HEIGHT - X_AXIS_HEIGHT,
-    }
-  }
-
   onMouseMove = (e, mouse) => {
     this.setState(state => {
-      if (!state.dragging) {
+      // drag left edge
+      if (state.draggingLeftEdge) {
+        const diff = mouse.x - state.dragLeftEdgeStartMouseX
+        const left = state.dragLeftEdgeStartWindowLeft + diff
+
+        return {
+          window: {
+            ...state.window,
+            left,
+            width: state.window.width - (left - state.window.left),
+          },
+          mouse: {
+            x: mouse.x,
+            y: mouse.y,
+          },
+        }
+      }
+
+      if (!state.draggingWindow) {
         return {
           mouse: {
             x: mouse.x,
@@ -68,9 +85,7 @@ class TestRenderHistory extends Component {
         }
       }
 
-      const rect = this.getWindow(state)
-
-      if (!canvas.math.isInsideRect(rect, mouse)) {
+      if (!canvas.math.isInsideRect(state.window, mouse)) {
         return {
           mouse: {
             x: mouse.x,
@@ -79,8 +94,8 @@ class TestRenderHistory extends Component {
         }
       }
 
-      const diff = mouse.x - state.dragStartCanvasX
-      const left = state.dragStartWindowLeft + diff
+      const diff = mouse.x - state.dragWindowStartMouseX
+      const left = state.dragWindowStartWindowLeft + diff
 
       return {
         mouse: {
@@ -97,31 +112,46 @@ class TestRenderHistory extends Component {
 
   onMouseUp = (e, { x, y }) => {
     this.setState(state => ({
-      dragging: false,
-      dragStartCanvasX: undefined,
-      dragStartWindowLeft: undefined,
+      draggingLeftEdge: false,
+      dragLeftEdgeStartMouseX: undefined,
+      dragLeftEdgeStartWindowLeft: undefined,
+      draggingWindow: false,
+      dragWindowStartMouseX: undefined,
+      dragWindowStartWindowLeft: undefined,
     }))
   }
 
-  onMouseDown = (e, { x, y }) => {
-    const rect = this.getWindow(this.state)
+  onMouseDown = (e, mouse) => {
+    // if near left edge
+    if (Math.abs(mouse.x - this.state.window.left) <= WINDOW_EDGE_DELTA) {
+      this.setState(state => ({
+        draggingLeftEdge: true,
+        dragLeftEdgeStartWindowLeft: state.window.left,
+        dragLeftEdgeStartMouseX: mouse.x,
+      }))
+      return
+    }
 
-    if (!canvas.math.isInsideRect(rect, { x, y })) {
+    // if near right edge
+    if (!canvas.math.isInsideRect(this.state.window, mouse)) {
       return
     }
 
     this.setState(state => ({
-      dragging: true,
-      dragStartCanvasX: x,
-      dragStartWindowLeft: state.window.left,
+      draggingWindow: true,
+      dragWindowStartMouseX: mouse.x,
+      dragWindowStartWindowLeft: state.window.left,
     }))
   }
 
   onMouseOut = e => {
     this.setState(state => ({
-      dragging: false,
-      dragStartCanvasX: undefined,
-      dragStartWindowLeft: undefined,
+      draggingWindow: false,
+      dragWindowStartMouseX: undefined,
+      dragWindowStartWindowLeft: undefined,
+      draggingLeftEdge: false,
+      dragLeftEdgeStartMouseX: undefined,
+      dragLeftEdgeStartWindowLeft: undefined,
       mouse: {
         x: undefined,
         y: undefined,
