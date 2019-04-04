@@ -197,6 +197,7 @@ class TestRenderHistory extends Component {
   render() {
     return (
       <History
+        shouldRedrawGraph={() => false}
         width={WIDTH}
         height={HEIGHT}
         xAxisHeight={X_AXIS_HEIGHT}

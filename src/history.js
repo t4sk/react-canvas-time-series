@@ -22,13 +22,18 @@ class History extends Component {
       graph: this.graph.current.getContext("2d"),
     }
 
-    // TODO should update graph
-    this.draw()
+    this.drawGraph()
     this.animate()
   }
 
   componentWillUnmount() {
     window.cancelAnimationFrame(this.animation)
+  }
+
+  componentDidUpdate() {
+    if (this.props.shouldRedrawGraph()) {
+      this.drawGraph()
+    }
   }
 
   getGraph = () => {
@@ -40,7 +45,9 @@ class History extends Component {
     }
   }
 
-  draw = () => {
+  drawGraph = () => {
+    this.ctx.graph.clearRect(0, 0, this.props.width, this.props.height)
+
     const { data } = this.props
     const xMin = data[0].x
     const xMax = data[data.length - 1].x
@@ -176,6 +183,7 @@ const styles = {
 }
 
 History.defaultProps = {
+  shouldRedrawGraph: () => true,
   width: 800,
   height: 200,
   backgroundColor: "",
@@ -212,6 +220,7 @@ History.defaultProps = {
 }
 
 History.propTypes = {
+  shouldRedrawGraph: PropTypes.func.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
