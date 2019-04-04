@@ -2,7 +2,7 @@
 
 - [ ] TODO Drag and zoom example
 - [ ] TODO candlestick and volume
-- [ ] TODO label example top, bottom, right, left, ticks
+- [ ] TODO label example top, bottom, right, left, ticks, x data , y data
 
 [![NPM](https://img.shields.io/npm/v/react-canvas-time-series.svg)](https://www.npmjs.com/package/react-canvas-time-series) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
