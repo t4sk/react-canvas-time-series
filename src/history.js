@@ -48,13 +48,7 @@ class History extends Component {
   drawGraph = () => {
     this.ctx.graph.clearRect(0, 0, this.props.width, this.props.height)
 
-    const { data } = this.props
-    const xMin = data[0].x
-    const xMax = data[data.length - 1].x
-
-    const ys = data.map(d => d.y)
-    const yMin = Math.min(...ys)
-    const yMax = Math.max(...ys)
+    const { data, xMin, xMax, yMin, yMax } = this.props
 
     const graph = this.getGraph()
 
@@ -189,6 +183,10 @@ History.defaultProps = {
   backgroundColor: "",
   xAxisHeight: 30,
   xAxisColor: "",
+  xMin: 0,
+  xMax: 0,
+  yMin: 0,
+  yMax: 0,
   tickHeight: 5,
   ticks: [],
   renderTick: x => x,
@@ -231,6 +229,10 @@ History.propTypes = {
   renderTick: PropTypes.func.isRequired,
   font: PropTypes.string.isRequired,
   textColor: PropTypes.string.isRequired,
+  xMin: PropTypes.number.isRequired,
+  xMax: PropTypes.number.isRequired,
+  yMin: PropTypes.number.isRequired,
+  yMax: PropTypes.number.isRequired,
 
   // graph
   data: PropTypes.arrayOf(

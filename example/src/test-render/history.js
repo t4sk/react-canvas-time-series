@@ -203,6 +203,10 @@ class TestRenderHistory extends Component {
         xAxisHeight={X_AXIS_HEIGHT}
         backgroundColor="beige"
         xAxisColor="green"
+        xMin={X_MIN}
+        xMax={X_MAX}
+        yMin={Y_MIN}
+        yMax={Y_MAX}
         ticks={YEARS}
         tickHeight={10}
         renderTick={x => moment.unix(x).format("YYYY")}
