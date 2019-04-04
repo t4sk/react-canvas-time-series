@@ -18,6 +18,7 @@ const propTypes = {
   font: PropTypes.string.isRequired,
   textColor: PropTypes.string.isRequired,
 
+  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
   tickInterval: PropTypes.number.isRequired,
   tickLength: PropTypes.number.isRequired,
   renderTick: PropTypes.func.isRequired,
@@ -27,6 +28,7 @@ const defaultProps = {
   lineColor: "black",
   font: "",
   textColor: "black",
+  ticks: [],
   tickInterval: 1,
   tickLength: 10,
   renderTick: x => x,
@@ -36,6 +38,43 @@ function setDefaults(props) {
   return {
     ...defaultProps,
     ...props,
+  }
+}
+
+function drawTick(ctx, props) {
+  const {
+    at,
+    top,
+    left,
+    height,
+    width,
+    yMax,
+    yMin,
+    y,
+    tickLength,
+    renderTick,
+  } = props
+
+  const canvasY = getCanvasY(height, top, yMax, yMin, y)
+
+  if (at == "left") {
+    ctx.beginPath()
+    ctx.moveTo(left + width, canvasY)
+    ctx.lineTo(left + width - tickLength, canvasY)
+    ctx.stroke()
+
+    ctx.fillText(
+      renderTick(y),
+      left + width - tickLength - TICK_TEXT_PADDING,
+      canvasY
+    )
+  } else if (at == "right") {
+    ctx.beginPath()
+    ctx.moveTo(left, canvasY)
+    ctx.lineTo(left + tickLength, canvasY)
+    ctx.stroke()
+
+    ctx.fillText(renderTick(y), left + tickLength + TICK_TEXT_PADDING, canvasY)
   }
 }
 
@@ -49,9 +88,8 @@ export function draw(ctx, props) {
     left,
     top,
     lineColor,
+    ticks,
     tickInterval,
-    tickLength,
-    renderTick,
     font,
     textColor,
     yMin,
@@ -89,30 +127,20 @@ export function draw(ctx, props) {
       continue
     }
 
-    const canvasY = getCanvasY(height, top, yMax, yMin, y)
+    drawTick(ctx, {
+      ...props,
+      y,
+    })
+  }
 
-    if (at == "left") {
-      ctx.beginPath()
-      ctx.moveTo(left + width, canvasY)
-      ctx.lineTo(left + width - tickLength, canvasY)
-      ctx.stroke()
-
-      ctx.fillText(
-        renderTick(y),
-        left + width - tickLength - TICK_TEXT_PADDING,
-        canvasY
-      )
-    } else if (at == "right") {
-      ctx.beginPath()
-      ctx.moveTo(left, canvasY)
-      ctx.lineTo(left + tickLength, canvasY)
-      ctx.stroke()
-
-      ctx.fillText(
-        renderTick(y),
-        left + tickLength + TICK_TEXT_PADDING,
-        canvasY
-      )
+  for (let y of ticks) {
+    if (y < yMin || y > yMax) {
+      continue
     }
+
+    drawTick(ctx, {
+      ...props,
+      y,
+    })
   }
 }

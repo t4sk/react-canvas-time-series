@@ -89,8 +89,6 @@ export function draw(ctx, props) {
     lineColor,
     ticks,
     tickInterval,
-    tickLength,
-    renderTick,
     font,
     textColor,
     xMin,
