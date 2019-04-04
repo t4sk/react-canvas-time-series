@@ -9,11 +9,13 @@ const propTypes = {
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
   yInterval: PropTypes.number.isRequired,
+  data: PropTypes.arrayOf(PropTypes.number).isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
   lineColor: "black",
+  data: [],
 }
 
 function setDefaults(props) {
@@ -23,10 +25,31 @@ function setDefaults(props) {
   }
 }
 
+function drawYLine(ctx, props) {
+  const { left, top, width, height, yMax, yMin, y } = props
+
+  const canvasY = getCanvasY(height, top, yMax, yMin, y)
+
+  ctx.beginPath()
+  ctx.moveTo(left, canvasY)
+  ctx.lineTo(left + width, canvasY)
+  ctx.stroke()
+}
+
 export function draw(ctx, props) {
   props = setDefaults(props)
 
-  const { top, left, width, height, yMin, yMax, yInterval, lineColor } = props
+  const {
+    top,
+    left,
+    width,
+    height,
+    yMin,
+    yMax,
+    yInterval,
+    data,
+    lineColor,
+  } = props
 
   PropTypes.checkPropTypes(propTypes, props, "prop", "y-lines")
 
@@ -40,11 +63,30 @@ export function draw(ctx, props) {
       continue
     }
 
-    const canvasY = getCanvasY(height, top, yMax, yMin, y)
+    drawYLine(ctx, {
+      left,
+      top,
+      width,
+      height,
+      yMax,
+      yMin,
+      y,
+    })
+  }
 
-    ctx.beginPath()
-    ctx.moveTo(left, canvasY)
-    ctx.lineTo(left + width, canvasY)
-    ctx.stroke()
+  for (let y of data) {
+    if (y < yMin || y > yMax) {
+      continue
+    }
+
+    drawYLine(ctx, {
+      left,
+      top,
+      width,
+      height,
+      yMax,
+      yMin,
+      y,
+    })
   }
 }

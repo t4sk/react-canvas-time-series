@@ -9,9 +9,9 @@ export default class App extends Component {
     return (
       <div style={{ margin: 20 }}>
         <TestRenderHistory />
+        <TestRenderBar />
 
         {/*}
-        <TestRenderBar />
 
 
         <TestRenderAxes />
