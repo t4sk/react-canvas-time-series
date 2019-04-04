@@ -25,6 +25,17 @@ function setDefaults(props) {
   }
 }
 
+function drawXLine(ctx, props) {
+  const { left, top, width, height, xMax, xMin, x } = props
+
+  const canvasX = getCanvasX(width, left, xMax, xMin, x)
+
+  ctx.beginPath()
+  ctx.moveTo(canvasX, top)
+  ctx.lineTo(canvasX, top + height)
+  ctx.stroke()
+}
+
 export function draw(ctx, props) {
   props = setDefaults(props)
 
@@ -53,12 +64,15 @@ export function draw(ctx, props) {
         continue
       }
 
-      const canvasX = getCanvasX(width, left, xMax, xMin, x)
-
-      ctx.beginPath()
-      ctx.moveTo(canvasX, top)
-      ctx.lineTo(canvasX, top + height)
-      ctx.stroke()
+      drawXLine(ctx, {
+        left,
+        top,
+        width,
+        height,
+        xMax,
+        xMin,
+        x,
+      })
     }
   }
 
@@ -67,11 +81,14 @@ export function draw(ctx, props) {
       continue
     }
 
-    const canvasX = getCanvasX(width, left, xMax, xMin, x)
-
-    ctx.beginPath()
-    ctx.moveTo(canvasX, top)
-    ctx.lineTo(canvasX, top + height)
-    ctx.stroke()
+    drawXLine(ctx, {
+      left,
+      top,
+      width,
+      height,
+      xMax,
+      xMin,
+      x,
+    })
   }
 }
