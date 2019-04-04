@@ -51,9 +51,6 @@ class TestRenderHistory extends Component {
   }
 
   onMouseMove = (e, mouse) => {
-    // TODO window boundaries
-    // window.left >= 0, window.right <= graph.width
-    // right - left >= MIN_WINDOW_SIZE
     this.setState(state => {
       // drag left edge
       if (state.draggingLeftEdge) {
@@ -63,8 +60,11 @@ class TestRenderHistory extends Component {
         return {
           window: {
             ...state.window,
-            left,
-            width: state.window.width - diff,
+            left: Math.min(
+              left,
+              state.window.left + state.window.width - MIN_WINDOW_SIZE
+            ),
+            width: Math.max(state.window.width - diff, MIN_WINDOW_SIZE),
           },
           mouse: {
             x: mouse.x,
@@ -80,7 +80,7 @@ class TestRenderHistory extends Component {
         return {
           window: {
             ...state.window,
-            width: state.window.width + diff,
+            width: Math.max(state.window.width + diff, MIN_WINDOW_SIZE),
           },
           mouse: {
             x: mouse.x,
@@ -89,6 +89,7 @@ class TestRenderHistory extends Component {
         }
       }
 
+      // darg window
       if (state.draggingWindow) {
         const diff = mouse.x - state.mouse.x
         const left = state.window.left + diff
