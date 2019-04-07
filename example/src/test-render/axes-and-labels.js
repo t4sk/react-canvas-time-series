@@ -1,6 +1,49 @@
 import React, { Component } from "react"
 import { Graphs } from "react-canvas-time-series"
 
+const WIDTH = 900
+const HEIGHT = 500
+const PADDING = 10
+const X_AXIS_TOP_HEIGHT = 50
+const X_AXIS_BOTTOM_HEIGHT = 50
+const Y_AXIS_LEFT_WIDTH = 50
+const Y_AXIS_RIGHT_WIDTH = 50
+
+const X_AXIS_TOP = {
+  top: PADDING,
+  left: PADDING + Y_AXIS_LEFT_WIDTH,
+  width: WIDTH - 2 * PADDING - (Y_AXIS_LEFT_WIDTH + Y_AXIS_RIGHT_WIDTH),
+  height: X_AXIS_TOP_HEIGHT,
+}
+
+const X_AXIS_BOTTOM = {
+  top: HEIGHT - PADDING - X_AXIS_BOTTOM_HEIGHT,
+  left: PADDING + Y_AXIS_LEFT_WIDTH,
+  width: WIDTH - 2 * PADDING - (Y_AXIS_LEFT_WIDTH + Y_AXIS_RIGHT_WIDTH),
+  height: X_AXIS_BOTTOM_HEIGHT,
+}
+
+const Y_AXIS_LEFT = {
+  top: PADDING + X_AXIS_TOP_HEIGHT,
+  left: PADDING,
+  width: Y_AXIS_LEFT_WIDTH,
+  height: HEIGHT - 2 * PADDING - (X_AXIS_TOP_HEIGHT + X_AXIS_BOTTOM_HEIGHT),
+}
+
+const Y_AXIS_RIGHT = {
+  top: PADDING + X_AXIS_TOP_HEIGHT,
+  left: WIDTH - PADDING - Y_AXIS_RIGHT_WIDTH,
+  width: Y_AXIS_RIGHT_WIDTH,
+  height: HEIGHT - 2 * PADDING - (X_AXIS_TOP_HEIGHT + X_AXIS_BOTTOM_HEIGHT),
+}
+
+const GRAPH = {
+  top: PADDING + X_AXIS_TOP_HEIGHT,
+  left: PADDING + Y_AXIS_LEFT_WIDTH,
+  width: WIDTH - 2 * PADDING - (Y_AXIS_LEFT_WIDTH + Y_AXIS_RIGHT_WIDTH),
+  height: HEIGHT - 2 * PADDING - (X_AXIS_TOP_HEIGHT + X_AXIS_BOTTOM_HEIGHT),
+}
+
 const X_MIN = 10
 const X_MAX = 110
 const Y_MIN = 1000
@@ -11,16 +54,13 @@ class AxesAndLabels extends Component {
   render() {
     return (
       <Graphs
-        width={900}
-        height={500}
+        width={WIDTH}
+        height={HEIGHT}
         backgroundColor="beige"
         axes={[
           {
             at: "top",
-            top: 10,
-            left: 10,
-            width: 880,
-            height: 50,
+            ...X_AXIS_TOP,
             lineColor: "red",
             xMin: X_MIN,
             xMax: X_MAX,
@@ -31,10 +71,7 @@ class AxesAndLabels extends Component {
           },
           {
             at: "left",
-            top: 60,
-            left: 10,
-            width: 50,
-            height: 380,
+            ...Y_AXIS_LEFT,
             lineColor: "green",
             yMin: Y_MIN,
             yMax: Y_MAX,
@@ -42,10 +79,7 @@ class AxesAndLabels extends Component {
           },
           {
             at: "right",
-            top: 60,
-            left: 840,
-            width: 50,
-            height: 380,
+            ...Y_AXIS_RIGHT,
             lineColor: "orange",
             yMin: Y_MIN,
             yMax: Y_MAX,
@@ -53,10 +87,7 @@ class AxesAndLabels extends Component {
           },
           {
             at: "bottom",
-            top: 440,
-            left: 10,
-            width: 880,
-            height: 50,
+            ...X_AXIS_BOTTOM,
             lineColor: "blue",
             xMin: X_MIN,
             xMax: X_MAX,
@@ -67,10 +98,7 @@ class AxesAndLabels extends Component {
         graphs={[
           {
             type: "xLines",
-            top: 60,
-            left: 10,
-            height: 380,
-            width: 880,
+            ...GRAPH,
             xMin: X_MIN,
             xMax: X_MAX,
             xInterval: 5,
@@ -79,10 +107,7 @@ class AxesAndLabels extends Component {
           },
           {
             type: "yLines",
-            top: 60,
-            left: 60,
-            height: 380,
-            width: 780,
+            ...GRAPH,
             yMin: Y_MIN,
             yMax: Y_MAX,
             yInterval: 1000,
