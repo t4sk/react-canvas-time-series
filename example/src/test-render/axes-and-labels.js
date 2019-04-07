@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Graphs } from "react-canvas-time-series"
+import moment from "moment"
 
 const WIDTH = 900
 const HEIGHT = 500
@@ -44,11 +45,30 @@ const GRAPH = {
   height: HEIGHT - 2 * PADDING - (X_AXIS_TOP_HEIGHT + X_AXIS_BOTTOM_HEIGHT),
 }
 
-const X_MIN = 10
-const X_MAX = 110
+const NOW = Math.round(Date.now() / 1000)
+
+const X_TICK_INTERVAL = 3600
+const X_MIN = NOW - 10 * X_TICK_INTERVAL
+const X_MAX = NOW
+const X_TICKS = [
+  NOW,
+  NOW - X_TICK_INTERVAL,
+  NOW - 2 * X_TICK_INTERVAL,
+  NOW - 3 * X_TICK_INTERVAL,
+]
+
+const Y_TICK_INTERVAL = 1000
 const Y_MIN = 1000
 const Y_MAX = 10000
-const X_TICKS = [20, 30, 40, 50, 60, 70, 80, 90, 100]
+const Y_TICKS = [Y_MIN + 1500]
+
+function renderXTick(x) {
+  return moment(x * 1000).format("HH:mm")
+}
+
+function renderYTick(y) {
+  return y.toLocaleString()
+}
 
 class AxesAndLabels extends Component {
   render() {
@@ -65,8 +85,9 @@ class AxesAndLabels extends Component {
             xMin: X_MIN,
             xMax: X_MAX,
             ticks: X_TICKS,
+            tickInterval: 2 * X_TICK_INTERVAL,
             tickLength: 5,
-            renderTick: x => x,
+            renderTick: renderXTick,
             textColor: "blue",
           },
           {
@@ -75,7 +96,10 @@ class AxesAndLabels extends Component {
             lineColor: "green",
             yMin: Y_MIN,
             yMax: Y_MAX,
-            tickInterval: 1000,
+            ticks: Y_TICKS,
+            tickInterval: Y_TICK_INTERVAL,
+            renderTick: renderYTick,
+            textColor: "red",
           },
           {
             at: "right",
@@ -83,7 +107,8 @@ class AxesAndLabels extends Component {
             lineColor: "orange",
             yMin: Y_MIN,
             yMax: Y_MAX,
-            tickInterval: 1000,
+            tickInterval: Y_TICK_INTERVAL,
+            renderTick: renderYTick,
           },
           {
             at: "bottom",
@@ -91,8 +116,8 @@ class AxesAndLabels extends Component {
             lineColor: "blue",
             xMin: X_MIN,
             xMax: X_MAX,
-            ticks: X_TICKS,
-            tickInterval: 5,
+            tickInterval: X_TICK_INTERVAL,
+            renderTick: renderXTick,
           },
         ]}
         graphs={[
@@ -101,7 +126,7 @@ class AxesAndLabels extends Component {
             ...GRAPH,
             xMin: X_MIN,
             xMax: X_MAX,
-            xInterval: 5,
+            xInterval: X_TICK_INTERVAL,
             data: X_TICKS,
             lineColor: "lightgrey",
           },
@@ -110,7 +135,8 @@ class AxesAndLabels extends Component {
             ...GRAPH,
             yMin: Y_MIN,
             yMax: Y_MAX,
-            yInterval: 1000,
+            data: Y_TICKS,
+            yInterval: Y_TICK_INTERVAL,
             lineColor: "lightgrey",
           },
         ]}
