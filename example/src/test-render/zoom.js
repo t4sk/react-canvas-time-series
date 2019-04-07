@@ -37,12 +37,13 @@ const GRAPH = {
   height: HEIGHT - 2 * PADDING - X_AXIS.height,
 }
 
-class Drag extends Component {
+const ZOOM_RATE = 0.1
+
+class Zoom extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      dragging: false,
       mouse: {
         x: undefined,
         y: undefined,
@@ -84,43 +85,32 @@ class Drag extends Component {
     }
   }
 
-  onMouseMove = (e, mouse) => {
-    this.setState(state => {
-      const { xMin, xMax } = this.getXRange(mouse, state)
+  onWheel = (e, mouse) => {
+    if (!canvas.math.isInsideRect(GRAPH, mouse)) {
+      return
+    }
 
-      return {
-        mouse: {
-          x: mouse.x,
-          y: mouse.y,
-        },
-        xMin,
-        xMax,
+    const { deltaY } = e
+
+    this.setState(state => {
+      const { xMin, xMax } = state
+
+      const x = canvas.math.getX(GRAPH.width, GRAPH.left, xMax, xMin, mouse.x)
+
+      if (deltaY > 0) {
+        // zoom out
+        return {
+          xMin: x - (x - xMin) * (1 + ZOOM_RATE),
+          xMax: x + (xMax - x) * (1 + ZOOM_RATE),
+        }
+      } else {
+        // zoom in
+        return {
+          xMin: x - (x - xMin) * (1 - ZOOM_RATE),
+          xMax: x + (xMax - x) * (1 - ZOOM_RATE),
+        }
       }
     })
-  }
-
-  onMouseDown = (e, mouse) => {
-    if (canvas.math.isInsideRect(GRAPH, mouse)) {
-      this.setState(state => ({
-        dragging: true,
-      }))
-    }
-  }
-
-  onMouseUp = (e, mouse) => {
-    this.setState(state => ({
-      dragging: false,
-    }))
-  }
-
-  onMouseOut = () => {
-    this.setState(state => ({
-      dragging: false,
-      mouse: {
-        x: undefined,
-        y: undefined,
-      },
-    }))
   }
 
   render() {
@@ -156,13 +146,10 @@ class Drag extends Component {
           canvasX: mouse.x,
           canvasY: mouse.y,
         }}
-        onMouseMove={this.onMouseMove}
-        onMouseOut={this.onMouseOut}
-        onMouseDown={this.onMouseDown}
-        onMouseUp={this.onMouseUp}
+        onWheel={this.onWheel}
       />
     )
   }
 }
 
-export default Drag
+export default Zoom
