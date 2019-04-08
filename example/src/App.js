@@ -5,12 +5,13 @@ import TestRenderZoom from "./test-render/zoom"
 import TestRenderDrag from "./test-render/drag"
 import TestRenderBar from "./test-render/bar"
 import TestRenderLine from "./test-render/line"
+import TestRenderCandlestick from "./test-render/candlestick"
 
 export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
-        <TestRenderZoom />
+        <TestRenderCandlestick />
         {/*}
         <TestRenderHistory />
         <TestRenderAxesAndLabels />
@@ -18,6 +19,7 @@ export default class App extends Component {
         <TestRenderZoom />
         <TestRenderLine />
         <TestRenderBar />
+        <TestRenderCandlestick />
         */}
       </div>
     )

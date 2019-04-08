@@ -51,7 +51,14 @@ export async function fetch(cache, { xMin, xMax }, opts = {}) {
     .sort((a, b) => a.x - b.x)
 }
 
-export function getRandomCandlestickData(xStep, xMin, xMax, yMin, yMax) {
+export function getRandomCandlestickData(
+  xStep,
+  xMin,
+  xMax,
+  yMin,
+  yMax,
+  volumeYMax
+) {
   let data = []
 
   const length = Math.round((xMax - xMin) / xStep)
@@ -82,7 +89,7 @@ export function getRandomCandlestickData(xStep, xMin, xMax, yMin, yMax) {
       low,
       open,
       close,
-      volume: rand(0, yMax),
+      volume: rand(0, volumeYMax),
       timestamp: xMin + xStep * i,
     })
   }

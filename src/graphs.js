@@ -3,15 +3,16 @@ import PropTypes from "prop-types"
 
 import * as xLines from "./canvas/x-lines"
 import * as yLines from "./canvas/y-lines"
-import * as bars from "./canvas/bars"
-import * as line from "./canvas/line"
-import * as point from "./canvas/point"
 import * as xAxis from "./canvas/x-axis"
 import * as yAxis from "./canvas/y-axis"
 import * as crosshair from "./canvas/crosshair"
 import * as text from "./canvas/text"
 import * as xLabel from "./canvas/x-label"
 import * as yLabel from "./canvas/y-label"
+import * as bars from "./canvas/bars"
+import * as line from "./canvas/line"
+import * as point from "./canvas/point"
+import * as candlestick from "./canvas/candlestick"
 
 const AXES = {
   top: xAxis,
@@ -26,6 +27,7 @@ const GRAPHS = {
   line,
   point,
   bars,
+  candlestick,
 }
 
 class Graphs extends Component {
@@ -213,7 +215,14 @@ Graphs.propTypes = {
   ).isRequired,
   graphs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf(["xLines", "yLines", "line", "point", "bars"]),
+      type: PropTypes.oneOf([
+        "xLines",
+        "yLines",
+        "line",
+        "point",
+        "bars",
+        "candlestick",
+      ]),
     })
   ).isRequired,
   frames: PropTypes.array.isRequired,
