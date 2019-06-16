@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import { getCanvasX } from '../math'
+import PropTypes from "prop-types"
+import { getCanvasX } from "../math"
 
 const TICK_TEXT_TOP_PADDING = 10
 
@@ -34,7 +34,7 @@ export function draw(ctx, props) {
     textColor,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'x-axis')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "x-axis")
 
   // style x axis
   ctx.lineWidth = 1
@@ -48,8 +48,8 @@ export function draw(ctx, props) {
   // style ticks
   ctx.font = font
   ctx.fillStyle = textColor
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
+  ctx.textAlign = "center"
+  ctx.textBaseline = "middle"
 
   for (let tick of ticks) {
     const canvasX = getCanvasX(graph.width, 0, xMax, xMin, tick)

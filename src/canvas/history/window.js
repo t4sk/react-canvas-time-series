@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 
 const propTypes = {
   graph: PropTypes.shape({
@@ -13,19 +13,10 @@ const propTypes = {
 }
 
 export function draw(ctx, props) {
-  const {
-    graph,
-    window,
-    windowColor,
-  } = props
+  const { graph, window, windowColor } = props
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'window')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "window")
 
   ctx.fillStyle = windowColor
-  ctx.fillRect(
-    window.left,
-    0,
-    window.width,
-    graph.height,
-  )
+  ctx.fillRect(window.left, 0, window.width, graph.height)
 }

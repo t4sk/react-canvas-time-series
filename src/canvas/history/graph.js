@@ -1,8 +1,5 @@
-import PropTypes from 'prop-types'
-import {
-  getCanvasX,
-  getCanvasY
-} from '../math'
+import PropTypes from "prop-types"
+import { getCanvasX, getCanvasY } from "../math"
 
 const propTypes = {
   graph: PropTypes.shape({
@@ -13,10 +10,12 @@ const propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   lineColor: PropTypes.string.isRequired,
   lineWidth: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
@@ -35,7 +34,7 @@ export function draw(ctx, props) {
     step = 1,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, 'prop', 'graph')
+  PropTypes.checkPropTypes(propTypes, props, "prop", "graph")
 
   ctx.strokeStyle = lineColor
   ctx.lineWidth = lineWidth
