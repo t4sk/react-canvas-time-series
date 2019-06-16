@@ -11,6 +11,7 @@ import * as point from "./point"
 import * as bars from "./bars"
 import * as candlestick from "./candlestick"
 import * as math from "./math"
+import * as history from "./history"
 
 export default {
   xAxis,
@@ -26,4 +27,5 @@ export default {
   bars,
   candlestick,
   math,
+  history,
 }

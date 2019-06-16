@@ -5,18 +5,18 @@ const propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
   }).isRequired,
-  window: PropTypes.shape({
+  mask: PropTypes.shape({
     left: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
   }).isRequired,
-  windowColor: PropTypes.string.isRequired,
+  maskColor: PropTypes.string.isRequired,
 }
 
 export function draw(ctx, props) {
-  const { graph, window, windowColor } = props
+  const { graph, mask, maskColor } = props
 
-  PropTypes.checkPropTypes(propTypes, props, "prop", "window")
+  PropTypes.checkPropTypes(propTypes, props, "prop", "mask")
 
-  ctx.fillStyle = windowColor
-  ctx.fillRect(window.left, 0, window.width, graph.height)
+  ctx.fillStyle = maskColor
+  ctx.fillRect(mask.left, 0, mask.width, graph.height)
 }

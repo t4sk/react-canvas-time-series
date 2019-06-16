@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import * as math from "./canvas/math"
-import { draw as drawXAxis } from "./canvas/history/x-axis"
-import { draw as drawGraph } from "./canvas/history/graph"
-import { draw as drawWindow } from "./canvas/history/window"
+import history from "./canvas/history"
 
 class History extends Component {
   constructor(props) {
@@ -52,14 +50,14 @@ class History extends Component {
 
     const graph = this.getGraph()
 
-    drawXAxis(this.ctx.graph, {
+    history.xAxis.draw(this.ctx.graph, {
       ...this.props,
       graph,
       xMin,
       xMax,
     })
 
-    drawGraph(this.ctx.graph, {
+    history.graph.draw(this.ctx.graph, {
       ...this.props,
       graph,
       xMin,
@@ -76,7 +74,7 @@ class History extends Component {
 
     const graph = this.getGraph()
 
-    drawWindow(this.ctx.ui, {
+    history.mask.draw(this.ctx.ui, {
       ...this.props,
       graph,
     })
@@ -108,7 +106,7 @@ class History extends Component {
   }
 
   getCursor() {
-    const { windowEdgeDelta, mouse, window } = this.props
+    const { maskEdgeDelta, mouse, mask } = this.props
 
     const graph = this.getGraph()
 
@@ -117,13 +115,13 @@ class History extends Component {
     }
 
     if (
-      Math.abs(window.left - mouse.x) <= windowEdgeDelta ||
-      Math.abs(window.left + window.width - mouse.x) <= windowEdgeDelta
+      Math.abs(mask.left - mouse.x) <= maskEdgeDelta ||
+      Math.abs(mask.left + mask.width - mouse.x) <= maskEdgeDelta
     ) {
       return "ew-resize"
     }
 
-    if (mouse.x > window.left && mouse.x < window.left + window.width) {
+    if (mouse.x > mask.left && mouse.x < mask.left + mask.width) {
       return "grab"
     }
 
@@ -199,13 +197,13 @@ History.defaultProps = {
   lineWidth: 1,
   step: 1,
 
-  // window
-  windowColor: "rgba(100, 100, 100, 0.5)",
-  window: {
+  // mask
+  maskColor: "rgba(100, 100, 100, 0.5)",
+  mask: {
     left: 0,
     width: 0,
   },
-  windowEdgeDelta: 10,
+  maskEdgeDelta: 10,
 
   mouse: {
     x: undefined,
@@ -245,13 +243,13 @@ History.propTypes = {
   lineWidth: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
 
-  // window
-  windowColor: PropTypes.string.isRequired,
-  window: PropTypes.shape({
+  // mask
+  maskColor: PropTypes.string.isRequired,
+  mask: PropTypes.shape({
     left: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
   }).isRequired,
-  windowEdgeDelta: PropTypes.number.isRequired,
+  maskEdgeDelta: PropTypes.number.isRequired,
 
   mouse: PropTypes.shape({
     x: PropTypes.number,
