@@ -40,7 +40,7 @@ function setDefaults(props) {
   }
 }
 
-export function draw(ctx: any, props: Props) {
+export function draw(ctx, props) {
   props = setDefaults(props)
 
   const {
