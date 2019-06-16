@@ -7,7 +7,7 @@ import * as yLabel from "./y-label"
 import * as text from "./text"
 import * as crosshair from "./crosshair"
 import * as line from "./line"
-import * as point from "./point"
+import * as points from "./points"
 import * as bars from "./bars"
 import * as candlestick from "./candlestick"
 import * as math from "./math"
@@ -23,7 +23,7 @@ export default {
   text,
   crosshair,
   line,
-  point,
+  points,
   bars,
   candlestick,
   math,

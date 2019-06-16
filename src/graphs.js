@@ -11,7 +11,7 @@ import * as xLabel from "./canvas/x-label"
 import * as yLabel from "./canvas/y-label"
 import * as bars from "./canvas/bars"
 import * as line from "./canvas/line"
-import * as point from "./canvas/point"
+import * as points from "./canvas/points"
 import * as candlestick from "./canvas/candlestick"
 
 const AXES = {
@@ -25,7 +25,7 @@ const GRAPHS = {
   xLines,
   yLines,
   line,
-  point,
+  points,
   bars,
   candlestick,
 }
@@ -219,7 +219,7 @@ Graphs.propTypes = {
         "xLines",
         "yLines",
         "line",
-        "point",
+        "points",
         "bars",
         "candlestick",
       ]),

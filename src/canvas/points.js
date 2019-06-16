@@ -10,8 +10,10 @@ const propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  x: PropTypes.number,
-  y: PropTypes.number,
+  data: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+  }).isRequired,
   color: PropTypes.string.isRequired,
   radius: PropTypes.number.isRequired,
   ambientColor: PropTypes.string.isRequired,
@@ -20,9 +22,10 @@ const propTypes = {
 
 const defaultProps = {
   color: "black",
-  radius: 3,
+  radius: 2,
   ambientColor: "rgba(80, 80, 80, 0.3)",
-  ambientRadius: 6,
+  ambientRadius: 0,
+  data: [],
 }
 
 function setDefaults(props) {
@@ -32,9 +35,7 @@ function setDefaults(props) {
   }
 }
 
-export function draw(ctx, props) {
-  props = setDefaults(props)
-
+export function drawPoint(ctx, props, point) {
   const {
     top,
     left,
@@ -44,15 +45,15 @@ export function draw(ctx, props) {
     xMax,
     yMin,
     yMax,
-    x,
-    y,
     color,
     radius,
     ambientColor,
     ambientRadius,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, "prop", "point")
+  const { x, y } = point
+
+  PropTypes.checkPropTypes(propTypes, props, "prop", "points")
 
   if (x === undefined || y === undefined) {
     return
@@ -73,5 +74,17 @@ export function draw(ctx, props) {
     ctx.arc(canvasX, canvasY, radius, 0, 2 * Math.PI, false)
     ctx.fillStyle = color
     ctx.fill()
+  }
+}
+
+export function draw(ctx, props) {
+  props = setDefaults(props)
+
+  const { data } = props
+
+  PropTypes.checkPropTypes(propTypes, props, "prop", "points")
+
+  for (let point of data) {
+    drawPoint(ctx, props, point)
   }
 }
