@@ -37,7 +37,6 @@ class Graphs extends Component {
     this.axes = React.createRef()
     this.graphs = React.createRef()
     this.ui = React.createRef()
-    this.crosshair = React.createRef()
 
     // ref to animation frame
     this.animation = undefined
@@ -48,7 +47,6 @@ class Graphs extends Component {
       axes: this.axes.current.getContext("2d"),
       graphs: this.graphs.current.getContext("2d"),
       ui: this.ui.current.getContext("2d"),
-      crosshair: this.crosshair.current.getContext("2d"),
     }
 
     if (this.props.animate) {
@@ -78,8 +76,8 @@ class Graphs extends Component {
     }
 
     if (this.props.crosshair) {
-      this.ctx.crosshair.clearRect(0, 0, this.props.width, this.props.height)
-      crosshair.draw(this.ctx.crosshair, this.props.crosshair)
+      this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
+      crosshair.draw(this.ctx.ui, this.props.crosshair)
     }
 
     this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
@@ -107,7 +105,7 @@ class Graphs extends Component {
   }
 
   getMouse = e => {
-    const rect = this.ctx.crosshair.canvas.getBoundingClientRect()
+    const rect = this.ctx.ui.canvas.getBoundingClientRect()
 
     return {
       x: e.clientX - rect.left,
@@ -163,12 +161,6 @@ class Graphs extends Component {
         />
         <canvas
           ref={this.graphs}
-          style={styles.canvas}
-          width={this.props.width}
-          height={this.props.height}
-        />
-        <canvas
-          ref={this.crosshair}
           style={styles.canvas}
           width={this.props.width}
           height={this.props.height}
