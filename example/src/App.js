@@ -12,16 +12,15 @@ export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
-        <TestRenderPointsAndLines />
+        <TestRenderAxesAndLabels />
         {/*}
+        <TestRenderPointsAndLines />
         <TestRenderCandlestick />
         <TestRenderHistory />
-        <TestRenderAxesAndLabels />
         <TestRenderDrag />
         <TestRenderZoom />
         <TestRenderLine />
         <TestRenderBar />
-        <TestRenderCandlestick />
         */}
       </div>
     )
