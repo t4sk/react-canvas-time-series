@@ -7,19 +7,21 @@ import TestRenderDrag from "./test-render/drag"
 import TestRenderBar from "./test-render/bar"
 import TestRenderLine from "./test-render/line"
 import TestRenderCandlestick from "./test-render/candlestick"
-import TestRenderPointsAndLines from "./test-render/points-and-lines"
+import TestRenderPoints from "./test-render/points"
 
 export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>Points</h3>
+        <TestRenderPoints />
+
         <h3>Labels</h3>
         <TestRenderLabels />
 
         <h3>Axes</h3>
         <TestRenderAxes />
         {/*}
-        <TestRenderPointsAndLines />
         <TestRenderCandlestick />
         <TestRenderHistory />
         <TestRenderDrag />

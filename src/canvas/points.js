@@ -10,10 +10,12 @@ const propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  data: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+    })
+  ).isRequired,
   color: PropTypes.string.isRequired,
   radius: PropTypes.number.isRequired,
   ambientColor: PropTypes.string.isRequired,
