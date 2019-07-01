@@ -12,7 +12,7 @@ import * as yLabel from "./canvas/y-label"
 import * as bars from "./canvas/bars"
 import * as line from "./canvas/line"
 import * as points from "./canvas/points"
-import * as candlestick from "./canvas/candlestick"
+import * as candlesticks from "./canvas/candlesticks"
 
 const AXES = {
   top: xAxis,
@@ -27,7 +27,7 @@ const GRAPHS = {
   line,
   points,
   bars,
-  candlestick,
+  candlesticks,
 }
 
 class Graphs extends Component {
@@ -213,7 +213,7 @@ Graphs.propTypes = {
         "line",
         "points",
         "bars",
-        "candlestick",
+        "candlesticks",
       ]),
     })
   ).isRequired,
