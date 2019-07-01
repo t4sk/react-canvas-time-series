@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import TestRenderHistory from "./test-render/history"
 import TestRenderAxes from "./test-render/axes"
-import TestRenderAxesAndLabels from "./test-render/axes-and-labels"
+import TestRenderLabels from "./test-render/labels"
 import TestRenderZoom from "./test-render/zoom"
 import TestRenderDrag from "./test-render/drag"
 import TestRenderBar from "./test-render/bar"
@@ -13,9 +13,12 @@ export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>Labels</h3>
+        <TestRenderLabels />
+
+        <h3>Axes</h3>
         <TestRenderAxes />
         {/*}
-        <TestRenderAxesAndLabels />
         <TestRenderPointsAndLines />
         <TestRenderCandlestick />
         <TestRenderHistory />

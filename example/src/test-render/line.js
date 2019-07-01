@@ -302,6 +302,7 @@ class LineTestRender extends Component {
             data: this.state.lines[1] || [],
             lineColor: "green",
           },
+          /*
           {
             type: "point",
             top: 10,
@@ -332,6 +333,7 @@ class LineTestRender extends Component {
             color: "blue",
             ambientColor: "rgba(0, 0, 255, 0.1)",
           },
+          */
           {
             type: "xLines",
             top: 230,
@@ -380,6 +382,7 @@ class LineTestRender extends Component {
             data: this.state.lines[3] || [],
             lineColor: "olive",
           },
+          /*
           {
             type: "point",
             top: 230,
@@ -410,6 +413,7 @@ class LineTestRender extends Component {
             color: "olive",
             ambientColor: "rgba(0, 255, 0, 0.1)",
           },
+          */
         ]}
         frames={[
           {

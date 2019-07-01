@@ -50,17 +50,10 @@ const NOW = Math.round(Date.now() / 1000)
 const X_TICK_INTERVAL = 3600
 const X_MIN = NOW - 10 * X_TICK_INTERVAL
 const X_MAX = NOW
-const X_TICKS = [
-  NOW,
-  NOW - X_TICK_INTERVAL,
-  NOW - 2 * X_TICK_INTERVAL,
-  NOW - 3 * X_TICK_INTERVAL,
-]
 
 const Y_TICK_INTERVAL = 1000
 const Y_MIN = 1000
 const Y_MAX = 10000
-const Y_TICKS = [Y_MIN + 1500]
 
 function renderXTick(x) {
   return moment(x * 1000).format("HH:mm")
@@ -90,7 +83,6 @@ class AxesAndLabels extends Component {
             lineColor: "red",
             xMin: X_MIN,
             xMax: X_MAX,
-            ticks: X_TICKS,
             tickInterval: 2 * X_TICK_INTERVAL,
             tickLength: 5,
             renderTick: renderXTick,
@@ -102,7 +94,6 @@ class AxesAndLabels extends Component {
             lineColor: "green",
             yMin: Y_MIN,
             yMax: Y_MAX,
-            ticks: Y_TICKS,
             tickInterval: Y_TICK_INTERVAL,
             renderTick: renderYTick,
             textColor: "red",
@@ -133,7 +124,6 @@ class AxesAndLabels extends Component {
             xMin: X_MIN,
             xMax: X_MAX,
             xInterval: X_TICK_INTERVAL,
-            data: X_TICKS,
             lineColor: "lightgrey",
           },
           {
@@ -141,7 +131,6 @@ class AxesAndLabels extends Component {
             ...GRAPH,
             yMin: Y_MIN,
             yMax: Y_MAX,
-            data: Y_TICKS,
             yInterval: Y_TICK_INTERVAL,
             lineColor: "lightgrey",
           },
