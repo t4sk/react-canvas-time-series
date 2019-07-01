@@ -75,12 +75,11 @@ class Graphs extends Component {
       GRAPHS[graph.type].draw(this.ctx.graphs, graph)
     }
 
+    this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
+
     if (this.props.crosshair) {
-      this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
       crosshair.draw(this.ctx.ui, this.props.crosshair)
     }
-
-    this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let frame of this.props.frames) {
       text.draw(this.ctx.ui, frame)
