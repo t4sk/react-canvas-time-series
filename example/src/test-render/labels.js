@@ -69,163 +69,161 @@ const X_LABEL_HEIGHT = 20
 const Y_LABEL_WIDTH = 50
 const Y_LABEL_HEIGHT = 20
 
-class AxesAndLabels extends Component {
-  render() {
-    return (
-      <Graphs
-        width={WIDTH}
-        height={HEIGHT}
-        backgroundColor="beige"
-        axes={[
-          {
-            at: "top",
-            ...X_AXIS_TOP,
-            lineColor: "red",
-            xMin: X_MIN,
-            xMax: X_MAX,
-            tickInterval: 2 * X_TICK_INTERVAL,
-            tickLength: 5,
-            renderTick: renderXTick,
-            textColor: "blue",
-          },
-          {
-            at: "left",
-            ...Y_AXIS_LEFT,
-            lineColor: "green",
-            yMin: Y_MIN,
-            yMax: Y_MAX,
-            tickInterval: Y_TICK_INTERVAL,
-            renderTick: renderYTick,
-            textColor: "red",
-          },
-          {
-            at: "right",
-            ...Y_AXIS_RIGHT,
-            lineColor: "orange",
-            yMin: Y_MIN,
-            yMax: Y_MAX,
-            tickInterval: Y_TICK_INTERVAL,
-            renderTick: renderYTick,
-          },
-          {
-            at: "bottom",
-            ...X_AXIS_BOTTOM,
-            lineColor: "blue",
-            xMin: X_MIN,
-            xMax: X_MAX,
-            tickInterval: X_TICK_INTERVAL,
-            renderTick: renderXTick,
-          },
-        ]}
-        graphs={[
-          {
-            type: "xLines",
-            ...GRAPH,
-            xMin: X_MIN,
-            xMax: X_MAX,
-            xInterval: X_TICK_INTERVAL,
-            lineColor: "lightgrey",
-          },
-          {
-            type: "yLines",
-            ...GRAPH,
-            yMin: Y_MIN,
-            yMax: Y_MAX,
-            yInterval: Y_TICK_INTERVAL,
-            lineColor: "lightgrey",
-          },
-        ]}
-        xLabels={[
-          {
-            drawLabel: true,
-            top: GRAPH.top - 10 - X_LABEL_HEIGHT,
-            left:
-              canvas.math.getCanvasX(
-                GRAPH.width,
-                GRAPH.left,
-                X_MAX,
-                X_MIN,
-                NOW - 8 * 3600
-              ) - Math.round(X_LABEL_WIDTH / 2),
-            width: X_LABEL_WIDTH,
-            height: X_LABEL_HEIGHT,
-            renderText: () => renderXTick(NOW - 8 * 3600),
-            color: "white",
-            backgroundColor: "black",
-            drawLine: true,
-            lineTop: GRAPH.top - 10,
-            lineBottom: GRAPH.top + GRAPH.height,
-            lineColor: "green",
-          },
-          {
-            drawLabel: true,
-            top: GRAPH.top + GRAPH.height + 10,
-            left:
-              canvas.math.getCanvasX(
-                GRAPH.width,
-                GRAPH.left,
-                X_MAX,
-                X_MIN,
-                NOW - 5 * 3600
-              ) - Math.round(X_LABEL_WIDTH / 2),
-            width: X_LABEL_WIDTH,
-            height: X_LABEL_HEIGHT,
-            renderText: () => renderXTick(NOW - 5 * 3600),
-            color: "white",
-            backgroundColor: "black",
-            drawLine: true,
-            lineTop: GRAPH.top,
-            lineBottom: GRAPH.top + GRAPH.height + 10,
-            lineColor: "green",
-          },
-        ]}
-        yLabels={[
-          {
-            drawLabel: true,
-            top:
-              canvas.math.getCanvasY(
-                GRAPH.height,
-                GRAPH.top,
-                Y_MAX,
-                Y_MIN,
-                (Y_MAX + Y_MIN) / 2
-              ) - 10,
-            left: GRAPH.left - Y_LABEL_WIDTH - 10,
-            width: Y_LABEL_WIDTH,
-            height: Y_LABEL_HEIGHT,
-            renderText: () => renderYTick((Y_MAX + Y_MIN) / 2),
-            color: "white",
-            backgroundColor: "black",
-            drawLine: true,
-            lineLeft: GRAPH.left - 10,
-            lineRight: GRAPH.left + GRAPH.width,
-            lineColor: "orange",
-          },
-          {
-            drawLabel: true,
-            top:
-              canvas.math.getCanvasY(
-                GRAPH.height,
-                GRAPH.top,
-                Y_MAX,
-                Y_MIN,
-                (Y_MAX + Y_MIN) / 2 + 1000
-              ) - 10,
-            left: GRAPH.left + GRAPH.width + 10,
-            width: Y_LABEL_WIDTH,
-            height: Y_LABEL_HEIGHT,
-            renderText: () => renderYTick((Y_MAX + Y_MIN) / 2 + 1000),
-            color: "white",
-            backgroundColor: "black",
-            drawLine: true,
-            lineLeft: GRAPH.left,
-            lineRight: GRAPH.left + GRAPH.width + 10,
-            lineColor: "orange",
-          },
-        ]}
-      />
-    )
-  }
+function Labels(props) {
+  return (
+    <Graphs
+      width={WIDTH}
+      height={HEIGHT}
+      backgroundColor="beige"
+      axes={[
+        {
+          at: "top",
+          ...X_AXIS_TOP,
+          lineColor: "red",
+          xMin: X_MIN,
+          xMax: X_MAX,
+          tickInterval: 2 * X_TICK_INTERVAL,
+          tickLength: 5,
+          renderTick: renderXTick,
+          textColor: "blue",
+        },
+        {
+          at: "left",
+          ...Y_AXIS_LEFT,
+          lineColor: "green",
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          tickInterval: Y_TICK_INTERVAL,
+          renderTick: renderYTick,
+          textColor: "red",
+        },
+        {
+          at: "right",
+          ...Y_AXIS_RIGHT,
+          lineColor: "orange",
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          tickInterval: Y_TICK_INTERVAL,
+          renderTick: renderYTick,
+        },
+        {
+          at: "bottom",
+          ...X_AXIS_BOTTOM,
+          lineColor: "blue",
+          xMin: X_MIN,
+          xMax: X_MAX,
+          tickInterval: X_TICK_INTERVAL,
+          renderTick: renderXTick,
+        },
+      ]}
+      graphs={[
+        {
+          type: "xLines",
+          ...GRAPH,
+          xMin: X_MIN,
+          xMax: X_MAX,
+          xInterval: X_TICK_INTERVAL,
+          lineColor: "lightgrey",
+        },
+        {
+          type: "yLines",
+          ...GRAPH,
+          yMin: Y_MIN,
+          yMax: Y_MAX,
+          yInterval: Y_TICK_INTERVAL,
+          lineColor: "lightgrey",
+        },
+      ]}
+      xLabels={[
+        {
+          drawLabel: true,
+          top: GRAPH.top - 10 - X_LABEL_HEIGHT,
+          left:
+            canvas.math.getCanvasX(
+              GRAPH.width,
+              GRAPH.left,
+              X_MAX,
+              X_MIN,
+              NOW - 8 * 3600
+            ) - Math.round(X_LABEL_WIDTH / 2),
+          width: X_LABEL_WIDTH,
+          height: X_LABEL_HEIGHT,
+          renderText: () => renderXTick(NOW - 8 * 3600),
+          color: "white",
+          backgroundColor: "black",
+          drawLine: true,
+          lineTop: GRAPH.top - 10,
+          lineBottom: GRAPH.top + GRAPH.height,
+          lineColor: "green",
+        },
+        {
+          drawLabel: true,
+          top: GRAPH.top + GRAPH.height + 10,
+          left:
+            canvas.math.getCanvasX(
+              GRAPH.width,
+              GRAPH.left,
+              X_MAX,
+              X_MIN,
+              NOW - 5 * 3600
+            ) - Math.round(X_LABEL_WIDTH / 2),
+          width: X_LABEL_WIDTH,
+          height: X_LABEL_HEIGHT,
+          renderText: () => renderXTick(NOW - 5 * 3600),
+          color: "white",
+          backgroundColor: "black",
+          drawLine: true,
+          lineTop: GRAPH.top,
+          lineBottom: GRAPH.top + GRAPH.height + 10,
+          lineColor: "green",
+        },
+      ]}
+      yLabels={[
+        {
+          drawLabel: true,
+          top:
+            canvas.math.getCanvasY(
+              GRAPH.height,
+              GRAPH.top,
+              Y_MAX,
+              Y_MIN,
+              (Y_MAX + Y_MIN) / 2
+            ) - 10,
+          left: GRAPH.left - Y_LABEL_WIDTH - 10,
+          width: Y_LABEL_WIDTH,
+          height: Y_LABEL_HEIGHT,
+          renderText: () => renderYTick((Y_MAX + Y_MIN) / 2),
+          color: "white",
+          backgroundColor: "black",
+          drawLine: true,
+          lineLeft: GRAPH.left - 10,
+          lineRight: GRAPH.left + GRAPH.width,
+          lineColor: "orange",
+        },
+        {
+          drawLabel: true,
+          top:
+            canvas.math.getCanvasY(
+              GRAPH.height,
+              GRAPH.top,
+              Y_MAX,
+              Y_MIN,
+              (Y_MAX + Y_MIN) / 2 + 1000
+            ) - 10,
+          left: GRAPH.left + GRAPH.width + 10,
+          width: Y_LABEL_WIDTH,
+          height: Y_LABEL_HEIGHT,
+          renderText: () => renderYTick((Y_MAX + Y_MIN) / 2 + 1000),
+          color: "white",
+          backgroundColor: "black",
+          drawLine: true,
+          lineLeft: GRAPH.left,
+          lineRight: GRAPH.left + GRAPH.width + 10,
+          lineColor: "orange",
+        },
+      ]}
+    />
+  )
 }
 
-export default AxesAndLabels
+export default Labels

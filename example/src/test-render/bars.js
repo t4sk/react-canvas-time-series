@@ -52,7 +52,7 @@ const GRAPH = {
   height: Y_AXIS_HEIGHT,
 }
 
-function Points(props) {
+function Bars(props) {
   return (
     <Graphs
       width={WIDTH}
@@ -127,4 +127,4 @@ function Points(props) {
   )
 }
 
-export default Points
+export default Bars
