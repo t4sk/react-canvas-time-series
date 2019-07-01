@@ -38,7 +38,7 @@ const GRAPH = {
   height: Y_AXIS_HEIGHT,
 }
 
-function Frames(props) {
+function Crosshair(props) {
   const [mouse, setMouse] = useState({
     x: undefined,
     y: undefined,
@@ -54,21 +54,6 @@ function Frames(props) {
       y: undefined,
     })
   }
-
-  const frameX = canvas.math.getX(
-    GRAPH.width,
-    GRAPH.left,
-    X_MAX,
-    X_MIN,
-    mouse.x
-  )
-  const frameY = canvas.math.getY(
-    GRAPH.height,
-    GRAPH.top,
-    Y_MAX,
-    Y_MIN,
-    mouse.y
-  )
 
   return (
     <Graphs
@@ -102,26 +87,22 @@ function Frames(props) {
           renderTick: x => x,
         },
       ]}
-      frames={[
-        {
-          text: `x: ${frameX.toFixed()}`,
-          color: "black",
-          font: "16px Arial",
-          left: 10,
-          top: 10,
-        },
-        {
-          text: `y: ${frameY.toFixed()}`,
-          color: "black",
-          font: "16px Arial",
-          left: 10,
-          top: 10 + 15,
-        },
-      ]}
+      crosshair={{
+        top: GRAPH.top,
+        left: GRAPH.left,
+        height: GRAPH.height,
+        width: GRAPH.width,
+        canvasX: mouse.x,
+        canvasY: mouse.y,
+        yLineColor: "red",
+        yLineWidth: 0.5,
+        xLineColor: "green",
+        xLineWidth: 4,
+      }}
       onMouseMove={onMouseMove}
       onMouseOut={onMouseOut}
     />
   )
 }
 
-export default Frames
+export default Crosshair

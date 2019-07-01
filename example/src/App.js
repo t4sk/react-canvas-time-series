@@ -7,6 +7,7 @@ import TestRenderBars from "./test-render/bars"
 import TestRenderCandlesticks from "./test-render/candlesticks"
 // UI
 import TestRenderFrames from "./test-render/frames"
+import TestRenderCrosshair from "./test-render/crosshair"
 import TestRenderZoom from "./test-render/zoom"
 import TestRenderDrag from "./test-render/drag"
 // History
@@ -16,6 +17,9 @@ export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>Crosshair</h3>
+        <TestRenderCrosshair />
+
         <h3>Frames</h3>
         <TestRenderFrames />
 
