@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Graphs, canvas } from "react-canvas-time-series"
 
 // fake data

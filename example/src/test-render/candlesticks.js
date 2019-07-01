@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Graphs, canvas } from "react-canvas-time-series"
 import moment from "moment"
 import { getRandomCandlestickData } from "../util"
