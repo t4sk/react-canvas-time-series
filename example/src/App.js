@@ -1,18 +1,24 @@
 import React, { Component } from "react"
-import TestRenderHistory from "./test-render/history"
 import TestRenderAxes from "./test-render/axes"
 import TestRenderLabels from "./test-render/labels"
+import TestRenderPoints from "./test-render/points"
+import TestRenderLines from "./test-render/lines"
+import TestRenderBars from "./test-render/bars"
+import TestRenderCandlesticks from "./test-render/candlesticks"
+// UI
+import TestRenderFrames from "./test-render/frames"
 import TestRenderZoom from "./test-render/zoom"
 import TestRenderDrag from "./test-render/drag"
-import TestRenderBars from "./test-render/bars"
-import TestRenderLines from "./test-render/lines"
-import TestRenderCandlesticks from "./test-render/candlesticks"
-import TestRenderPoints from "./test-render/points"
+// History
+import TestRenderHistory from "./test-render/history"
 
 export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>Frames</h3>
+        <TestRenderFrames />
+
         <h3>Candlesticks</h3>
         <TestRenderCandlesticks />
 
