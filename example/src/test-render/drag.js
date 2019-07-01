@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import { Graphs, canvas } from "react-canvas-time-series"
 import moment from "moment"
 
@@ -17,17 +17,16 @@ const X_MAX = DAYS[DAYS.length - 1]
 const X_TICK_INTERVAL = 24 * 3600
 
 // graph
-const WIDTH = 800
+const WIDTH = 900
 const HEIGHT = 150
-
-// top, bottom, left, right
 const PADDING = 10
+const X_AXIS_HEIGHT = 20
 
 const X_AXIS = {
-  top: HEIGHT - PADDING - 20,
+  top: HEIGHT - PADDING - X_AXIS_HEIGHT,
   left: PADDING,
   width: WIDTH - 2 * PADDING,
-  height: 20,
+  height: X_AXIS_HEIGHT,
 }
 
 const GRAPH = {
@@ -37,22 +36,18 @@ const GRAPH = {
   height: HEIGHT - 2 * PADDING - X_AXIS.height,
 }
 
-class Drag extends Component {
-  constructor(props) {
-    super(props)
+function Drag(props) {
+  const [state, setState] = useState({
+    dragging: false,
+    mouse: {
+      x: undefined,
+      y: undefined,
+    },
+    xMin: X_MIN,
+    xMax: X_MAX,
+  })
 
-    this.state = {
-      dragging: false,
-      mouse: {
-        x: undefined,
-        y: undefined,
-      },
-      xMin: X_MIN,
-      xMax: X_MAX,
-    }
-  }
-
-  getXRange = (mouse, state) => {
+  function getXRange(mouse, state) {
     if (!canvas.math.isInsideRect(GRAPH, mouse) || !state.dragging) {
       return {
         xMin: state.xMin,
@@ -84,85 +79,86 @@ class Drag extends Component {
     }
   }
 
-  onMouseMove = (e, mouse) => {
-    this.setState(state => {
-      const { xMin, xMax } = this.getXRange(mouse, state)
+  function onMouseMove(e, mouse) {
+    const { xMin, xMax } = getXRange(mouse, state)
 
-      return {
-        mouse: {
-          x: mouse.x,
-          y: mouse.y,
-        },
-        xMin,
-        xMax,
-      }
+    setState({
+      ...state,
+      mouse: {
+        x: mouse.x,
+        y: mouse.y,
+      },
+      xMin,
+      xMax,
     })
   }
 
-  onMouseDown = (e, mouse) => {
+  function onMouseDown(e, mouse) {
     if (canvas.math.isInsideRect(GRAPH, mouse)) {
-      this.setState(state => ({
+      setState({
+        ...state,
         dragging: true,
-      }))
+      })
     }
   }
 
-  onMouseUp = (e, mouse) => {
-    this.setState(state => ({
+  function onMouseUp(e, mouse) {
+    setState({
+      ...state,
       dragging: false,
-    }))
+    })
   }
 
-  onMouseOut = () => {
-    this.setState(state => ({
+  function onMouseOut() {
+    setState({
+      ...state,
       dragging: false,
       mouse: {
         x: undefined,
         y: undefined,
       },
-    }))
+    })
   }
 
-  render() {
-    const { xMin, xMax, mouse } = this.state
+  const { xMin, xMax, mouse } = state
 
-    return (
-      <Graphs
-        width={WIDTH}
-        height={HEIGHT}
-        backgroundColor="beige"
-        axes={[
-          {
-            at: "bottom",
-            ...X_AXIS,
-            lineColor: "blue",
-            xMin,
-            xMax,
-            tickInterval: X_TICK_INTERVAL,
-            renderTick: x => moment(x * 1000).format("MM-DD"),
-          },
-        ]}
-        graphs={[
-          {
-            type: "xLines",
-            ...GRAPH,
-            xMin,
-            xMax,
-            xInterval: X_TICK_INTERVAL,
-          },
-        ]}
-        crosshair={{
+  return (
+    <Graphs
+      width={WIDTH}
+      height={HEIGHT}
+      backgroundColor="beige"
+      axes={[
+        {
+          at: "bottom",
+          ...X_AXIS,
+          lineColor: "blue",
+          xMin,
+          xMax,
+          tickInterval: X_TICK_INTERVAL,
+          renderTick: x => moment(x * 1000).format("MM-DD"),
+        },
+      ]}
+      graphs={[
+        {
+          type: "xLines",
           ...GRAPH,
-          canvasX: mouse.x,
-          canvasY: mouse.y,
-        }}
-        onMouseMove={this.onMouseMove}
-        onMouseOut={this.onMouseOut}
-        onMouseDown={this.onMouseDown}
-        onMouseUp={this.onMouseUp}
-      />
-    )
-  }
+          lineColor: "blue",
+          xMin,
+          xMax,
+          xInterval: X_TICK_INTERVAL,
+        },
+      ]}
+      crosshair={{
+        ...GRAPH,
+        canvasX: mouse.x,
+        canvasY: mouse.y,
+      }}
+      onMouseMove={onMouseMove}
+      onMouseOut={onMouseOut}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+    />
+  )
 }
 
 export default Drag
