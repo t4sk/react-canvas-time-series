@@ -9,7 +9,7 @@ import * as crosshair from "./crosshair"
 import * as line from "./line"
 import * as points from "./points"
 import * as bars from "./bars"
-import * as candlestick from "./candlestick"
+import * as candlesticks from "./candlesticks"
 import * as math from "./math"
 import * as history from "./history"
 
@@ -25,7 +25,7 @@ export default {
   line,
   points,
   bars,
-  candlestick,
+  candlesticks,
   math,
   history,
 }
