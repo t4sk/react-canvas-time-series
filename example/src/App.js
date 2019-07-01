@@ -5,7 +5,7 @@ import TestRenderLabels from "./test-render/labels"
 import TestRenderZoom from "./test-render/zoom"
 import TestRenderDrag from "./test-render/drag"
 import TestRenderBar from "./test-render/bar"
-import TestRenderLine from "./test-render/line"
+import TestRenderLines from "./test-render/lines"
 import TestRenderCandlestick from "./test-render/candlestick"
 import TestRenderPoints from "./test-render/points"
 
@@ -13,6 +13,9 @@ export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>Lines</h3>
+        <TestRenderLines />
+
         <h3>Points</h3>
         <TestRenderPoints />
 
