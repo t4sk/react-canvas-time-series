@@ -17,6 +17,9 @@ export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        <h3>History</h3>
+        <TestRenderHistory />
+
         <h3>Zoom</h3>
         <TestRenderZoom />
 
