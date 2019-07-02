@@ -1,6 +1,11 @@
 import React, { useState } from "react"
-import { Graphs, canvas } from "react-canvas-time-series"
+import ReactCanvasTimeSeries, {
+  canvas,
+  draggable,
+} from "react-canvas-time-series"
 import moment from "moment"
+
+const Graphs = draggable(ReactCanvasTimeSeries.Graphs)
 
 const NOW = moment()
 const DAYS = [...Array(10).keys()]
@@ -38,7 +43,6 @@ const GRAPH = {
 
 function Drag(props) {
   const [state, setState] = useState({
-    dragging: false,
     mouse: {
       x: undefined,
       y: undefined,
@@ -47,41 +51,7 @@ function Drag(props) {
     xMax: X_MAX,
   })
 
-  function getXRange(mouse, state) {
-    if (!canvas.math.isInsideRect(GRAPH, mouse) || !state.dragging) {
-      return {
-        xMin: state.xMin,
-        xMax: state.xMax,
-      }
-    }
-
-    const diff = mouse.x - state.mouse.x
-
-    const xMin = canvas.math.getX(
-      GRAPH.width,
-      GRAPH.left,
-      state.xMax,
-      state.xMin,
-      GRAPH.left - diff
-    )
-
-    const xMax = canvas.math.getX(
-      GRAPH.width,
-      GRAPH.left,
-      state.xMax,
-      state.xMin,
-      GRAPH.width + GRAPH.left - diff
-    )
-
-    return {
-      xMin,
-      xMax,
-    }
-  }
-
-  function onMouseMove(e, mouse) {
-    const { xMin, xMax } = getXRange(mouse, state)
-
+  function onMouseMove(e, mouse, { xMin, xMax }) {
     setState({
       ...state,
       mouse: {
@@ -93,26 +63,9 @@ function Drag(props) {
     })
   }
 
-  function onMouseDown(e, mouse) {
-    if (canvas.math.isInsideRect(GRAPH, mouse)) {
-      setState({
-        ...state,
-        dragging: true,
-      })
-    }
-  }
-
-  function onMouseUp(e, mouse) {
-    setState({
-      ...state,
-      dragging: false,
-    })
-  }
-
   function onMouseOut() {
     setState({
       ...state,
-      dragging: false,
       mouse: {
         x: undefined,
         y: undefined,
@@ -127,6 +80,10 @@ function Drag(props) {
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"
+      graph={GRAPH}
+      mouse={state.mouse}
+      xMin={state.xMin}
+      xMax={state.xMax}
       axes={[
         {
           at: "bottom",
@@ -155,8 +112,6 @@ function Drag(props) {
       }}
       onMouseMove={onMouseMove}
       onMouseOut={onMouseOut}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
     />
   )
 }
