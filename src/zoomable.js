@@ -6,10 +6,10 @@ const DEFAULT_ZOOM_RATE = 0.1
 
 export default function zoomable(Component) {
   function Zoomable(props) {
-    const { graph, xMin, xMax, mouse, zoomRate } = props
+    const { ui, xMin, xMax, mouse, zoomRate } = props
 
     function getXRange(e) {
-      if (!canvas.math.isInsideRect(graph, mouse)) {
+      if (!canvas.math.isInsideRect(ui, mouse)) {
         return {
           xMin,
           xMax,
@@ -18,7 +18,7 @@ export default function zoomable(Component) {
 
       const { deltaY } = e
 
-      const x = canvas.math.getX(graph.width, graph.left, xMax, xMin, mouse.x)
+      const x = canvas.math.getX(ui.width, ui.left, xMax, xMin, mouse.x)
 
       if (deltaY > 0) {
         // zoom out
@@ -47,7 +47,7 @@ export default function zoomable(Component) {
   Zoomable.propTypes = {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
-    graph: PropTypes.shape({
+    ui: PropTypes.shape({
       left: PropTypes.number.isRequired,
       top: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,

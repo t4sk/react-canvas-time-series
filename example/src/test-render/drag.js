@@ -80,7 +80,7 @@ function Drag(props) {
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"
-      graph={GRAPH}
+      ui={GRAPH}
       mouse={state.mouse}
       xMin={state.xMin}
       xMax={state.xMax}

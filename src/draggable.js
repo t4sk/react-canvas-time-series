@@ -9,7 +9,7 @@ export default function draggable(Component) {
     })
 
     function getXRange(mouse) {
-      if (!canvas.math.isInsideRect(props.graph, mouse) || !state.dragging) {
+      if (!canvas.math.isInsideRect(props.ui, mouse) || !state.dragging) {
         return {
           xMin: props.xMin,
           xMax: props.xMax,
@@ -19,19 +19,19 @@ export default function draggable(Component) {
       const diff = mouse.x - props.mouse.x
 
       const xMin = canvas.math.getX(
-        props.graph.width,
-        props.graph.left,
+        props.ui.width,
+        props.ui.left,
         props.xMax,
         props.xMin,
-        props.graph.left - diff
+        props.ui.left - diff
       )
 
       const xMax = canvas.math.getX(
-        props.graph.width,
-        props.graph.left,
+        props.ui.width,
+        props.ui.left,
         props.xMax,
         props.xMin,
-        props.graph.width + props.graph.left - diff
+        props.ui.width + props.ui.left - diff
       )
 
       return {
@@ -47,7 +47,7 @@ export default function draggable(Component) {
     }
 
     function onMouseDown(e, mouse) {
-      if (canvas.math.isInsideRect(props.graph, mouse)) {
+      if (canvas.math.isInsideRect(props.ui, mouse)) {
         setState({ dragging: true })
       }
 
@@ -80,7 +80,7 @@ export default function draggable(Component) {
   Draggable.propTypes = {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
-    graph: PropTypes.shape({
+    ui: PropTypes.shape({
       left: PropTypes.number.isRequired,
       top: PropTypes.number.isRequired,
       width: PropTypes.number.isRequired,
