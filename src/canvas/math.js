@@ -50,7 +50,7 @@ export function isInsideRect(rect, { x, y }) {
   return true
 }
 
-function linear(dy, dx, x, y0) {
+export function linear(dy, dx, x, y0) {
   return (dy / dx) * x + y0
 }
 
