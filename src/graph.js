@@ -188,6 +188,10 @@ Graph.defaultProps = {
   animate: true,
   shouldRedrawGraph: () => true,
   backgroundColor: "",
+  xMin: 0,
+  xMax: 0,
+  yMin: 0,
+  yMax: 0,
   axes: [],
   graphs: [],
   frames: [],
@@ -201,6 +205,10 @@ Graph.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   animate: PropTypes.bool.isRequired,
   shouldRedrawGraph: PropTypes.func.isRequired,
+  xMin: PropTypes.number.isRequired,
+  xMax: PropTypes.number.isRequired,
+  yMin: PropTypes.number.isRequired,
+  yMax: PropTypes.number.isRequired,
   axes: PropTypes.arrayOf(
     PropTypes.shape({
       at: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
