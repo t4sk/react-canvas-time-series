@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Graphs, canvas } from "react-canvas-time-series"
+import { Graph, canvas } from "react-canvas-time-series"
 
 // fake data
 const X_MIN = 0
@@ -56,7 +56,7 @@ function Crosshair(props) {
   }
 
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"

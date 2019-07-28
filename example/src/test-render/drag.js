@@ -5,7 +5,7 @@ import ReactCanvasTimeSeries, {
 } from "react-canvas-time-series"
 import moment from "moment"
 
-const Graphs = draggable(ReactCanvasTimeSeries.Graphs)
+const Graph = draggable(ReactCanvasTimeSeries.Graph)
 
 const NOW = moment()
 const DAYS = [...Array(10).keys()]
@@ -76,7 +76,7 @@ function Drag(props) {
   const { xMin, xMax, mouse } = state
 
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"

@@ -5,7 +5,7 @@ import ReactCanvasTimeSeries, {
 } from "react-canvas-time-series"
 import moment from "moment"
 
-const Graphs = zoomable(ReactCanvasTimeSeries.Graphs)
+const Graph = zoomable(ReactCanvasTimeSeries.Graph)
 
 const NOW = moment()
 const DAYS = [...Array(10).keys()]
@@ -87,7 +87,7 @@ function Zoom(props) {
   const { xMin, xMax, mouse } = state
 
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"

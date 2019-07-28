@@ -1,5 +1,5 @@
 import React from "react"
-import { Graphs, canvas } from "react-canvas-time-series"
+import { Graph, canvas } from "react-canvas-time-series"
 import moment from "moment"
 import { getRandomCandlestickData } from "../util"
 
@@ -56,7 +56,7 @@ const GRAPH = {
 
 function Candlesticks(props) {
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"

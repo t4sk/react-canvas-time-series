@@ -1,5 +1,5 @@
 import React from "react"
-import { Graphs, canvas } from "react-canvas-time-series"
+import { Graph, canvas } from "react-canvas-time-series"
 import moment from "moment"
 
 const WIDTH = 900
@@ -71,7 +71,7 @@ const Y_LABEL_HEIGHT = 20
 
 function Labels(props) {
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"
