@@ -188,6 +188,26 @@ Graph.defaultProps = {
   animate: true,
   shouldRedrawGraph: () => true,
   backgroundColor: "",
+  padding: 0,
+  // x axis
+  xAxisAt: "top",
+  xAxisHeight: 0,
+  xAxisLineColor: "black",
+  xTicks: [],
+  xTickInterval: 0,
+  xTickLength: 0,
+  renderXTick: x => x,
+  xAxisTextColor: "black",
+  // y axis
+  yAxisAt: "left",
+  yAxisWidth: 0,
+  yAxisLineColor: "black",
+  yTicks: [],
+  yTickInterval: 0,
+  yTickLength: 0,
+  renderYTick: x => x,
+  yAxisTextColor: "black",
+
   xMin: 0,
   xMax: 0,
   yMin: 0,
@@ -209,6 +229,26 @@ Graph.propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
+  padding: PropTypes.number.isRequired,
+  // x axis
+  xAxisAt: PropTypes.oneOf(["top", "bottom"]),
+  xAxisHeight: PropTypes.number.isRequired,
+  xAxisLineColor: PropTypes.string.isRequired,
+  xTicks: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  xTickInterval: PropTypes.number.isRequired,
+  xTickLength: PropTypes.number.isRequired,
+  renderXTick: PropTypes.func.isRequired,
+  xAxisTextColor: PropTypes.string.isRequired,
+  // y axis
+  yAxisAt: PropTypes.oneOf(["left", "right"]),
+  yAxisWidth: PropTypes.number.isRequired,
+  yAxisLineColor: PropTypes.string.isRequired,
+  yTicks: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
+  yTickInterval: PropTypes.number.isRequired,
+  yTickLength: PropTypes.number.isRequired,
+  renderYTick: PropTypes.func.isRequired,
+  yAxisTextColor: PropTypes.string.isRequired,
+
   axes: PropTypes.arrayOf(
     PropTypes.shape({
       at: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
