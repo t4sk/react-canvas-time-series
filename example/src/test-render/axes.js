@@ -1,5 +1,5 @@
 import React from "react"
-import { Graphs, canvas } from "react-canvas-time-series"
+import { Graph, canvas } from "react-canvas-time-series"
 import moment from "moment"
 
 const WIDTH = 900
@@ -67,17 +67,19 @@ function renderYTick(y) {
 
 function Axes(props) {
   return (
-    <Graphs
+    <Graph
       width={WIDTH}
       height={HEIGHT}
       backgroundColor="beige"
+      xMin={X_MIN}
+      xMax={X_MAX}
+      yMin={Y_MIN}
+      yMax={Y_MAX}
       axes={[
         {
           at: "top",
           ...X_AXIS_TOP,
           lineColor: "red",
-          xMin: X_MIN,
-          xMax: X_MAX,
           ticks: X_TICKS,
           tickInterval: 2 * X_TICK_INTERVAL,
           tickLength: 5,
@@ -88,8 +90,6 @@ function Axes(props) {
           at: "bottom",
           ...X_AXIS_BOTTOM,
           lineColor: "blue",
-          xMin: X_MIN,
-          xMax: X_MAX,
           tickInterval: X_TICK_INTERVAL,
           renderTick: renderXTick,
         },
@@ -97,8 +97,6 @@ function Axes(props) {
           at: "left",
           ...Y_AXIS_LEFT,
           lineColor: "green",
-          yMin: Y_MIN,
-          yMax: Y_MAX,
           ticks: Y_TICKS,
           tickInterval: Y_TICK_INTERVAL,
           renderTick: renderYTick,
@@ -108,8 +106,6 @@ function Axes(props) {
           at: "right",
           ...Y_AXIS_RIGHT,
           lineColor: "orange",
-          yMin: Y_MIN,
-          yMax: Y_MAX,
           tickInterval: Y_TICK_INTERVAL,
           renderTick: renderYTick,
         },

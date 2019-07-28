@@ -63,10 +63,12 @@ class Graph extends Component {
   }
 
   draw = () => {
+    const { xMin, xMax, yMin, yMax } = this.props
+
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let axis of this.props.axes) {
-      AXES[axis.at].draw(this.ctx.axes, axis)
+      AXES[axis.at].draw(this.ctx.axes, { ...axis, xMin, xMax, yMin, yMax })
     }
 
     this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)

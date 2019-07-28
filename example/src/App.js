@@ -1,22 +1,23 @@
 import React, { Component } from "react"
 import TestRenderAxes from "./test-render/axes"
-import TestRenderLabels from "./test-render/labels"
-import TestRenderPoints from "./test-render/points"
-import TestRenderLines from "./test-render/lines"
-import TestRenderBars from "./test-render/bars"
-import TestRenderCandlesticks from "./test-render/candlesticks"
-// UI
-import TestRenderFrames from "./test-render/frames"
-import TestRenderCrosshair from "./test-render/crosshair"
-import TestRenderDrag from "./test-render/drag"
-import TestRenderZoom from "./test-render/zoom"
-// History
-import TestRenderHistory from "./test-render/history"
+// import TestRenderLabels from "./test-render/labels"
+// import TestRenderPoints from "./test-render/points"
+// import TestRenderLines from "./test-render/lines"
+// import TestRenderBars from "./test-render/bars"
+// import TestRenderCandlesticks from "./test-render/candlesticks"
+// // UI
+// import TestRenderFrames from "./test-render/frames"
+// import TestRenderCrosshair from "./test-render/crosshair"
+// import TestRenderDrag from "./test-render/drag"
+// import TestRenderZoom from "./test-render/zoom"
+// // History
+// import TestRenderHistory from "./test-render/history"
 
 export default class App extends Component {
   render() {
     return (
       <div style={{ margin: 20 }}>
+        {/*}
         <h3>History</h3>
         <TestRenderHistory />
 
@@ -46,17 +47,9 @@ export default class App extends Component {
 
         <h3>Labels</h3>
         <TestRenderLabels />
-
+        */}
         <h3>Axes</h3>
         <TestRenderAxes />
-        {/*}
-        <TestRenderCandlestick />
-        <TestRenderHistory />
-        <TestRenderDrag />
-        <TestRenderZoom />
-        <TestRenderLine />
-        <TestRenderBar />
-        */}
       </div>
     )
   }
