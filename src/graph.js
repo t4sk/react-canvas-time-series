@@ -30,7 +30,7 @@ const GRAPHS = {
   candlesticks,
 }
 
-class Graphs extends Component {
+class Graph extends Component {
   constructor(props) {
     super(props)
 
@@ -180,7 +180,7 @@ class Graphs extends Component {
   }
 }
 
-Graphs.defaultProps = {
+Graph.defaultProps = {
   width: 800,
   height: 400,
   animate: true,
@@ -193,7 +193,7 @@ Graphs.defaultProps = {
   yLabels: [],
 }
 
-Graphs.propTypes = {
+Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
@@ -239,4 +239,4 @@ const styles = {
   },
 }
 
-export default Graphs
+export default Graph
