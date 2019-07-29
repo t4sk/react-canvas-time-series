@@ -75,24 +75,15 @@ function Axes(props) {
       xMax={X_MAX}
       yMin={Y_MIN}
       yMax={Y_MAX}
+      xAxisAt="top"
+      xAxisHeight={50}
+      xAxisLineColor="red"
+      xTicks={X_TICKS}
+      xTickInterval={X_TICK_INTERVAL}
+      xTickLength={5}
+      renderXTick={renderXTick}
+      xAxisTextColor="blue"
       axes={[
-        {
-          at: "top",
-          ...X_AXIS_TOP,
-          lineColor: "red",
-          ticks: X_TICKS,
-          tickInterval: 2 * X_TICK_INTERVAL,
-          tickLength: 5,
-          renderTick: renderXTick,
-          textColor: "blue",
-        },
-        {
-          at: "bottom",
-          ...X_AXIS_BOTTOM,
-          lineColor: "blue",
-          tickInterval: X_TICK_INTERVAL,
-          renderTick: renderXTick,
-        },
         {
           at: "left",
           ...Y_AXIS_LEFT,

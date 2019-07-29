@@ -1,147 +1,92 @@
-import PropTypes from "prop-types"
 import { getCanvasX, stepBelow } from "./math"
 
 const TICK_TEXT_PADDING = 10
 
-const propTypes = {
-  at: PropTypes.oneOf(["top", "bottom"]).isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  left: PropTypes.number.isRequired,
-  top: PropTypes.number.isRequired,
-
-  lineColor: PropTypes.string.isRequired,
-
-  xMin: PropTypes.number.isRequired,
-  xMax: PropTypes.number.isRequired,
-
-  font: PropTypes.string.isRequired,
-  textColor: PropTypes.string.isRequired,
-
-  ticks: PropTypes.arrayOf(PropTypes.number).isRequired,
-  tickInterval: PropTypes.number,
-  tickLength: PropTypes.number.isRequired,
-  renderTick: PropTypes.func.isRequired,
-}
-
-const defaultProps = {
-  lineColor: "black",
-  font: "",
-  textColor: "black",
-  ticks: [],
-  tickLength: 10,
-  renderTick: x => x,
-}
-
-function setDefaults(props) {
-  return {
-    ...defaultProps,
-    ...props,
-  }
-}
-
-function drawTick(ctx, props) {
+function drawTick(ctx, layout, props, x) {
   const {
-    at,
-    width,
-    height,
-    left,
-    top,
-    tickLength,
-    renderTick,
-    xMin,
-    xMax,
-    x,
-  } = props
+    xAxis: { top, left, width, height },
+  } = layout
+
+  const { xAxisAt, xTickLength, renderXTick, xMin, xMax } = props
 
   const canvasX = getCanvasX(width, left, xMax, xMin, x)
 
-  if (at == "top") {
+  if (xAxisAt == "top") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top + height)
-    ctx.lineTo(canvasX, top + height - tickLength)
+    ctx.lineTo(canvasX, top + height - xTickLength)
     ctx.stroke()
 
     ctx.fillText(
-      renderTick(x),
+      renderXTick(x),
       canvasX,
-      top + height - tickLength - TICK_TEXT_PADDING
+      top + height - xTickLength - TICK_TEXT_PADDING
     )
-  } else if (at == "bottom") {
+  } else if (xAxisAt == "bottom") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top)
-    ctx.lineTo(canvasX, top + tickLength)
+    ctx.lineTo(canvasX, top + xTickLength)
     ctx.stroke()
 
-    ctx.fillText(renderTick(x), canvasX, top + tickLength + TICK_TEXT_PADDING)
+    ctx.fillText(renderXTick(x), canvasX, top + xTickLength + TICK_TEXT_PADDING)
   }
 }
 
-export function draw(ctx, props) {
-  props = setDefaults(props)
+export function draw(ctx, layout, props) {
+  const {
+    xAxis: { top, left, width, height },
+  } = layout
 
   const {
-    at,
-    width,
-    height,
-    left,
-    top,
-    lineColor,
-    ticks,
-    tickInterval,
-    font,
-    textColor,
+    xAxisAt,
+    xAxisLineColor,
+    xTicks,
+    xTickInterval,
+    xAxisFont,
+    xAxisTextColor,
     xMin,
     xMax,
   } = props
 
-  PropTypes.checkPropTypes(propTypes, props, "prop", "x-axis")
-
   // style x axis line
   ctx.lineWidth = 1
-  ctx.strokeStyle = lineColor
+  ctx.strokeStyle = xAxisLineColor
 
-  if (at == "top") {
+  if (xAxisAt == "top") {
     ctx.beginPath()
     ctx.moveTo(left, top + height)
     ctx.lineTo(left + width, top + height)
     ctx.stroke()
-  } else if (at == "bottom") {
+  } else if (xAxisAt == "bottom") {
     ctx.beginPath()
     ctx.moveTo(left, top)
     ctx.lineTo(left + width, top)
     ctx.stroke()
   }
 
-  // style ticks
-  ctx.font = font
-  ctx.fillStyle = textColor
+  // style xTicks
+  ctx.font = xAxisFont
+  ctx.fillStyle = xAxisTextColor
   ctx.textAlign = "center"
   ctx.textBaseline = "middle"
 
-  if (tickInterval) {
-    const x0 = stepBelow(xMin, tickInterval)
+  if (xTickInterval) {
+    const x0 = stepBelow(xMin, xTickInterval)
 
-    for (let x = x0; x <= xMax; x += tickInterval) {
+    for (let x = x0; x <= xMax; x += xTickInterval) {
       if (x < xMin) {
         continue
       }
 
-      drawTick(ctx, {
-        ...props,
-        x,
-      })
+      drawTick(ctx, layout, props, x)
     }
   }
 
-  for (let x of ticks) {
+  for (let x of xTicks) {
     if (x < xMin || x > xMax) {
       continue
     }
 
-    drawTick(ctx, {
-      ...props,
-      x,
-    })
+    drawTick(ctx, layout, props, x)
   }
 }

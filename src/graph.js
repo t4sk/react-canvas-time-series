@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
+import { getLayout } from "./layout"
 import * as xLines from "./canvas/x-lines"
 import * as yLines from "./canvas/y-lines"
 import * as xAxis from "./canvas/x-axis"
@@ -13,13 +14,6 @@ import * as bars from "./canvas/bars"
 import * as line from "./canvas/line"
 import * as points from "./canvas/points"
 import * as candlesticks from "./canvas/candlesticks"
-
-const AXES = {
-  top: xAxis,
-  bottom: xAxis,
-  left: yAxis,
-  right: yAxis,
-}
 
 const GRAPHS = {
   xLines,
@@ -63,12 +57,14 @@ class Graph extends Component {
   }
 
   draw = () => {
-    const { xMin, xMax, yMin, yMax } = this.props
+    const { xMin, xMax, yMin, yMax, xAxisAt } = this.props
+
+    const layout = getLayout(this.props)
 
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
-    for (let axis of this.props.axes) {
-      AXES[axis.at].draw(this.ctx.axes, { ...axis, xMin, xMax, yMin, yMax })
+    if (xAxisAt == "top" || xAxisAt == "bottom") {
+      xAxis.draw(this.ctx.axes, layout, this.props)
     }
 
     this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)
@@ -183,20 +179,21 @@ class Graph extends Component {
 }
 
 Graph.defaultProps = {
-  width: 800,
-  height: 400,
+  width: 500,
+  height: 300,
   animate: true,
   shouldRedrawGraph: () => true,
   backgroundColor: "",
   padding: 0,
   // x axis
-  xAxisAt: "top",
-  xAxisHeight: 0,
+  xAxisAt: "bottom",
+  xAxisHeight: 30,
   xAxisLineColor: "black",
   xTicks: [],
   xTickInterval: 0,
-  xTickLength: 0,
+  xTickLength: 10,
   renderXTick: x => x,
+  xAxisFont: "",
   xAxisTextColor: "black",
   // y axis
   yAxisAt: "left",
