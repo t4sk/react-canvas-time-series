@@ -2,7 +2,7 @@ import React from "react"
 import { Graph, canvas } from "react-canvas-time-series"
 import moment from "moment"
 
-const WIDTH = 900
+const WIDTH = 800
 const HEIGHT = 500
 const PADDING = 10
 const X_AXIS_TOP_HEIGHT = 50
@@ -76,51 +76,24 @@ function Axes(props) {
       yMin={Y_MIN}
       yMax={Y_MAX}
       xAxisAt="top"
-      xAxisHeight={50}
+      xAxisHeight={30}
       xAxisLineColor="red"
       xTicks={X_TICKS}
+      showXLine={true}
+      xLineColor="lightgrey"
       xTickInterval={X_TICK_INTERVAL}
       xTickLength={5}
       renderXTick={renderXTick}
       xAxisTextColor="blue"
-      axes={[
-        {
-          at: "left",
-          ...Y_AXIS_LEFT,
-          lineColor: "green",
-          ticks: Y_TICKS,
-          tickInterval: Y_TICK_INTERVAL,
-          renderTick: renderYTick,
-          textColor: "red",
-        },
-        {
-          at: "right",
-          ...Y_AXIS_RIGHT,
-          lineColor: "orange",
-          tickInterval: Y_TICK_INTERVAL,
-          renderTick: renderYTick,
-        },
-      ]}
-      graphs={[
-        {
-          type: "xLines",
-          ...GRAPH,
-          xMin: X_MIN,
-          xMax: X_MAX,
-          xInterval: X_TICK_INTERVAL,
-          data: X_TICKS,
-          lineColor: "lightgrey",
-        },
-        {
-          type: "yLines",
-          ...GRAPH,
-          yMin: Y_MIN,
-          yMax: Y_MAX,
-          data: Y_TICKS,
-          yInterval: Y_TICK_INTERVAL,
-          lineColor: "lightgrey",
-        },
-      ]}
+      yAxisAt="left"
+      yAxisWidth={50}
+      yAxisLineColor="green"
+      yTicks={Y_TICKS}
+      yTickInterval={Y_TICK_INTERVAL}
+      yTickLength={10}
+      renderYTick={renderYTick}
+      yAxisTextColor="red"
+      yLineColor="lightgrey"
     />
   )
 }

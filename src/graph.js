@@ -2,8 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 
 import { getLayout } from "./layout"
-import * as xLines from "./canvas/x-lines"
-import * as yLines from "./canvas/y-lines"
 import * as xAxis from "./canvas/x-axis"
 import * as yAxis from "./canvas/y-axis"
 import * as crosshair from "./canvas/crosshair"
@@ -16,8 +14,6 @@ import * as points from "./canvas/points"
 import * as candlesticks from "./canvas/candlesticks"
 
 const GRAPHS = {
-  xLines,
-  yLines,
   line,
   points,
   bars,
@@ -198,6 +194,9 @@ Graph.defaultProps = {
   renderXTick: x => x,
   xAxisFont: "",
   xAxisTextColor: "black",
+  showXLine: true,
+  xLineColor: "black",
+
   // y axis
   yAxisWidth: 50,
   yAxisLineColor: "black",
@@ -240,6 +239,8 @@ Graph.propTypes = {
   renderXTick: PropTypes.func.isRequired,
   xAxisFont: PropTypes.string.isRequired,
   xAxisTextColor: PropTypes.string.isRequired,
+  showXLine: PropTypes.bool.isRequired,
+  xLineColor: PropTypes.string.isRequired,
   // y axis
   yAxisAt: PropTypes.oneOf(["left", "right"]),
   yAxisWidth: PropTypes.number.isRequired,

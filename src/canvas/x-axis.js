@@ -7,9 +7,24 @@ function drawTick(ctx, layout, props, x) {
     xAxis: { top, left, width, height },
   } = layout
 
-  const { xAxisAt, xTickLength, renderXTick, xMin, xMax } = props
+  const {
+    xAxisAt,
+    xAxisFont,
+    xAxisLineColor,
+    xAxisTextColor,
+    xTickLength,
+    renderXTick,
+    xMin,
+    xMax,
+  } = props
 
   const canvasX = getCanvasX(width, left, xMax, xMin, x)
+
+  ctx.font = xAxisFont
+  ctx.fillStyle = xAxisTextColor
+  ctx.strokeStyle = xAxisLineColor
+  ctx.textAlign = "center"
+  ctx.textBaseline = "middle"
 
   if (xAxisAt == "top") {
     ctx.beginPath()
@@ -32,25 +47,32 @@ function drawTick(ctx, layout, props, x) {
   }
 }
 
+function drawLine(ctx, layout, props, x) {
+  const {
+    graph: { left, top, width, height },
+  } = layout
+
+  const { xLineColor, xMax, xMin } = props
+
+  const canvasX = getCanvasX(width, left, xMax, xMin, x)
+
+  ctx.strokeStyle = xLineColor
+
+  ctx.beginPath()
+  ctx.moveTo(canvasX, top)
+  ctx.lineTo(canvasX, top + height)
+  ctx.stroke()
+}
+
 export function draw(ctx, layout, props) {
   const {
     xAxis: { top, left, width, height },
   } = layout
 
-  const {
-    xAxisAt,
-    xAxisLineColor,
-    xTicks,
-    xTickInterval,
-    xAxisFont,
-    xAxisTextColor,
-    xMin,
-    xMax,
-  } = props
+  const { xAxisAt, xTicks, xTickInterval, showXLine, xMin, xMax } = props
 
   // style x axis line
   ctx.lineWidth = 1
-  ctx.strokeStyle = xAxisLineColor
 
   if (xAxisAt == "top") {
     ctx.beginPath()
@@ -64,12 +86,6 @@ export function draw(ctx, layout, props) {
     ctx.stroke()
   }
 
-  // style xTicks
-  ctx.font = xAxisFont
-  ctx.fillStyle = xAxisTextColor
-  ctx.textAlign = "center"
-  ctx.textBaseline = "middle"
-
   if (xTickInterval) {
     const x0 = stepBelow(xMin, xTickInterval)
 
@@ -79,6 +95,10 @@ export function draw(ctx, layout, props) {
       }
 
       drawTick(ctx, layout, props, x)
+
+      if (showXLine) {
+        drawLine(ctx, layout, props, x)
+      }
     }
   }
 
@@ -88,5 +108,9 @@ export function draw(ctx, layout, props) {
     }
 
     drawTick(ctx, layout, props, x)
+
+    if (showXLine) {
+      drawLine(ctx, layout, props, x)
+    }
   }
 }
