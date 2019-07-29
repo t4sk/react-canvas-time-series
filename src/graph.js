@@ -57,14 +57,18 @@ class Graph extends Component {
   }
 
   draw = () => {
-    const { xMin, xMax, yMin, yMax, xAxisAt } = this.props
+    const { xMin, xMax, yMin, yMax, xAxisAt, yAxisAt } = this.props
 
     const layout = getLayout(this.props)
 
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
-    if (xAxisAt == "top" || xAxisAt == "bottom") {
+    if (xAxisAt) {
       xAxis.draw(this.ctx.axes, layout, this.props)
+    }
+
+    if (yAxisAt) {
+      yAxis.draw(this.ctx.axes, layout, this.props)
     }
 
     this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)
@@ -184,9 +188,8 @@ Graph.defaultProps = {
   animate: true,
   shouldRedrawGraph: () => true,
   backgroundColor: "",
-  padding: 0,
+  padding: 10,
   // x axis
-  xAxisAt: "bottom",
   xAxisHeight: 30,
   xAxisLineColor: "black",
   xTicks: [],
@@ -196,13 +199,13 @@ Graph.defaultProps = {
   xAxisFont: "",
   xAxisTextColor: "black",
   // y axis
-  yAxisAt: "left",
-  yAxisWidth: 0,
+  yAxisWidth: 50,
   yAxisLineColor: "black",
   yTicks: [],
   yTickInterval: 0,
-  yTickLength: 0,
-  renderYTick: x => x,
+  yTickLength: 10,
+  renderYTick: y => y,
+  yAxisFont: "",
   yAxisTextColor: "black",
 
   xMin: 0,
@@ -235,6 +238,7 @@ Graph.propTypes = {
   xTickInterval: PropTypes.number.isRequired,
   xTickLength: PropTypes.number.isRequired,
   renderXTick: PropTypes.func.isRequired,
+  xAxisFont: PropTypes.string.isRequired,
   xAxisTextColor: PropTypes.string.isRequired,
   // y axis
   yAxisAt: PropTypes.oneOf(["left", "right"]),
@@ -244,6 +248,7 @@ Graph.propTypes = {
   yTickInterval: PropTypes.number.isRequired,
   yTickLength: PropTypes.number.isRequired,
   renderYTick: PropTypes.func.isRequired,
+  yAxisFont: PropTypes.string.isRequired,
   yAxisTextColor: PropTypes.string.isRequired,
 
   axes: PropTypes.arrayOf(
