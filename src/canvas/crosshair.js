@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { isInsideRect } from "./math"
+import { isInside } from "./math"
 
 const propTypes = {
   width: PropTypes.number.isRequired,
@@ -46,7 +46,7 @@ export function draw(ctx, props) {
 
   PropTypes.checkPropTypes(propTypes, props, "prop", "crosshair")
 
-  if (!isInsideRect({ top, left, width, height }, { x: canvasX, y: canvasY })) {
+  if (!isInside({ top, left, width, height }, { x: canvasX, y: canvasY })) {
     return
   }
 

@@ -9,7 +9,7 @@ export default function draggable(Component) {
     })
 
     function getXRange(mouse) {
-      if (!canvas.math.isInsideRect(props.ui, mouse) || !state.dragging) {
+      if (!canvas.math.isInside(props.ui, mouse) || !state.dragging) {
         return {
           xMin: props.xMin,
           xMax: props.xMax,
@@ -47,7 +47,7 @@ export default function draggable(Component) {
     }
 
     function onMouseDown(e, mouse) {
-      if (canvas.math.isInsideRect(props.ui, mouse)) {
+      if (canvas.math.isInside(props.ui, mouse)) {
         setState({ dragging: true })
       }
 

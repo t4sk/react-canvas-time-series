@@ -6,10 +6,10 @@ import {
   getY,
   stepBelow,
   findNearestIndex,
-  isInsideRect,
+  isInside,
 } from "./math"
 
-test("isInsideRect", () => {
+test("isInside", () => {
   const rect = {
     top: 10,
     left: 20,
@@ -17,17 +17,17 @@ test("isInsideRect", () => {
     height: 200,
   }
 
-  expect(isInsideRect(rect, { x: 20, y: 10 })).toBe(true)
-  expect(isInsideRect(rect, { x: 120, y: 10 })).toBe(true)
-  expect(isInsideRect(rect, { x: 20, y: 210 })).toBe(true)
-  expect(isInsideRect(rect, { x: 120, y: 210 })).toBe(true)
-  expect(isInsideRect(rect, { x: 70, y: 110 })).toBe(true)
+  expect(isInside(rect, { x: 20, y: 10 })).toBe(true)
+  expect(isInside(rect, { x: 120, y: 10 })).toBe(true)
+  expect(isInside(rect, { x: 20, y: 210 })).toBe(true)
+  expect(isInside(rect, { x: 120, y: 210 })).toBe(true)
+  expect(isInside(rect, { x: 70, y: 110 })).toBe(true)
 
-  expect(isInsideRect(rect, {})).toBe(false)
-  expect(isInsideRect(rect, { x: 19, y: 10 })).toBe(false)
-  expect(isInsideRect(rect, { x: 121, y: 10 })).toBe(false)
-  expect(isInsideRect(rect, { x: 20, y: 9 })).toBe(false)
-  expect(isInsideRect(rect, { x: 120, y: 211 })).toBe(false)
+  expect(isInside(rect, {})).toBe(false)
+  expect(isInside(rect, { x: 19, y: 10 })).toBe(false)
+  expect(isInside(rect, { x: 121, y: 10 })).toBe(false)
+  expect(isInside(rect, { x: 20, y: 9 })).toBe(false)
+  expect(isInside(rect, { x: 120, y: 211 })).toBe(false)
 })
 
 test("get canvas x", () => {

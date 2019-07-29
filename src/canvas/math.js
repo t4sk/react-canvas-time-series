@@ -38,7 +38,7 @@ export function findNearestIndex(arr, x) {
   return low
 }
 
-export function isInsideRect(rect, { x, y }) {
+export function isInside(rect, { x, y }) {
   if (!x || x < rect.left || x > rect.left + rect.width) {
     return false
   }

@@ -110,7 +110,7 @@ class History extends Component {
 
     const graph = this.getGraph()
 
-    if (!math.isInsideRect(graph, mouse)) {
+    if (!math.isInside(graph, mouse)) {
       return "auto"
     }
 

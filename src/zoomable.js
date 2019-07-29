@@ -9,7 +9,7 @@ export default function zoomable(Component) {
     const { ui, xMin, xMax, mouse, zoomRate } = props
 
     function getXRange(e) {
-      if (!canvas.math.isInsideRect(ui, mouse)) {
+      if (!canvas.math.isInside(ui, mouse)) {
         return {
           xMin,
           xMax,
