@@ -69,10 +69,19 @@ export function draw(ctx, layout, props) {
     xAxis: { top, left, width, height },
   } = layout
 
-  const { xAxisAt, xTicks, xTickInterval, showXLine, xMin, xMax } = props
+  const {
+    xAxisAt,
+    xAxisLineColor,
+    xTicks,
+    xTickInterval,
+    showXLine,
+    xMin,
+    xMax,
+  } = props
 
   // style x axis line
   ctx.lineWidth = 1
+  ctx.strokeStyle = xAxisLineColor
 
   if (xAxisAt == "top") {
     ctx.beginPath()

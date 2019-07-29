@@ -211,7 +211,6 @@ Graph.defaultProps = {
   xMax: 0,
   yMin: 0,
   yMax: 0,
-  axes: [],
   graphs: [],
   frames: [],
   xLabels: [],
@@ -252,21 +251,9 @@ Graph.propTypes = {
   yAxisFont: PropTypes.string.isRequired,
   yAxisTextColor: PropTypes.string.isRequired,
 
-  axes: PropTypes.arrayOf(
-    PropTypes.shape({
-      at: PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-    })
-  ).isRequired,
   graphs: PropTypes.arrayOf(
     PropTypes.shape({
-      type: PropTypes.oneOf([
-        "xLines",
-        "yLines",
-        "line",
-        "points",
-        "bars",
-        "candlesticks",
-      ]),
+      type: PropTypes.oneOf(["line", "points", "bars", "candlesticks"]),
     })
   ).isRequired,
   frames: PropTypes.array.isRequired,

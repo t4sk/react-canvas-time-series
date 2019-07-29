@@ -7,9 +7,24 @@ function drawTick(ctx, layout, props, y) {
     yAxis: { top, left, height, width },
   } = layout
 
-  const { yAxisAt, yMax, yMin, yTickLength, renderYTick } = props
+  const {
+    yAxisAt,
+    yAxisLineColor,
+    yAxisFont,
+    yAxisTextColor,
+    yMax,
+    yMin,
+    yTickLength,
+    renderYTick,
+  } = props
 
   const canvasY = getCanvasY(height, top, yMax, yMin, y)
+
+  ctx.strokeStyle = yAxisLineColor
+  ctx.font = yAxisFont
+  ctx.fillStyle = yAxisTextColor
+  ctx.textAlign = yAxisAt == "left" ? "right" : "left"
+  ctx.textBaseline = "middle"
 
   if (yAxisAt == "left") {
     ctx.beginPath()
@@ -36,12 +51,30 @@ function drawTick(ctx, layout, props, y) {
   }
 }
 
+function drawLine(ctx, layout, props, y) {
+  const {
+    graph: { top, left, height, width },
+  } = layout
+
+  const { yLineColor, yMax, yMin } = props
+
+  const canvasY = getCanvasY(height, top, yMax, yMin, y)
+
+  ctx.strokeStyle = yLineColor
+
+  ctx.beginPath()
+  ctx.moveTo(left, canvasY)
+  ctx.lineTo(left + width, canvasY)
+  ctx.stroke()
+}
+
 export function draw(ctx, layout, props) {
   const {
     yAxis: { top, left, height, width },
   } = layout
 
   const {
+    showYLine,
     yAxisAt,
     yAxisLineColor,
     yTicks,
@@ -68,12 +101,6 @@ export function draw(ctx, layout, props) {
     ctx.stroke()
   }
 
-  // style yTicks
-  ctx.font = yAxisFont
-  ctx.fillStyle = yAxisTextColor
-  ctx.textAlign = yAxisAt == "left" ? "right" : "left"
-  ctx.textBaseline = "middle"
-
   const y0 = stepBelow(yMin, yTickInterval)
 
   for (let y = y0; y <= yMax; y += yTickInterval) {
@@ -82,6 +109,10 @@ export function draw(ctx, layout, props) {
     }
 
     drawTick(ctx, layout, props, y)
+
+    if (showYLine) {
+      drawLine(ctx, layout, props, y)
+    }
   }
 
   for (let y of yTicks) {
@@ -90,5 +121,9 @@ export function draw(ctx, layout, props) {
     }
 
     drawTick(ctx, layout, props, y)
+
+    if (showYLine) {
+      drawLine(ctx, layout, props, y)
+    }
   }
 }
