@@ -101,17 +101,19 @@ export function draw(ctx, layout, props) {
     ctx.stroke()
   }
 
-  const y0 = stepBelow(yMin, yTickInterval)
+  if (yTickInterval > 0) {
+    const y0 = stepBelow(yMin, yTickInterval)
 
-  for (let y = y0; y <= yMax; y += yTickInterval) {
-    if (y < yMin) {
-      continue
-    }
+    for (let y = y0; y <= yMax; y += yTickInterval) {
+      if (y < yMin) {
+        continue
+      }
 
-    drawTick(ctx, layout, props, y)
+      drawTick(ctx, layout, props, y)
 
-    if (showYLine) {
-      drawLine(ctx, layout, props, y)
+      if (showYLine) {
+        drawLine(ctx, layout, props, y)
+      }
     }
   }
 

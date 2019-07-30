@@ -95,7 +95,7 @@ export function draw(ctx, layout, props) {
     ctx.stroke()
   }
 
-  if (xTickInterval) {
+  if (xTickInterval > 0) {
     const x0 = stepBelow(xMin, xTickInterval)
 
     for (let x = x0; x <= xMax; x += xTickInterval) {

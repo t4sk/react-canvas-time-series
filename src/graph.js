@@ -195,7 +195,7 @@ Graph.defaultProps = {
   xAxisFont: "",
   xAxisTextColor: "black",
   showXLine: true,
-  xLineColor: "black",
+  xLineColor: "lightgrey",
 
   // y axis
   yAxisWidth: 50,
@@ -206,6 +206,8 @@ Graph.defaultProps = {
   renderYTick: y => y,
   yAxisFont: "",
   yAxisTextColor: "black",
+  showYLine: true,
+  yLineColor: "lightgrey",
 
   xMin: 0,
   xMax: 0,
@@ -250,6 +252,8 @@ Graph.propTypes = {
   renderYTick: PropTypes.func.isRequired,
   yAxisFont: PropTypes.string.isRequired,
   yAxisTextColor: PropTypes.string.isRequired,
+  showYLine: PropTypes.bool.isRequired,
+  yLineColor: PropTypes.string.isRequired,
 
   graphs: PropTypes.arrayOf(
     PropTypes.shape({

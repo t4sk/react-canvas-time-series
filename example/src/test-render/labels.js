@@ -40,22 +40,11 @@ function Labels(props) {
       yMin={Y_MIN}
       yMax={Y_MAX}
       xAxisAt="top"
-      xAxisHeight={30}
-      xAxisLineColor="red"
-      showXLine={true}
-      xLineColor="lightgrey"
       xTickInterval={X_TICK_INTERVAL}
-      xTickLength={5}
       renderXTick={renderXTick}
-      xAxisTextColor="blue"
       yAxisAt="right"
-      yAxisWidth={50}
-      yAxisLineColor="green"
       yTickInterval={Y_TICK_INTERVAL}
-      showYLine={true}
-      yLineColor="lightgrey"
       yTickLength={10}
-      yAxisTextColor="red"
       xLabels={[
         {
           x: (X_MIN + X_MAX) / 2,
