@@ -84,7 +84,7 @@ class Graph extends Component {
     }
 
     for (let label of this.props.xLabels) {
-      xLabel.draw(this.ctx.ui, label)
+      xLabel.draw(this.ctx.ui, layout, label, this.props)
     }
 
     for (let label of this.props.yLabels) {
