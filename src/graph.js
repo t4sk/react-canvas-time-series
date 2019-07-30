@@ -70,7 +70,7 @@ class Graph extends Component {
     this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let graph of this.props.graphs) {
-      GRAPHS[graph.type].draw(this.ctx.graphs, graph)
+      GRAPHS[graph.type].draw(this.ctx.graphs, layout, graph, this.props)
     }
 
     this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
@@ -181,10 +181,10 @@ class Graph extends Component {
 Graph.defaultProps = {
   width: 500,
   height: 300,
+  padding: 10,
   animate: true,
   shouldRedrawGraph: () => true,
   backgroundColor: "",
-  padding: 10,
   // x axis
   xAxisHeight: 30,
   xAxisLineColor: "black",
@@ -222,6 +222,7 @@ Graph.defaultProps = {
 Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  padding: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   animate: PropTypes.bool.isRequired,
   shouldRedrawGraph: PropTypes.func.isRequired,
@@ -229,7 +230,6 @@ Graph.propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
   // x axis
   xAxisAt: PropTypes.oneOf(["top", "bottom"]),
   xAxisHeight: PropTypes.number.isRequired,
@@ -254,7 +254,7 @@ Graph.propTypes = {
   yAxisTextColor: PropTypes.string.isRequired,
   showYLine: PropTypes.bool.isRequired,
   yLineColor: PropTypes.string.isRequired,
-
+  // graphs
   graphs: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.oneOf(["line", "points", "bars", "candlesticks"]),

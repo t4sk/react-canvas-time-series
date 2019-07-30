@@ -27,6 +27,7 @@ function Axes(props) {
     <Graph
       width={800}
       height={500}
+      padding={20}
       backgroundColor="beige"
       xMin={X_MIN}
       xMax={X_MAX}

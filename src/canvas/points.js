@@ -2,14 +2,6 @@ import PropTypes from "prop-types"
 import { getCanvasX, getCanvasY } from "./math"
 
 const propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  left: PropTypes.number.isRequired,
-  top: PropTypes.number.isRequired,
-  xMin: PropTypes.number.isRequired,
-  xMax: PropTypes.number.isRequired,
-  yMin: PropTypes.number.isRequired,
-  yMax: PropTypes.number.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       x: PropTypes.number,
@@ -37,25 +29,14 @@ function setDefaults(props) {
   }
 }
 
-export function drawPoint(ctx, props, point) {
+export function drawPoint(ctx, layout, graph, point, props) {
   const {
-    top,
-    left,
-    height,
-    width,
-    xMin,
-    xMax,
-    yMin,
-    yMax,
-    color,
-    radius,
-    ambientColor,
-    ambientRadius,
-  } = props
+    graph: { top, left, width, height },
+  } = layout
 
+  const { color, radius, ambientColor, ambientRadius } = graph
+  const { xMin, xMax, yMin, yMax } = props
   const { x, y } = point
-
-  PropTypes.checkPropTypes(propTypes, props, "prop", "points")
 
   if (x === undefined || y === undefined) {
     return
@@ -79,14 +60,13 @@ export function drawPoint(ctx, props, point) {
   }
 }
 
-export function draw(ctx, props) {
-  props = setDefaults(props)
+export function draw(ctx, layout, graph, props) {
+  graph = setDefaults(graph)
+  PropTypes.checkPropTypes(propTypes, graph, "prop", "points")
 
-  const { data } = props
-
-  PropTypes.checkPropTypes(propTypes, props, "prop", "points")
+  const { data } = graph
 
   for (let point of data) {
-    drawPoint(ctx, props, point)
+    drawPoint(ctx, layout, graph, point, props)
   }
 }
