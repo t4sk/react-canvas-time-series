@@ -5,8 +5,7 @@ import TestRenderPoints from "./test-render/points"
 import TestRenderLines from "./test-render/lines"
 import TestRenderBars from "./test-render/bars"
 import TestRenderCandlesticks from "./test-render/candlesticks"
-// // UI
-// import TestRenderFrames from "./test-render/frames"
+import TestRenderFrames from "./test-render/frames"
 // import TestRenderCrosshair from "./test-render/crosshair"
 // import TestRenderDrag from "./test-render/drag"
 // import TestRenderZoom from "./test-render/zoom"
@@ -29,15 +28,15 @@ export default class App extends Component {
 
         <h3>Crosshair</h3>
         <TestRenderCrosshair />
+      */}
 
         <h3>Frames</h3>
         <TestRenderFrames />
 
-      */}
+        {/*
         <h3>Candlesticks</h3>
         <TestRenderCandlesticks />
 
-        {/*
         <h3>Bars</h3>
         <TestRenderBars />
 
