@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import TestRenderAxes from "./test-render/axes"
-// import TestRenderLabels from "./test-render/labels"
+import TestRenderLabels from "./test-render/labels"
 // import TestRenderPoints from "./test-render/points"
 // import TestRenderLines from "./test-render/lines"
 // import TestRenderBars from "./test-render/bars"
@@ -44,12 +44,15 @@ export default class App extends Component {
 
         <h3>Points</h3>
         <TestRenderPoints />
+      */}
 
         <h3>Labels</h3>
         <TestRenderLabels />
-        */}
+
+        {/*
         <h3>Axes</h3>
         <TestRenderAxes />
+        */}
       </div>
     )
   }

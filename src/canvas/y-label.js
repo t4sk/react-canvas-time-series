@@ -1,37 +1,29 @@
 import PropTypes from "prop-types"
+import { getCanvasY } from "./math"
 
 const propTypes = {
-  drawLabel: PropTypes.bool.isRequired,
-  top: PropTypes.number.isRequired,
-  left: PropTypes.number.isRequired,
+  y: PropTypes.number,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   font: PropTypes.string.isRequired,
   textPadding: PropTypes.number.isRequired,
-  renderText: PropTypes.func.isRequired,
-  textAlign: PropTypes.oneOf(["left", "right"]).isRequired,
+  render: PropTypes.func.isRequired,
   drawLine: PropTypes.bool.isRequired,
-  lineLeft: PropTypes.number.isRequired,
-  lineRight: PropTypes.number.isRequired,
   lineWidth: PropTypes.number.isRequired,
   lineColor: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
-  drawLabel: true,
   width: 50,
   height: 20,
   backgroundColor: "white",
   font: "",
   color: "black",
   textPadding: 10,
-  renderText: () => "",
-  textAlign: "left",
+  render: () => "",
   drawLine: true,
-  lineLeft: 0,
-  lineRight: 0,
   lineColor: "black",
   lineWidth: 1,
 }
@@ -43,65 +35,128 @@ function setDefaults(props) {
   }
 }
 
-function getTextLeft(props) {
-  const { textAlign, left, textPadding } = props
+function getLeft(label, layout, props) {
+  const { graph } = layout
+  const { yAxisAt, yTickLength } = props
 
-  switch (textAlign) {
+  if (yAxisAt == "left") {
+    return graph.left - label.width - yTickLength
+  }
+  if (yAxisAt == "right") {
+    return graph.left + graph.width + yTickLength
+  }
+
+  return 0
+}
+
+function getTextAlign(props) {
+  const { yAxisAt } = props
+
+  switch (yAxisAt) {
     case "left":
-      return left + textPadding
+      return "right"
     case "right":
-      return left - textPadding
+      return "left"
     default:
-      throw new Error(`invalid axisAt ${axisAt}`)
+      console.error(`invalid yAxisAt ${yAxisAt}`)
   }
 }
 
-export function draw(ctx, props) {
-  props = setDefaults(props)
+function getTextLeft(left, label, props) {
+  const { yAxisAt } = props
+  const { textPadding, width } = label
+
+  switch (yAxisAt) {
+    case "left":
+      return left + width - textPadding
+    case "right":
+      return left + textPadding
+    default:
+      console.error(`invalid yAxisAt ${yAxisAt}`)
+  }
+}
+
+function getLineStart(label, layout, props) {
+  const { graph } = layout
+  const { yAxisAt, yTickLength } = props
+
+  if (yAxisAt == "left") {
+    return graph.left - yTickLength
+  }
+  if (yAxisAt == "right") {
+    return graph.left + graph.width + yTickLength
+  }
+
+  return 0
+}
+
+function getLineEnd(label, layout, props) {
+  const { graph } = layout
+  const { yAxisAt } = props
+
+  if (yAxisAt == "left") {
+    return graph.left + graph.width
+  }
+  if (yAxisAt == "right") {
+    return graph.left
+  }
+
+  return 0
+}
+
+export function draw(ctx, layout, label, props) {
+  label = setDefaults(label)
+  PropTypes.checkPropTypes(propTypes, label, "prop", "y-label")
 
   const {
-    drawLabel,
-    top,
-    left,
+    y,
     width,
     height,
     backgroundColor,
     font,
     color,
     textPadding,
-    renderText,
-    textAlign,
+    render,
     drawLine,
-    lineLeft,
-    lineRight,
     lineWidth,
     lineColor,
-  } = props
+  } = label
 
-  PropTypes.checkPropTypes(propTypes, props, "prop", "y-label")
+  const { graph } = layout
 
-  if (drawLabel) {
-    ctx.fillStyle = backgroundColor
+  const { yMin, yMax } = props
 
-    // label box
-    ctx.fillRect(left, top, width, height)
-
-    // text
-    ctx.font = font
-    ctx.fillStyle = color
-    ctx.textAlign = textAlign
-    ctx.textBaseline = "middle"
-
-    ctx.fillText(renderText(), getTextLeft(props), top + textPadding)
+  if (y == undefined) {
+    return
   }
+
+  const canvasY = getCanvasY(graph.height, graph.top, yMax, yMin, y)
+  const top = canvasY - Math.round(height / 2)
+  const left = getLeft(label, layout, props)
+
+  ctx.fillStyle = backgroundColor
+
+  // label box
+  ctx.fillRect(left, top, width, height)
+
+  // text
+  ctx.font = font
+  ctx.fillStyle = color
+  ctx.textAlign = getTextAlign(props)
+  ctx.textBaseline = "middle"
+
+  ctx.fillText(render(y), getTextLeft(left, label, props), top + textPadding)
 
   if (drawLine) {
     ctx.lineWidth = lineWidth
     ctx.strokeStyle = lineColor
 
+    const lineStart = getLineStart(label, layout, props)
+    const lineEnd = getLineEnd(label, layout, props)
+
     ctx.beginPath()
-    ctx.moveTo(lineLeft, top + height / 2)
-    ctx.lineTo(lineRight, top + height / 2)
+    ctx.moveTo(lineStart, top + height / 2)
+    ctx.lineTo(lineEnd, top + height / 2)
     ctx.stroke()
   }
 }

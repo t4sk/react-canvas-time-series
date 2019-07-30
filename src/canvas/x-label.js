@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import { getCanvasX } from "./math"
 
 const propTypes = {
+  x: PropTypes.number,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string.isRequired,
@@ -64,7 +65,7 @@ function getLineStart(label, layout, props) {
 
 function getLineEnd(label, layout, props) {
   const { graph } = layout
-  const { xAxisAt, xTickLength } = props
+  const { xAxisAt } = props
 
   if (xAxisAt == "top") {
     return graph.top + graph.height
@@ -97,6 +98,10 @@ export function draw(ctx, layout, label, props) {
   const { graph } = layout
 
   const { xMin, xMax } = props
+
+  if (x == undefined) {
+    return
+  }
 
   const canvasX = getCanvasX(graph.width, graph.left, xMax, xMin, x)
   const left = canvasX - Math.round(width / 2)
