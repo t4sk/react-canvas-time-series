@@ -111,33 +111,23 @@ class Graph extends Component {
   }
 
   onMouseMove = e => {
-    if (this.props.onMouseMove) {
-      this.props.onMouseMove(e, this.getMouse(e))
-    }
+    this.props.onMouseMove(e, this.getMouse(e), getLayout(this.props))
   }
 
   onMouseDown = e => {
-    if (this.props.onMouseDown) {
-      this.props.onMouseDown(e, this.getMouse(e))
-    }
+    this.props.onMouseDown(e, this.getMouse(e), getLayout(this.props))
   }
 
   onMouseUp = e => {
-    if (this.props.onMouseUp) {
-      this.props.onMouseUp(e, this.getMouse(e))
-    }
+    this.props.onMouseUp(e, this.getMouse(e))
   }
 
   onMouseOut = e => {
-    if (this.props.onMouseOut) {
-      this.props.onMouseOut(e)
-    }
+    this.props.onMouseOut(e)
   }
 
   onWheel = e => {
-    if (this.props.onWheel) {
-      this.props.onWheel(e, this.getMouse(e))
-    }
+    this.props.onWheel(e, this.getMouse(e))
   }
 
   render() {
@@ -217,6 +207,12 @@ Graph.defaultProps = {
   frames: [],
   xLabels: [],
   yLabels: [],
+
+  onMouseMove: () => {},
+  onMouseDown: () => {},
+  onMouseUp: () => {},
+  onMouseOut: () => {},
+  onWheel: () => {},
 }
 
 Graph.propTypes = {
@@ -264,11 +260,11 @@ Graph.propTypes = {
   xLabels: PropTypes.array.isRequired,
   yLabels: PropTypes.array.isRequired,
   crosshair: PropTypes.object,
-  onMouseMove: PropTypes.func,
-  onMouseDown: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  onMouseOut: PropTypes.func,
-  onWheel: PropTypes.func,
+  onMouseMove: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
+  onMouseUp: PropTypes.func.isRequired,
+  onMouseOut: PropTypes.func.isRequired,
+  onWheel: PropTypes.func.isRequired,
 }
 
 const styles = {

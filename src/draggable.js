@@ -8,8 +8,8 @@ export default function draggable(Component) {
       dragging: false,
     })
 
-    function getXRange(mouse) {
-      if (!canvas.math.isInside(props.ui, mouse) || !state.dragging) {
+    function getXRange(mouse, graph) {
+      if (!canvas.math.isInside(graph, mouse) || !state.dragging) {
         return {
           xMin: props.xMin,
           xMax: props.xMax,
@@ -19,19 +19,19 @@ export default function draggable(Component) {
       const diff = mouse.x - props.mouse.x
 
       const xMin = canvas.math.getX(
-        props.ui.width,
-        props.ui.left,
+        graph.width,
+        graph.left,
         props.xMax,
         props.xMin,
-        props.ui.left - diff
+        graph.left - diff
       )
 
       const xMax = canvas.math.getX(
-        props.ui.width,
-        props.ui.left,
+        graph.width,
+        graph.left,
         props.xMax,
         props.xMin,
-        props.ui.width + props.ui.left - diff
+        graph.width + graph.left - diff
       )
 
       return {
@@ -40,14 +40,14 @@ export default function draggable(Component) {
       }
     }
 
-    function onMouseMove(e, mouse) {
-      const { xMin, xMax } = getXRange(mouse)
+    function onMouseMove(e, mouse, layout) {
+      const { xMin, xMax } = getXRange(mouse, layout.graph)
 
-      props.onMouseMove(e, mouse, { xMin, xMax })
+      props.onMouseMove(e, mouse, layout, { xMin, xMax })
     }
 
-    function onMouseDown(e, mouse) {
-      if (canvas.math.isInside(props.ui, mouse)) {
+    function onMouseDown(e, mouse, layout) {
+      if (canvas.math.isInside(layout.graph, mouse)) {
         setState({ dragging: true })
       }
 
@@ -80,12 +80,6 @@ export default function draggable(Component) {
   Draggable.propTypes = {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
-    ui: PropTypes.shape({
-      left: PropTypes.number.isRequired,
-      top: PropTypes.number.isRequired,
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-    }).isRequired,
     mouse: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number,
@@ -97,10 +91,10 @@ export default function draggable(Component) {
   }
 
   Draggable.defaultProps = {
-    onMouseMove: () => ({}),
-    onMouseDown: () => ({}),
-    onMouseUp: () => ({}),
-    onMouseOut: () => ({}),
+    onMouseMove: () => {},
+    onMouseDown: () => {},
+    onMouseUp: () => {},
+    onMouseOut: () => {},
   }
 
   return Draggable
