@@ -124,7 +124,7 @@ class TestRenderHistory extends Component {
   }
 
   onMouseDown = (e, mouse) => {
-    if (!canvas.math.isInsideRect(this.state.mask, mouse)) {
+    if (!canvas.math.isInside(this.state.mask, mouse)) {
       return
     }
 
