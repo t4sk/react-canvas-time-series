@@ -127,7 +127,7 @@ class Graph extends Component {
   }
 
   onWheel = e => {
-    this.props.onWheel(e, this.getMouse(e))
+    this.props.onWheel(e, this.getMouse(e), getLayout(this.props))
   }
 
   render() {

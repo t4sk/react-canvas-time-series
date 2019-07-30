@@ -21,26 +21,13 @@ const X_MIN = DAYS[0]
 const X_MAX = DAYS[DAYS.length - 1]
 const X_TICK_INTERVAL = 24 * 3600
 
+const Y_MIN = 0
+const Y_MAX = 1000
+const Y_TICK_INTERVAL = 100
+
 // graph
 const WIDTH = 900
-const HEIGHT = 150
-
-// top, bottom, left, right
-const PADDING = 10
-
-const X_AXIS = {
-  top: HEIGHT - PADDING - 20,
-  left: PADDING,
-  width: WIDTH - 2 * PADDING,
-  height: 20,
-}
-
-const GRAPH = {
-  top: PADDING,
-  left: PADDING,
-  width: X_AXIS.width,
-  height: HEIGHT - 2 * PADDING - X_AXIS.height,
-}
+const HEIGHT = 300
 
 const ZOOM_RATE = 0.1
 
@@ -74,7 +61,7 @@ function Zoom(props) {
     })
   }
 
-  function onWheel(e, mouse, xRange) {
+  function onWheel(e, mouse, layout, xRange) {
     const { xMin, xMax } = xRange
 
     setState({
@@ -90,34 +77,18 @@ function Zoom(props) {
     <Graph
       width={WIDTH}
       height={HEIGHT}
+      animate={false}
       backgroundColor="beige"
-      ui={GRAPH}
-      mouse={mouse}
+      yMin={Y_MIN}
+      yMax={Y_MAX}
+      xAxisAt="bottom"
+      xTickInterval={X_TICK_INTERVAL}
+      yAxisAt="left"
+      yTickInterval={Y_TICK_INTERVAL}
       xMin={xMin}
       xMax={xMax}
-      axes={[
-        {
-          at: "bottom",
-          ...X_AXIS,
-          lineColor: "blue",
-          xMin,
-          xMax,
-          tickInterval: X_TICK_INTERVAL,
-          renderTick: x => moment(x * 1000).format("MM-DD"),
-        },
-      ]}
-      graphs={[
-        {
-          type: "xLines",
-          ...GRAPH,
-          lineColor: "blue",
-          xMin,
-          xMax,
-          xInterval: X_TICK_INTERVAL,
-        },
-      ]}
+      mouse={mouse}
       crosshair={{
-        ...GRAPH,
         canvasX: mouse.x,
         canvasY: mouse.y,
       }}

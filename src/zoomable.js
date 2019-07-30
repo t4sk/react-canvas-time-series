@@ -6,10 +6,10 @@ const DEFAULT_ZOOM_RATE = 0.1
 
 export default function zoomable(Component) {
   function Zoomable(props) {
-    const { ui, xMin, xMax, mouse, zoomRate } = props
+    const { xMin, xMax, mouse, zoomRate } = props
 
-    function getXRange(e) {
-      if (!canvas.math.isInside(ui, mouse)) {
+    function getXRange(e, graph) {
+      if (!canvas.math.isInside(graph, mouse)) {
         return {
           xMin,
           xMax,
@@ -18,7 +18,7 @@ export default function zoomable(Component) {
 
       const { deltaY } = e
 
-      const x = canvas.math.getX(ui.width, ui.left, xMax, xMin, mouse.x)
+      const x = canvas.math.getX(graph.width, graph.left, xMax, xMin, mouse.x)
 
       if (deltaY > 0) {
         // zoom out
@@ -35,10 +35,10 @@ export default function zoomable(Component) {
       }
     }
 
-    function onWheel(e, mouse) {
-      const { xMin, xMax } = getXRange(e)
+    function onWheel(e, mouse, layout) {
+      const { xMin, xMax } = getXRange(e, layout.graph)
 
-      props.onWheel(e, mouse, { xMin, xMax })
+      props.onWheel(e, mouse, layout, { xMin, xMax })
     }
 
     return <Component {...props} onWheel={onWheel} />
@@ -47,12 +47,6 @@ export default function zoomable(Component) {
   Zoomable.propTypes = {
     xMin: PropTypes.number.isRequired,
     xMax: PropTypes.number.isRequired,
-    ui: PropTypes.shape({
-      left: PropTypes.number.isRequired,
-      top: PropTypes.number.isRequired,
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-    }).isRequired,
     mouse: PropTypes.shape({
       x: PropTypes.number,
       y: PropTypes.number,
@@ -63,7 +57,7 @@ export default function zoomable(Component) {
 
   Zoomable.defaultProps = {
     zoomRate: DEFAULT_ZOOM_RATE,
-    onWheel: () => ({}),
+    onWheel: () => {},
   }
 
   return Zoomable
