@@ -2,10 +2,6 @@ import PropTypes from "prop-types"
 import { isInside } from "./math"
 
 const propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  left: PropTypes.number.isRequired,
-  top: PropTypes.number.isRequired,
   canvasX: PropTypes.number,
   canvasY: PropTypes.number,
   xLineColor: PropTypes.string.isRequired,
@@ -28,14 +24,15 @@ function setDefaults(props) {
   }
 }
 
-export function draw(ctx, props) {
+export function draw(ctx, layout, props) {
   props = setDefaults(props)
+  PropTypes.checkPropTypes(propTypes, props, "prop", "crosshair")
 
   const {
-    width,
-    height,
-    left,
-    top,
+    graph: { width, height, left, top },
+  } = layout
+
+  const {
     canvasX,
     canvasY,
     xLineColor,
@@ -43,8 +40,6 @@ export function draw(ctx, props) {
     yLineColor,
     yLineWidth,
   } = props
-
-  PropTypes.checkPropTypes(propTypes, props, "prop", "crosshair")
 
   if (!isInside({ top, left, width, height }, { x: canvasX, y: canvasY })) {
     return

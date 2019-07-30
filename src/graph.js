@@ -76,7 +76,7 @@ class Graph extends Component {
     this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
 
     if (this.props.crosshair) {
-      crosshair.draw(this.ctx.ui, this.props.crosshair)
+      crosshair.draw(this.ctx.ui, layout, this.props.crosshair)
     }
 
     for (let frame of this.props.frames) {
