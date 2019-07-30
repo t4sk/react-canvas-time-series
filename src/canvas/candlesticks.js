@@ -2,14 +2,6 @@ import PropTypes from "prop-types"
 import { getCanvasX, getCanvasY } from "./math"
 
 const propTypes = {
-  top: PropTypes.number.isRequired,
-  left: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  xMin: PropTypes.number.isRequired,
-  xMax: PropTypes.number.isRequired,
-  yMin: PropTypes.number.isRequired,
-  yMax: PropTypes.number.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       open: PropTypes.number.isRequired,
@@ -40,62 +32,63 @@ function setDefaults(props) {
   }
 }
 
-export function draw(ctx, props) {
-  props = setDefaults(props)
+export function draw(ctx, layout, graph, props) {
+  graph = setDefaults(graph)
+  PropTypes.checkPropTypes(propTypes, graph, "prop", "candlesticks")
 
   const {
-    top,
-    left,
-    width,
-    height,
-    xMin,
-    xMax,
-    yMin,
-    yMax,
-    data,
-    step,
-    getColor,
-    candlestickWidth,
-    lineWidth,
-  } = props
+    graph: { top, left, width, height },
+  } = layout
 
-  for (let i = 0; i < data.length; i += step) {
-    const { high, low, open, close, timestamp } = data[i]
+  const { data, step, getColor, candlestickWidth, lineWidth } = graph
 
-    if (timestamp >= xMin && timestamp <= xMax) {
-      const canvasX = getCanvasX(width, left, xMax, xMin, timestamp)
-      const bodyTop = getCanvasY(height, top, yMax, yMin, Math.max(open, close))
-      const bodyBottom = getCanvasY(
-        height,
-        top,
-        yMax,
-        yMin,
-        Math.min(open, close)
-      )
-      const bodyHeight = Math.max(bodyBottom - bodyTop, 1)
+  const { xMin, xMax, yMin, yMax } = props
 
-      ctx.fillStyle = getColor(data[i])
+  if (step > 0) {
+    for (let i = 0; i < data.length; i += step) {
+      const { high, low, open, close, timestamp } = data[i]
 
-      // body
-      ctx.fillRect(
-        canvasX - candlestickWidth / 2,
-        bodyTop,
-        candlestickWidth,
-        bodyHeight
-      )
+      if (timestamp >= xMin && timestamp <= xMax) {
+        const canvasX = getCanvasX(width, left, xMax, xMin, timestamp)
+        const bodyTop = getCanvasY(
+          height,
+          top,
+          yMax,
+          yMin,
+          Math.max(open, close)
+        )
+        const bodyBottom = getCanvasY(
+          height,
+          top,
+          yMax,
+          yMin,
+          Math.min(open, close)
+        )
+        const bodyHeight = Math.max(bodyBottom - bodyTop, 1)
 
-      ctx.strokeStyle = ctx.fillStyle
-      ctx.lineWidth = lineWidth
+        ctx.fillStyle = getColor(data[i])
 
-      // top wick
-      ctx.beginPath()
-      ctx.moveTo(canvasX, bodyTop)
-      ctx.lineTo(canvasX, getCanvasY(height, top, yMax, yMin, high))
+        // body
+        ctx.fillRect(
+          canvasX - candlestickWidth / 2,
+          bodyTop,
+          candlestickWidth,
+          bodyHeight
+        )
 
-      // bottom wick
-      ctx.moveTo(canvasX, bodyTop + bodyHeight)
-      ctx.lineTo(canvasX, getCanvasY(height, top, yMax, yMin, low))
-      ctx.stroke()
+        ctx.strokeStyle = ctx.fillStyle
+        ctx.lineWidth = lineWidth
+
+        // top wick
+        ctx.beginPath()
+        ctx.moveTo(canvasX, bodyTop)
+        ctx.lineTo(canvasX, getCanvasY(height, top, yMax, yMin, high))
+
+        // bottom wick
+        ctx.moveTo(canvasX, bodyTop + bodyHeight)
+        ctx.lineTo(canvasX, getCanvasY(height, top, yMax, yMin, low))
+        ctx.stroke()
+      }
     }
   }
 }
