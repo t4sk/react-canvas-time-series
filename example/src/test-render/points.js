@@ -33,7 +33,6 @@ function Points(props) {
     <Graph
       width={WIDTH}
       height={HEIGHT}
-      backgroundColor="beige"
       animate={false}
       backgroundColor="beige"
       xMin={X_MIN}
