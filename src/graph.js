@@ -30,6 +30,9 @@ class Graph extends Component {
 
     // ref to animation frame
     this.animation = undefined
+
+    // cache layout
+    this.layout = getLayout(props)
   }
 
   componentDidMount() {
@@ -50,33 +53,33 @@ class Graph extends Component {
     if (!this.props.animate && this.props.shouldRedrawGraph()) {
       this.draw()
     }
+
+    this.layout = getLayout(this.props)
   }
 
   draw = () => {
     const { xMin, xMax, yMin, yMax, xAxisAt, yAxisAt } = this.props
 
-    const layout = getLayout(this.props)
-
     this.ctx.axes.clearRect(0, 0, this.props.width, this.props.height)
 
     if (xAxisAt) {
-      xAxis.draw(this.ctx.axes, layout, this.props)
+      xAxis.draw(this.ctx.axes, this.layout, this.props)
     }
 
     if (yAxisAt) {
-      yAxis.draw(this.ctx.axes, layout, this.props)
+      yAxis.draw(this.ctx.axes, this.layout, this.props)
     }
 
     this.ctx.graphs.clearRect(0, 0, this.props.width, this.props.height)
 
     for (let graph of this.props.graphs) {
-      GRAPHS[graph.type].draw(this.ctx.graphs, layout, graph, this.props)
+      GRAPHS[graph.type].draw(this.ctx.graphs, this.layout, graph, this.props)
     }
 
     this.ctx.ui.clearRect(0, 0, this.props.width, this.props.height)
 
     if (this.props.crosshair) {
-      crosshair.draw(this.ctx.ui, layout, this.props.crosshair)
+      crosshair.draw(this.ctx.ui, this.layout, this.props.crosshair)
     }
 
     for (let frame of this.props.frames) {
@@ -84,11 +87,11 @@ class Graph extends Component {
     }
 
     for (let label of this.props.xLabels) {
-      xLabel.draw(this.ctx.ui, layout, label, this.props)
+      xLabel.draw(this.ctx.ui, this.layout, label, this.props)
     }
 
     for (let label of this.props.yLabels) {
-      yLabel.draw(this.ctx.ui, layout, label, this.props)
+      yLabel.draw(this.ctx.ui, this.layout, label, this.props)
     }
   }
 
@@ -111,11 +114,11 @@ class Graph extends Component {
   }
 
   onMouseMove = e => {
-    this.props.onMouseMove(e, this.getMouse(e), getLayout(this.props))
+    this.props.onMouseMove(e, this.getMouse(e), this.layout.graph)
   }
 
   onMouseDown = e => {
-    this.props.onMouseDown(e, this.getMouse(e), getLayout(this.props))
+    this.props.onMouseDown(e, this.getMouse(e), this.layout.graph)
   }
 
   onMouseUp = e => {
@@ -127,7 +130,7 @@ class Graph extends Component {
   }
 
   onWheel = e => {
-    this.props.onWheel(e, this.getMouse(e), getLayout(this.props))
+    this.props.onWheel(e, this.getMouse(e), this.layout.graph)
   }
 
   render() {

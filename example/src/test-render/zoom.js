@@ -61,7 +61,7 @@ function Zoom(props) {
     })
   }
 
-  function onWheel(e, mouse, layout, xRange) {
+  function onWheel(e, mouse, graph, xRange) {
     const { xMin, xMax } = xRange
 
     setState({

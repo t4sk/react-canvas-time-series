@@ -39,7 +39,7 @@ function Drag(props) {
     xMax: X_MAX,
   })
 
-  function onMouseMove(e, mouse, layout, { xMin, xMax }) {
+  function onMouseMove(e, mouse, graph, { xMin, xMax }) {
     setState({
       ...state,
       mouse: {

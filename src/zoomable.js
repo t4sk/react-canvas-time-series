@@ -35,10 +35,10 @@ export default function zoomable(Component) {
       }
     }
 
-    function onWheel(e, mouse, layout) {
-      const { xMin, xMax } = getXRange(e, layout.graph)
+    function onWheel(e, mouse, graph) {
+      const { xMin, xMax } = getXRange(e, graph)
 
-      props.onWheel(e, mouse, layout, { xMin, xMax })
+      props.onWheel(e, mouse, graph, { xMin, xMax })
     }
 
     return <Component {...props} onWheel={onWheel} />

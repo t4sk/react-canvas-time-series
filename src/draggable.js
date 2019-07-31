@@ -40,14 +40,14 @@ export default function draggable(Component) {
       }
     }
 
-    function onMouseMove(e, mouse, layout) {
-      const { xMin, xMax } = getXRange(mouse, layout.graph)
+    function onMouseMove(e, mouse, graph) {
+      const { xMin, xMax } = getXRange(mouse, graph)
 
-      props.onMouseMove(e, mouse, layout, { xMin, xMax })
+      props.onMouseMove(e, mouse, graph, { xMin, xMax })
     }
 
-    function onMouseDown(e, mouse, layout) {
-      if (canvas.math.isInside(layout.graph, mouse)) {
+    function onMouseDown(e, mouse, graph) {
+      if (canvas.math.isInside(graph, mouse)) {
         setState({ dragging: true })
       }
 
