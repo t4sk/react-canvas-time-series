@@ -36,3 +36,7 @@ export function getLayout(props) {
     yAxis,
   }
 }
+
+export default {
+  getLayout,
+}
