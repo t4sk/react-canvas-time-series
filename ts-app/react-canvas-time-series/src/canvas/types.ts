@@ -2,10 +2,17 @@
 // interface CanvasContext {}
 export type CanvasContext = any
 
+export interface Rectangle {
+  top: number
+  left: number
+  height: number
+  width: number
+}
+
 export interface Layout {
-  graph: { top: number; left: number; height: number; width: number }
-  yAxis: { top: number; left: number; height: number; width: number }
-  xAxis: { top: number; left: number; height: number; width: number }
+  graph: Rectangle
+  yAxis: Rectangle
+  xAxis: Rectangle
 }
 
 export type XAxisAt = "top" | "bottom"

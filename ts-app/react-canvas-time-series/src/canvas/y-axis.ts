@@ -107,7 +107,7 @@ interface DrawProps {
   yMin: number
   yMax: number
   yTickLength: number
-  renderYTick: (y: number) => void
+  renderYTick: (y: number) => string
   yLineColor: string
 }
 

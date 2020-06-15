@@ -1,3 +1,5 @@
+import { Rectangle } from "./types"
+
 export function stepBelow(x: number, step: number): number {
   return x - (x % step)
 }
@@ -11,7 +13,7 @@ export function findNearestIndex(arr: number[], x: number): number {
   }
 
   if (arr[low] > arr[high]) {
-    throw "Data must be sorted in ascending order"
+    throw new Error("Data must be sorted in ascending order")
   }
 
   // binary search
@@ -36,13 +38,6 @@ export function findNearestIndex(arr: number[], x: number): number {
   }
 
   return low
-}
-
-interface Rectangle {
-  top: number
-  left: number
-  width: number
-  height: number
 }
 
 export function isInside(

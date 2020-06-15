@@ -10,6 +10,7 @@ import * as bars from "./bars"
 import * as candlesticks from "./candlesticks"
 import * as math from "./math"
 import * as history from "./history"
+import * as layout from "./layout"
 
 export default {
   xAxis,
@@ -24,4 +25,5 @@ export default {
   candlesticks,
   math,
   history,
+  layout,
 }

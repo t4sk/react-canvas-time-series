@@ -43,7 +43,7 @@ function drawTick(
   ctx.textAlign = "center"
   ctx.textBaseline = "middle"
 
-  if (xAxisAt == "top") {
+  if (xAxisAt === "top") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top + height)
     ctx.lineTo(canvasX, top + height - xTickLength)
@@ -54,7 +54,7 @@ function drawTick(
       canvasX,
       top + height - xTickLength - TICK_TEXT_PADDING
     )
-  } else if (xAxisAt == "bottom") {
+  } else if (xAxisAt === "bottom") {
     ctx.beginPath()
     ctx.moveTo(canvasX, top)
     ctx.lineTo(canvasX, top + xTickLength)
@@ -126,12 +126,12 @@ export function draw(ctx: CanvasContext, layout: Layout, props: DrawProps) {
   ctx.lineWidth = 1
   ctx.strokeStyle = xAxisLineColor
 
-  if (xAxisAt == "top") {
+  if (xAxisAt === "top") {
     ctx.beginPath()
     ctx.moveTo(left, top + height)
     ctx.lineTo(left + width, top + height)
     ctx.stroke()
-  } else if (xAxisAt == "bottom") {
+  } else if (xAxisAt === "bottom") {
     ctx.beginPath()
     ctx.moveTo(left, top)
     ctx.lineTo(left + width, top)
