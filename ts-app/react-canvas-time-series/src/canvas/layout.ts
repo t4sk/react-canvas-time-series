@@ -16,9 +16,9 @@ export function getLayout(props: Props): Layout {
     width,
     height,
     xAxisAt,
-    xAxisHeight = 0,
+    xAxisHeight,
     yAxisAt,
-    yAxisWidth = 0,
+    yAxisWidth,
   } = props
 
   const xAxis = {

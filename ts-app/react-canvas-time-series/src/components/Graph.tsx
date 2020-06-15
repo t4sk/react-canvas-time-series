@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useCallback, useMemo } from "react"
 
-import { Layout, Rectangle } from "../canvas/types"
-import { XAxisAt, YAxisAt } from "../canvas/types"
+import { Layout, Rectangle, XAxisAt, YAxisAt } from "../canvas/types"
 import { getLayout } from "../canvas/layout"
 import * as xAxis from "../canvas/x-axis"
 import * as yAxis from "../canvas/y-axis"
@@ -30,14 +29,13 @@ interface Mouse {
   y: number
 }
 
-// TODO types Array, Function, object
 interface Props {
   width: number
   height: number
   padding: number
   backgroundColor: string
   animate?: boolean
-  // shouldRedrawGraph?: Function
+  shouldRedrawGraph?: () => boolean
   xMin: number
   xMax: number
   yMin: number
@@ -67,10 +65,11 @@ interface Props {
   showYLine: boolean
   yLineColor: string
   // graphs
-  graphs?: GraphTypes[]
-  frames?: Array<any>
-  xLabels?: Array<any>
-  yLabels?: Array<any>
+  graphs: GraphTypes[]
+  // TODO types Array
+  frames: Array<any>
+  xLabels: Array<any>
+  yLabels: Array<any>
   crosshair?: {
     canvasX: number
     canvasY: number
@@ -106,6 +105,57 @@ interface Props {
   ) => void
 }
 
+const DEFAULT_PROPS = {
+  width: 500,
+  height: 300,
+  padding: 10,
+  backgroundColor: "transparent",
+  animate: false,
+  shouldRedrawGraph: () => true,
+  xMin: 0,
+  xMax: 0,
+  yMin: 0,
+  yMax: 0,
+  // x axis
+  xAxisAt: "bottom" as XAxisAt,
+  xAxisHeight: 30,
+  xAxisLineColor: "black",
+  xTicks: [],
+  xTickInterval: 0,
+  xTickLength: 10,
+  renderXTick: (x: number) => x.toString(),
+  xAxisFont: "",
+  xAxisTextColor: "black",
+  showXLine: true,
+  xLineColor: "lightgrey",
+
+  // y axis
+  yAxisAt: "right" as YAxisAt,
+  yAxisWidth: 50,
+  yAxisLineColor: "black",
+  yTicks: [],
+  yTickInterval: 0,
+  yTickLength: 10,
+  renderYTick: (y: number) => y.toString(),
+  yAxisFont: "",
+  yAxisTextColor: "black",
+  showYLine: true,
+  yLineColor: "lightgrey",
+
+  // graphs
+  graphs: [],
+  frames: [],
+  xLabels: [],
+  yLabels: [],
+}
+
+function withDefaultProps(props: Partial<Props>): Props {
+  return {
+    ...DEFAULT_PROPS,
+    ...props,
+  }
+}
+
 interface Context {
   // axes: CanvasRenderingContext2D | null | undefined
   // graphs: CanvasRenderingContext2D | null | undefined
@@ -116,14 +166,7 @@ interface Context {
 }
 
 function draw(ctx: Context, props: Props, layout: Layout) {
-  const {
-    xAxisAt,
-    yAxisAt,
-    graphs = [],
-    frames = [],
-    xLabels = [],
-    yLabels = [],
-  } = props
+  const { xAxisAt, yAxisAt } = props
 
   ctx.axes.clearRect(0, 0, props.width, props.height)
 
@@ -137,7 +180,7 @@ function draw(ctx: Context, props: Props, layout: Layout) {
 
   ctx.graphs.clearRect(0, 0, props.width, props.height)
 
-  for (const graph of graphs) {
+  for (const graph of props.graphs) {
     // @ts-ignore
     GRAPHS[graph.type].draw(ctx.graphs, layout, graph, props)
   }
@@ -148,15 +191,15 @@ function draw(ctx: Context, props: Props, layout: Layout) {
     crosshair.draw(ctx.ui, layout, props.crosshair)
   }
 
-  for (const frame of frames) {
+  for (const frame of props.frames) {
     text.draw(ctx.ui, frame)
   }
 
-  for (const label of xLabels) {
+  for (const label of props.xLabels) {
     xLabel.draw(ctx.ui, layout, label, props)
   }
 
-  for (const label of yLabels) {
+  for (const label of props.yLabels) {
     yLabel.draw(ctx.ui, layout, label, props)
   }
 }
@@ -173,7 +216,9 @@ function getMouse(
   }
 }
 
-const Graph: React.FC<Props> = (props) => {
+const Graph: React.SFC<Partial<Props>> = (props) => {
+  const _props = withDefaultProps(props)
+
   const refs = {
     axes: useRef<HTMLCanvasElement | null>(null),
     graphs: useRef<HTMLCanvasElement | null>(null),
@@ -187,17 +232,17 @@ const Graph: React.FC<Props> = (props) => {
     graphs: null,
     ui: null,
   })
-  const layout = useMemo(() => getLayout(props), [props])
+  const layout = useMemo(() => getLayout(_props), [props])
 
   useEffect(() => {
     ctx.current.axes = refs.axes.current?.getContext("2d")
     ctx.current.graphs = refs.graphs.current?.getContext("2d")
     ctx.current.ui = refs.ui.current?.getContext("2d")
 
-    if (props.animate) {
+    if (_props.animate) {
       animate()
     } else {
-      draw(ctx.current, props, layout)
+      draw(ctx.current, _props, layout)
     }
 
     return () => {
@@ -218,40 +263,40 @@ const Graph: React.FC<Props> = (props) => {
 
   const animate = useCallback(() => {
     refs.animation.current = window.requestAnimationFrame(animate)
-    draw(ctx.current, props, layout)
+    draw(ctx.current, _props, layout)
   }, [])
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      props.onMouseMove?.(e, getMouse(ctx.current, e), layout)
+      _props.onMouseMove?.(e, getMouse(ctx.current, e), layout)
     },
     []
   )
 
   const onMouseDown = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      props.onMouseDown?.(e, getMouse(ctx.current, e), layout)
+      _props.onMouseDown?.(e, getMouse(ctx.current, e), layout)
     },
     []
   )
 
   const onMouseUp = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      props.onMouseUp?.(e, getMouse(ctx.current, e), layout)
+      _props.onMouseUp?.(e, getMouse(ctx.current, e), layout)
     },
     []
   )
 
   const onMouseOut = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      props.onMouseOut?.(e, getMouse(ctx.current, e), layout)
+      _props.onMouseOut?.(e, getMouse(ctx.current, e), layout)
     },
     []
   )
 
   const onWheel = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      props.onWheel?.(e, getMouse(ctx.current, e), layout)
+      _props.onWheel?.(e, getMouse(ctx.current, e), layout)
     },
     []
   )
@@ -262,9 +307,9 @@ const Graph: React.FC<Props> = (props) => {
       style={{
         position: "relative",
         cursor: "crosshair",
-        width: props.width,
-        height: props.height,
-        backgroundColor: props.backgroundColor,
+        width: _props.width,
+        height: _props.height,
+        backgroundColor: _props.backgroundColor,
       }}
     >
       <canvas
@@ -274,8 +319,8 @@ const Graph: React.FC<Props> = (props) => {
           left: 0,
           top: 0,
         }}
-        width={props.width}
-        height={props.height}
+        width={_props.width}
+        height={_props.height}
       />
       <canvas
         ref={refs.graphs}
@@ -284,8 +329,8 @@ const Graph: React.FC<Props> = (props) => {
           left: 0,
           top: 0,
         }}
-        width={props.width}
-        height={props.height}
+        width={_props.width}
+        height={_props.height}
       />
       <canvas
         ref={refs.ui}
@@ -294,8 +339,8 @@ const Graph: React.FC<Props> = (props) => {
           left: 0,
           top: 0,
         }}
-        width={props.width}
-        height={props.height}
+        width={_props.width}
+        height={_props.height}
         onMouseMove={onMouseMove}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
@@ -304,35 +349,6 @@ const Graph: React.FC<Props> = (props) => {
       />
     </div>
   )
-}
-
-Graph.defaultProps = {
-  padding: 10,
-  // shouldRedrawGraph: () => true,
-
-  // x axis
-  xAxisHeight: 30,
-  xAxisLineColor: "black",
-  xTicks: [],
-  xTickInterval: 0,
-  xTickLength: 10,
-  renderXTick: (x: number) => x.toString(),
-  xAxisFont: "",
-  xAxisTextColor: "black",
-  showXLine: true,
-  xLineColor: "lightgrey",
-
-  // y axis
-  yAxisWidth: 50,
-  yAxisLineColor: "black",
-  yTicks: [],
-  yTickInterval: 0,
-  yTickLength: 10,
-  renderYTick: (y: number) => y.toString(),
-  yAxisFont: "",
-  yAxisTextColor: "black",
-  showYLine: true,
-  yLineColor: "lightgrey",
 }
 
 // TODO useMemo
