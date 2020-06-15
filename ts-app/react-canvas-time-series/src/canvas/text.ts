@@ -21,7 +21,8 @@ function setDefaults(props: Props): Props {
 }
 
 export function draw(ctx: CanvasContext, props: Props) {
-  props = setDefaults(props)
+  // TODO remove setDefaults?
+  // props = setDefaults(props)
 
   const { left, top, color, font, text } = props
 

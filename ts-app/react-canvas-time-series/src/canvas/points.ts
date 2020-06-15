@@ -74,7 +74,8 @@ export function draw(
   graph: Graph,
   props: Props
 ) {
-  graph = setDefaults(graph)
+  // TODO remove setDefaults?
+  // graph = setDefaults(graph)
 
   const { data } = graph
 

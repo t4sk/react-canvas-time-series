@@ -121,7 +121,8 @@ export function draw(
   label: Label,
   props: { yAxisAt: YAxisAt; yTickLength: number; yMin: number; yMax: number }
 ) {
-  label = setDefaults(label)
+  // TODO remove setDefaults?
+  // label = setDefaults(label)
 
   const {
     y,

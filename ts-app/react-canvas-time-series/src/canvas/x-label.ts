@@ -90,7 +90,8 @@ export function draw(
   label: Label,
   props: { xMin: number; xMax: number; xAxisAt: XAxisAt; xTickLength: number }
 ) {
-  label = setDefaults(label)
+  // TODO remove setDefaults?
+  // label = setDefaults(label)
 
   const {
     x,

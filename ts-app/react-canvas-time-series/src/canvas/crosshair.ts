@@ -25,7 +25,8 @@ function setDefaults(props: Props): Props {
 }
 
 export function draw(ctx: CanvasContext, layout: Layout, props: Props) {
-  props = setDefaults(props)
+  // TODO remove setDefaults?
+  // props = setDefaults(props)
 
   const {
     graph: { width, height, left, top },
