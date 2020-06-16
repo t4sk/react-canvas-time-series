@@ -7,7 +7,9 @@ import * as yAxis from "../canvas/y-axis"
 import * as crosshair from "../canvas/crosshair"
 import * as text from "../canvas/text"
 import * as xLabel from "../canvas/x-label"
+import { XLabel } from "../canvas/x-label"
 import * as yLabel from "../canvas/y-label"
+import { YLabel } from "../canvas/y-label"
 import * as bars from "../canvas/bars"
 import * as line from "../canvas/line"
 import * as points from "../canvas/points"
@@ -68,8 +70,8 @@ interface Props {
   graphs: GraphTypes[]
   // TODO types Array
   frames: Array<any>
-  xLabels: Array<any>
-  yLabels: Array<any>
+  xLabels: Array<Partial<XLabel>>
+  yLabels: Array<Partial<YLabel>>
   crosshair?: {
     canvasX: number
     canvasY: number

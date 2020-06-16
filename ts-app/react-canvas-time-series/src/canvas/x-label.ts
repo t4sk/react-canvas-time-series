@@ -1,7 +1,7 @@
 import { CanvasContext, Layout, XAxisAt } from "./types"
 import { getCanvasX } from "./math"
 
-interface Label {
+export interface XLabel {
   x?: number
   width: number
   height: number
@@ -15,7 +15,7 @@ interface Label {
   lineColor: string
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
   width: 50,
   height: 20,
   backgroundColor: "white",
@@ -28,15 +28,15 @@ const defaultProps = {
   lineColor: "black",
 }
 
-function setDefaults(props: Label): Label {
+function withDefaultProps(props: Partial<XLabel>): XLabel {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
 
 function getTop(
-  label: Label,
+  label: XLabel,
   layout: Layout,
   props: { xAxisAt: XAxisAt; xTickLength: number }
 ): number {
@@ -87,11 +87,10 @@ function getLineEnd(layout: Layout, props: { xAxisAt: XAxisAt }): number {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  label: Label,
+  label: Partial<XLabel>,
   props: { xMin: number; xMax: number; xAxisAt: XAxisAt; xTickLength: number }
 ) {
-  // TODO remove setDefaults?
-  // label = setDefaults(label)
+  const _label = withDefaultProps(label)
 
   const {
     x,
@@ -105,7 +104,7 @@ export function draw(
     drawLine,
     lineWidth,
     lineColor,
-  } = label
+  } = _label
 
   const { graph } = layout
 
@@ -117,7 +116,7 @@ export function draw(
 
   const canvasX = getCanvasX(graph.width, graph.left, xMax, xMin, x)
   const left = canvasX - Math.round(width / 2)
-  const top = getTop(label, layout, props)
+  const top = getTop(_label, layout, props)
 
   // label box
   ctx.fillStyle = backgroundColor

@@ -1,7 +1,7 @@
 import { CanvasContext, Layout, YAxisAt, TextAlign } from "./types"
 import { getCanvasY } from "./math"
 
-interface Label {
+export interface YLabel {
   y?: number
   width: number
   height: number
@@ -28,7 +28,7 @@ const DEFAULT_PROPS = {
   lineWidth: 1,
 }
 
-function setDefaults(props: Label): Label {
+function withDefaultProps(props: Partial<YLabel>): YLabel {
   return {
     ...DEFAULT_PROPS,
     ...props,
@@ -36,7 +36,7 @@ function setDefaults(props: Label): Label {
 }
 
 function getLeft(
-  label: Label,
+  label: YLabel,
   layout: Layout,
   props: { yAxisAt: YAxisAt; yTickLength: number }
 ): number {
@@ -68,7 +68,7 @@ function getTextAlign(props: { yAxisAt: YAxisAt }): TextAlign | undefined {
 
 function getTextLeft(
   left: number,
-  label: Label,
+  label: YLabel,
   props: { yAxisAt: YAxisAt }
 ): number | undefined {
   const { yAxisAt } = props
@@ -118,11 +118,10 @@ function getLineEnd(layout: Layout, props: { yAxisAt: YAxisAt }): number {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  label: Label,
+  label: Partial<YLabel>,
   props: { yAxisAt: YAxisAt; yTickLength: number; yMin: number; yMax: number }
 ) {
-  // TODO remove setDefaults?
-  // label = setDefaults(label)
+  const _label = withDefaultProps(label)
 
   const {
     y,
@@ -136,7 +135,7 @@ export function draw(
     drawLine,
     lineWidth,
     lineColor,
-  } = label
+  } = _label
 
   const { graph } = layout
   const { yMin, yMax } = props
@@ -147,7 +146,7 @@ export function draw(
 
   const canvasY = getCanvasY(graph.height, graph.top, yMax, yMin, y)
   const top = canvasY - Math.round(height / 2)
-  const left = getLeft(label, layout, props)
+  const left = getLeft(_label, layout, props)
 
   ctx.fillStyle = backgroundColor
 
@@ -160,7 +159,7 @@ export function draw(
   ctx.textAlign = getTextAlign(props)
   ctx.textBaseline = "middle"
 
-  ctx.fillText(render(y), getTextLeft(left, label, props), top + textPadding)
+  ctx.fillText(render(y), getTextLeft(left, _label, props), top + textPadding)
 
   if (drawLine) {
     ctx.lineWidth = lineWidth
