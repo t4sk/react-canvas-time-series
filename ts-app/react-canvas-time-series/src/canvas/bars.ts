@@ -6,22 +6,23 @@ interface Bar {
   y: number
 }
 
-interface Graph {
+export interface Graph {
   data: Bar[]
   step: number
   getBarColor: (bar: Bar) => string
   barWidth: number
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
+  data: [],
   step: 1,
   getBarColor: () => "",
   barWidth: 1,
 }
 
-function setDefaults(props: Graph): Graph {
+function withDefaultProps(props: Partial<Graph>): Graph {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
@@ -36,17 +37,16 @@ interface Props {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  graph: Graph,
+  graph: Partial<Graph>,
   props: Props
 ) {
-  // TODO remove setDefaults?
-  // graph = setDefaults(graph)
+  const _graph = withDefaultProps(graph)
 
   const {
     graph: { top, left, width, height },
   } = layout
 
-  const { data, step, getBarColor, barWidth } = graph
+  const { data, step, getBarColor, barWidth } = _graph
   const { xMin, xMax, yMin, yMax } = props
 
   const canvasY0 = getCanvasY(height, top, yMax, yMin, yMin)

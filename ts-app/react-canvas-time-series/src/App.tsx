@@ -1,7 +1,7 @@
 import React from "react"
 import "./App.css"
 import Labels from "./examples/Labels"
-// import Bars from "./examples/Bars"
+import Bars from "./examples/Bars"
 import Axes from "./examples/Axes"
 import Points from "./examples/Points"
 import Lines from "./examples/Lines"
@@ -29,10 +29,10 @@ function App() {
         <h3>Candlesticks</h3>
         <TestRenderCandlesticks />
 
+  */}
+
       <h3>Bars</h3>
       <Bars />
-
-  */}
 
       <h3>Lines</h3>
       <Lines />

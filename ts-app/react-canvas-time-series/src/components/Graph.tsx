@@ -24,7 +24,11 @@ interface LineGraph extends Partial<line.Graph> {
   type: string
 }
 
-type GraphType = PointGraph | LineGraph
+interface BarGraph extends Partial<bars.Graph> {
+  type: string
+}
+
+type GraphType = PointGraph | LineGraph | BarGraph
 
 const GRAPHS = {
   line,
