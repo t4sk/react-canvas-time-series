@@ -16,17 +16,15 @@ import * as points from "../canvas/points"
 import * as candlesticks from "../canvas/candlesticks"
 
 // type GraphTypes = "line" | "points" | "bars" | "candlestick"
-interface PointGraph {
-  // type: "points"
+interface PointGraph extends Partial<points.Graph> {
   type: string
-  data?: Point[]
-  color?: string
-  radius?: number
-  ambientColor?: string
-  ambientRadius?: number
 }
 
-type GraphType = PointGraph
+interface LineGraph extends Partial<line.Graph> {
+  type: string
+}
+
+type GraphType = PointGraph | LineGraph
 
 const GRAPHS = {
   line,

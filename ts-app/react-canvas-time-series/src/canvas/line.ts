@@ -1,21 +1,21 @@
 import { CanvasContext, Layout, Point } from "./types"
 import { getCanvasX, getCanvasY } from "./math"
 
-interface Graph {
+export interface Graph {
   data: Point[]
   step: number
   lineColor: string
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
   lineColor: "",
   step: 1,
   data: [],
 }
 
-function setDefaults(props: Graph): Graph {
+function withDefaultProps(props: Partial<Graph>): Graph {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
@@ -30,17 +30,16 @@ interface Props {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  graph: Graph,
+  graph: Partial<Graph>,
   props: Props
 ) {
-  // TODO remove setDefaults?
-  // graph = setDefaults(graph)
+  const _graph = withDefaultProps(graph)
 
   const {
     graph: { top, left, width, height },
   } = layout
 
-  const { data, step, lineColor } = graph
+  const { data, step, lineColor } = _graph
   const { xMin, xMax, yMin, yMax } = props
 
   ctx.strokeStyle = lineColor
