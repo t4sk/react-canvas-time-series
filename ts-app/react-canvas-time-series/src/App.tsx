@@ -5,6 +5,7 @@ import Bars from "./examples/Bars"
 import Axes from "./examples/Axes"
 import Points from "./examples/Points"
 import Lines from "./examples/Lines"
+import Candlesticks from "./examples/Candlesticks"
 import Frames from "./examples/Frames"
 
 function App() {
@@ -26,10 +27,9 @@ function App() {
         <h3>Crosshair</h3>
         <TestRenderCrosshair />
 
-        <h3>Candlesticks</h3>
-        <TestRenderCandlesticks />
-
   */}
+      <h3>Candlesticks</h3>
+      <Candlesticks />
 
       <h3>Bars</h3>
       <Bars />

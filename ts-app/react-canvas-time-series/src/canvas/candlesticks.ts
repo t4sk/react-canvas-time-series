@@ -9,7 +9,7 @@ interface Candlestick {
   timestamp: number
 }
 
-interface Graph {
+export interface Graph {
   data: Candlestick[]
   step: number
   getColor: (candlestick: Candlestick) => string
@@ -17,7 +17,7 @@ interface Graph {
   lineWidth: number
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
   data: [],
   step: 1,
   getColor: (data: Candlestick) => "green",
@@ -25,9 +25,9 @@ const defaultProps = {
   lineWidth: 1,
 }
 
-function setDefaults(props: Graph): Graph {
+function withDefaultProps(props: Partial<Graph>): Graph {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
@@ -42,17 +42,16 @@ interface Props {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  graph: Graph,
+  graph: Partial<Graph>,
   props: Props
 ) {
-  // TODO remove setDefaults?
-  // graph = setDefaults(graph)
+  const _graph = withDefaultProps(graph)
 
   const {
     graph: { top, left, width, height },
   } = layout
 
-  const { data, step, getColor, candlestickWidth, lineWidth } = graph
+  const { data, step, getColor, candlestickWidth, lineWidth } = _graph
   const { xMin, xMax, yMin, yMax } = props
 
   if (step > 0) {

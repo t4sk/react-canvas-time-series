@@ -28,7 +28,11 @@ interface BarGraph extends Partial<bars.Graph> {
   type: string
 }
 
-type GraphType = PointGraph | LineGraph | BarGraph
+interface CandlestickGraph extends Partial<candlesticks.Graph> {
+  type: string
+}
+
+type GraphType = PointGraph | LineGraph | BarGraph | CandlestickGraph
 
 const GRAPHS = {
   line,
