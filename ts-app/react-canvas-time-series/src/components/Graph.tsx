@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useMemo } from "react"
 
-import { Layout, Rectangle, XAxisAt, YAxisAt } from "../canvas/types"
+import { Layout, Point, XAxisAt, YAxisAt } from "../canvas/types"
 import { getLayout } from "../canvas/layout"
 import * as xAxis from "../canvas/x-axis"
 import * as yAxis from "../canvas/y-axis"
@@ -15,7 +15,18 @@ import * as line from "../canvas/line"
 import * as points from "../canvas/points"
 import * as candlesticks from "../canvas/candlesticks"
 
-type GraphTypes = "line" | "points" | "bars" | "candlestick"
+// type GraphTypes = "line" | "points" | "bars" | "candlestick"
+interface PointGraph {
+  // type: "points"
+  type: string
+  data?: Point[]
+  color?: string
+  radius?: number
+  ambientColor?: string
+  ambientRadius?: number
+}
+
+type GraphType = PointGraph
 
 const GRAPHS = {
   line,
@@ -23,8 +34,6 @@ const GRAPHS = {
   bars,
   candlesticks,
 }
-
-type Graph = Rectangle
 
 interface Mouse {
   x: number
@@ -67,7 +76,7 @@ interface Props {
   showYLine: boolean
   yLineColor: string
   // graphs
-  graphs: GraphTypes[]
+  graphs: GraphType[]
   // TODO types Array
   frames: Array<any>
   xLabels: Array<Partial<XLabel>>

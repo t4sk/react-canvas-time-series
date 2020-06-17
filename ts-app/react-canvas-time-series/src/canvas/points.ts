@@ -1,7 +1,7 @@
 import { CanvasContext, Layout, Point } from "./types"
 import { getCanvasX, getCanvasY } from "./math"
 
-interface Graph {
+export interface Graph {
   data: Point[]
   color: string
   radius: number
@@ -9,7 +9,7 @@ interface Graph {
   ambientRadius: number
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
   color: "black",
   radius: 2,
   ambientColor: "rgba(80, 80, 80, 0.3)",
@@ -17,9 +17,9 @@ const defaultProps = {
   data: [],
 }
 
-function setDefaults(props: Graph): Graph {
+function withDefaultProps(props: Partial<Graph>): Graph {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
@@ -71,15 +71,14 @@ interface Props {
 export function draw(
   ctx: CanvasContext,
   layout: Layout,
-  graph: Graph,
+  graph: Partial<Graph>,
   props: Props
 ) {
-  // TODO remove setDefaults?
-  // graph = setDefaults(graph)
+  const _graph = withDefaultProps(graph)
 
-  const { data } = graph
+  const { data } = _graph
 
   for (const point of data) {
-    drawPoint(ctx, layout, graph, point, props)
+    drawPoint(ctx, layout, _graph, point, props)
   }
 }
