@@ -6,6 +6,7 @@ import Axes from "./examples/Axes"
 import Points from "./examples/Points"
 import Lines from "./examples/Lines"
 import Candlesticks from "./examples/Candlesticks"
+import Crosshair from "./examples/Crosshair"
 import Frames from "./examples/Frames"
 
 function App() {
@@ -24,10 +25,10 @@ function App() {
       <h3>Frames</h3>
       <Frames />
 
-        <h3>Crosshair</h3>
-        <TestRenderCrosshair />
-
   */}
+      <h3>Crosshair</h3>
+      <Crosshair />
+
       <h3>Candlesticks</h3>
       <Candlesticks />
 

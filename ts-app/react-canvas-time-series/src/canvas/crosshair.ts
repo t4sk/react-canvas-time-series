@@ -1,7 +1,7 @@
 import { CanvasContext, Layout } from "./types"
 import { isInside } from "./math"
 
-interface Props {
+export interface Crosshair {
   canvasX: number
   canvasY: number
   xLineColor: string
@@ -10,23 +10,28 @@ interface Props {
   yLineWidth: number
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
+  canvasX: 0,
+  canvasY: 0,
   xLineColor: "",
   xLineWidth: 0.5,
   yLineColor: "",
   yLineWidth: 0.5,
 }
 
-function setDefaults(props: Props): Props {
+function withDefaultProps(props: Partial<Crosshair>): Crosshair {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
 
-export function draw(ctx: CanvasContext, layout: Layout, props: Props) {
-  // TODO remove setDefaults?
-  // props = setDefaults(props)
+export function draw(
+  ctx: CanvasContext,
+  layout: Layout,
+  props: Partial<Crosshair>
+) {
+  const _props = withDefaultProps(props)
 
   const {
     graph: { width, height, left, top },
@@ -39,7 +44,7 @@ export function draw(ctx: CanvasContext, layout: Layout, props: Props) {
     xLineWidth,
     yLineColor,
     yLineWidth,
-  } = props
+  } = _props
 
   if (!isInside({ top, left, width, height }, { x: canvasX, y: canvasY })) {
     return

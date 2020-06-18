@@ -5,6 +5,7 @@ import { getLayout } from "../canvas/layout"
 import * as xAxis from "../canvas/x-axis"
 import * as yAxis from "../canvas/y-axis"
 import * as crosshair from "../canvas/crosshair"
+import { Crosshair } from "../canvas/crosshair"
 import * as text from "../canvas/text"
 import * as xLabel from "../canvas/x-label"
 import { XLabel } from "../canvas/x-label"
@@ -87,14 +88,7 @@ interface Props {
   frames: Array<any>
   xLabels: Array<Partial<XLabel>>
   yLabels: Array<Partial<YLabel>>
-  crosshair?: {
-    canvasX: number
-    canvasY: number
-    xLineColor: string
-    xLineWidth: number
-    yLineColor: string
-    yLineWidth: number
-  }
+  crosshair?: Partial<Crosshair>
   onMouseMove?: (
     e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
     mouse: Mouse,
@@ -234,7 +228,8 @@ function getMouse(
 }
 
 const Graph: React.SFC<Partial<Props>> = (props) => {
-  const _props = withDefaultProps(props)
+  const _props = useMemo(() => withDefaultProps(props), [props])
+  const layout = useMemo(() => getLayout(_props), [props])
 
   const refs = {
     axes: useRef<HTMLCanvasElement | null>(null),
@@ -242,14 +237,19 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
     ui: useRef<HTMLCanvasElement | null>(null),
     // ref to animation frame
     animation: useRef<number | null>(null),
+    // NOTE: store props and layout as ref for animate to draw with latest prop
+    props: useRef(_props),
+    layout: useRef(layout),
   }
+
+  refs.props.current = _props
+  refs.layout.current = layout
 
   const ctx = useRef<Context>({
     axes: null,
     graphs: null,
     ui: null,
   })
-  const layout = useMemo(() => getLayout(_props), [props])
 
   useEffect(() => {
     ctx.current.axes = refs.axes.current?.getContext("2d")
@@ -259,7 +259,7 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
     if (_props.animate) {
       animate()
     } else {
-      draw(ctx.current, _props, layout)
+      draw(ctx.current, refs.props.current, refs.layout.current)
     }
 
     return () => {
@@ -270,6 +270,7 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
     }
   }, [])
 
+  // TODO
   // componentDidUpdate() {
   //   if (!this.props.animate && this.props.shouldRedrawGraph()) {
   //     this.draw()
@@ -280,7 +281,7 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
 
   const animate = useCallback(() => {
     refs.animation.current = window.requestAnimationFrame(animate)
-    draw(ctx.current, _props, layout)
+    draw(ctx.current, refs.props.current, refs.layout.current)
   }, [])
 
   const onMouseMove = useCallback(
