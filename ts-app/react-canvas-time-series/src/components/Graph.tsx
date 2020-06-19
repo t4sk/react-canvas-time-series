@@ -7,6 +7,7 @@ import * as yAxis from "../canvas/y-axis"
 import * as crosshair from "../canvas/crosshair"
 import { Crosshair } from "../canvas/crosshair"
 import * as text from "../canvas/text"
+import { Text } from "../canvas/text"
 import * as xLabel from "../canvas/x-label"
 import { XLabel } from "../canvas/x-label"
 import * as yLabel from "../canvas/y-label"
@@ -84,10 +85,9 @@ interface Props {
   yLineColor: string
   // graphs
   graphs: GraphType[]
-  // TODO types Array
-  frames: Array<any>
-  xLabels: Array<Partial<XLabel>>
-  yLabels: Array<Partial<YLabel>>
+  frames: Partial<Text>[]
+  xLabels: Partial<XLabel>[]
+  yLabels: Partial<YLabel>[]
   crosshair?: Partial<Crosshair>
   onMouseMove?: (
     e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,

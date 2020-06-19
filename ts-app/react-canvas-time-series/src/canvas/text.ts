@@ -1,30 +1,32 @@
 import { CanvasContext } from "./types"
 
-interface Props {
+export interface Text {
   left: number
   top: number
-  color: string
   text: number | string
+  color: string
   font: string
 }
 
-const defaultProps = {
+const DEFAULT_PROPS = {
+  left: 0,
+  top: 0,
+  text: "",
   color: "black",
   font: "12px Arial",
 }
 
-function setDefaults(props: Props): Props {
+function withDefaultProps(props: Partial<Text>): Text {
   return {
-    ...defaultProps,
+    ...DEFAULT_PROPS,
     ...props,
   }
 }
 
-export function draw(ctx: CanvasContext, props: Props) {
-  // TODO remove setDefaults?
-  // props = setDefaults(props)
+export function draw(ctx: CanvasContext, props: Partial<Text>) {
+  const _props = withDefaultProps(props)
 
-  const { left, top, color, font, text } = props
+  const { left, top, color, font, text } = _props
 
   ctx.textBaseline = "top"
   ctx.textAlign = "left"
