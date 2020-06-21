@@ -107,9 +107,11 @@ export interface Props {
     layout: Layout
   ) => void
   onWheel?: (
-    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    e: React.WheelEvent<HTMLCanvasElement>,
     mouse: Mouse,
-    layout: Layout
+    layout: Layout,
+    // NOTE: return xRange so that typescript compiles with draggable
+    xRange: XRange
   ) => void
 }
 
@@ -303,10 +305,13 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
   )
 
   const onWheel = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      _props.onWheel?.(e, getMouse(ctx.current, e), layout)
+    (e: React.WheelEvent<HTMLCanvasElement>) => {
+      _props.onWheel?.(e, getMouse(ctx.current, e), layout, {
+        xMin: refs.props.current.xMin,
+        xMax: refs.props.current.xMax,
+      })
     },
-    [_props.onWheel, layout]
+    [_props.onWheel, layout, refs.props]
   )
 
   // Note: inline styling to remove ts errors

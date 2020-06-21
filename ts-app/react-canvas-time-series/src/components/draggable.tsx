@@ -53,14 +53,14 @@ function getXRange(ref: Ref, mouse: Mouse, graph: Graph): XRange {
   }
 }
 
+interface Props {
+  xMin: number
+  xMax: number
+}
+
 export default function draggable(
   Component: React.ComponentType<Partial<GraphProps>>
 ) {
-  interface Props {
-    xMin: number
-    xMax: number
-  }
-
   const Draggable: React.FC<Partial<GraphProps> & Props> = (props) => {
     // use ref to keep track of dragging state
     // need to store props to ref for functions to get current value from props
