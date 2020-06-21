@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
 import { XRange } from "../components/types"
 import Graph from "../components/Graph"
-import canvas from "../canvas"
 import { Layout } from "../canvas/types"
 import draggable from "../components/draggable"
 import moment from "moment"

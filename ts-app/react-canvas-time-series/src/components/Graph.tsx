@@ -225,7 +225,7 @@ function getMouse(
 
 const Graph: React.SFC<Partial<Props>> = (props) => {
   const _props = useMemo(() => withDefaultProps(props), [props])
-  const layout = useMemo(() => getLayout(_props), [props])
+  const layout = useMemo(() => getLayout(_props), [_props])
 
   const refs = {
     axes: useRef<HTMLCanvasElement | null>(null),
@@ -269,7 +269,7 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
   const animate = useCallback(() => {
     refs.animation.current = window.requestAnimationFrame(animate)
     draw(ctx.current, refs.props.current, refs.layout.current)
-  }, [])
+  }, [refs.animation, refs.layout, refs.props])
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -278,35 +278,35 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
         xMax: refs.props.current.xMax,
       })
     },
-    []
+    [_props.onMouseMove, layout, refs.props]
   )
 
   const onMouseDown = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
       _props.onMouseDown?.(e, getMouse(ctx.current, e), layout)
     },
-    []
+    [_props.onMouseDown, layout]
   )
 
   const onMouseUp = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
       _props.onMouseUp?.(e, getMouse(ctx.current, e), layout)
     },
-    []
+    [_props.onMouseUp, layout]
   )
 
   const onMouseOut = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
       _props.onMouseOut?.(e, getMouse(ctx.current, e), layout)
     },
-    []
+    [_props.onMouseOut, layout]
   )
 
   const onWheel = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
       _props.onWheel?.(e, getMouse(ctx.current, e), layout)
     },
-    []
+    [_props.onWheel, layout]
   )
 
   // Note: inline styling to remove ts errors
