@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback, useMemo } from "react"
 
-import { Layout, Point, XAxisAt, YAxisAt } from "../canvas/types"
+import { Layout, XAxisAt, YAxisAt } from "../canvas/types"
 import { getLayout } from "../canvas/layout"
 import * as xAxis from "../canvas/x-axis"
 import * as yAxis from "../canvas/y-axis"
