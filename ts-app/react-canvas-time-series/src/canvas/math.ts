@@ -42,7 +42,7 @@ export function findNearestIndex(arr: number[], x: number): number {
 
 export function isInside(
   rect: Rectangle,
-  point: { x: number; y: number }
+  point: { x: number | undefined; y: number | undefined }
 ): boolean {
   const { x, y } = point
 

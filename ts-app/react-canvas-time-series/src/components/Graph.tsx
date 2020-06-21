@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useCallback, useMemo } from "react"
 
+import { Mouse, XRange } from "./types"
 import { Layout, XAxisAt, YAxisAt } from "../canvas/types"
 import { getLayout } from "../canvas/layout"
 import * as xAxis from "../canvas/x-axis"
@@ -43,18 +44,12 @@ const GRAPHS = {
   candlesticks,
 }
 
-interface Mouse {
-  x: number
-  y: number
-}
-
-interface Props {
+export interface Props {
   width: number
   height: number
   padding: number
   backgroundColor: string
   animate?: boolean
-  shouldRedrawGraph?: () => boolean
   xMin: number
   xMax: number
   yMin: number
@@ -92,7 +87,9 @@ interface Props {
   onMouseMove?: (
     e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
     mouse: Mouse,
-    layout: Layout
+    layout: Layout,
+    // NOTE: return xRange so that typescript compiles with draggable
+    xRange: XRange
   ) => void
   onMouseDown?: (
     e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
@@ -122,7 +119,6 @@ const DEFAULT_PROPS = {
   padding: 10,
   backgroundColor: "transparent",
   animate: false,
-  shouldRedrawGraph: () => true,
   xMin: 0,
   xMax: 0,
   yMin: 0,
@@ -270,15 +266,6 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
     }
   }, [])
 
-  // TODO
-  // componentDidUpdate() {
-  //   if (!this.props.animate && this.props.shouldRedrawGraph()) {
-  //     this.draw()
-  //   }
-
-  //   this.layout = getLayout(this.props)
-  // }
-
   const animate = useCallback(() => {
     refs.animation.current = window.requestAnimationFrame(animate)
     draw(ctx.current, refs.props.current, refs.layout.current)
@@ -286,7 +273,10 @@ const Graph: React.SFC<Partial<Props>> = (props) => {
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-      _props.onMouseMove?.(e, getMouse(ctx.current, e), layout)
+      _props.onMouseMove?.(e, getMouse(ctx.current, e), layout, {
+        xMin: refs.props.current.xMin,
+        xMax: refs.props.current.xMax,
+      })
     },
     []
   )

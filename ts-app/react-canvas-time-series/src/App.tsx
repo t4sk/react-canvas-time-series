@@ -8,6 +8,7 @@ import Lines from "./examples/Lines"
 import Candlesticks from "./examples/Candlesticks"
 import Crosshair from "./examples/Crosshair"
 import Frames from "./examples/Frames"
+import Drag from "./examples/Drag"
 
 function App() {
   return (
@@ -19,13 +20,13 @@ function App() {
         <h3>Zoom</h3>
         <TestRenderZoom />
 
-        <h3>Drag</h3>
-        <TestRenderDrag />
+  */}
+      <h3>Drag</h3>
+      <Drag />
 
       <h3>Frames</h3>
       <Frames />
 
-  */}
       <h3>Crosshair</h3>
       <Crosshair />
 
