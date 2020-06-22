@@ -44,7 +44,7 @@ const GRAPHS = {
   candlesticks,
 }
 
-export interface Props {
+export interface GraphProps {
   width: number
   height: number
   padding: number
@@ -158,7 +158,7 @@ const DEFAULT_PROPS = {
   yLabels: [],
 }
 
-function withDefaultProps(props: Partial<Props>): Props {
+function withDefaultProps(props: Partial<GraphProps>): GraphProps {
   return {
     ...DEFAULT_PROPS,
     ...props,
@@ -174,7 +174,7 @@ interface Context {
   ui: any
 }
 
-function draw(ctx: Context, props: Props, layout: Layout) {
+function draw(ctx: Context, props: GraphProps, layout: Layout) {
   const { xAxisAt, yAxisAt } = props
 
   ctx.axes.clearRect(0, 0, props.width, props.height)
@@ -225,7 +225,7 @@ function getMouse(
   }
 }
 
-const Graph: React.SFC<Partial<Props>> = (props) => {
+const Graph: React.SFC<Partial<GraphProps>> = (props) => {
   const _props = useMemo(() => withDefaultProps(props), [props])
   const layout = useMemo(() => getLayout(_props), [_props])
 

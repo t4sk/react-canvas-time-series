@@ -10,6 +10,7 @@ import Crosshair from "./examples/Crosshair"
 import Frames from "./examples/Frames"
 import Drag from "./examples/Drag"
 import Zoom from "./examples/Zoom"
+import DragAndZoom from "./examples/DragAndZoom"
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
       {/*}
         <h3>History</h3>
         <TestRenderHistory />
-
   */}
+      <h3>Drag and Zoom</h3>
+      <DragAndZoom />
+
       <h3>Zoom</h3>
       <Zoom />
 

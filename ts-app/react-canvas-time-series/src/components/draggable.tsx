@@ -1,5 +1,4 @@
 import React, { useRef } from "react"
-import { Props as GraphProps } from "../components/Graph"
 import { Mouse, Graph, XRange } from "../components/types"
 import { Layout } from "../canvas/types"
 import canvas from "../canvas"
@@ -53,15 +52,37 @@ function getXRange(ref: Ref, mouse: Mouse, graph: Graph): XRange {
   }
 }
 
-interface Props {
+interface DraggableProps {
   xMin: number
   xMax: number
+  onMouseMove?: (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    mouse: Mouse,
+    layout: Layout,
+    // NOTE: return xRange so that typescript compiles with draggable
+    xRange: XRange
+  ) => void
+  onMouseDown?: (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    mouse: Mouse,
+    layout: Layout
+  ) => void
+  onMouseUp?: (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    mouse: Mouse,
+    layout: Layout
+  ) => void
+  onMouseOut?: (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>,
+    mouse: Mouse,
+    layout: Layout
+  ) => void
 }
 
-export default function draggable(
-  Component: React.ComponentType<Partial<GraphProps>>
+export default function draggable<ComponentProps>(
+  Component: React.ComponentType<ComponentProps>
 ) {
-  const Draggable: React.FC<Partial<GraphProps> & Props> = (props) => {
+  const Draggable: React.FC<ComponentProps & DraggableProps> = (props) => {
     // use ref to keep track of dragging state
     // need to store props to ref for functions to get current value from props
     const ref = useRef<Ref>({

@@ -1,5 +1,4 @@
 import React, { useRef } from "react"
-import { Props as GraphProps } from "../components/Graph"
 import { Mouse, Graph, XRange } from "../components/types"
 import { Layout } from "../canvas/types"
 import canvas from "../canvas"
@@ -46,7 +45,7 @@ function getXRange(
   }
 }
 
-interface Props {
+interface ZoomableProps {
   xMin: number
   xMax: number
   zoomRate?: number
@@ -58,10 +57,10 @@ interface Props {
   ) => void
 }
 
-export default function zoomable(
-  Component: React.ComponentType<Partial<GraphProps>>
+export default function zoomable<ComponentProps>(
+  Component: React.ComponentType<ComponentProps>
 ) {
-  const Zoomable: React.FC<Partial<GraphProps> & Props> = (props) => {
+  const Zoomable: React.FC<ComponentProps & ZoomableProps> = (props) => {
     // need to store props to ref for functions to get current value from props
     const ref = useRef<Ref>({
       xMin: props.xMin,
